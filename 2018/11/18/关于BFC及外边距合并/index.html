@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="-Xiang Yu&#39;s Blog-">
+    <title>关于BFC及外边距合并 - -Xiang Yu&#39;s Blog-</title>
+    <meta name="author" content="Xiang Yu (向 宇)">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu (向 宇)","sameAs":["https://github.com/","https://facebook.com/","mailto"],"image":"cat.jpg"},"articleBody":"BFC 是什么BFC全称Block Formatting Context。中文为”块级格式化上下文”。每个渲染区域用formatting context表示，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用。在正常流中的盒子要么属于块级格式化上下文，要么属于内联格式化上下文。也就是页面渲染时候所遵循的一种规则。\n\nBFC的特性有\n内部的Box会在垂直方向按顺序放置\nBox垂直方向的距离由margin决定，属于同一个BFC的两个相邻Box的margin会发生重叠 ，每个元素的margin box的左边与包含块border box的左边相接触。\nBFC 区域不会与float box重叠\nBFC就是页面上的一个隔离的独立容器，容器里的子元素不会影响到外面的元素。\nBFC的高度也包括浮动元素的高度。\n\n\nBFC的产生\n根元素\n\n\n撑满父容器，父容器能被子元素撑开\n可能会产生外边局合并的情况\n页面渲染时位置从上到下\n\n2.float属性不为none拥有float属性的元素，相当于脱离文档流，拥有自己专属空间，对外界元素没有影响的元素。\n3.position为absolute或fixedposition属性值为absolute或fixed的，脱离了文档流的元素。\n4.display为inline-block，flex，或者inline-flex\n5.overflow不为visible\n\nBFC 有什么作用？举例说明。BFC的作用有：\n\n自适应两栏布局12345678910111213141516171819202122 &lt;style&gt;    body &#123;        position: relative;    &#125;    .aside &#123;        width: 90px;        height: 150px;        float: left;        background: #f66;    &#125;    .main &#123;        height: 200px;        background: #fcc;          &#125;&lt;/style&gt;&lt;body&gt;    &lt;div class=&quot;aside&quot;&gt;&lt;/div&gt;    &lt;div class=&quot;main&quot;&gt;&lt;/div&gt;&lt;/body&gt;\n\n\n页面效果：\n根据BFC布局规则第三条：\n\n每个元素的margin box的左边，与包含border box的左边相接触（对于从左往右的格式化，否则相反）。即使存在浮动也是如此。\n\n因此，虽然存在浮动元素aslide，但main的左边依然会与包含块的左边接触。根据BFC布局规则第四条：\n\nBFC的区域不会与float box重叠。我们可以通过除法main生成BFC，来实现自适应两栏布局。\n\n123 .main &#123;    overflow: hidden;&#125;\n当除法main生成BFC后，这个新的BFC不会与浮动的aside重叠。因此会根据包含块的宽度和aside的宽度自动变窄。\n页面效果：\n2.清除内部浮动1234567891011121314151617181920&lt;style&gt;    &lt;style&gt;    .parent &#123;        border: 5px solid #fcc;        width: 300px;    &#125;    .child &#123;        border: 5px solid #f66;        width:100px;        height: 100px;        float: left;    &#125;&lt;/style&gt;&lt;body&gt;    &lt;div class=&quot;parent&quot;&gt;        &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;        &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;    &lt;/div&gt;&lt;/body&gt;\n页面效果：\n根据BFC布局规则：\n\n计算BFC的高度时，浮动元素也参与计算为达到清除内部浮动，我们可以除法parent生成BFC，那么parent在计算高度时，parent内的浮动元素child也会参与计算。\n\n123.parent &#123;    overflow: hidden;&#125;\n页面效果：\n3.防止垂直margin重叠1234567891011121314&lt;style&gt;    p &#123;        color: #f55;        background: #fcc;        width: 200px;        line-height: 100px;        text-align:center;        margin: 100px;    &#125;&lt;/style&gt;&lt;body&gt;    &lt;p&gt;Haha&lt;/p&gt;    &lt;p&gt;Hehe&lt;/p&gt;&lt;/body&gt;\n页面效果：\n两个p之间的距离为100px，发送了margin重叠。 根据BFC布局规则第二条：\n\nBox垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠\n\n我们可以在p外面包裹一层容器，并触发该容器生成一个BFC。那么两个P便不属于同一个BFC，就不会发生margin重叠了。 \n12345678910111213141516171819&lt;style&gt;    .wrap &#123;        overflow: hidden;    &#125;    p &#123;        color: #f55;        background: #fcc;        width: 200px;        line-height: 100px;        text-align:center;        margin: 100px;    &#125;&lt;/style&gt;&lt;body&gt;    &lt;p&gt;Haha&lt;/p&gt;    &lt;div class=&quot;wrap&quot;&gt;        &lt;p&gt;Hehe&lt;/p&gt;    &lt;/div&gt;&lt;/body&gt;\n页面效果：\n\n总结\nBFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。\n\n因为BFC内部的元素和外部的元素绝对不会互相影响，因此， 当BFC外部存在浮动时，它不应该影响BFC内部Box的布局，BFC会通过变窄，而不与浮动有重叠。同样的，当BFC内部有浮动时，为了不影响外部元素的布局，BFC计算高度时会包括浮动的高度。避免margin重叠也是这样的一个道理。\n外边距合并块的顶部外边距和底部外边距有时候会被折叠为单个外边距，其大小为两值中的最大值，这种行为就被称为外边距合并。一般发生外边距合并主要有以下三种情况：\n\n相邻兄弟姐妹元素\n父元素和子元素\n空元素\n\n\n相邻兄弟姐妹元素两个兄弟元素之间的外边距，会取两个元素外边距的最大值。\n12&lt;p style=&quot;margin-bottom: 30px;&quot;&gt;这个段落的下外边距被合并...&lt;/p&gt;&lt;p style=&quot;margin-top: 20px;&quot;&gt;...这个段落的上外边距被合并。&lt;/p&gt;\n按照上面的例子可以得出，两个p元素之间距离为30px。\n\n父元素和子元素这种情况又可以分为以下两种：\n\n父元素的上外边距和第一个子元素的上外边距\n父元素的下外边距和最后一个子元素的下外边距\n\n这两种情况，最终显示出来的结果都是取二者中的最大值。\n\n空元素自己的上外边距会和自己的下外边距合并\n12345&lt;p style=&quot;margin-bottom: 0px;&quot;&gt;这个段落的和下面段落的距离将为20px&lt;/p&gt;&lt;div style=&quot;margin-top: 20px; margin-bottom: 20px;&quot;&gt;&lt;/div&gt;&lt;p style=&quot;margin-top: 0px;&quot;&gt;这个段落的和上面段落的距离将为20px&lt;/p&gt;\n这样第一个p元素和第三个p元素之间距离为20px\n\n阻止合并方法通用方法\n处于静态流元素会发生合并，所以float和position:absolute都不会发生合并\n设置为inline-block ，也不会发生合并\n\n针对于父元素和子元素情况不合并方法以下都不会发生合并\n\n设置了清除浮动属性\n因为margin需要直接接触才能合并，所以父元素或子元素中有border或padding，或者二者之间有元素\n\n注意\n如果两个外边距值中有一个为0，也会发生合并。\n如果有负外边距，合并后外边距为最大正边距加上最小负边距（绝对值最大的一个），如上面元素下边距为20px，下面元素上边距为-20px，则最后为0px\n\n参考：\n外边距合并MDN https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing\n\n「CSS」Margin Collapsing - 外边距合并 https://segmentfault.com/a/1190000003712262\n\n\n","dateCreated":"2018-11-18T18:31:15+09:00","dateModified":"2018-11-19T01:48:16+09:00","datePublished":"2018-11-18T18:31:15+09:00","description":"BFC 是什么BFC全称Block Formatting Context。中文为”块级格式化上下文”。","headline":"关于BFC及外边距合并","image":["20181118.png","20181118.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/"},"publisher":{"@type":"Organization","name":"Xiang Yu (向 宇)","sameAs":["https://github.com/","https://facebook.com/","mailto"],"image":"cat.jpg","logo":{"@type":"ImageObject","url":"cat.jpg"}},"url":"https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/","keywords":"CSS","thumbnailUrl":"20181118.png"}</script>
+    <meta name="description" content="BFC 是什么BFC全称Block Formatting Context。中文为”块级格式化上下文”。">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="关于BFC及外边距合并">
+<meta property="og:url" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/index.html">
+<meta property="og:site_name" content="-Xiang Yu&#39;s Blog-">
+<meta property="og:description" content="BFC 是什么BFC全称Block Formatting Context。中文为”块级格式化上下文”。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/3.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/4.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/5.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/6.png">
+<meta property="og:updated_time" content="2018-11-18T16:48:16.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于BFC及外边距合并">
+<meta name="twitter:description" content="BFC 是什么BFC全称Block Formatting Context。中文为”块级格式化上下文”。">
+<meta name="twitter:image" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/cat.jpg"/>
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/20181118.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/20181118.png" />
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/20181118.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/20181118.png" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-du2xmrqdqrl2ollgeiw050kpl6l4nbyz7bumjuurjgsxyopifvukebxc9lqe.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-135079303-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">-Xiang Yu&#39;s Blog-</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/cat.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/cat.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu (向 宇)</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Hello Programming,Hello World</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="Search"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/mailto"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--partial"
+             style="background-image:url('/2018/11/18/关于BFC及外边距合并/20181118.png');"
+             data-behavior="4">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            关于BFC及外边距合并
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2018-11-18T18:31:15+09:00">
+	
+		    Nov 18, 2018
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-End-Knowledge/">Front End Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="4"
+                 class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h3 id="BFC-是什么"><a href="#BFC-是什么" class="headerlink" title="BFC 是什么"></a>BFC 是什么</h3><p>BFC全称Block Formatting Context。中文为”块级格式化上下文”。<br><a id="more"></a><br>每个渲染区域用formatting context表示，它决定了其子元素将如何定位，以及和其他元素的关系和相互作用。在正常流中的盒子要么属于块级格式化上下文，要么属于内联格式化上下文。<br>也就是页面渲染时候所遵循的一种规则。</p>
+<hr>
+<h3 id="BFC的特性有"><a href="#BFC的特性有" class="headerlink" title="BFC的特性有"></a>BFC的特性有</h3><ul>
+<li>内部的Box会在垂直方向按顺序放置</li>
+<li>Box垂直方向的距离由margin决定，属于同一个BFC的两个相邻Box的margin会发生重叠 ，每个元素的margin box的左边与包含块border box的左边相接触。</li>
+<li>BFC 区域不会与float box重叠</li>
+<li>BFC就是页面上的一个隔离的独立容器，容器里的子元素不会影响到外面的元素。</li>
+<li>BFC的高度也包括浮动元素的高度。</li>
+</ul>
+<hr>
+<h3 id="BFC的产生"><a href="#BFC的产生" class="headerlink" title="BFC的产生"></a>BFC的产生</h3><ol>
+<li>根元素</li>
+</ol>
+<ul>
+<li>撑满父容器，父容器能被子元素撑开</li>
+<li>可能会产生外边局合并的情况</li>
+<li>页面渲染时位置从上到下</li>
+</ul>
+<p>2.float属性不为none<br>拥有float属性的元素，相当于脱离文档流，拥有自己专属空间，对外界元素没有影响的元素。</p>
+<p>3.position为absolute或fixed<br>position属性值为absolute或fixed的，脱离了文档流的元素。</p>
+<p>4.display为inline-block，flex，或者inline-flex</p>
+<p>5.overflow不为visible</p>
+<hr>
+<h3 id="BFC-有什么作用？举例说明。"><a href="#BFC-有什么作用？举例说明。" class="headerlink" title="BFC 有什么作用？举例说明。"></a>BFC 有什么作用？举例说明。</h3><p>BFC的作用有：</p>
+<ol>
+<li>自适应两栏布局<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> &lt;style&gt;</span><br><span class="line">    body &#123;</span><br><span class="line">        position: relative;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .aside &#123;</span><br><span class="line">        width: 90px;</span><br><span class="line">        height: 150px;</span><br><span class="line">        float: left;</span><br><span class="line">        background: #f66;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .main &#123;</span><br><span class="line">        height: 200px;</span><br><span class="line">        background: #fcc;</span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;aside&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;main&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>页面效果：<br><img width="300" alt="5.png (457.3 kB)" src="./1.png"></p>
+<p>根据BFC布局规则第三条：</p>
+<blockquote>
+<p>每个元素的margin box的左边，与包含border box的左边相接触（对于从左往右的格式化，否则相反）。即使存在浮动也是如此。</p>
+</blockquote>
+<p>因此，虽然存在浮动元素aslide，但main的左边依然会与包含块的左边接触。<br>根据BFC布局规则第四条：</p>
+<blockquote>
+<p>BFC的区域不会与float box重叠。<br>我们可以通过除法main生成BFC，来实现自适应两栏布局。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> .main &#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当除法main生成BFC后，这个新的BFC不会与浮动的aside重叠。因此会根据包含块的宽度和aside的宽度自动变窄。</p>
+<p>页面效果：<br><img width="300" alt="5.png (457.3 kB)" src="./2.png"></p>
+<p>2.清除内部浮动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">    .parent &#123;</span><br><span class="line">        border: 5px solid #fcc;</span><br><span class="line">        width: 300px;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .child &#123;</span><br><span class="line">        border: 5px solid #f66;</span><br><span class="line">        width:100px;</span><br><span class="line">        height: 100px;</span><br><span class="line">        float: left;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div class=&quot;parent&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;child&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<p>页面效果：<br><img width="300" alt="5.png (457.3 kB)" src="./3.png"></p>
+<p>根据BFC布局规则：</p>
+<blockquote>
+<p>计算BFC的高度时，浮动元素也参与计算<br>为达到清除内部浮动，我们可以除法parent生成BFC，那么parent在计算高度时，parent内的浮动元素child也会参与计算。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>页面效果：<br><img width="300" alt="5.png (457.3 kB)" src="./4.png"></p>
+<p>3.防止垂直margin重叠<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    p &#123;</span><br><span class="line">        color: #f55;</span><br><span class="line">        background: #fcc;</span><br><span class="line">        width: 200px;</span><br><span class="line">        line-height: 100px;</span><br><span class="line">        text-align:center;</span><br><span class="line">        margin: 100px;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;p&gt;Haha&lt;/p&gt;</span><br><span class="line">    &lt;p&gt;Hehe&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<p>页面效果：<br><img width="300" alt="5.png (457.3 kB)" src="./5.png"></p>
+<p>两个p之间的距离为100px，发送了margin重叠。 根据BFC布局规则第二条：</p>
+<blockquote>
+<p>Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠</p>
+</blockquote>
+<p>我们可以在p外面包裹一层容器，并触发该容器生成一个BFC。那么两个P便不属于同一个BFC，就不会发生margin重叠了。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">    .wrap &#123;</span><br><span class="line">        overflow: hidden;</span><br><span class="line">    &#125;</span><br><span class="line">    p &#123;</span><br><span class="line">        color: #f55;</span><br><span class="line">        background: #fcc;</span><br><span class="line">        width: 200px;</span><br><span class="line">        line-height: 100px;</span><br><span class="line">        text-align:center;</span><br><span class="line">        margin: 100px;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;p&gt;Haha&lt;/p&gt;</span><br><span class="line">    &lt;div class=&quot;wrap&quot;&gt;</span><br><span class="line">        &lt;p&gt;Hehe&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p>页面效果：<br><img width="300" alt="5.png (457.3 kB)" src="./6.png"></p>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><blockquote>
+<p>BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。</p>
+</blockquote>
+<p>因为BFC内部的元素和外部的元素绝对不会互相影响，因此， 当BFC外部存在浮动时，它不应该影响BFC内部Box的布局，BFC会通过变窄，而不与浮动有重叠。同样的，当BFC内部有浮动时，为了不影响外部元素的布局，BFC计算高度时会包括浮动的高度。避免margin重叠也是这样的一个道理。</p>
+<h3 id="外边距合并"><a href="#外边距合并" class="headerlink" title="外边距合并"></a>外边距合并</h3><p>块的顶部外边距和底部外边距有时候会被折叠为单个外边距，其大小为两值中的最大值，这种行为就被称为外边距合并。<br>一般发生外边距合并主要有以下三种情况：</p>
+<ul>
+<li>相邻兄弟姐妹元素</li>
+<li>父元素和子元素</li>
+<li>空元素</li>
+</ul>
+<hr>
+<h4 id="相邻兄弟姐妹元素"><a href="#相邻兄弟姐妹元素" class="headerlink" title="相邻兄弟姐妹元素"></a>相邻兄弟姐妹元素</h4><p>两个兄弟元素之间的外边距，会取两个元素外边距的最大值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p style=&quot;margin-bottom: 30px;&quot;&gt;这个段落的下外边距被合并...&lt;/p&gt;</span><br><span class="line">&lt;p style=&quot;margin-top: 20px;&quot;&gt;...这个段落的上外边距被合并。&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>按照上面的例子可以得出，两个p元素之间距离为30px。</p>
+<hr>
+<h4 id="父元素和子元素"><a href="#父元素和子元素" class="headerlink" title="父元素和子元素"></a>父元素和子元素</h4><p>这种情况又可以分为以下两种：</p>
+<ul>
+<li>父元素的上外边距和第一个子元素的上外边距</li>
+<li>父元素的下外边距和最后一个子元素的下外边距</li>
+</ul>
+<p>这两种情况，最终显示出来的结果都是取二者中的最大值。</p>
+<hr>
+<h4 id="空元素"><a href="#空元素" class="headerlink" title="空元素"></a>空元素</h4><p>自己的上外边距会和自己的下外边距合并</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;p style=&quot;margin-bottom: 0px;&quot;&gt;这个段落的和下面段落的距离将为20px&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;div style=&quot;margin-top: 20px; margin-bottom: 20px;&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;p style=&quot;margin-top: 0px;&quot;&gt;这个段落的和上面段落的距离将为20px&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+<p>这样第一个p元素和第三个p元素之间距离为20px</p>
+<hr>
+<h3 id="阻止合并方法"><a href="#阻止合并方法" class="headerlink" title="阻止合并方法"></a>阻止合并方法</h3><h4 id="通用方法"><a href="#通用方法" class="headerlink" title="通用方法"></a>通用方法</h4><ol>
+<li>处于静态流元素会发生合并，所以float和position:absolute都不会发生合并</li>
+<li>设置为inline-block ，也不会发生合并</li>
+</ol>
+<h4 id="针对于父元素和子元素情况不合并方法"><a href="#针对于父元素和子元素情况不合并方法" class="headerlink" title="针对于父元素和子元素情况不合并方法"></a>针对于父元素和子元素情况不合并方法</h4><p>以下都不会发生合并</p>
+<ol>
+<li>设置了清除浮动属性</li>
+<li>因为margin需要直接接触才能合并，所以父元素或子元素中有border或padding，或者二者之间有元素</li>
+</ol>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
+<li>如果两个外边距值中有一个为0，也会发生合并。</li>
+<li>如果有负外边距，合并后外边距为最大正边距加上最小负边距（绝对值最大的一个），如上面元素下边距为20px，下面元素上边距为-20px，则最后为0px</li>
+</ul>
+<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><ul>
+<li><p>外边距合并MDN<br> <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Box_Model/Mastering_margin_collapsing</a></p>
+</li>
+<li><p>「CSS」Margin Collapsing - 外边距合并<br> <a href="https://segmentfault.com/a/1190000003712262" target="_blank" rel="noopener">https://segmentfault.com/a/1190000003712262</a></p>
+</li>
+</ul>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/CSS/">CSS</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/11/18/CSS Tip/" data-tooltip="Css Tip" aria-label="PREVIOUS: Css Tip">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/11/10/关于CSS浮动/" data-tooltip="关于CSS浮动" aria-label="NEXT: 关于CSS浮动">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/" title="Share on Twitter">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/" title="Share on Google+">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/&amp;title=关于BFC及外边距合并" title="Share on QQ">
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2019 Xiang Yu (向 宇). All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/11/18/CSS Tip/" data-tooltip="Css Tip" aria-label="PREVIOUS: Css Tip">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/11/10/关于CSS浮动/" data-tooltip="关于CSS浮动" aria-label="NEXT: 关于CSS浮动">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/" title="Share on Twitter">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/" title="Share on Google+">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/&amp;title=关于BFC及外边距合并" title="Share on QQ">
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-times"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/">
+                    <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/">
+                    <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kisky3.github.io/2018/11/18/关于BFC及外边距合并/&amp;title=关于BFC及外边距合并">
+                    <i class="fab fa-qq" aria-hidden="true"></i><span>Share on QQ</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/cat.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu (向 宇)</h4>
+        
+            <div id="about-card-bio"><p>Hello Programming,Hello World</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end Engineer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/images.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-vufjrm3fmbuttogo1hxuu0w9w0sesk5iyysjuguc2hdhufot9szxg8twijry.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+    </body>
+</html>

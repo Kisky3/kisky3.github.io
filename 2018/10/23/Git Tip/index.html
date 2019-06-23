@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="-Xiang Yu&#39;s Blog-">
+    <title>Git Tip - -Xiang Yu&#39;s Blog-</title>
+    <meta name="author" content="Xiang Yu (向 宇)">
+    
+        <meta name="keywords" content="Git Tip">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu (向 宇)","sameAs":["https://github.com/","https://facebook.com/","mailto"],"image":"cat.jpg"},"articleBody":"1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」\n\n输入以下代码后再进行修改，然后再push就好 （本地做的修改会不见 修改多的时候不建议！）\n1git fetch origin\n1git reset --hard FETCH_HEAD\n\n2. git本地版本回退与远端版本回退\n本地回滚1.在Github上或者下面的命令行查看想回退版本的版本号。1git reflog\n2.接着回退版本1git reset --hard *****(版本号)\n\n远程回滚方法一：如果错误提交已经推送到自己的远程分支了，那么就需要回滚远程分支了。 以下方法只能在自己一人的branch下使用。强制回滚会消除别人提交的修改。慎用！\n\n首先回退本地分支步骤参见本地回滚\n\n强制推送到远程分支\n1git push -f *****(你的分支名)\n\n\n方法二：git revert 命令意思是撤销某次提交。它会产生一个新的提交，虽然代码回退了，但是版本依然是向前的，所以，当你用revert回退之后，所有人pull之后，他们的代码也自动的回退了。如果使用 revert 撤销的不是最近一次提交，那么一定会有代码冲突，需要你合并代码，合并代码只需要把当前的代码全部去掉，保留之前版本的代码就可以了.撤销最近一次提交1git revert HEAD\n撤销上上次提交1git revert HEAD～1\n撤销这次提交1git revert *****(版本号)\n\n3. git 将当前branch1的一部分抽出merge 剩余部分在另一个branch2上开发\n1.切换回master2.在master上创建一个新的branch2作为继续开发的branch3.在branch2上merge branch14.将branch1 返回到想merge的范围，然后强制push回滚 之后merge5.在branch2 上进行后续开发\n\n4. Git 撤销修改\n1.本地修改了一堆文件(并没有使用git add到暂存区)，想放弃修改。1git checkout -- filename\n2.撤销所有文件/文件夹的修改1git checkout .\n3.本地新增了一堆文件(并没有git add到暂存区)，想放弃修改。  单个文件1rm filename / rm dir -rf\n  所有文件/文件夹：1git clean -xdf\n4.本地修改/新增了一堆文件，已经git add到暂存区，想放弃修改。  单个文件/文件夹：1git reset HEAD filename\n  所有文件/文件夹：1git reset HEAD .\n5.本地通过git add &amp; git commit 之后，想要撤销此次commit1git reset commit_id\n\n5. git 将当前的branch的commit移动到另一个新的branch\ngit cherry-pick可以理解为”挑拣”提交，它会获取某一个分支的单笔提交，并作为一个新的提交引入到你当前分支上。 当我们需要在本地合入其他分支的提交时，如果我们不想对整个分支进行合并，而是只想将某一次提交合入到本地当前分支上，那么就要使用git cherry-pick了。\n查看你需要的commit，然后切换到master上建立新分支。一个commit的情况下1git cherry-pick 版本号\n复数commit的情况下1git cherry-pick [起点版本号]..[终点版本号]\n终止cherry-pick1git cherry-pick --abort\n如果发生conflict则需要解决冲突并commit。复数的情况下利用下面的comment查看状态并继续cheery-pick12git statusgit cherry-pick --continue\n最后成功后git push到新分支便可以获得所需commit（不是新分支的情况下也适用。）\n\n6. git删除分支\n删除已经push的远程分支12git branch -r -d origin/branch-namegit push origin :branch-name\n但是本地查看branch还是能看到删除的分支。利用下面的命令行可删除远程仓库不存在的分支。1git remote prune origin\n删除本地分支1git branch -d\n\n7. 出现错误 fatal: remote origin already exists\n当要把本地文件夹上传到git时要执行下面的代码：1git remote add origin 〜\n但是有时会出现fatal: remote origin already exists.的错误信息，此时需要使用git remote rm origin删除origin，然后再次上传即可123$ git remote rm origin$ git remote add origin git@github.com:user_name/repository_name.git$ git push -u origin master\n","dateCreated":"2018-10-23T19:43:42+09:00","dateModified":"2019-06-19T16:33:33+09:00","datePublished":"2018-10-23T19:43:42+09:00","description":"1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」","headline":"Git Tip","image":["20181023.png","20181023.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/10/23/Git Tip/"},"publisher":{"@type":"Organization","name":"Xiang Yu (向 宇)","sameAs":["https://github.com/","https://facebook.com/","mailto"],"image":"cat.jpg","logo":{"@type":"ImageObject","url":"cat.jpg"}},"url":"https://kisky3.github.io/2018/10/23/Git Tip/","keywords":"Git","thumbnailUrl":"20181023.png"}</script>
+    <meta name="description" content="1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」">
+<meta name="keywords" content="Git Tip">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Git Tip">
+<meta property="og:url" content="https://kisky3.github.io/2018/10/23/Git Tip/index.html">
+<meta property="og:site_name" content="-Xiang Yu&#39;s Blog-">
+<meta property="og:description" content="1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-06-19T07:33:33.880Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git Tip">
+<meta name="twitter:description" content="1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/cat.jpg"/>
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2018/10/23/Git Tip/20181023.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/10/23/Git Tip/20181023.png" />
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2018/10/23/Git Tip/20181023.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/10/23/Git Tip/20181023.png" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-du2xmrqdqrl2ollgeiw050kpl6l4nbyz7bumjuurjgsxyopifvukebxc9lqe.min.css">
+    <!--STYLES END-->
+    
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-135079303-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">-Xiang Yu&#39;s Blog-</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/cat.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/cat.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu (向 宇)</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Hello Programming,Hello World</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="Search"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/mailto"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--partial"
+             style="background-image:url('/2018/10/23/Git Tip/20181023.png');"
+             data-behavior="4">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Git Tip
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2018-10-23T19:43:42+09:00">
+	
+		    Oct 23, 2018
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Tip/">Tip</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="4"
+                 class="hasCover
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <div class="alert info no-icon"><h3 id="1-git-pull时-「Error：The-following-untracked-working-tree-files-would-be-overwritten-by-merge-」"><a href="#1-git-pull时-「Error：The-following-untracked-working-tree-files-would-be-overwritten-by-merge-」" class="headerlink" title="1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」"></a>1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」</h3></div>
+<a id="more"></a>
+<p>输入以下代码后再进行修改，然后再push就好 （本地做的修改会不见 修改多的时候不建议！）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard FETCH_HEAD</span><br></pre></td></tr></table></figure>
+<hr>
+<div class="alert info no-icon"><h3 id="2-git本地版本回退与远端版本回退"><a href="#2-git本地版本回退与远端版本回退" class="headerlink" title="2. git本地版本回退与远端版本回退"></a>2. git本地版本回退与远端版本回退</h3></div>
+<h4 id="本地回滚"><a href="#本地回滚" class="headerlink" title="本地回滚"></a>本地回滚</h4><p>1.在Github上或者下面的命令行查看想回退版本的版本号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure></p>
+<p>2.接着回退版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard *****(版本号)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="远程回滚"><a href="#远程回滚" class="headerlink" title="远程回滚"></a>远程回滚</h4><h5 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h5><p>如果错误提交已经推送到自己的远程分支了，那么就需要回滚远程分支了。 以下方法只能在自己一人的branch下使用。<br>强制回滚会消除别人提交的修改。慎用！</p>
+<ol>
+<li><p>首先回退本地分支<br>步骤参见本地回滚</p>
+</li>
+<li><p>强制推送到远程分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -f *****(你的分支名)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h5 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h5><p>git revert 命令意思是撤销某次提交。<br>它会产生一个新的提交，虽然代码回退了，但是版本依然是向前的，所以，当你用revert回退之后，所有人pull之后，他们的代码也自动的回退了。<br>如果使用 revert 撤销的不是最近一次提交，那么一定会有代码冲突，需要你合并代码，合并代码只需要把当前的代码全部去掉，保留之前版本的代码就可以了.<br>撤销最近一次提交<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br></pre></td></tr></table></figure></p>
+<p>撤销上上次提交<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD～1</span><br></pre></td></tr></table></figure></p>
+<p>撤销这次提交<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert *****(版本号)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<div class="alert info no-icon"><h3 id="3-git-将当前branch1的一部分抽出merge-剩余部分在另一个branch2上开发"><a href="#3-git-将当前branch1的一部分抽出merge-剩余部分在另一个branch2上开发" class="headerlink" title="3. git 将当前branch1的一部分抽出merge 剩余部分在另一个branch2上开发"></a>3. git 将当前branch1的一部分抽出merge 剩余部分在另一个branch2上开发</h3></div>
+<p>1.切换回master<br>2.在master上创建一个新的branch2作为继续开发的branch<br>3.在branch2上merge branch1<br>4.将branch1 返回到想merge的范围，然后强制push回滚 之后merge<br>5.在branch2 上进行后续开发</p>
+<hr>
+<div class="alert info no-icon"><h3 id="4-Git-撤销修改"><a href="#4-Git-撤销修改" class="headerlink" title="4. Git 撤销修改"></a>4. Git 撤销修改</h3></div>
+<p>1.本地修改了一堆文件(并没有使用git add到暂存区)，想放弃修改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -- filename</span><br></pre></td></tr></table></figure></p>
+<p>2.撤销所有文件/文件夹的修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout .</span><br></pre></td></tr></table></figure></p>
+<p>3.本地新增了一堆文件(并没有git add到暂存区)，想放弃修改。<br>  单个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm filename / rm dir -rf</span><br></pre></td></tr></table></figure></p>
+<p>  所有文件/文件夹：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clean -xdf</span><br></pre></td></tr></table></figure></p>
+<p>4.本地修改/新增了一堆文件，已经git add到暂存区，想放弃修改。<br>  单个文件/文件夹：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD filename</span><br></pre></td></tr></table></figure></p>
+<p>  所有文件/文件夹：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD .</span><br></pre></td></tr></table></figure></p>
+<p>5.本地通过git add &amp; git commit 之后，想要撤销此次commit<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset commit_id</span><br></pre></td></tr></table></figure></p>
+<hr>
+<div class="alert info no-icon"><h3 id="5-git-将当前的branch的commit移动到另一个新的branch"><a href="#5-git-将当前的branch的commit移动到另一个新的branch" class="headerlink" title="5. git 将当前的branch的commit移动到另一个新的branch"></a>5. git 将当前的branch的commit移动到另一个新的branch</h3></div>
+<p>git cherry-pick可以理解为”挑拣”提交，它会获取某一个分支的单笔提交，并作为一个新的提交引入到你当前分支上。 当我们需要在本地合入其他分支的提交时，如果我们不想对整个分支进行合并，而是只想将某一次提交合入到本地当前分支上，那么就要使用git cherry-pick了。</p>
+<p>查看你需要的commit，然后切换到master上建立新分支。<br>一个commit的情况下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick 版本号</span><br></pre></td></tr></table></figure></p>
+<p>复数commit的情况下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick [起点版本号]..[终点版本号]</span><br></pre></td></tr></table></figure></p>
+<p>终止cherry-pick<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick --abort</span><br></pre></td></tr></table></figure></p>
+<p>如果发生conflict则需要解决冲突并commit。复数的情况下利用下面的comment查看状态并继续cheery-pick<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">git cherry-pick --continue</span><br></pre></td></tr></table></figure></p>
+<p>最后成功后git push到新分支便可以获得所需commit（不是新分支的情况下也适用。）</p>
+<hr>
+<div class="alert info no-icon"><h3 id="6-git删除分支"><a href="#6-git删除分支" class="headerlink" title="6. git删除分支"></a>6. git删除分支</h3></div>
+<h5 id="删除已经push的远程分支"><a href="#删除已经push的远程分支" class="headerlink" title="删除已经push的远程分支"></a>删除已经push的远程分支</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch -r -d origin/branch-name</span><br><span class="line">git push origin :branch-name</span><br></pre></td></tr></table></figure>
+<p>但是本地查看branch还是能看到删除的分支。利用下面的命令行可删除远程仓库不存在的分支。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote prune origin</span><br></pre></td></tr></table></figure></p>
+<h5 id="删除本地分支"><a href="#删除本地分支" class="headerlink" title="删除本地分支"></a>删除本地分支</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d</span><br></pre></td></tr></table></figure>
+<hr>
+<div class="alert info no-icon"><h3 id="7-出现错误-fatal-remote-origin-already-exists"><a href="#7-出现错误-fatal-remote-origin-already-exists" class="headerlink" title="7. 出现错误 fatal: remote origin already exists"></a>7. 出现错误 fatal: remote origin already exists</h3></div>
+<p>当要把本地文件夹上传到git时要执行下面的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin 〜</span><br></pre></td></tr></table></figure></p>
+<p>但是有时会出现<span class="highlight-text danger">fatal: remote origin already exists.</span>的错误信息，<br>此时需要使用git remote rm origin删除origin，然后再次上传即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git remote rm origin</span><br><span class="line">$ git remote add origin git@github.com:user_name/repository_name.git</span><br><span class="line">$ git push -u origin master</span><br></pre></td></tr></table></figure></p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Git/">Git</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/10/28/IconFont/" data-tooltip="关于Icon Font" aria-label="PREVIOUS: 关于Icon Font">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/10/20/关于CSS继承/" data-tooltip="关于CSS继承" aria-label="NEXT: 关于CSS继承">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2018/10/23/Git Tip/" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2018/10/23/Git Tip/" title="Share on Twitter">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2018/10/23/Git Tip/" title="Share on Google+">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kisky3.github.io/2018/10/23/Git Tip/&amp;title=Git Tip" title="Share on QQ">
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2019 Xiang Yu (向 宇). All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/10/28/IconFont/" data-tooltip="关于Icon Font" aria-label="PREVIOUS: 关于Icon Font">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/10/20/关于CSS继承/" data-tooltip="关于CSS继承" aria-label="NEXT: 关于CSS继承">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2018/10/23/Git Tip/" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2018/10/23/Git Tip/" title="Share on Twitter">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2018/10/23/Git Tip/" title="Share on Google+">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kisky3.github.io/2018/10/23/Git Tip/&amp;title=Git Tip" title="Share on QQ">
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <i id="btn-close-shareoptions" class="fa fa-times"></i>
+    <ul class="share-options">
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2018/10/23/Git Tip/">
+                    <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2018/10/23/Git Tip/">
+                    <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2018/10/23/Git Tip/">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                </a>
+            </li>
+        
+            
+            
+            <li class="share-option">
+                <a class="share-option-btn" target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=https://kisky3.github.io/2018/10/23/Git Tip/&amp;title=Git Tip">
+                    <i class="fab fa-qq" aria-hidden="true"></i><span>Share on QQ</span>
+                </a>
+            </li>
+        
+    </ul>
+</div>
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/cat.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu (向 宇)</h4>
+        
+            <div id="about-card-bio"><p>Hello Programming,Hello World</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end Engineer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/images.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-vufjrm3fmbuttogo1hxuu0w9w0sesk5iyysjuguc2hdhufot9szxg8twijry.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+    </body>
+</html>
