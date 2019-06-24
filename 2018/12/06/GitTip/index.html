@@ -17,19 +17,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg"},"articleBody":"1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」\n\n输入以下代码后再进行修改，然后再push就好 （本地做的修改会不见 修改多的时候不建议！)\n12git fetch origingit reset --hard FETCH_HEAD\n\n\n\n2. git本地版本回退与远端版本回退\n\n本地回滚1.在Github上或者下面的命令行查看想回退版本的版本号。\n 1git reflog\n\n2.接着回退版本\n1git reset --hard *****(版本号)\n\n远程回滚方法一：如果错误提交已经推送到自己的远程分支了，那么就需要回滚远程分支了。 以下方法只能在自己一人的branch下使用。强制回滚会消除别人提交的修改。慎用！\n\n首先回退本地分支步骤参见本地回滚\n\n强制推送到远程分支\n\n\n1git push -f *****(你的分支名)\n\n方法二：git revert 命令意思是撤销某次提交。它会产生一个新的提交，虽然代码回退了，但是版本依然是向前的，所以，当你用revert回退之后，所有人pull之后，他们的代码也自动的回退了。如果使用 revert 撤销的不是最近一次提交，那么一定会有代码冲突，需要你合并代码，合并代码只需要把当前的代码全部去掉，保留之前版本的代码就可以了.撤销最近一次提交\n1git revert HEAD\n\n撤销上上次提交\n1git revert HEAD～1\n\n撤销这次提交\n1git revert *****(版本号)\n\n\n\n3. git 将当前branch1的一部分抽出merge 剩余部分在另一个branch2上开发\n\n\n切换回master\n在master上创建一个新的branch2作为继续开发的branch\n在branch2上merge branch1\n将branch1 返回到想merge的范围，然后强制push回滚 之后merge\n在branch2 上进行后续开发\n\n\n\n4. Git 撤销修改\n1.本地修改了一堆文件(并没有使用git add到暂存区)，想放弃修改。\n1git checkout -- filename\n\n2.撤销所有文件/文件夹的修改\n1git checkout .\n\n3.本地新增了一堆文件(并没有git add到暂存区)，想放弃修改。【单个文件】\n1rm filename / rm dir -rf\n\n【所有文件/文件夹：】\n1git clean -xdf\n\n4.本地修改/新增了一堆文件，已经git add到暂存区，想放弃修改。【单个文件/文件夹：】\n1git reset HEAD filename\n\n【所有文件/文件夹：】\n1git reset HEAD .\n\n5.本地通过git add &amp; git commit 之后，想要撤销此次commit\n1git reset commit_id\n\n\n\n5. git 将当前的branch的commit移动到另一个新的branch\n\ngit cherry-pick可以理解为”挑拣”提交，它会获取某一个分支的单笔提交，并作为一个新的提交引入到你当前分支上。 当我们需要在本地合入其他分支的提交时，如果我们不想对整个分支进行合并，而是只想将某一次提交合入到本地当前分支上，那么就要使用git cherry-pick了。\n查看你需要的commit，然后切换到master上建立新分支。\n一个commit的情况下1git cherry-pick 版本号\n\n复数commit的情况下1git cherry-pick [起点版本号]..[终点版本号]\n\n终止cherry-pick1git cherry-pick --abort\n\n如果发生conflict则需要解决冲突并commit。复数的情况下利用下面的comment查看状态并继续cheery-pick\n12git statusgit cherry-pick --continue\n\n最后成功后git push到新分支便可以获得所需commit（不是新分支的情况下也适用。）\n\n\n6. git删除分支\n\n删除已经push的远程分支12git branch -r -d origin/branch-namegit push origin :branch-name\n\n但是本地查看branch还是能看到删除的分支。利用下面的命令行可删除远程仓库不存在的分支。\n1git remote prune origin\n\n删除本地分支1git branch -d\n\n\n\n7. 出现错误 fatal: remote origin already exists\n\n当要把本地文件夹上传到git时要执行下面的代码：\n1git remote add origin 〜\n\n但是有时会出现fatal: remote origin already exists.的错误信息，此时需要使用git remote rm origin删除origin，然后再次上传即可\n123$ git remote rm origin$ git remote add origin git@github.com:user_name/repository_name.git$ git push -u origin master\n\n","dateCreated":"2018-12-06T18:28:52+09:00","dateModified":"2019-06-24T19:17:23+09:00","datePublished":"2018-12-06T18:28:52+09:00","description":"1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」","headline":"GitTip","image":["20181206.jpg","20181206.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/12/06/GitTip/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg","logo":{"@type":"ImageObject","url":"pic.jpg"}},"url":"https://kisky3.github.io/2018/12/06/GitTip/","keywords":"Git","thumbnailUrl":"20181206.jpg"}</script>
-    <meta name="description" content="1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg"},"articleBody":"【TOP】ABOUT COMMON GIT TIPS\n\n\n\n1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」\n输入以下代码后再进行修改，然后再push就好 （本地做的修改会不见 修改多的时候不建议！)\n12git fetch origingit reset --hard FETCH_HEAD\n\n\n\n2. git本地版本回退与远端版本回退\n\n本地回滚1.在Github上或者下面的命令行查看想回退版本的版本号。\n 1git reflog\n\n2.接着回退版本\n1git reset --hard *****(版本号)\n\n远程回滚方法一：如果错误提交已经推送到自己的远程分支了，那么就需要回滚远程分支了。 以下方法只能在自己一人的branch下使用。强制回滚会消除别人提交的修改。慎用！\n\n首先回退本地分支步骤参见本地回滚\n\n强制推送到远程分支\n\n\n1git push -f *****(你的分支名)\n\n方法二：git revert 命令意思是撤销某次提交。它会产生一个新的提交，虽然代码回退了，但是版本依然是向前的，所以，当你用revert回退之后，所有人pull之后，他们的代码也自动的回退了。如果使用 revert 撤销的不是最近一次提交，那么一定会有代码冲突，需要你合并代码，合并代码只需要把当前的代码全部去掉，保留之前版本的代码就可以了.撤销最近一次提交\n1git revert HEAD\n\n撤销上上次提交\n1git revert HEAD～1\n\n撤销这次提交\n1git revert *****(版本号)\n\n\n\n3. git 将当前branch1的一部分抽出merge 剩余部分在另一个branch2上开发\n\n\n切换回master\n在master上创建一个新的branch2作为继续开发的branch\n在branch2上merge branch1\n将branch1 返回到想merge的范围，然后强制push回滚 之后merge\n在branch2 上进行后续开发\n\n\n\n4. Git 撤销修改\n1.本地修改了一堆文件(并没有使用git add到暂存区)，想放弃修改。\n1git checkout -- filename\n\n2.撤销所有文件/文件夹的修改\n1git checkout .\n\n3.本地新增了一堆文件(并没有git add到暂存区)，想放弃修改。【单个文件】\n1rm filename / rm dir -rf\n\n【所有文件/文件夹：】\n1git clean -xdf\n\n4.本地修改/新增了一堆文件，已经git add到暂存区，想放弃修改。【单个文件/文件夹：】\n1git reset HEAD filename\n\n【所有文件/文件夹：】\n1git reset HEAD .\n\n5.本地通过git add &amp; git commit 之后，想要撤销此次commit\n1git reset commit_id\n\n\n\n5. git 将当前的branch的commit移动到另一个新的branch\n\ngit cherry-pick可以理解为”挑拣”提交，它会获取某一个分支的单笔提交，并作为一个新的提交引入到你当前分支上。 当我们需要在本地合入其他分支的提交时，如果我们不想对整个分支进行合并，而是只想将某一次提交合入到本地当前分支上，那么就要使用git cherry-pick了。\n查看你需要的commit，然后切换到master上建立新分支。\n一个commit的情况下1git cherry-pick 版本号\n\n复数commit的情况下1git cherry-pick [起点版本号]..[终点版本号]\n\n终止cherry-pick1git cherry-pick --abort\n\n如果发生conflict则需要解决冲突并commit。复数的情况下利用下面的comment查看状态并继续cheery-pick\n12git statusgit cherry-pick --continue\n\n最后成功后git push到新分支便可以获得所需commit（不是新分支的情况下也适用。）\n\n\n6. git删除分支\n\n删除已经push的远程分支12git branch -r -d origin/branch-namegit push origin :branch-name\n\n但是本地查看branch还是能看到删除的分支。利用下面的命令行可删除远程仓库不存在的分支。\n1git remote prune origin\n\n删除本地分支1git branch -d\n\n\n\n7. 出现错误 fatal: remote origin already exists\n\n当要把本地文件夹上传到git时要执行下面的代码：\n1git remote add origin 〜\n\n但是有时会出现fatal: remote origin already exists.的错误信息，此时需要使用git remote rm origin删除origin，然后再次上传即可\n123$ git remote rm origin$ git remote add origin git@github.com:user_name/repository_name.git$ git push -u origin master\n\n","dateCreated":"2018-12-06T18:28:52+09:00","dateModified":"2019-06-24T19:24:34+09:00","datePublished":"2018-12-06T18:28:52+09:00","description":"【TOP】ABOUT COMMON GIT TIPS\n","headline":"GitTip","image":["none"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/12/06/GitTip/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg","logo":{"@type":"ImageObject","url":"pic.jpg"}},"url":"https://kisky3.github.io/2018/12/06/GitTip/","keywords":"Git","thumbnailUrl":"none"}</script>
+    <meta name="description" content="【TOP】ABOUT COMMON GIT TIPS">
 <meta name="keywords" content="Git">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="GitTip">
 <meta property="og:url" content="https://kisky3.github.io/2018/12/06/GitTip/index.html">
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
-<meta property="og:description" content="1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」">
+<meta property="og:description" content="【TOP】ABOUT COMMON GIT TIPS">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-06-24T10:17:23.453Z">
+<meta property="og:updated_time" content="2019-06-24T10:24:34.941Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="GitTip">
-<meta name="twitter:description" content="1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」">
+<meta name="twitter:description" content="【TOP】ABOUT COMMON GIT TIPS">
     
     
         
@@ -38,12 +38,9 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/pic.jpg"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2018/12/06/GitTip/20181206.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/12/06/GitTip/20181206.jpg" />
+        <meta property="og:image" content="https://kisky3.github.io/2018/12/06/GitTip/none"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/12/06/GitTip/none" />
     
-    
-        <meta property="og:image" content="https://kisky3.github.io/2018/12/06/GitTip/20181206.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/12/06/GitTip/20181206.jpg" />
     
     
     <!--STYLES-->
@@ -231,13 +228,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2018/12/06/GitTip/20181206.jpg');"
-             data-behavior="4">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             GitTip
@@ -262,37 +263,28 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="4"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <div class="alert info no-icon"><h3 id="1-git-pull时-「Error：The-following-untracked-working-tree-files-would-be-overwritten-by-merge-」"><a href="#1-git-pull时-「Error：The-following-untracked-working-tree-files-would-be-overwritten-by-merge-」" class="headerlink" title="1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」"></a>1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」</h3></div>
+            <div class="alert info no-icon"><h3 id="【TOP】ABOUT-COMMON-GIT-TIPS"><a href="#【TOP】ABOUT-COMMON-GIT-TIPS" class="headerlink" title="【TOP】ABOUT COMMON GIT TIPS"></a>【TOP】ABOUT COMMON GIT TIPS</h3></div>
+<hr>
 <a id="more"></a>
+
+<div class="alert success no-icon"><h4 id="1-git-pull时-「Error：The-following-untracked-working-tree-files-would-be-overwritten-by-merge-」"><a href="#1-git-pull时-「Error：The-following-untracked-working-tree-files-would-be-overwritten-by-merge-」" class="headerlink" title="1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」"></a>1. git pull时 「Error：The following untracked working tree files would be overwritten by merge:」</h4></div>
 <p>输入以下代码后再进行修改，然后再push就好 （本地做的修改会不见 修改多的时候不建议！)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin</span><br><span class="line">git reset --hard FETCH_HEAD</span><br></pre></td></tr></table></figure>
 
 <hr>
 <br>
-<div class="alert success no-icon"><h3 id="2-git本地版本回退与远端版本回退"><a href="#2-git本地版本回退与远端版本回退" class="headerlink" title="2. git本地版本回退与远端版本回退"></a>2. git本地版本回退与远端版本回退</h3></div>
+<div class="alert success no-icon"><h4 id="2-git本地版本回退与远端版本回退"><a href="#2-git本地版本回退与远端版本回退" class="headerlink" title="2. git本地版本回退与远端版本回退"></a>2. git本地版本回退与远端版本回退</h4></div>
 
-<h4 id="本地回滚"><a href="#本地回滚" class="headerlink" title="本地回滚"></a>本地回滚</h4><p>1.在Github上或者下面的命令行查看想回退版本的版本号。</p>
+<h5 id="本地回滚"><a href="#本地回滚" class="headerlink" title="本地回滚"></a>本地回滚</h5><p>1.在Github上或者下面的命令行查看想回退版本的版本号。</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure>
 
 <p>2.接着回退版本</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard *****(版本号)</span><br></pre></td></tr></table></figure>
 
-<h4 id="远程回滚"><a href="#远程回滚" class="headerlink" title="远程回滚"></a>远程回滚</h4><h5 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h5><p>如果错误提交已经推送到自己的远程分支了，那么就需要回滚远程分支了。 以下方法只能在自己一人的branch下使用。<br>强制回滚会消除别人提交的修改。慎用！</p>
+<h5 id="远程回滚"><a href="#远程回滚" class="headerlink" title="远程回滚"></a>远程回滚</h5><h6 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h6><p>如果错误提交已经推送到自己的远程分支了，那么就需要回滚远程分支了。 以下方法只能在自己一人的branch下使用。<br>强制回滚会消除别人提交的修改。慎用！</p>
 <ol>
 <li><p>首先回退本地分支步骤参见本地回滚</p>
 </li>
@@ -301,7 +293,7 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -f *****(你的分支名)</span><br></pre></td></tr></table></figure>
 
-<h5 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h5><p>git revert 命令意思是撤销某次提交。<br>它会产生一个新的提交，虽然代码回退了，但是版本依然是向前的，所以，当你用revert回退之后，所有人pull之后，他们的代码也自动的回退了。<br>如果使用 revert 撤销的不是最近一次提交，那么一定会有代码冲突，需要你合并代码，合并代码只需要把当前的代码全部去掉，保留之前版本的代码就可以了.<br>撤销最近一次提交</p>
+<h6 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h6><p>git revert 命令意思是撤销某次提交。<br>它会产生一个新的提交，虽然代码回退了，但是版本依然是向前的，所以，当你用revert回退之后，所有人pull之后，他们的代码也自动的回退了。<br>如果使用 revert 撤销的不是最近一次提交，那么一定会有代码冲突，需要你合并代码，合并代码只需要把当前的代码全部去掉，保留之前版本的代码就可以了.<br>撤销最近一次提交</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br></pre></td></tr></table></figure>
 
 <p>撤销上上次提交</p>
@@ -312,7 +304,7 @@
 
 <hr>
 <br>
-<div class="alert info no-icon"><h3 id="3-git-将当前branch1的一部分抽出merge-剩余部分在另一个branch2上开发"><a href="#3-git-将当前branch1的一部分抽出merge-剩余部分在另一个branch2上开发" class="headerlink" title="3. git 将当前branch1的一部分抽出merge 剩余部分在另一个branch2上开发"></a>3. git 将当前branch1的一部分抽出merge 剩余部分在另一个branch2上开发</h3></div>
+<div class="alert success no-icon"><h4 id="3-git-将当前branch1的一部分抽出merge-剩余部分在另一个branch2上开发"><a href="#3-git-将当前branch1的一部分抽出merge-剩余部分在另一个branch2上开发" class="headerlink" title="3. git 将当前branch1的一部分抽出merge 剩余部分在另一个branch2上开发"></a>3. git 将当前branch1的一部分抽出merge 剩余部分在另一个branch2上开发</h4></div>
 
 <ol>
 <li>切换回master</li>
@@ -347,15 +339,15 @@
 
 <hr>
 <br>
-<div class="alert info no-icon"><h3 id="5-git-将当前的branch的commit移动到另一个新的branch"><a href="#5-git-将当前的branch的commit移动到另一个新的branch" class="headerlink" title="5. git 将当前的branch的commit移动到另一个新的branch"></a>5. git 将当前的branch的commit移动到另一个新的branch</h3></div>
+<div class="alert success no-icon"><h4 id="5-git-将当前的branch的commit移动到另一个新的branch"><a href="#5-git-将当前的branch的commit移动到另一个新的branch" class="headerlink" title="5. git 将当前的branch的commit移动到另一个新的branch"></a>5. git 将当前的branch的commit移动到另一个新的branch</h4></div>
 
 <p>git cherry-pick可以理解为”挑拣”提交，它会获取某一个分支的单笔提交，并作为一个新的提交引入到你当前分支上。 当我们需要在本地合入其他分支的提交时，如果我们不想对整个分支进行合并，而是只想将某一次提交合入到本地当前分支上，那么就要使用git cherry-pick了。</p>
 <p>查看你需要的commit，然后切换到master上建立新分支。</p>
-<h5 id="一个commit的情况下"><a href="#一个commit的情况下" class="headerlink" title="一个commit的情况下"></a>一个commit的情况下</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick 版本号</span><br></pre></td></tr></table></figure>
+<h6 id="一个commit的情况下"><a href="#一个commit的情况下" class="headerlink" title="一个commit的情况下"></a>一个commit的情况下</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick 版本号</span><br></pre></td></tr></table></figure>
 
-<h5 id="复数commit的情况下"><a href="#复数commit的情况下" class="headerlink" title="复数commit的情况下"></a>复数commit的情况下</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick [起点版本号]..[终点版本号]</span><br></pre></td></tr></table></figure>
+<h6 id="复数commit的情况下"><a href="#复数commit的情况下" class="headerlink" title="复数commit的情况下"></a>复数commit的情况下</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick [起点版本号]..[终点版本号]</span><br></pre></td></tr></table></figure>
 
-<h5 id="终止cherry-pick"><a href="#终止cherry-pick" class="headerlink" title="终止cherry-pick"></a>终止cherry-pick</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick --abort</span><br></pre></td></tr></table></figure>
+<h6 id="终止cherry-pick"><a href="#终止cherry-pick" class="headerlink" title="终止cherry-pick"></a>终止cherry-pick</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick --abort</span><br></pre></td></tr></table></figure>
 
 <p>如果发生conflict则需要解决冲突并commit。复数的情况下利用下面的comment查看状态并继续cheery-pick</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">git cherry-pick --continue</span><br></pre></td></tr></table></figure>
@@ -363,18 +355,18 @@
 <p>最后成功后git push到新分支便可以获得所需commit（不是新分支的情况下也适用。）</p>
 <hr>
 <br>
-<div class="alert success no-icon"><h3 id="6-git删除分支"><a href="#6-git删除分支" class="headerlink" title="6. git删除分支"></a>6. git删除分支</h3></div>
+<div class="alert success no-icon"><h4 id="6-git删除分支"><a href="#6-git删除分支" class="headerlink" title="6. git删除分支"></a>6. git删除分支</h4></div>
 
-<h5 id="删除已经push的远程分支"><a href="#删除已经push的远程分支" class="headerlink" title="删除已经push的远程分支"></a>删除已经push的远程分支</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch -r -d origin/branch-name</span><br><span class="line">git push origin :branch-name</span><br></pre></td></tr></table></figure>
+<h6 id="删除已经push的远程分支"><a href="#删除已经push的远程分支" class="headerlink" title="删除已经push的远程分支"></a>删除已经push的远程分支</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch -r -d origin/branch-name</span><br><span class="line">git push origin :branch-name</span><br></pre></td></tr></table></figure>
 
 <p>但是本地查看branch还是能看到删除的分支。利用下面的命令行可删除远程仓库不存在的分支。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote prune origin</span><br></pre></td></tr></table></figure>
 
-<h5 id="删除本地分支"><a href="#删除本地分支" class="headerlink" title="删除本地分支"></a>删除本地分支</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d</span><br></pre></td></tr></table></figure>
+<h6 id="删除本地分支"><a href="#删除本地分支" class="headerlink" title="删除本地分支"></a>删除本地分支</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d</span><br></pre></td></tr></table></figure>
 
 <hr>
 <br>
-<div class="alert success no-icon"><h3 id="7-出现错误-fatal-remote-origin-already-exists"><a href="#7-出现错误-fatal-remote-origin-already-exists" class="headerlink" title="7. 出现错误 fatal: remote origin already exists"></a>7. 出现错误 fatal: remote origin already exists</h3></div>
+<div class="alert success no-icon"><h4 id="7-出现错误-fatal-remote-origin-already-exists"><a href="#7-出现错误-fatal-remote-origin-already-exists" class="headerlink" title="7. 出现错误 fatal: remote origin already exists"></a>7. 出现错误 fatal: remote origin already exists</h4></div>
 
 <p>当要把本地文件夹上传到git时要执行下面的代码：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin 〜</span><br></pre></td></tr></table></figure>
