@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Xiang Yu&#39;s Blog">
-    <title>IconFont - Xiang Yu&#39;s Blog</title>
+    <title>关于CSS浮动 - Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,25 +17,25 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg"},"articleBody":"Icon Font简而言之也就是把字体做成图标\nIcon Font的原理\n\n例：\n123456&lt;p&gt;Hello &amp;#x9965; &amp;#x4eba;&amp;#x8c37;&lt;/p&gt;&lt;style&gt;p&#123;  font-family: serif;&#125;&lt;/style&gt;\n\n这里把「饥人谷」这几个字改为 unicode 编码，此时页面上仍然能以serif 字体展示「饥人谷」三个字。使用浏览器打开页面时，浏览器会读取 HTML 文件进行解析渲染。当读到「饥人谷」三个字时会转换成对应的 unicode码（可以认为是世界上任意一种文字的特定编号）。再根据HTML 里设置的 font-family （如果没设置则使用浏览器默认设置）去查找电脑里（如果有自定义字体@font-face ，则加载对应字体文件）对应字体的字体文件。找到文件后根据 unicode 码去查找绘制外形，找到后绘制到页面上。 所以对于第二个范例， 「&amp;#9965」是「饥」的 unicede 码，所以用户最终也能看到serf字体样式的「饥」字。\n\nIcon Font生成和使用步骤1.制作字体文件这个需要设计师把字体文件做好。一般不属于前端工作范畴，在这里掠过不讲。\n2.声明font-family\n使用本地链接\n使用第三方链接\n\n3.使用font-family\n使用HTML实体\n使用CSS：before\n\n\n最常用的Icon Font生成步骤1. 点击打开阿里巴巴的免费字体工具网站2. 在搜索栏里搜索自己需要的图标（英文）\n\n3. 用Github登陆后选择自己中意的图标，添加入库\n\n4. 可以选择添加至项目或者直接下载至本地下图的search下的&amp;#xe71d为HTML实体，可以用实体显示但是不便记忆所以不推荐也可以使用CSS before 的content加上/ 导出icon\n1.icon-search:before &#123; content: \"\\e71d\"; &#125;\n\n\n\n5. 下载至本地后解压为了浏览器兼容，建议复制后缀名为.eot,svg,ttf和woff的4个文件到自己的目录下\n\n\n6. 复制iconfont.css的内容到自己的页面，并直接添加span和class引用生产的字体文件\n\n7. 保存并查看","dateCreated":"2018-12-28T19:38:46+09:00","dateModified":"2019-06-24T23:17:42+09:00","datePublished":"2018-12-28T19:38:46+09:00","description":"Icon Font简而言之也就是把字体做成图标\nIcon Font的原理","headline":"IconFont","image":["20181228.jpg","20181228.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/12/28/IconFont/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg","logo":{"@type":"ImageObject","url":"pic.jpg"}},"url":"https://kisky3.github.io/2018/12/28/IconFont/","keywords":"CSS, IconFont","thumbnailUrl":"20181228.jpg"}</script>
-    <meta name="description" content="Icon Font简而言之也就是把字体做成图标 Icon Font的原理">
-<meta name="keywords" content="CSS,IconFont">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg"},"articleBody":"浮动元素的特征一个浮动元素会向左或向右移动，直到其外边（outer edge）挨到包含块边沿或者另\n\n一个浮动盒的外边。如果存在行盒，浮动盒的外top会与当前行盒的top对齐。如果没有足够的水平空间来浮动，它会向下移动，直到空间合适或者不会再出现其他浮动了。块级元素设置浮动后会呈现出inline-block的感觉，宽度会收缩。行内元素设置浮动后会呈现块级的特性。比如可以设置宽高margin等。\n\n浮动元素的效果及对其他元素的影响下面为浮动最简单的一个左浮动效果。有3个box，分别向左浮动。可以看到box原来为块级元素，本应该单独占据一行。但是设置左浮动之后，脱离文档流，依次向左移动。由于没有足够空间来让box3移动，便到了下一行。\n\n如果改为右浮动的话，效果将变成box2，box1，box3。\n\n\n这个效果是因为浏览器渲染时，从上到下渲染代码。第一个是box1，便向右浮动，直至碰到外边缘便停止下来。第二个是box2接着向右浮动，直至碰到了box1的外边缘便停止浮动。最后是box3，向右浮动时没有足够空间便移到了下一行。\n有时浮动还会出现如下图卡住的现象。这是因为box3在向左浮动时，第一个碰到的是box1的外边缘，便停下来卡住了。\n\n\n当浮动元素与普通元素和文本有交集的时候会是什么情况呢。我们在box1下面加一个文本p作为文字，p背景色设置为黄色作为普通元素。其余box元素不变向左浮动。最终呈现效果如下图:\n\n\n可以得出结论，box1把普通元素p遮挡住了，普通元素看不见浮动元素。但是普通元素内的文字是可以看到浮动元素的，所以就会围绕浮动元素显示。\n\n\n关于如何清除浮动clear: left/clear right定义：要求该盒的top border边位于源文档中在此之前的元素形成的所有左/右浮动盒的bottom外边下方。\n也就是说当我们给一个元素设置了clear:left之后，它的文档流上方如果有左浮动元素，它就要位于该左浮动元素的下方。如果前面没有左浮动元素则不起效果。clear:right也同理。还有clear：both 就是该元素之前有左浮动元素或者右浮动元素都生效。\n方法一在浮动元素的最后加上一个普通元素，设置clear:left,达到撑开容器的效果。\n\n\n方法二给包含浮动元素的容器设置一个class伪元素来清除浮动。相当于在最下方添加了一个内容为空的块级元素。\n12345.clearfix::after &#123; content:'';display: block;clear: both;&#125;\n\n","dateCreated":"2018-12-30T23:00:12+09:00","dateModified":"2019-06-24T23:16:42+09:00","datePublished":"2018-12-30T23:00:12+09:00","description":"浮动元素的特征一个浮动元素会向左或向右移动，直到其外边（outer edge）挨到包含块边沿或者另","headline":"关于CSS浮动","image":["20181230.png","20181228.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/12/30/关于CSS浮动/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg","logo":{"@type":"ImageObject","url":"pic.jpg"}},"url":"https://kisky3.github.io/2018/12/30/关于CSS浮动/","keywords":"CSS","thumbnailUrl":"20181230.png"}</script>
+    <meta name="description" content="浮动元素的特征一个浮动元素会向左或向右移动，直到其外边（outer edge）挨到包含块边沿或者另">
+<meta name="keywords" content="CSS">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="IconFont">
-<meta property="og:url" content="https://kisky3.github.io/2018/12/28/IconFont/index.html">
+<meta property="og:title" content="关于CSS浮动">
+<meta property="og:url" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/index.html">
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
-<meta property="og:description" content="Icon Font简而言之也就是把字体做成图标 Icon Font的原理">
+<meta property="og:description" content="浮动元素的特征一个浮动元素会向左或向右移动，直到其外边（outer edge）挨到包含块边沿或者另">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://kisky3.github.io/2018/12/28/IconFont/1.png">
-<meta property="og:image" content="https://kisky3.github.io/2018/12/28/IconFont/2.png">
-<meta property="og:image" content="https://kisky3.github.io/2018/12/28/IconFont/3.png">
-<meta property="og:image" content="https://kisky3.github.io/2018/12/28/IconFont/4.png">
-<meta property="og:image" content="https://kisky3.github.io/2018/12/28/IconFont/5.png">
-<meta property="og:updated_time" content="2019-06-24T14:17:42.675Z">
+<meta property="og:image" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/3.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/4.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/5.png">
+<meta property="og:updated_time" content="2019-06-24T14:16:42.664Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IconFont">
-<meta name="twitter:description" content="Icon Font简而言之也就是把字体做成图标 Icon Font的原理">
-<meta name="twitter:image" content="https://kisky3.github.io/2018/12/28/IconFont/1.png">
+<meta name="twitter:title" content="关于CSS浮动">
+<meta name="twitter:description" content="浮动元素的特征一个浮动元素会向左或向右移动，直到其外边（outer edge）挨到包含块边沿或者另">
+<meta name="twitter:image" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/1.png">
     
     
         
@@ -44,12 +44,12 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/pic.jpg"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2018/12/28/IconFont/20181228.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/12/28/IconFont/20181228.jpg" />
+        <meta property="og:image" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/20181230.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/20181230.png" />
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2018/12/28/IconFont/20181228.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/12/28/IconFont/20181228.jpg" />
+        <meta property="og:image" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/20181228.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/12/30/关于CSS浮动/20181228.png" />
     
     
     <!--STYLES-->
@@ -240,20 +240,20 @@
         <div class="post-header-cover
                     text-left
                     post-header-cover--partial"
-             style="background-image:url('/2018/12/28/IconFont/20181228.jpg');"
+             style="background-image:url('/2018/12/30/关于CSS浮动/20181228.png');"
              data-behavior="4">
             
                 <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            IconFont
+            关于CSS浮动
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2018-12-28T19:38:46+09:00">
+    <time datetime="2018-12-30T23:00:12+09:00">
 	
-		    Dec 28, 2018
+		    Dec 30, 2018
     	
     </time>
     
@@ -283,39 +283,34 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>Icon Font简而言之也就是把字体做成图标</p>
-<h3 id="Icon-Font的原理"><a href="#Icon-Font的原理" class="headerlink" title="Icon Font的原理"></a>Icon Font的原理</h3><a id="more"></a>
-
-<p>例：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello &amp;#x9965; &amp;#x4eba;&amp;#x8c37;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">p&#123;</span><br><span class="line">  font-family: serif;</span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这里把「饥人谷」这几个字改为 unicode 编码，此时页面上仍然能以serif 字体展示「饥人谷」三个字。<br>使用浏览器打开页面时，浏览器会读取 HTML 文件进行解析渲染。当读到「饥人谷」三个字时会转换成对应的 unicode码（可以认为是世界上任意一种文字的特定编号）。再根据HTML 里设置的 font-family （如果没设置则使用浏览器默认设置）去查找电脑里（如果有自定义字体@font-face ，则加载对应字体文件）对应字体的字体文件。找到文件后根据 unicode 码去查找绘制外形，找到后绘制到页面上。 所以对于第二个范例， 「&amp;#9965」是「饥」的 unicede 码，所以用户最终也能看到serf字体样式的「饥」字。</p>
+            <h3 id="浮动元素的特征"><a href="#浮动元素的特征" class="headerlink" title="浮动元素的特征"></a>浮动元素的特征</h3><p>一个浮动元素会向左或向右移动，直到其外边（outer edge）挨到包含块边沿或者另</p>
+<a id="more"></a>
+<p>一个浮动盒的外边。<br>如果存在行盒，浮动盒的外top会与当前行盒的top对齐。<br>如果没有足够的水平空间来浮动，它会向下移动，直到空间合适或者不会再出现其他浮动了。<br>块级元素设置浮动后会呈现出inline-block的感觉，宽度会收缩。<br>行内元素设置浮动后会呈现块级的特性。比如可以设置宽高margin等。</p>
 <hr>
-<h3 id="Icon-Font生成和使用步骤"><a href="#Icon-Font生成和使用步骤" class="headerlink" title="Icon Font生成和使用步骤"></a>Icon Font生成和使用步骤</h3><h4 id="1-制作字体文件"><a href="#1-制作字体文件" class="headerlink" title="1.制作字体文件"></a>1.制作字体文件</h4><p>这个需要设计师把字体文件做好。一般不属于前端工作范畴，在这里掠过不讲。</p>
-<h4 id="2-声明font-family"><a href="#2-声明font-family" class="headerlink" title="2.声明font-family"></a>2.声明font-family</h4><ul>
-<li>使用本地链接</li>
-<li>使用第三方链接</li>
-</ul>
-<h4 id="3-使用font-family"><a href="#3-使用font-family" class="headerlink" title="3.使用font-family"></a>3.使用font-family</h4><ul>
-<li>使用HTML实体</li>
-<li>使用CSS：before</li>
-</ul>
-<hr>
-<h3 id="最常用的Icon-Font生成步骤"><a href="#最常用的Icon-Font生成步骤" class="headerlink" title="最常用的Icon Font生成步骤"></a>最常用的Icon Font生成步骤</h3><h4 id="1-点击打开阿里巴巴的免费字体工具网站"><a href="#1-点击打开阿里巴巴的免费字体工具网站" class="headerlink" title="1. 点击打开阿里巴巴的免费字体工具网站"></a>1. 点击打开<a href="https://www.iconfont.cn/" target="_blank" rel="noopener">阿里巴巴的免费字体工具网站</a></h4><h4 id="2-在搜索栏里搜索自己需要的图标（英文）"><a href="#2-在搜索栏里搜索自己需要的图标（英文）" class="headerlink" title="2. 在搜索栏里搜索自己需要的图标（英文）"></a>2. 在搜索栏里搜索自己需要的图标（英文）</h4><img src="./1.png" style="width:500px">
+<h3 id="浮动元素的效果及对其他元素的影响"><a href="#浮动元素的效果及对其他元素的影响" class="headerlink" title="浮动元素的效果及对其他元素的影响"></a>浮动元素的效果及对其他元素的影响</h3><p>下面为浮动最简单的一个左浮动效果。<br>有3个box，分别向左浮动。<br>可以看到box原来为块级元素，本应该单独占据一行。但是设置左浮动之后，脱离文档流，依次向左移动。由于没有足够空间来让box3移动，便到了下一行。<br><img src="./1.png" style="width:500px"></p>
+<br>
+如果改为右浮动的话，效果将变成box2，box1，box3。
+<img src="./2.png" style="width:500px">
 
-<h4 id="3-用Github登陆后选择自己中意的图标，添加入库"><a href="#3-用Github登陆后选择自己中意的图标，添加入库" class="headerlink" title="3. 用Github登陆后选择自己中意的图标，添加入库"></a>3. 用Github登陆后选择自己中意的图标，添加入库</h4><img src="./2.png" style="width:500px">
-
-<h4 id="4-可以选择添加至项目或者直接下载至本地"><a href="#4-可以选择添加至项目或者直接下载至本地" class="headerlink" title="4. 可以选择添加至项目或者直接下载至本地"></a>4. 可以选择添加至项目或者直接下载至本地</h4><p>下图的search下的&amp;#xe71d为HTML实体，可以用实体显示但是不便记忆所以不推荐<br>也可以使用CSS before 的content加上/ 导出icon</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.icon-search</span><span class="selector-pseudo">:before</span> &#123; <span class="attribute">content</span>: <span class="string">"\e71d"</span>; &#125;</span><br></pre></td></tr></table></figure>
-
+<p>这个效果是因为浏览器渲染时，从上到下渲染代码。第一个是box1，便向右浮动，直至碰到外边缘便停止下来。第二个是box2接着向右浮动，直至碰到了box1的外边缘便停止浮动。最后是box3，向右浮动时没有足够空间便移到了下一行。</p>
+<p>有时浮动还会出现如下图卡住的现象。<br>这是因为box3在向左浮动时，第一个碰到的是box1的外边缘，便停下来卡住了。</p>
 <img src="./3.png" style="width:500px">
 
-<h4 id="5-下载至本地后解压"><a href="#5-下载至本地后解压" class="headerlink" title="5. 下载至本地后解压"></a>5. 下载至本地后解压</h4><p>为了浏览器兼容，建议复制后缀名为.eot,svg,ttf和woff的4个文件到自己的目录下</p>
+<p>当浮动元素与普通元素和文本有交集的时候会是什么情况呢。<br>我们在box1下面加一个文本p作为文字，p背景色设置为黄色作为普通元素。其余box元素不变向左浮动。最终呈现效果如下图:</p>
 <img src="./4.png" style="width:500px">
+<br>
+可以得出结论，box1把普通元素p遮挡住了，普通元素看不见浮动元素。但是普通元素内的文字是可以看到浮动元素的，所以就会围绕浮动元素显示。
 
-<h4 id="6-复制iconfont-css的内容到自己的页面，并直接添加span和class引用生产的字体文件"><a href="#6-复制iconfont-css的内容到自己的页面，并直接添加span和class引用生产的字体文件" class="headerlink" title="6. 复制iconfont.css的内容到自己的页面，并直接添加span和class引用生产的字体文件"></a>6. 复制iconfont.css的内容到自己的页面，并直接添加span和class引用生产的字体文件</h4><img src="./5.png" style="width:500px">
+<hr>
+<h3 id="关于如何清除浮动"><a href="#关于如何清除浮动" class="headerlink" title="关于如何清除浮动"></a>关于如何清除浮动</h3><h5 id="clear-left-clear-right定义："><a href="#clear-left-clear-right定义：" class="headerlink" title="clear: left/clear right定义："></a>clear: left/clear right定义：</h5><p>要求该盒的top border边位于源文档中在此之前的元素形成的所有左/右浮动盒的bottom外边下方。</p>
+<p>也就是说当我们给一个元素设置了clear:left之后，它的文档流上方如果有左浮动元素，它就要位于该左浮动元素的下方。如果前面没有左浮动元素则不起效果。<br>clear:right也同理。<br>还有clear：both 就是该元素之前有左浮动元素或者右浮动元素都生效。</p>
+<h5 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h5><p>在浮动元素的最后加上一个普通元素，设置clear:left,达到撑开容器的效果。</p>
+<img src="./5.png" style="width:500px">
 
-<h4 id="7-保存并查看"><a href="#7-保存并查看" class="headerlink" title="7. 保存并查看"></a>7. 保存并查看</h4>
+<h5 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h5><p>给包含浮动元素的容器设置一个class伪元素来清除浮动。相当于在最下方添加了一个内容为空的块级元素。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line"> <span class="attribute">content</span>:<span class="string">''</span>;</span><br><span class="line"><span class="attribute">display</span>: block;</span><br><span class="line"><span class="attribute">clear</span>: both;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
             
 
         </div>
@@ -325,7 +320,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/CSS/">CSS</a> <a class="tag tag--primary tag--small t-link" href="/tags/IconFont/">IconFont</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/CSS/">CSS</a>
 
             </div>
         
@@ -335,8 +330,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/30/关于CSS浮动/" data-tooltip="关于CSS浮动" aria-label="PREVIOUS: 关于CSS浮动">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -345,7 +339,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/06/GitTip/" data-tooltip="【TOP】GIT TIPS" aria-label="NEXT: 【TOP】GIT TIPS">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/28/IconFont/" data-tooltip="IconFont" aria-label="NEXT: IconFont">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -401,8 +395,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/30/关于CSS浮动/" data-tooltip="关于CSS浮动" aria-label="PREVIOUS: 关于CSS浮动">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -411,7 +404,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/06/GitTip/" data-tooltip="【TOP】GIT TIPS" aria-label="NEXT: 【TOP】GIT TIPS">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/12/28/IconFont/" data-tooltip="IconFont" aria-label="NEXT: IconFont">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
