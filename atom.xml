@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-06-25T12:29:23.817Z</updated>
+  <updated>2019-06-25T12:39:49.737Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于LocalStorage-cookie和session</title>
+    <link href="https://kisky3.github.io/2019/05/10/%E5%85%B3%E4%BA%8ELocalStorage-cookie%E5%92%8Csession/"/>
+    <id>https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/</id>
+    <published>2019-05-10T12:30:55.000Z</published>
+    <updated>2019-06-25T12:39:49.737Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>网页的application下的Storage里的Cookie里可以看到Cookie的信息。网站只要设计登陆功能就一定会用到Cookie。</p><a id="more"></a><p>Cookie可以把一些需要存储的信息存储在当前的页面下。</p><img src="./1.png" style="width:500px"><p>包括Name和Value等。Domain表示在哪个域下是生效的。Path表示是否有下级的Path。Expries表示生效时间。设置Cookie时会设置生效时间，过了该时间之后则会失效。</p><p>当输入URL时，服务器会发送响应头，里面包含Set-Cookie，便可以设定Cookie。</p><img src="./3.png" style="width:500px"><p>当Cookie被保存在浏览器之后，再次刷新网页时，因为Cookie已经存在，所以响应头上就不会再带有同样的Set-Cookie了。</p><p>当浏览器被种下Cookie时，之后浏览器向该域名发送请求，比如请求图片等时，请求头都会带上Cookie。</p><img src="./4.png" style="width:500px"><p>关于Cookie，综上：</p><img src="./5.png" style="width:500px"><hr><h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>当一个用户打开淘宝登陆后，刷新浏览器仍然显示登陆状态。服务器如何分辨这次发起请求的用户是刚才登陆过的用户呢。<br>用户没有登陆时，在地址栏输入URL向服务器发送请求时，服务器看到该URL发送的请求头并没有带上Cookie，便可以知道用户没有登陆，于是便在自己服务器里创建了一个对象（一串数据），这个对象里有一个随机id，这个对象就是session。在服务器向浏览器发送响应头的时候，加上了Set-Cookie，把id给set上，当用户再次打开该网站的时候，就有了这个Cookie。<br>当用户再次刷新页面的时候，请求头带上了这个Coolie，服务器通过接收到的id和当时存在的对象进行对比，得出是该用户再次访问了该页面。<br>可以认为session是结合Cookie实行的一种机制，用于识别用户的身份。<br>session对象可以存在服务器内存中，也可以保存在数据库中。</p><img src="./6.png" style="width:500px"><hr><h3 id="LocalStorage"><a href="#LocalStorage" class="headerlink" title="LocalStorage"></a>LocalStorage</h3><p>localStorage就是一个存数据的地方，将数据存到浏览器里。<br>特点是存储数据量大，并且不会失效。</p><img src="./2.png" style="width:500px"><p>LocalStorage对应一个key和value，可以存储很多的内容，并且没有过期的时效。</p><img src="./7.png" style="width:500px">]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;Cookie&quot;&gt;&lt;a href=&quot;#Cookie&quot; class=&quot;headerlink&quot; title=&quot;Cookie&quot;&gt;&lt;/a&gt;Cookie&lt;/h3&gt;&lt;p&gt;网页的application下的Storage里的Cookie里可以看到Cookie的信息。网站只要设计登陆功能就一定会用到Cookie。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="Session" scheme="https://kisky3.github.io/tags/Session/"/>
+    
+      <category term="LocalStorage" scheme="https://kisky3.github.io/tags/LocalStorage/"/>
+    
+      <category term="Cookie" scheme="https://kisky3.github.io/tags/Cookie/"/>
+    
+  </entry>
   
   <entry>
     <title>关于BOM对象</title>
@@ -437,28 +463,6 @@
     
     
       <category term="URL" scheme="https://kisky3.github.io/tags/URL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>常见浏览器及浏览器内核</title>
-    <link href="https://kisky3.github.io/2018/10/29/%E5%B8%B8%E8%A7%81%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%8A%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8/"/>
-    <id>https://kisky3.github.io/2018/10/29/常见浏览器及浏览器内核/</id>
-    <published>2018-10-29T10:42:04.000Z</published>
-    <updated>2019-06-24T13:57:03.389Z</updated>
-    
-    <content type="html"><![CDATA[<p>浏览器内核可以分为：渲染引擎(layout engineer)和JS引擎。</p><a id="more"></a><p>它负责：</p><ul><li>获取网页的HTML，XML，图像等内容</li><li>整理CSS讯息以及计算机网页的显示方式</li><li>然后会输出至显示器或打印机。</li></ul><h3 id="内核是什么"><a href="#内核是什么" class="headerlink" title="内核是什么"></a>内核是什么</h3><p>浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不相同。<br>所有的网页浏览器，电子邮件客户端以及其他需要编辑显示网络内容的应用程序都需要内核。JS引擎是解析Javascript语言，执行javascript语言来实现网页的动态效果。</p><p>最开始渲染引擎和JS引擎并没有很明确的区分，后来JS引擎越来越独立，内核就只倾向于只指渲染引擎。</p><hr><h3 id="内核的种类"><a href="#内核的种类" class="headerlink" title="内核的种类"></a>内核的种类</h3><p>内核的种类有很多，加上没什么人使用的非商业的免费内核，可能会有10多种，但是常见的浏览器内核可以分为以下四种：</p><span class="highlight-text" style="background-color:#FFCCCC;">Trident，Gecko，Blink，Webkit。</span><h4 id="Trident-‘traɪd-ə-nt"><a href="#Trident-‘traɪd-ə-nt" class="headerlink" title="Trident ([‘traɪd(ə)nt])"></a>Trident ([‘traɪd(ə)nt])</h4><p>Trident(IE内核)：该内核程序在 1997 年的 IE4 中首次被采用，是微软在 Mosaic（”马赛克”，这是人类历史上第一个浏览器，从此网页可以在图形界面的窗口浏览） 代码的基础之上修改而来的，并沿用到 IE11，也被普遍称作 “IE内核”。</p><p>Trident实际上是一款开放的内核，其接口内核设计的相当成熟，因此才有许多采用 IE 内核而非 IE 的浏览器(壳浏览器)涌现。由于 IE 本身的 “垄断性”（虽然名义上 IE 并非垄断，但实际上，特别是从 Windows 95 年代一直到 XP 初期，就市场占有率来说 IE 的确借助 Windows 的东风处于 “垄断” 的地位）而使得 Trident 内核的长期一家独大，微软很长时间都并没有更新 Trident 内核，这导致了两个后果——</p><p>一是 Trident 内核曾经几乎与 W3C 标准脱节（2005年），二是 Trident 内核的大量 Bug 等安全性问题没有得到及时解决，然后加上一些致力于开源的开发者和一些学者们公开自己认为 IE 浏览器不安全的观点，也有很多用户转向了其他浏览器，Firefox 和 Opera 就是这个时候兴起的。非 Trident 内核浏览器的市场占有率大幅提高也致使许多网页开发人员开始注意网页标准和非 IE浏览器的浏览效果问题。</p><p>补充：IE 从版本 11 开始，初步支持 WebGL 技术。IE8 的 JavaScript 引擎是 Jscript，IE9 开始用 Chakra，这两个版本区别很大，Chakra 无论是速度和标准化方面都很出色。<br>国内很多的双核浏览器的其中一核便是 Trident，美其名曰 “兼容模式”。<br>Window10 发布后，IE 将其内置浏览器命名为 Edge，Edge 最显著的特点就是新内核 EdgeHTML。<br>关于 Edge 浏览器更多可以参考 如何评价 Microsoft Edge 浏览器</p><h4 id="Gecko-‘gekəʊ"><a href="#Gecko-‘gekəʊ" class="headerlink" title="Gecko ([‘gekəʊ])"></a>Gecko ([‘gekəʊ])</h4><p>Gecko(Firefox 内核)：Netscape6 开始采用的内核，后来的 Mozilla FireFox(火狐浏览器) 也采用了该内核，Gecko 的特点是代码完全公开，因此，其可开发程度很高，全世界的程序员都可以为其编写代码，增加功能。因为这是个开源内核，因此受到许多人的青睐，Gecko 内核的浏览器也很多，这也是 Gecko 内核虽然年轻但市场占有率能够迅速提高的重要原因。</p><p>事实上，Gecko 引擎的由来跟 IE 不无关系，前面说过 IE 没有使用 W3C 的标准，这导致了微软内部一些开发人员的不满；他们与当时已经停止更新了的 Netscape 的一些员工一起创办了 Mozilla，以当时的 Mosaic 内核为基础重新编写内核，于是开发出了 Gecko。不过事实上，Gecko 内核的浏览器仍然还是 Firefox (火狐) 用户最多，所以有时也会被称为 Firefox 内核。此外 Gecko 也是一个跨平台内核，可以在Windows、 BSD、Linux 和 Mac OS X 中使用。</p><h4 id="Webkit"><a href="#Webkit" class="headerlink" title="Webkit"></a>Webkit</h4><p>一提到 webkit，首先想到的便是 chrome，可以说，chrome 将 Webkit内核 深入人心，殊不知，Webkit 的鼻祖其实是 Safari。现在很多人错误地把 webkit 叫做 chrome内核（即使 chrome内核已经是 blink 了），苹果都哭瞎了有木有。</p><p>Safari 是苹果公司开发的浏览器，使用了KDE（Linux桌面系统）的 KHTML 作为浏览器的内核，Safari 所用浏览器内核的名称是大名鼎鼎的 WebKit。 Safari 在 2003 年 1 月 7 日首度发行测试版，并成为 Mac OS X v10.3 与之后版本的默认浏览器，也成为苹果其它系列产品的指定浏览器（也已支持 Windows 平台）。</p><p>如上述可知，WebKit 前身是 KDE 小组的 KHTML 引擎，可以说 WebKit 是 KHTML 的一个开源的分支。当年苹果在比较了 Gecko 和 KHTML 后，选择了后者来做引擎开发，是因为 KHTML 拥有清晰的源码结构和极快的渲染速度。</p><p>Webkit内核 可以说是以硬件盈利为主的苹果公司给软件行业的最大贡献之一。随后，2008 年谷歌公司发布 chrome 浏览器，采用的 chromium 内核便 fork 了 Webkit。</p><h4 id="Chromium-Blink"><a href="#Chromium-Blink" class="headerlink" title="Chromium/Blink"></a>Chromium/Blink</h4><p>2008 年，谷歌公司发布了 chrome 浏览器，浏览器使用的内核被命名为 chromium。</p><p>chromium fork 自开源引擎 webkit，却把 WebKit 的代码梳理得可读性提高很多，所以以前可能需要一天进行编译的代码，现在只要两个小时就能搞定。因此 Chromium 引擎和其它基于 WebKit 的引擎所渲染页面的效果也是有出入的。所以有些地方会把 chromium 引擎和 webkit 区分开来单独介绍，而有的文章把 chromium 归入 webkit 引擎中，都是有一定道理的。</p><p>谷歌公司还研发了自己的 Javascript 引擎，V8，极大地提高了 Javascript 的运算速度。</p><p>chromium 问世后，带动了国产浏览器行业的发展。一些基于 chromium 的单核，双核浏览器如雨后春笋般拔地而起，例如 搜狗、360、QQ浏览器等等，无一不是套着不同的外壳用着相同的内核。</p><p>然而 2013 年 4 月 3 日，谷歌在 Chromium Blog 上发表 博客，称将与苹果的开源浏览器核心 Webkit 分道扬镳，在 Chromium 项目中研发 Blink 渲染引擎（即浏览器核心），内置于 Chrome 浏览器之中。</p><p>webkit 用的好好的，为何要投入到一个新的内核中去呢？</p><p>Blink 其实是 WebKit 的分支，如同 WebKit 是 KHTML 的分支。Google 的 Chromium 项目此前一直使用 WebKit(WebCore) 作为渲染引擎，但出于某种原因，并没有将其多进程架构移植入Webkit。</p><p>后来，由于苹果推出的 WebKit2 与 Chromium 的沙箱设计存在冲突，所以 Chromium 一直停留在 WebKit，并使用移植的方式来实现和主线 WebKit2 的对接。这增加了 Chromium 的复杂性，且在一定程度上影响了 Chromium 的架构移植工作。</p><p>基于以上原因，Google 决定从 WebKit 衍生出自己的 Blink 引擎（后由 Google 和 Opera Software 共同研发），将在 WebKit 代码的基础上研发更加快速和简约的渲染引擎，并逐步脱离 WebKit 的影响，创造一个完全独立的 Blink 引擎。这样以来，唯一一条维系 Google 和苹果之间技术关系的纽带就这样被切断了。</p><p>Google 和苹果在多个领域都是竞争对手，而唯独在浏览器引擎上有技术合作，利益一致。但为了各自的利益，谁都不会拿出 100% 的 “诚意” 来做好 WebKit，因为你做出来的成果竞争对手可以直接享用。移动互联网已经崛起，手机和平板设备端必将成为浏览器的另一个战场。这个时候，如果 Google 跟苹果仍然黏在一起，将会严重阻碍双方的进步，也会阻碍 WebKit 的进步。</p><h4 id="Presto-‘prestəʊ"><a href="#Presto-‘prestəʊ" class="headerlink" title="Presto ([‘prestəʊ])"></a>Presto ([‘prestəʊ])</h4><p>Presto 是挪威产浏览器 opera 的 “前任” 内核，为何说是 “前任”，因为最新的 opera 浏览器早已将之抛弃从而投入到了谷歌大本营。</p><p>Opera 的一个里程碑作品是 Opera7.0，因为它使用了 Opera Software 自主开发的 Presto 渲染引擎，取代了旧版 Opera 4 至 6 版本使用的 Elektra 排版引擎。该款引擎的特点就是渲染速度的优化达到了极致，然而代价是牺牲了网页的兼容性。</p><p>Presto 加入了动态功能，例如网页或其部分可随着 DOM 及 Script 语法的事件而重新排版。Presto 在推出后不断有更新版本推出，使不少错误得以修正，以及阅读 Javascript 效能得以最佳化，并成为当时速度最快的引擎。</p><p>然而为了减少研发成本，Opera 在 2013 年 2 月宣布放弃 Presto，转而跟随 Chrome 使用 WebKit 分支的 Chromium 引擎作为自家浏览器核心引擎，Presto 内核的 Opera 浏览器版本永远的停留在了 12.17。在 Chrome 于 2013 年推出 Blink 引擎之后，Opera 也紧跟其脚步表示将转而使用 Blink 作为浏览器核心引擎。</p><p>Presto 与开源的 WebKit 和经过谷歌加持的 Chromium 系列相比毫无推广上的优势，这是 Opera 转投 WebKit 的主要原因，并且使用 WebKit 内核的 Opera 浏览器可以兼容谷歌 Chrome 浏览器海量的插件资源。但是换内核的代价对于 Opera 来说过于惨痛。使用谷歌的 WebKit 内核之后，原本快速，轻量化，稳定的 Opera 浏览器变得异常的卡顿，而且表现不稳定，Opera 原本旧内核浏览器书签同步到新内核上的工作 Opera 花了整整两年时间，期间很多 Opera 的用户纷纷转投谷歌浏览器和其他浏览器，造成了众多的用户流失。时至今日现在还有上千万人在使用老版本的 Opera。</p><p>很多人都认为 Opera 浏览器终止在了 12.17，此后所更新的 Opera 版本号不再是原来那个 Opera。</p><hr><h3 id="关于移动端"><a href="#关于移动端" class="headerlink" title="关于移动端"></a>关于移动端</h3><p>移动端的浏览器内核主要说的是系统内置浏览器的内核。</p><p>目前移动设备浏览器上常用的内核有 Webkit，Blink，Trident，Gecko 等，其中 iPhone 和 iPad 等苹果 iOS 平台主要是 WebKit，Android 4.4 之前的 Android 系统浏览器内核是 WebKit，Android4.4 系统浏览器切换到了Chromium，内核是 Webkit 的分支 Blink，Windows Phone 8 系统浏览器内核是 Trident。</p><hr><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>浏览器内核主要指的是浏览器的渲染引擎，2013 年以前，代表有 Trident（IE），Gecko（firefox），Webkit（Safari chrome 等）以及 Presto（opera)。2013 年，谷歌开始研发 blink 引擎，chrome 28 以后开始使用，而 opera 则放弃了自主研发的 Presto 引擎，投入谷歌怀抱，和谷歌一起研发 blink 引擎，国内各种 chrome系的浏览器（360、UC、QQ、2345 等等）也纷纷放弃 webkit，投入 blink 的怀抱。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;浏览器内核可以分为：渲染引擎(layout engineer)和JS引擎。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
-    
-    
-      <category term="Browser" scheme="https://kisky3.github.io/tags/Browser/"/>
     
   </entry>
   
