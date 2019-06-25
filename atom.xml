@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-06-25T10:19:40.936Z</updated>
+  <updated>2019-06-25T10:35:18.278Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JS正则表达式</title>
+    <link href="https://kisky3.github.io/2019/03/16/JS%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <id>https://kisky3.github.io/2019/03/16/JS正则表达式/</id>
+    <published>2019-03-16T10:23:28.000Z</published>
+    <updated>2019-06-25T10:35:18.278Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="什么是JS正则表达式"><a href="#什么是JS正则表达式" class="headerlink" title="什么是JS正则表达式"></a>什么是JS正则表达式</h3><p>正则表达式是计算机科学的一个概念，正则表达式使用单个字符串来描述，匹配一系列符合某个句法规则的字符串。</p><a id="more"></a><p>在很多文本编辑器里，正则表达式常被用来检索替换某些符合某个模式的文本。</p><h3 id="正则表达式的创建"><a href="#正则表达式的创建" class="headerlink" title="正则表达式的创建"></a>正则表达式的创建</h3><p>1.构造函数</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var reg = new RegExp(&apos;&lt;%[^%]+%&gt;&apos;,&apos;g&apos;);</span><br></pre></td></tr></table></figure><p>2.字面量</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var reg =/&lt;%[^%]%&gt;/g;</span><br></pre></td></tr></table></figure><p>最后的g代表全局搜索，不添加的画搜索到第一个结果停止搜索</p><hr><h3 id="预定义类"><a href="#预定义类" class="headerlink" title="预定义类"></a>预定义类</h3><table><thead><tr><th>字符</th><th>等价类</th><th>含义</th></tr></thead><tbody><tr><td>.</td><td>[^\r\n]</td><td>除了回车符和换行符之外的所有字符</td></tr><tr><td>\d</td><td>[0-9]</td><td>数字字符</td></tr><tr><td>\D</td><td>[^0-9]</td><td>非数字字符</td></tr><tr><td>\s</td><td>[\t\n\x0B\f\r]</td><td>空白符</td></tr><tr><td>\S</td><td>[^\t\n\x0B\f\r]</td><td>非空白符</td></tr><tr><td>\w</td><td>[a-zA-Z_0-9]</td><td>单词字符，字母，数字下划线</td></tr><tr><td>\W</td><td>[^a-zA-Z_0-9]</td><td>非单词字符</td></tr></tbody></table><hr><h3 id="边界"><a href="#边界" class="headerlink" title="边界"></a>边界</h3><p>正则表达式还提供里几个常用的边界匹配字符串</p><table><thead><tr><th>字符</th><th>含义</th></tr></thead><tbody><tr><td>^</td><td>以xxx开头</td></tr><tr><td>$</td><td>以xxx结尾</td></tr><tr><td>\b</td><td>单词边界</td></tr><tr><td>\B</td><td>非单词边界</td></tr></tbody></table><hr><h3 id="量词"><a href="#量词" class="headerlink" title="量词"></a>量词</h3><p>正则表达式还提供里几个常用的边界匹配字符串</p><table><thead><tr><th>字符</th><th>含义</th></tr></thead><tbody><tr><td>?</td><td>出现零次或一次（最多出现一次）</td></tr><tr><td>+</td><td>出现一次或多次（至少出现一次）</td></tr><tr><td>*</td><td>出现零次或多次（任意次）</td></tr><tr><td>{n}</td><td>出现n次</td></tr><tr><td>{n，m}</td><td>出现n到m次</td></tr><tr><td>{n，}</td><td>至少出现n次</td></tr></tbody></table><hr><h3 id="前瞻"><a href="#前瞻" class="headerlink" title="前瞻"></a>前瞻</h3><table><thead><tr><th>字符</th><th>含义</th></tr></thead><tbody><tr><td>exp1(?=exp2)</td><td>匹配后面是exp2的exp1</td></tr><tr><td>exp1(?！=exp2)</td><td>匹配后面不是exp2的exp1</td></tr></tbody></table><hr><h3 id="贪婪模式与非贪婪模式"><a href="#贪婪模式与非贪婪模式" class="headerlink" title="贪婪模式与非贪婪模式"></a>贪婪模式与非贪婪模式</h3><h4 id="贪婪模式"><a href="#贪婪模式" class="headerlink" title="贪婪模式"></a>贪婪模式</h4><p>在贪婪模式下（一般为默认模式），正则引擎尽可能多的重复匹配字符<br>也就是匹配时先忽略下一个条件，优先以当前条件进行匹配，完成当前条件之后才开始回溯以下一条件进行匹配</p><h4 id="非贪婪模式"><a href="#非贪婪模式" class="headerlink" title="非贪婪模式"></a>非贪婪模式</h4><p>非贪婪模式和贪婪模式相反，可通过在代表适量的表示符后放置？来开启非贪婪模式<br>如？，+？甚至是？？？，<br>非贪婪模式是不只看当前条件还看下一条件进行检索，正则引擎尝试用最小可能的重复次数来进行匹配</p><p>例</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'a "witch" and her "broom" is one'</span>;</span><br><span class="line"> str.match( <span class="regexp">/".*"/g</span>);</span><br></pre></td></tr></table></figure><p>在贪婪模式下，匹配到 “witch” and her “broom” 一个字符串</p><p>而在非贪婪模式下匹配到的是”witch”和”broom”</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;什么是JS正则表达式&quot;&gt;&lt;a href=&quot;#什么是JS正则表达式&quot; class=&quot;headerlink&quot; title=&quot;什么是JS正则表达式&quot;&gt;&lt;/a&gt;什么是JS正则表达式&lt;/h3&gt;&lt;p&gt;正则表达式是计算机科学的一个概念，正则表达式使用单个字符串来描述，匹配一系列符合某个句法规则的字符串。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="JS" scheme="https://kisky3.github.io/tags/JS/"/>
+    
+  </entry>
   
   <entry>
     <title>JS立即执行函数表达式</title>
