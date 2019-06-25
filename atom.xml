@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-06-25T09:32:06.105Z</updated>
+  <updated>2019-06-25T10:11:34.350Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JS函数关于if-xx-和-a-b</title>
+    <link href="https://kisky3.github.io/2019/02/26/JS%E5%87%BD%E6%95%B0%E5%85%B3%E4%BA%8Eif-xx-%E5%92%8C-a-b/"/>
+    <id>https://kisky3.github.io/2019/02/26/JS函数关于if-xx-和-a-b/</id>
+    <published>2019-02-26T09:35:02.000Z</published>
+    <updated>2019-06-25T10:11:34.350Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="JS函数-f-xx"><a href="#JS函数-f-xx" class="headerlink" title="JS函数:f(xx)"></a>JS函数:f(xx)</h3><p>JS对于括号里的表达式，会被强制转换成布尔类型</p><a id="more"></a><p>基本原理如下表：</p><table><thead><tr><th>type</th><th>result</th></tr></thead><tbody><tr><td>Undefined</td><td>false</td></tr><tr><td>Null</td><td>false</td></tr><tr><td>Boolean</td><td>直接判断</td></tr><tr><td>Number</td><td>+0，-0，或者NaN为false，其他为true</td></tr><tr><td>String</td><td>空字符串为false，其他都为true</td></tr><tr><td>Object</td><td>true</td></tr></tbody></table><hr><h3 id="JS函数：a-b"><a href="#JS函数：a-b" class="headerlink" title="JS函数：a==b"></a>JS函数：a==b</h3><p>JS对于a==b类型会进行变形比较，原理如下表：<br>基本上遇到数字以外的类型可以先考虑往数字上转型</p><table><thead><tr><th>x</th><th>y</th><th>结果</th></tr></thead><tbody><tr><td>null</td><td>undefined</td><td>true</td></tr><tr><td>Number</td><td>String</td><td>x == toNumber(y)</td></tr><tr><td>Boolean</td><td>(any)</td><td>toNumber(x) == y</td></tr><tr><td>Object</td><td>String or Number</td><td>toPrimitive(x) == y</td></tr><tr><td>otherwise</td><td>otherwise</td><td>false</td></tr></tbody></table><hr><h3 id="toNumber"><a href="#toNumber" class="headerlink" title="toNumber"></a>toNumber</h3><p>其他类型转换成数字用toNumber：</p><table><thead><tr><th>type</th><th>result</th></tr></thead><tbody><tr><td>Undefined</td><td>NaN</td></tr><tr><td>Null</td><td>0</td></tr><tr><td>Boolean</td><td>true -&gt; 1, false -&gt; 0</td></tr><tr><td>String</td><td>“abc” -&gt; NaN, “123” -&gt; 123</td></tr></tbody></table><hr><h3 id="toPrimitive"><a href="#toPrimitive" class="headerlink" title="toPrimitive"></a>toPrimitive</h3><p>对于Object类型，先尝试调用.v3alueOf方法获取结果。如果没定义，再尝试调用.toString方法获取结果。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;JS函数-f-xx&quot;&gt;&lt;a href=&quot;#JS函数-f-xx&quot; class=&quot;headerlink&quot; title=&quot;JS函数:f(xx)&quot;&gt;&lt;/a&gt;JS函数:f(xx)&lt;/h3&gt;&lt;p&gt;JS对于括号里的表达式，会被强制转换成布尔类型&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="JS" scheme="https://kisky3.github.io/tags/JS/"/>
+    
+  </entry>
   
   <entry>
     <title>关于浏览器渲染机制</title>
