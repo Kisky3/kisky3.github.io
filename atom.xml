@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-06-25T12:52:49.615Z</updated>
+  <updated>2019-06-27T11:29:50.708Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>关于前端mock数据</title>
+    <link href="https://kisky3.github.io/2019/05/21/%E5%85%B3%E4%BA%8E%E5%89%8D%E7%AB%AFmock%E6%95%B0%E6%8D%AE/"/>
+    <id>https://kisky3.github.io/2019/05/21/关于前端mock数据/</id>
+    <published>2019-05-21T10:52:09.000Z</published>
+    <updated>2019-06-27T11:29:50.708Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-搭建一个静态服务器"><a href="#1-搭建一个静态服务器" class="headerlink" title="1. 搭建一个静态服务器"></a>1. 搭建一个静态服务器</h3><h4 id="http-server"><a href="#http-server" class="headerlink" title="http-server"></a>http-server</h4><a id="more"></a><p>比如在本地写一个http-server，可以在本地将需要的数据，做成一个文件，然后将该数据返回。</p><p>也可以在github上建立一个项目，创建首页，之后再创建一个json文件，将我们需要的数据写入此文件</p><p>例：</p><img src="./1.png" style="width:500px"><br><img src="./2.png" style="width:500px"><p>之后打开页面就可以看到我们所取得的json数据了</p><img src="./3.png" style="width:500px"><h3 id="2-线上mock数据"><a href="#2-线上mock数据" class="headerlink" title="2. 线上mock数据"></a>2. 线上mock数据</h3><p>在下面的网站里添加接口和数据，再将生成的数据URL写入ajax即可取得在线模拟的数据</p><p>1.使用<a href="http://easy-mock.com" target="_blank" rel="noopener">http://easy-mock.com</a></p><p>2.使用<a href="http://rapapi.org/org/index.do" target="_blank" rel="noopener">http://rapapi.org/org/index.do</a></p><p>3.使用server-mock</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-搭建一个静态服务器&quot;&gt;&lt;a href=&quot;#1-搭建一个静态服务器&quot; class=&quot;headerlink&quot; title=&quot;1. 搭建一个静态服务器&quot;&gt;&lt;/a&gt;1. 搭建一个静态服务器&lt;/h3&gt;&lt;h4 id=&quot;http-server&quot;&gt;&lt;a href=&quot;#http-server&quot; class=&quot;headerlink&quot; title=&quot;http-server&quot;&gt;&lt;/a&gt;http-server&lt;/h4&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="Mock" scheme="https://kisky3.github.io/tags/Mock/"/>
+    
+  </entry>
   
   <entry>
     <title>关于事件传播机制</title>
@@ -439,28 +461,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;什么是-CSS-继承&quot;&gt;&lt;a href=&quot;#什么是-CSS-继承&quot; class=&quot;headerlink&quot; title=&quot;什么是 CSS 继承?&quot;&gt;&lt;/a&gt;什么是 CSS 继承?&lt;/h3&gt;&lt;p&gt;CSS继承是指子元素能够拥有和父元素一样的属性。不用特地在子元素上定义但是也能在页面上展示出来。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
-    
-    
-      <category term="CSS" scheme="https://kisky3.github.io/tags/CSS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CSS选择器类型与用法</title>
-    <link href="https://kisky3.github.io/2018/11/15/CSS%E9%80%89%E6%8B%A9%E5%99%A8%E7%B1%BB%E5%9E%8B%E4%B8%8E%E7%94%A8%E6%B3%95/"/>
-    <id>https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/</id>
-    <published>2018-11-15T08:23:25.000Z</published>
-    <updated>2019-06-24T14:18:01.152Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="选择器类型"><a href="#选择器类型" class="headerlink" title="选择器类型"></a>选择器类型</h3><p>选择器分为基础选择器，组合选择器，属性选择器，伪类选择器，伪元素选择器</p><a id="more"></a><hr><h4 id="基础选择器"><a href="#基础选择器" class="headerlink" title="基础选择器"></a>基础选择器</h4><table><thead><tr><th>选择器</th><th>含义</th></tr></thead><tbody><tr><td>*</td><td>通用元素选择器，匹配页面任何元素（这也就决定了我们很少使用）</td></tr><tr><td>#id</td><td>id选择器，匹配特定id元素</td></tr><tr><td>.class</td><td>类选择器，匹配class包含（不是等于）特定类的元素</td></tr><tr><td>element</td><td>标签选择器</td></tr></tbody></table><p>例子：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">* &#123;</span><br><span class="line"> <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line"><span class="attribute">padding</span>:<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#id-selector</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>:<span class="number">#333</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.class-selector</span> &#123;</span><br><span class="line"> <span class="attribute">background</span>: <span class="number">#ccc</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">p</span> &#123;</span><br><span class="line"><span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><hr><h3 id="组合选择器"><a href="#组合选择器" class="headerlink" title="组合选择器"></a>组合选择器</h3><table><thead><tr><th>选择器</th><th>含义</th></tr></thead><tbody><tr><td>E,F</td><td>多元素选择器，用逗号分隔，同时匹配元素E或元素F</td></tr><tr><td>E F</td><td>后代选择器，用空格分隔，匹配E元素所有的后代（不只是子元素向下递归）元素F</td></tr><tr><td>E&gt;F</td><td>子元素选择器，用&gt;分隔，匹配E元素的所有直接子元素</td></tr><tr><td>E+F</td><td>直接相邻选择器，匹配E元素之后的相邻的同级元素F</td></tr><tr><td>E~F</td><td>普通相邻选择器(弟弟选择器)，匹配E元素之后的同级元素F(无论直接相邻与否)</td></tr><tr><td>.class1.class2</td><td>id和class选择器和选择器连写的时候中间没有分隔符， 。和#本身充当分隔符的元素</td></tr><tr><td>element#id</td><td>id和class 选择器和选择器连写的时候中间没有分隔符，。和#本身充当分隔符的元素</td></tr></tbody></table><p>例子：</p><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.p1</span>,<span class="selector-class">.p2</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ct</span> <span class="selector-class">.p2</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>:blue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#ct</span> &gt;<span class="selector-class">.p2</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>:blue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.p1</span>+<span class="selector-tag">p</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>:red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.p1</span>~<span class="selector-tag">p</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>:red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.p2</span><span class="selector-class">.active</span> &#123;</span><br><span class="line"> <span class="attribute">color</span>:red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-id">#ct</span> &#123;</span><br><span class="line"> <span class="attribute">background</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="属性选择器"><a href="#属性选择器" class="headerlink" title="属性选择器"></a>属性选择器</h3><table><thead><tr><th>选择器</th><th>含义</th></tr></thead><tbody><tr><td>E[attr]</td><td>匹配所有具有属性attr的元素，div[id]就能取到所有有id属性的div</td></tr><tr><td>E[attr=value]</td><td>匹配属性attr 值为value的元素，div[id=test]，匹配id=test的div</td></tr><tr><td>E[attr~=value]</td><td>匹配所有属性attr具有多个空格分隔，其中一个值等于value的元素</td></tr><tr><td>E[attr^=value]</td><td>匹配属性attr的值以value开头的元素</td></tr><tr><td>E[attr$=value]</td><td>匹配属性attr的值以value结尾的元素</td></tr><tr><td>E[attr*=value]</td><td>匹配属性attr的值包含value的元素</td></tr></tbody></table><hr><h3 id="伪类选择器"><a href="#伪类选择器" class="headerlink" title="伪类选择器"></a>伪类选择器</h3><p>代表元素的一种状态</p><table><thead><tr><th>选择器</th><th>含义</th></tr></thead><tbody><tr><td>E:first-child</td><td>匹配其E的父元素的第一个子元素</td></tr><tr><td>E:nth-child(n)</td><td>匹配其E的父元素的第n个子元素(2n+1,2n)</td></tr><tr><td>E:first-of-type</td><td>E的同种类型下的第一个元素</td></tr><tr><td>E:nth-of-type(n)</td><td>E的同种类型下的第n个元素</td></tr><tr><td>E:link</td><td>匹配所有未被点击的链接</td></tr><tr><td>E:visited</td><td>匹配所有已经被点击的链接</td></tr><tr><td>E:active</td><td>匹配鼠标已经其上按下还没有释放的E元素</td></tr><tr><td>E:hover</td><td>匹配鼠标悬停其上的E元素</td></tr><tr><td>E:focus</td><td>匹配获得当前焦点的E元素</td></tr><tr><td>E:enabled</td><td>匹配表单中可用的元素</td></tr><tr><td>E:disabled</td><td>匹配表单中禁用的元素</td></tr><tr><td>E:checked</td><td>匹配表单中被选中的radio或checkoutbox元素</td></tr><tr><td>E:selection</td><td>匹配用户当前选中的元素</td></tr></tbody></table><p>a链接伪类选择器时要注意伪类的顺序</p><hr><h3 id="伪元素选择器"><a href="#伪元素选择器" class="headerlink" title="伪元素选择器"></a>伪元素选择器</h3><table><thead><tr><th>选择器</th><th>含义</th></tr></thead><tbody><tr><td>E::first-line</td><td>匹配E元素内容的第一行</td></tr><tr><td>E::first-letter</td><td>匹配E元素内容的第一个字母</td></tr><tr><td>E::before</td><td>在E元素之前插入生成的内容</td></tr><tr><td>E::after</td><td>在E元素之后插入生成的内容</td></tr></tbody></table><hr><h3 id="选择器的优先级"><a href="#选择器的优先级" class="headerlink" title="选择器的优先级"></a>选择器的优先级</h3><img src="./1.png" style="width:500px"><p>注意：</p><p>在一些复杂场景下，可以进行一些标记再进行比较<br>假如选择器有两次则下面的样式会覆盖上面的样式<br><img src="./2.png" style="width:500px"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;选择器类型&quot;&gt;&lt;a href=&quot;#选择器类型&quot; class=&quot;headerlink&quot; title=&quot;选择器类型&quot;&gt;&lt;/a&gt;选择器类型&lt;/h3&gt;&lt;p&gt;选择器分为基础选择器，组合选择器，属性选择器，伪类选择器，伪元素选择器&lt;/p&gt;
     
     </summary>
     
