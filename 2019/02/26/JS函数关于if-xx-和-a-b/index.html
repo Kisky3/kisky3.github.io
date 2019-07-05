@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Xiang Yu&#39;s Blog">
-    <title>JS函数关于if-xx-和-a-b - Xiang Yu&#39;s Blog</title>
+    <title>JS About if-xx- And -a-b - Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,19 +17,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg"},"articleBody":"JS函数:f(xx)JS对于括号里的表达式，会被强制转换成布尔类型\n\n基本原理如下表：\n\n\n\ntype\nresult\n\n\n\nUndefined\nfalse\n\n\nNull\nfalse\n\n\nBoolean\n直接判断\n\n\nNumber\n+0，-0，或者NaN为false，其他为true\n\n\nString\n空字符串为false，其他都为true\n\n\nObject\ntrue\n\n\n\nJS函数：a==bJS对于a==b类型会进行变形比较，原理如下表：基本上遇到数字以外的类型可以先考虑往数字上转型\n\n\n\nx\ny\n结果\n\n\n\nnull\nundefined\ntrue\n\n\nNumber\nString\nx == toNumber(y)\n\n\nBoolean\n(any)\ntoNumber(x) == y\n\n\nObject\nString or Number\ntoPrimitive(x) == y\n\n\notherwise\notherwise\nfalse\n\n\n\ntoNumber其他类型转换成数字用toNumber：\n\n\n\ntype\nresult\n\n\n\nUndefined\nNaN\n\n\nNull\n0\n\n\nBoolean\ntrue -&gt; 1, false -&gt; 0\n\n\nString\n“abc” -&gt; NaN, “123” -&gt; 123\n\n\n\ntoPrimitive对于Object类型，先尝试调用.v3alueOf方法获取结果。如果没定义，再尝试调用.toString方法获取结果。\n","dateCreated":"2019-02-26T18:35:02+09:00","dateModified":"2019-06-25T19:11:34+09:00","datePublished":"2019-02-26T18:35:02+09:00","description":"JS函数:f(xx)JS对于括号里的表达式，会被强制转换成布尔类型","headline":"JS函数关于if-xx-和-a-b","image":["20190226.png","20190226.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/02/26/JS函数关于if-xx-和-a-b/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg","logo":{"@type":"ImageObject","url":"pic.jpg"}},"url":"https://kisky3.github.io/2019/02/26/JS函数关于if-xx-和-a-b/","keywords":"JS","thumbnailUrl":"20190226.png"}</script>
-    <meta name="description" content="JS函数:f(xx)JS对于括号里的表达式，会被强制转换成布尔类型">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg"},"articleBody":"JS函数关于if-xx-和-a-b\n\n\nJS函数:f(xx)JS对于括号里的表达式，会被强制转换成布尔类型\n基本原理如下表：\n\n\n\ntype\nresult\n\n\n\nUndefined\nfalse\n\n\nNull\nfalse\n\n\nBoolean\n直接判断\n\n\nNumber\n+0，-0，或者NaN为false，其他为true\n\n\nString\n空字符串为false，其他都为true\n\n\nObject\ntrue\n\n\n\nJS函数：a==bJS对于a==b类型会进行变形比较，原理如下表：基本上遇到数字以外的类型可以先考虑往数字上转型\n\n\n\nx\ny\n结果\n\n\n\nnull\nundefined\ntrue\n\n\nNumber\nString\nx == toNumber(y)\n\n\nBoolean\n(any)\ntoNumber(x) == y\n\n\nObject\nString or Number\ntoPrimitive(x) == y\n\n\notherwise\notherwise\nfalse\n\n\n\ntoNumber其他类型转换成数字用toNumber：\n\n\n\ntype\nresult\n\n\n\nUndefined\nNaN\n\n\nNull\n0\n\n\nBoolean\ntrue -&gt; 1, false -&gt; 0\n\n\nString\n“abc” -&gt; NaN, “123” -&gt; 123\n\n\n\ntoPrimitive对于Object类型，先尝试调用.v3alueOf方法获取结果。如果没定义，再尝试调用.toString方法获取结果。\n","dateCreated":"2019-02-26T18:35:02+09:00","dateModified":"2019-07-05T22:54:15+09:00","datePublished":"2019-02-26T18:35:02+09:00","description":"JS函数关于if-xx-和-a-b","headline":"JS About if-xx- And -a-b","image":["20190226.png","20190226.png"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/02/26/JS函数关于if-xx-和-a-b/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","kisky3@126.com"],"image":"pic.jpg","logo":{"@type":"ImageObject","url":"pic.jpg"}},"url":"https://kisky3.github.io/2019/02/26/JS函数关于if-xx-和-a-b/","keywords":"JS","thumbnailUrl":"20190226.png"}</script>
+    <meta name="description" content="JS函数关于if-xx-和-a-b">
 <meta name="keywords" content="JS">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="JS函数关于if-xx-和-a-b">
+<meta property="og:title" content="JS About if-xx- And -a-b">
 <meta property="og:url" content="https://kisky3.github.io/2019/02/26/JS函数关于if-xx-和-a-b/index.html">
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
-<meta property="og:description" content="JS函数:f(xx)JS对于括号里的表达式，会被强制转换成布尔类型">
+<meta property="og:description" content="JS函数关于if-xx-和-a-b">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-06-25T10:11:34.350Z">
+<meta property="og:updated_time" content="2019-07-05T13:54:15.517Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS函数关于if-xx-和-a-b">
-<meta name="twitter:description" content="JS函数:f(xx)JS对于括号里的表达式，会被强制转换成布尔类型">
+<meta name="twitter:title" content="JS About if-xx- And -a-b">
+<meta name="twitter:description" content="JS函数关于if-xx-和-a-b">
     
     
         
@@ -249,7 +249,7 @@
                 <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            JS函数关于if-xx-和-a-b
+            JS About if-xx- And -a-b
         </h1>
     
     
@@ -286,8 +286,10 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <h3 id="JS函数-f-xx"><a href="#JS函数-f-xx" class="headerlink" title="JS函数:f(xx)"></a>JS函数:f(xx)</h3><p>JS对于括号里的表达式，会被强制转换成布尔类型</p>
+            <p>JS函数关于if-xx-和-a-b</p>
 <a id="more"></a>
+
+<h3 id="JS函数-f-xx"><a href="#JS函数-f-xx" class="headerlink" title="JS函数:f(xx)"></a>JS函数:f(xx)</h3><p>JS对于括号里的表达式，会被强制转换成布尔类型</p>
 <p>基本原理如下表：</p>
 <table>
 <thead>
@@ -406,7 +408,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/02/JS立即执行函数表达式/" data-tooltip="JS立即执行函数表达式" aria-label="PREVIOUS: JS立即执行函数表达式">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/02/JS立即执行函数表达式/" data-tooltip="JS Immediately Invoked Function Expression" aria-label="PREVIOUS: JS Immediately Invoked Function Expression">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -415,7 +417,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/02/23/关于浏览器渲染机制/" data-tooltip="关于浏览器渲染机制" aria-label="NEXT: 关于浏览器渲染机制">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/02/23/关于浏览器渲染机制/" data-tooltip="About Webpage Rendering" aria-label="NEXT: About Webpage Rendering">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -472,7 +474,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/02/JS立即执行函数表达式/" data-tooltip="JS立即执行函数表达式" aria-label="PREVIOUS: JS立即执行函数表达式">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/03/02/JS立即执行函数表达式/" data-tooltip="JS Immediately Invoked Function Expression" aria-label="PREVIOUS: JS Immediately Invoked Function Expression">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -481,7 +483,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/02/23/关于浏览器渲染机制/" data-tooltip="关于浏览器渲染机制" aria-label="NEXT: 关于浏览器渲染机制">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/02/23/关于浏览器渲染机制/" data-tooltip="About Webpage Rendering" aria-label="NEXT: About Webpage Rendering">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
