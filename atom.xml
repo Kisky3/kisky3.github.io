@@ -171,9 +171,9 @@
     <link href="https://kisky3.github.io/2019/05/21/%E5%85%B3%E4%BA%8E%E5%89%8D%E7%AB%AFmock%E6%95%B0%E6%8D%AE/"/>
     <id>https://kisky3.github.io/2019/05/21/关于前端mock数据/</id>
     <published>2019-05-21T10:52:09.000Z</published>
-    <updated>2019-08-08T14:02:06.265Z</updated>
+    <updated>2019-08-10T07:13:29.403Z</updated>
     
-    <content type="html"><![CDATA[<p>关于mock数据 - 怎样模拟后端数据</p><a id="more"></a><h3 id="1-搭建一个静态服务器"><a href="#1-搭建一个静态服务器" class="headerlink" title="1. 搭建一个静态服务器"></a>1. 搭建一个静态服务器</h3><h4 id="http-server"><a href="#http-server" class="headerlink" title="http-server"></a>http-server</h4><p>比如在本地写一个http-server，可以在本地将需要的数据，做成一个文件，然后将该数据返回。</p><p>也可以在github上建立一个项目，创建首页，之后再创建一个json文件，将我们需要的数据写入此文件。</p><p>例：</p><img src="./1.png" style="width:500px"><br><img src="./2.png" style="width:500px"><p>之后打开页面就可以看到我们所取得的json数据了</p><img src="./3.png" style="width:500px"><h3 id="2-线上mock数据"><a href="#2-线上mock数据" class="headerlink" title="2. 线上mock数据"></a>2. 线上mock数据</h3><p>在下面的网站里添加接口和数据，再将生成的数据URL写入ajax即可取得在线模拟的数据</p><p>1.使用<a href="http://easy-mock.com" target="_blank" rel="noopener">http://easy-mock.com</a></p><p>2.使用<a href="http://rapapi.org/org/index.do" target="_blank" rel="noopener">http://rapapi.org/org/index.do</a></p><p>3.使用server-mock</p>]]></content>
+    <content type="html"><![CDATA[<p>关于mock数据 - 怎样模拟后端数据</p><a id="more"></a> <h3 id="1-搭建一个静态服务器"><a href="#1-搭建一个静态服务器" class="headerlink" title="1. 搭建一个静态服务器"></a>1. 搭建一个静态服务器</h3><h4 id="http-server"><a href="#http-server" class="headerlink" title="http-server"></a>http-server</h4><p>比如在本地写一个http-server，可以在本地将需要的数据，做成一个文件，然后将该数据返回。</p><p>也可以在github上建立一个项目，创建首页，之后再创建一个json文件，将我们需要的数据写入此文件。</p><p>例：</p><img src="./1.png" style="width:500px"><br><img src="./2.png" style="width:500px"><p>之后打开页面就可以看到我们所取得的json数据了</p><img src="./3.png" style="width:500px"><h3 id="2-线上mock数据"><a href="#2-线上mock数据" class="headerlink" title="2. 线上mock数据"></a>2. 线上mock数据</h3><p>在下面的网站里添加接口和数据，再将生成的数据URL写入ajax即可取得在线模拟的数据</p><p>1.使用<a href="http://easy-mock.com" target="_blank" rel="noopener">http://easy-mock.com</a></p><p>2.使用<a href="http://rapapi.org/org/index.do" target="_blank" rel="noopener">http://rapapi.org/org/index.do</a></p><p>3.使用server-mock</p>]]></content>
     
     <summary type="html">
     
