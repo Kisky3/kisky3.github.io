@@ -1,48 +1,48 @@
 @charset "UTF-8";
 @font-face {
-  font-family: 黑体;
+  font-family: STHeiti;
   font-style: normal;
   font-weight: 400;
   src: local("Open Sans"), local("OpenSans"), url(https://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3SZ2oysoEQEeKwjgmXLRnTc.ttf) format("truetype"); }
 
 @font-face {
-  font-family: 黑体;
+  font-family: STHeiti;
   font-style: normal;
   font-weight: 700;
   src: local("Open Sans Bold"), local("OpenSans-Bold"), url(https://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzJS3E-kSBmtLoNJPDtbj2Pk.ttf) format("truetype"); }
 
 @font-face {
-  font-family: 黑体;
+  font-family: STHeiti;
   font-style: normal;
   font-weight: 300;
   src: local("Merriweather Light"), local("Merriweather-Light"), url(https://fonts.gstatic.com/s/merriweather/v8/ZvcMqxEwPfh2qDWBPxn6nk7nEl83IKQRaQwpv_tz1Eg.ttf) format("truetype"); }
 
 @font-face {
-  font-family: 黑体;
+  font-family: STHeiti;
   font-style: normal;
   font-weight: 400;
   src: local("Merriweather"), url(https://fonts.gstatic.com/s/merriweather/v8/RFda8w1V0eDZheqfcyQ4EJS3E-kSBmtLoNJPDtbj2Pk.ttf) format("truetype"); }
 
 @font-face {
-  font-family: 黑体;
+  font-family: STHeiti;
   font-style: normal;
   font-weight: 700;
   src: local("Merriweather Bold"), local("Merriweather-Bold"), url(https://fonts.gstatic.com/s/merriweather/v8/ZvcMqxEwPfh2qDWBPxn6nv83cGrqhiQgWmjXfohD0fc.ttf) format("truetype"); }
 
 @font-face {
-  font-family: 黑体;
+  font-family: STHeiti;
   font-style: italic;
   font-weight: 300;
   src: local("Merriweather Light Italic"), local("Merriweather-LightItalic"), url(https://fonts.gstatic.com/s/merriweather/v8/EYh7Vl4ywhowqULgRdYwIGrKw6K5wsYdxr6rUL2ZGaM.ttf) format("truetype"); }
 
 @font-face {
-  font-family: 黑体;
+  font-family: STHeiti;
   font-style: italic;
   font-weight: 700;
   src: local("Merriweather Bold Italic"), local("Merriweather-BoldItalic"), url(https://fonts.gstatic.com/s/merriweather/v8/EYh7Vl4ywhowqULgRdYwII1kRdeHIFWYEsp6A2f99b0.ttf) format("truetype"); }
 
 html {
-  font-family: 黑体;
+  font-family: SimHei;
   font-size: 10px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -56,7 +56,7 @@ body {
   margin: 0;
   padding: 0;
   background: white;
-  font-family: "Open Sans", sans-serif;
+  font-family: SimHei;
   font-size: 1.6rem;
   line-height: 1.9em;
   letter-spacing: 0.01em;
@@ -72,7 +72,7 @@ h4,
 h5,
 h6 {
   letter-spacing: -0.04em;
-  font-family: "Open Sans", sans-serif;
+  font-family: SimHei;
   font-weight: 700;
   line-height: 1.45em;
   color: #4a4a4a; }
@@ -154,7 +154,7 @@ pre > code {
   width: 100%;
   box-sizing: border-box;
   padding: 15px;
-  font-family: Menlo, Consolas, monospace;
+  font-family: SimHei;
   border: none;
   margin: 0;
   cursor: text;
@@ -165,7 +165,7 @@ pre > code {
 code {
   font-size: 1.5rem;
   display: inline-block;
-  font-family: Menlo, Consolas, monospace;
+  font-family: SimHei;
   font-weight: 400;
   background-color: #f7f8f8;
   padding: 0 10px; }
@@ -440,7 +440,7 @@ blockquote {
   z-index: -1; }
 
 #footer {
-  color: #9eabb3;
+  color: #696969;
   font-size: 1.5rem;
   text-align: center;
   margin-top: 70px;
@@ -529,12 +529,12 @@ blockquote {
 #main {
   display: block;
   min-height: 100%;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   transition: transform .25s ease-in-out;
   -webkit-transition: -webkit-transform .25s ease-in-out; }
   #main.hasCover.hasCoverCaption, #main.hasCover.hasCoverMetaOut {
     padding-top: 50px !important; }
-  #main.hasCover.hasCoverMetaIn, #main.hasCover.hasCoverMetaOut.hasCoverCaption {
+  #main.hasCover.hasCoverMetaIn #main.hasCover.hasCoverMetaOut.hasCoverCaption {
     padding-top: 0 !important; }
 
 @media only screen and (max-width: 767px) {
@@ -638,7 +638,7 @@ blockquote {
       transform: translate3d(75px, 0, 0); } }
 
 #sidebar {
-  font-family: "Open Sans", sans-serif;
+  font-family: SimHei;
   height: 100%;
   position: fixed;
   top: 0;
@@ -1446,7 +1446,7 @@ blockquote {
 
 .caption {
   display: block;
-  font-family: "Merriweather", serif;
+  font-family: SimHei;
   font-size: 1.3rem;
   color: #81929d;
   text-align: center;
@@ -1474,7 +1474,7 @@ figure.highlight,
   .codeblock .code,
   .codeblock .tag {
     background-color: inherit;
-    font-family: Menlo, Consolas, monospace;
+    font-family: SimHei;
     border: none;
     padding: 0;
     margin: 0;
@@ -1533,7 +1533,7 @@ figure.highlight,
 
 .gist .line,
 .gist .line-number {
-  font-family: Menlo, Consolas, monospace;
+  font-family: SimHei;
   font-size: 1em;
   margin: 0 0 5px 0; }
 
@@ -1694,7 +1694,7 @@ figure.highlight,
     position: absolute;
     bottom: 0;
     width: calc(100% - (1.5em) * 2);
-    font-family: "Open Sans";
+    font-family: SimHei;
     font-style: italic;
     background: rgba(0, 0, 0, 0.75);
     font-size: 1.3rem;
@@ -1745,6 +1745,7 @@ a.fancybox {
 .main-content-wrap {
   display: block;
   max-width: 750px;
+  background: rgba(255, 255, 255, 0.9);
   margin: 0 auto;
   padding-right: 20px;
   padding-left: 20px; }
@@ -1893,6 +1894,7 @@ a.fancybox {
 
 .post {
   position: relative;
+  background: white;
   width: 100%;
   display: inline-block;
   vertical-align: top; }
@@ -1904,7 +1906,7 @@ a.fancybox {
       text-decoration: none; }
   .post .post-meta {
     line-height: 1.5em;
-    font-family: "Open Sans", sans-serif;
+    font-family: SimHei;
     font-size: 1.3rem;
     font-weight: 400;
     color: #9eabb3; }
@@ -1913,7 +1915,7 @@ a.fancybox {
   .post .post-content {
     text-rendering: optimizelegibility;
     letter-spacing: -0.3px;
-    font-family: "Merriweather", serif;
+    font-family: SimHei;
     color: #5d686f;
     margin-top: 20px;
     font-weight: 400;
@@ -2008,12 +2010,14 @@ a.fancybox {
   .pullquote.blur {
     background-color: #eef0f1; }
 
-.post-header .post-title {
-  margin: 0;
-  word-break: initial;
-  overflow: hidden; }
-  .post-header .post-title:hover {
-    text-decoration: none; }
+.post-header {
+  background: none; }
+  .post-header .post-title {
+    margin: 0;
+    word-break: initial;
+    overflow: hidden; }
+    .post-header .post-title:hover {
+      text-decoration: none; }
 
 .post-header-cover {
   display: table;
@@ -2044,7 +2048,7 @@ a.fancybox {
         text-decoration: none; }
     .post-header-cover .post-header .post-meta {
       max-width: 750px;
-      font-family: "Open Sans", sans-serif;
+      font-family: SimHei;
       font-size: 1.6rem;
       color: white !important;
       font-weight: 400;
@@ -2180,6 +2184,13 @@ a.fancybox {
     overflow: hidden; }
     .postShorten .postShorten-header .postShorten-title:hover {
       text-decoration: none; }
+  .postShorten .postShorten-header .postShorten-title > i {
+    font-size: 20px;
+    color: lightblue; }
+  .postShorten .postShorten-header .postShorten-title > span {
+    font-size: 20px;
+    margin-right: 10px;
+    color: lightblue; }
   .postShorten .postShorten-meta {
     line-height: 1.5em; }
     .postShorten .postShorten-meta a {
@@ -2192,14 +2203,14 @@ a.fancybox {
   .postShorten .postShorten-meta,
   .postShorten .postShorten-readingtime,
   .postShorten .postShorten-excerpt_link {
-    font-family: "Open Sans", sans-serif;
+    font-family: SimHei;
     font-size: 1.3rem;
     font-weight: 400; }
   .postShorten .postShorten-excerpt,
   .postShorten .postShorten-content {
     text-rendering: optimizelegibility;
     letter-spacing: -0.3px;
-    font-family: "Merriweather", serif;
+    font-family: SimHei;
     color: #5d686f;
     font-weight: 400;
     overflow: hidden;
@@ -2471,7 +2482,7 @@ a.tag--small,
   color: #349ef3 !important; }
 
 .font-merryweather {
-  font-family: "Merriweather", serif; }
+  font-family: SimHei; }
 
 .tooltip, [data-tooltip] {
   position: relative;

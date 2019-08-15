@@ -3071,6 +3071,13 @@ a.fancybox {
     overflow: hidden; }
     .postShorten .postShorten-header .postShorten-title:hover {
       text-decoration: none; }
+  .postShorten .postShorten-header .postShorten-title > i {
+    font-size: 20px;
+    color: lightblue; }
+  .postShorten .postShorten-header .postShorten-title > span {
+    font-size: 20px;
+    margin-right: 10px;
+    color: lightblue; }
   .postShorten .postShorten-meta {
     line-height: 1.5em; }
     .postShorten .postShorten-meta a {
