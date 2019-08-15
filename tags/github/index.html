@@ -37,7 +37,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-zwoeklvnieng37tqacdsgnne4eeggdtqqo1japmgvqu1lxhleae7shwafowu.min.css">
+    <link rel="stylesheet" href="/assets/css/style-kbbllzsmvmsprq4drxnj35ovsnohsmfn2ulph80h8o1qswpr9kw12gnyzf3f.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
@@ -54,8 +54,8 @@
 </head>
 
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <body>
-        <div id="aaa" style="width:100%;height:auto;position:fixed"></div>
+    <body style="height: 100%;width: 100%;margin: 0;padding: 0;">
+        <div id="aaa" style="height: 100%;width: 100%;margin: 0;padding: 0;position: fixed;"></div>
         <div id="blog">
             <!-- Define author's picture -->
 
@@ -528,20 +528,25 @@ function update(){
 }
 
 update()
-
-window.addEventListener("resize", resizeCanvas, false);
- 
-function resizeCanvas() {
-  location.reload();  
-}
 </script>
 </div>
         <!--SCRIPTS-->
-<script src="/assets/js/script-qe772wvvmmw5lezhwg88mvtcdo2mhoxaxq58pvblngh1x6ybeqoog8yzsxmu.min.js"></script>
+<script src="/assets/js/script-ioigak7wcb75nark1xjxraicmmeehvfbz4joyuuxqe71gvoqvpvbcgxdqsx1.min.js"></script>
 <!--SCRIPTS END-->
 
 
 
     </body>
-
+    <script>
+      $(window).resize(resizeCanvas);  
+   
+       function resizeCanvas() { 
+          var tela = document.createElement('canvas');
+          tela.attr("width", $(window).get(0).innerWidth);  
+          tela.attr("height", $(window).get(0).innerHeight);  
+          context.fillRect(0, 0, canvas.width(), canvas.height());    
+        };  
+       
+       resizeCanvas();  
+    </script>
 </html>
