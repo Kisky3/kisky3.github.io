@@ -51,7 +51,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-d1dvq98m0hzyq4a2dhytrhrsy0pro2avmngjqiyodpbsnflociqcaus44wlb.min.css">
+    <link rel="stylesheet" href="/assets/css/style-8ki9eg5g2a258pspmyvpq3i3bjxxftjaqwwyejhuzoer3dhj1m7uociseusi.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
@@ -69,7 +69,8 @@
 
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <body>
-        <div id="aaa" style="height: 100%;width: 100%;margin: 0;padding: 0;position: fixed;"></div>
+        <div id="contents" style="height: 100%;width: 100%;margin: 0;padding: 0;position: fixed; background: pink;">
+        </div>
         <div id="blog">
             <!-- Define author's picture -->
 
@@ -389,7 +390,7 @@
                 <footer id="footer">
     <i class="fas fa-paw"></i>
     <span id="busuanzi_container_site_pv">
-      <span id="busuanzi_value_site_pv" style="color: SteelBlue; font-size: 20px"></span> visitors 
+      <span id="busuanzi_value_site_pv" style="color: CadetBlue; font-size: 20px"></span> visitors 
     </span>
     <br>
     <span class="copyrights">
@@ -533,7 +534,7 @@ popolate(max_particles);
 var tela = document.createElement('canvas');
     tela.width = $(window).width();
     tela.height = $(window).height();
-    $("#aaa").append(tela);
+    $("#contents").append(tela);
 
 var canvas = tela.getContext('2d');
 
@@ -687,10 +688,20 @@ function update(){
 
 update()
 
+ $(window).resize(resizeCanvas);  
+   
+function resizeCanvas() {
+  var w = $('#contents').width();
+  var h = $('#contents').height();
+  $('canvas').attr('width', w);
+  $('canvas').attr('height', h);
+};  
+       
+ resizeCanvas();  
 </script>
 </div>
         <!--SCRIPTS-->
-<script src="/assets/js/script-any9yqdamtymjnwdkh5dm1mbzohwalrjg4o22voew7ky9e5qskcqp4chwy9v.min.js"></script>
+<script src="/assets/js/script-03s9pfdm29padp1vfs9lr3lpm9kphaom6doazbhkvb4ivonug5n0uau0qdcd.min.js"></script>
 <!--SCRIPTS END-->
 
 
