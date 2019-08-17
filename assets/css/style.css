@@ -3078,11 +3078,12 @@ a.fancybox {
       text-decoration: none; }
   .postShorten .postShorten-header .postShorten-title > i {
     font-size: 20px;
-    color: CadetBlue; }
+    color: rgba(0, 0, 0, 0.7);
+    margin-right: 15px; }
   .postShorten .postShorten-header .postShorten-title > span {
     font-size: 20px;
     margin-right: 10px;
-    color: CadetBlue;
+    color: rgba(0, 0, 0, 0.7);
     font-weight: normal; }
   .postShorten .postShorten-meta {
     line-height: 1.5em; }
@@ -3092,11 +3093,15 @@ a.fancybox {
   .postShorten .postShorten-readingtime {
     color: #9eabb3; }
   .postShorten .postShorten-excerpt_link {
-    display: block;
-    text-align: center;
+    display: flex;
     width: 40%;
-    border: solid 1px;
-    border-radius: 2px; }
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    height: 40px;
+    color: white;
+    margin-top: 20px; }
   .postShorten .postShorten-meta,
   .postShorten .postShorten-readingtime,
   .postShorten .postShorten-excerpt_link {
@@ -3137,7 +3142,7 @@ a.fancybox {
     padding: 35px; }
   .postShorten.postShorten--thumbnailimg-left .postShorten-thumbnailimg {
     float: left;
-    margin: 30px 0 0 30px; }
+    margin: 50px 0 0 30px; }
     .postShorten.postShorten--thumbnailimg-left .postShorten-thumbnailimg img {
       display: block;
       width: 140px;
