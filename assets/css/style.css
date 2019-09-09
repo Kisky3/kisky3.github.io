@@ -1537,7 +1537,8 @@ blockquote {
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased; }
   #sidebar .sidebar-container {
-    overflow: auto; }
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.5); }
   #sidebar .sidebar-profile {
     color: #ebebeb;
     text-align: center;
@@ -3059,7 +3060,8 @@ a.fancybox {
 
 .postShorten-group .postShorten {
   margin-top: 15px;
-  border-bottom: 1px solid #eef2f8; }
+  border-bottom: 1px solid #eef2f8;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4); }
 
 .postShorten {
   position: relative;
@@ -3135,11 +3137,13 @@ a.fancybox {
     .postShorten .postShorten-thumbnailimg img {
       display: none; }
   .postShorten .postShorten-wrap {
-    padding: 15px; } }
+    padding: 15px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4); } }
 
 @media only screen and (min-width: 480px) {
   .postShorten.postShorten--thumbnailimg-right .postShorten-wrap {
-    padding: 35px; }
+    padding: 35px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4); }
   .postShorten.postShorten--thumbnailimg-left .postShorten-thumbnailimg {
     float: left;
     margin: 50px 0 0 30px; }
