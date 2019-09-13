@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Xiang Yu&#39;s Blog">
-    <title>About jQuery ajax &amp; jsonp - Xiang Yu&#39;s Blog</title>
+    <title> - Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,19 +17,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于jQuery ajax &amp; jsonp\n\n\njQuery.ajax([settings])我们可以用ajax发送了请求(get/post)\najax方法提供了几个常用的setting\n\nasync：默认设置下，所有请求均为异步请求（也就是说这是默认设置为 true ）。如果需要发送同步请求，请将此选项设置为 false\n\nbeforeSend：请求发送前的回调函数，用来修改请求发送前jqXHR对象，此功能用来设置自定义 HTTP 头信息，等等。该jqXHR和设置对象作为参数传递\n\ncache：如果设置为 false ，浏览器将不缓存此页面。注意: 设置cache为 false将在 HEAD和GET请求中正常工作。它的工作原理是在GET请求参数中附加”_={timestamp}”\n\ncontext：这个对象用于设置Ajax相关回调函数的上下文。 默认情况下，这个上下文是一个ajax请求使用的参数设置对象\n\ndata：发送到服务器的数据。将自动转换为请求字符串格式。GET 请求中将附加在 URL 后面，POST请求作为表单数据\n\nheaders：一个额外的{键:值}对映射到请求一起发送。此设置会在beforeSend 函数调用之前被设置 ;因此，请求头中的设置值，会被beforeSend 函数内的设置覆盖\n\nmethod：HTTP 请求方法 (比如：”POST”, “GET “, “PUT”，1.9之前使用“type”)    \n\n\n了解了这些参数，使用jQuery处理ajax请求就简单了\n例子:\n1234567$.ajax(&#123;  method: \"POST\",  url: \"some.php\",  data: &#123; name: \"John\", location: \"Boston\" &#125;&#125;).done(function( msg ) &#123;  alert( \"Data Saved: \" + msg );&#125;);\n\n\njQuery.get( [settings] ) / jQuery.post( [settings ] )这两个方法专门用来处理get和post请求,dataType：从服务器返回的预期的数据类型。默认：智能猜测（xml, json, script, 或 html）\n1234567891011121314$.ajax(&#123;  url: url,  data: data,  success: success,  dataType: dataType&#125;);$.ajax(&#123;  type: \"POST\",  url: url,  data: data,  success: success,  dataType: dataType&#125;);\n\n\njQuery.getJSON( url [,data] [success(data, textStatus, jqXHR)])使用一个HTTP GET请求从服务器加载JSON编码的数据，这是一个Ajax函数的缩写，这相当于:\n123456$.ajax(&#123;  dataType: \"json\",  url: url,  data: data,  success: success&#125;);\n\n","dateCreated":"2019-08-31T20:22:41+09:00","dateModified":"2019-09-14T00:02:41+09:00","datePublished":"2019-08-31T20:22:41+09:00","description":"关于jQuery ajax &amp; jsonp","headline":"About jQuery ajax & jsonp","image":["20190830.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/08/31/Ajax/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/08/31/Ajax/","keywords":"jQuery","thumbnailUrl":"20190830.png"}</script>
-    <meta name="description" content="关于jQuery ajax &amp;amp; jsonp">
-<meta name="keywords" content="jQuery">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"\ntitle: About jQuery ajax &amp; jsonpdate: 2019-08-31 20:22:41tags:\n\njQueryclearReading: truethumbnailImage: 20190830.pngthumbnailImagePosition: leftcoverImage: cover.jpgcoverCaption: “Hello World, Hello Programming”coverSize: partialcomments: falsecategories: Front-end Knowledge\n\n\n关于jQuery ajax &amp; jsonp\n\n\njQuery.ajax([settings])我们可以用ajax发送了请求(get/post)\najax方法提供了几个常用的setting\n\nasync：默认设置下，所有请求均为异步请求（也就是说这是默认设置为 true ）。如果需要发送同步请求，请将此选项设置为 false\n\nbeforeSend：请求发送前的回调函数，用来修改请求发送前jqXHR对象，此功能用来设置自定义 HTTP 头信息，等等。该jqXHR和设置对象作为参数传递\n\ncache：如果设置为 false ，浏览器将不缓存此页面。注意: 设置cache为 false将在 HEAD和GET请求中正常工作。它的工作原理是在GET请求参数中附加”_={timestamp}”\n\ncontext：这个对象用于设置Ajax相关回调函数的上下文。 默认情况下，这个上下文是一个ajax请求使用的参数设置对象\n\ndata：发送到服务器的数据。将自动转换为请求字符串格式。GET 请求中将附加在 URL 后面，POST请求作为表单数据\n\nheaders：一个额外的{键:值}对映射到请求一起发送。此设置会在beforeSend 函数调用之前被设置 ;因此，请求头中的设置值，会被beforeSend 函数内的设置覆盖\n\nmethod：HTTP 请求方法 (比如：”POST”, “GET “, “PUT”，1.9之前使用“type”)    \n\n\n了解了这些参数，使用jQuery处理ajax请求就简单了\n例子:\n1234567$.ajax(&#123;  method: \"POST\",  url: \"some.php\",  data: &#123; name: \"John\", location: \"Boston\" &#125;&#125;).done(function( msg ) &#123;  alert( \"Data Saved: \" + msg );&#125;);\n\n\njQuery.get( [settings] ) / jQuery.post( [settings ] )这两个方法专门用来处理get和post请求,dataType：从服务器返回的预期的数据类型。默认：智能猜测（xml, json, script, 或 html）\n1234567891011121314$.ajax(&#123;  url: url,  data: data,  success: success,  dataType: dataType&#125;);$.ajax(&#123;  type: \"POST\",  url: url,  data: data,  success: success,  dataType: dataType&#125;);\n\n\njQuery.getJSON( url [,data] [success(data, textStatus, jqXHR)])使用一个HTTP GET请求从服务器加载JSON编码的数据，这是一个Ajax函数的缩写，这相当于:\n123456$.ajax(&#123;  dataType: \"json\",  url: url,  data: data,  success: success&#125;);\n\n","dateCreated":"2019-09-10T20:22:41+09:00","dateModified":"2019-09-14T00:04:21+09:00","datePublished":"2019-09-10T20:22:41+09:00","description":"\ntitle: About jQuery ajax &amp; jsonpdate: 2019-08-31 20:22:41tags:\n\njQueryclearReading: truethumbnailImage: 20190830.pngthumbnailImagePosition: leftcoverImage: cover.jpgcoverCaption: “Hello World, Hello Programming”coverSize: partialcomments: falsecategories: Front-end Knowledge\n\n\n关于jQuery ajax &amp; jsonp","headline":"","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/09/10/Ajax/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/09/10/Ajax/"}</script>
+    <meta name="description" content="title: About jQuery ajax &amp;amp; jsonpdate: 2019-08-31 20:22:41tags:  jQueryclearReading: truethumbnailImage: 20190830.pngthumbnailImagePosition: leftcoverImage: cover.jpgcoverCaption: “Hello World, He">
+<meta name="keywords" content="hexo,javascript,front-end">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="About jQuery ajax &amp; jsonp">
-<meta property="og:url" content="https://kisky3.github.io/2019/08/31/Ajax/index.html">
+<meta property="og:title" content="Xiang Yu&#39;s Blog">
+<meta property="og:url" content="https://kisky3.github.io/2019/09/10/Ajax/index.html">
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
-<meta property="og:description" content="关于jQuery ajax &amp;amp; jsonp">
+<meta property="og:description" content="title: About jQuery ajax &amp;amp; jsonpdate: 2019-08-31 20:22:41tags:  jQueryclearReading: truethumbnailImage: 20190830.pngthumbnailImagePosition: leftcoverImage: cover.jpgcoverCaption: “Hello World, He">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-09-13T15:02:41.705Z">
+<meta property="og:updated_time" content="2019-09-13T15:04:21.609Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About jQuery ajax &amp; jsonp">
-<meta name="twitter:description" content="关于jQuery ajax &amp;amp; jsonp">
+<meta name="twitter:title" content="Xiang Yu&#39;s Blog">
+<meta name="twitter:description" content="title: About jQuery ajax &amp;amp; jsonpdate: 2019-08-31 20:22:41tags:  jQueryclearReading: truethumbnailImage: 20190830.pngthumbnailImagePosition: leftcoverImage: cover.jpgcoverCaption: “Hello World, He">
     
     
         
@@ -38,12 +38,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/08/31/Ajax/20190830.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/08/31/Ajax/20190830.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2019/08/31/Ajax/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/08/31/Ajax/cover.jpg" />
     
     
     <!--STYLES-->
@@ -239,53 +233,43 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2019/08/31/Ajax/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            About jQuery ajax &amp; jsonp
+            (no title)
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2019-08-31T20:22:41+09:00">
+    <time datetime="2019-09-10T20:22:41+09:00">
 	
-		    Aug 31, 2019
+		    Sep 10, 2019
     	
     </time>
     
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
-
-
-    
 </div>
 
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>关于jQuery ajax &amp; jsonp</p>
+            <hr>
+<p>title: About jQuery ajax &amp; jsonp<br>date: 2019-08-31 20:22:41<br>tags:</p>
+<ul>
+<li>jQuery<br>clearReading: true<br>thumbnailImage: 20190830.png<br>thumbnailImagePosition: left<br>coverImage: cover.jpg<br>coverCaption: “Hello World, Hello Programming”<br>coverSize: partial<br>comments: false<br>categories: Front-end Knowledge</li>
+</ul>
+<hr>
+<p>关于jQuery ajax &amp; jsonp</p>
 <a id="more"></a>
 
 <h3 id="jQuery-ajax-settings"><a href="#jQuery-ajax-settings" class="headerlink" title="jQuery.ajax([settings])"></a>jQuery.ajax([settings])</h3><p>我们可以用ajax发送了请求(get/post)</p>
@@ -324,13 +308,6 @@
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
-        
-            <div class="post-footer-tags">
-                <span class="text-color-light text-small">TAGGED IN</span><br/>
-                
-    <a class="tag tag--primary tag--small t-link" href="/tags/jQuery/">jQuery</a>
-
-            </div>
         
         
             <div class="post-actions-wrap">
@@ -373,11 +350,13 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/08/31/Ajax/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/09/10/Ajax/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
+        
+            
         
         <li class="post-action">
             
@@ -391,6 +370,8 @@
 
 
         
+        
+            
         
     </div>
 </article>
@@ -454,11 +435,13 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/08/31/Ajax/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/09/10/Ajax/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
+        
+            
         
         <li class="post-action">
             
@@ -488,7 +471,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/08/31/Ajax/">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/09/10/Ajax/">
                         <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
                     </a>
                 </li>
@@ -652,6 +635,8 @@
         <!--SCRIPTS-->
 <script src="/assets/js/script-3aqcegpda1qmips6yoo6eaovp7rgkcwkwkzahnh8l81r35gsi8r4c2apcos7.min.js"></script>
 <!--SCRIPTS END-->
+
+    
 
 
 
