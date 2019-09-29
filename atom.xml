@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-09-29T14:10:18.839Z</updated>
+  <updated>2019-09-29T17:02:14.646Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Deploying React Applications to Github Pages</title>
+    <link href="https://kisky3.github.io/2019/09/30/Pages/"/>
+    <id>https://kisky3.github.io/2019/09/30/Pages/</id>
+    <published>2019-09-29T16:46:01.000Z</published>
+    <updated>2019-09-29T17:02:14.646Z</updated>
+    
+    <content type="html"><![CDATA[<p>把React项目部署到Github Page线上环境</p><a id="more"></a><h3 id="1-在github上新建仓库"><a href="#1-在github上新建仓库" class="headerlink" title="1. 在github上新建仓库"></a>1. 在github上新建仓库</h3><p>貌似必须要新建仓库，如果在已有仓库的分支下想预览不成功（因为并不是master，所以也会对别的分支有影响）</p><h3 id="2-将本地代码同步"><a href="#2-将本地代码同步" class="headerlink" title="2. 将本地代码同步"></a>2. 将本地代码同步</h3><h3 id="3-修改本地React项目的-package-json文件"><a href="#3-修改本地React项目的-package-json文件" class="headerlink" title="3. 修改本地React项目的 package.json文件"></a>3. 修改本地React项目的 package.json文件</h3><ul><li>配置homepage</li></ul><p>这里需要把你的github仓库地址稍微修改一下，例如我的”homepage”: “<a href="https://Kisky3.github.io/react-todolist&quot;">https://Kisky3.github.io/react-todolist&quot;</a></p><ul><li>配置发布选项</li></ul><p>在scripts里添加以下两行</p><p>predeploy:是将你的项目预编译成静态文件放在build文件夹<br>deploy:是使用gh-pages 部署你的build文件夹下的内容。</p><p>package.json</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;predeploy&quot;: &quot;npm run build&quot;, </span><br><span class="line"> &quot;deploy&quot;: &quot;gh-pages -d build&quot;</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;todolist&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.1.0&quot;,</span><br><span class="line">  &quot;homepage&quot;: &quot;https://Kisky3.github.io/react-todolist&quot;,</span><br><span class="line">  &quot;private&quot;: true,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;react&quot;: &quot;^16.4.1&quot;,</span><br><span class="line">    &quot;react-dom&quot;: &quot;^16.4.1&quot;,</span><br><span class="line">    &quot;react-scripts&quot;: &quot;1.1.4&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;start&quot;: &quot;react-scripts start&quot;,</span><br><span class="line">    &quot;build&quot;: &quot;react-scripts build&quot;,</span><br><span class="line">    &quot;test&quot;: &quot;react-scripts test --env=jsdom&quot;,</span><br><span class="line">    &quot;eject&quot;: &quot;react-scripts eject&quot;,</span><br><span class="line">    &quot;predeploy&quot;: &quot;npm run build&quot;,</span><br><span class="line">    &quot;deploy&quot;: &quot;gh-pages -d build&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;gh-pages&quot;: &quot;^2.0.1&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;browserslist&quot;: &#123;</span><br><span class="line">    &quot;production&quot;: [</span><br><span class="line">      &quot;&gt;0.2%&quot;,</span><br><span class="line">      &quot;not dead&quot;,</span><br><span class="line">      &quot;not op_mini all&quot;</span><br><span class="line">    ],</span><br><span class="line">    &quot;development&quot;: [</span><br><span class="line">      &quot;last 1 chrome version&quot;,</span><br><span class="line">      &quot;last 1 firefox version&quot;,</span><br><span class="line">      &quot;last 1 safari version&quot;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>安装 gh-pages</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gh-pages --save-dev</span><br></pre></td></tr></table></figure><ul><li>部署项目到github page上<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run deploy</span><br></pre></td></tr></table></figure></li></ul><h3 id="GIthub上的分支切换"><a href="#GIthub上的分支切换" class="headerlink" title="GIthub上的分支切换"></a>GIthub上的分支切换</h3><p>配置完之后，打开github上的仓库，你会发现原先的项目多了一个gh-pages分支，里面存放的是我们打包编译完成之后的静态文件。<br>一定要手动切换到gh-pages分支 而不是master！</p><img src="./1.png" style="width:500px;margin:40px 0"><p>再切换到setting下，我们可以看到现在项目已经被成功部署到 <a href="https://Kisky3.github.io/react-todolist">https://Kisky3.github.io/react-todolist</a> 上了</p><img src="./2.png" style="width:500px;margin:40px 0"><p>打开 <a href="https://Kisky3.github.io/react-todolist">https://Kisky3.github.io/react-todolist</a> 检验是否能预览</p><img src="./3.png" style="width:500px;margin:40px 0">]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;把React项目部署到Github Page线上环境&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="react" scheme="https://kisky3.github.io/tags/react/"/>
+    
+      <category term="github pages" scheme="https://kisky3.github.io/tags/github-pages/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Install homebrew</title>
     <link href="https://kisky3.github.io/2019/09/29/Homebrew/"/>
     <id>https://kisky3.github.io/2019/09/29/Homebrew/</id>
     <published>2019-09-29T14:03:54.000Z</published>
-    <updated>2019-09-29T14:10:18.839Z</updated>
+    <updated>2019-09-29T14:13:18.920Z</updated>
     
     <content type="html"><![CDATA[<p>安装homebrew</p><a id="more"></a><h3 id="1-AppStore下载Xcode"><a href="#1-AppStore下载Xcode" class="headerlink" title="1. AppStore下载Xcode"></a>1. AppStore下载Xcode</h3><h3 id="2-global-install"><a href="#2-global-install" class="headerlink" title="2. global install"></a>2. global install</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure><h3 id="3-安装Homebrew"><a href="#3-安装Homebrew" class="headerlink" title="3.安装Homebrew"></a>3.安装Homebrew</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure><h3 id="4-确认"><a href="#4-确认" class="headerlink" title="4. 确认"></a>4. 确认</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew doctor</span><br></pre></td></tr></table></figure><p>没有安装 yarn。create-react-app 需要你事先安装好了 yarn，如果你没有安装，那就需要去下载 安装即可。如果你没安装 yarn，会自动降级为 npm。<br>Mac 安装 yarn 的方式很简单: brew install yarn 即可。</p>]]></content>
     
@@ -476,32 +500,6 @@
       <category term="Event  Capturing" scheme="https://kisky3.github.io/tags/Event-Capturing/"/>
     
       <category term="Dubbed Bubbling" scheme="https://kisky3.github.io/tags/Dubbed-Bubbling/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>About LocalStorage,Cookie And Session</title>
-    <link href="https://kisky3.github.io/2019/05/10/%E5%85%B3%E4%BA%8ELocalStorage-cookie%E5%92%8Csession/"/>
-    <id>https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/</id>
-    <published>2019-05-10T12:30:55.000Z</published>
-    <updated>2019-08-17T07:40:08.748Z</updated>
-    
-    <content type="html"><![CDATA[<p>关于LocalStorage,Cookie和Session </p><a id="more"></a><h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>网页的application下的Storage里的Cookie里可以看到Cookie的信息。网站只要设计登陆功能就一定会用到Cookie。</p><p>Cookie可以把一些需要存储的信息存储在当前的页面下。</p><img src="./1.png" style="width:500px"><p>包括Name和Value等。Domain表示在哪个域下是生效的。Path表示是否有下级的Path。Expries表示生效时间。设置Cookie时会设置生效时间，过了该时间之后则会失效。</p><p>当输入URL时，服务器会发送响应头，里面包含Set-Cookie，便可以设定Cookie。</p><img src="./3.png" style="width:500px"><p>当Cookie被保存在浏览器之后，再次刷新网页时，因为Cookie已经存在，所以响应头上就不会再带有同样的Set-Cookie了。</p><p>当浏览器被种下Cookie时，之后浏览器向该域名发送请求，比如请求图片等时，请求头都会带上Cookie。</p><img src="./4.png" style="width:500px"><p>关于Cookie，综上：</p><img src="./5.png" style="width:500px"><hr><h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>当一个用户打开淘宝登陆后，刷新浏览器仍然显示登陆状态。服务器如何分辨这次发起请求的用户是刚才登陆过的用户呢。<br>用户没有登陆时，在地址栏输入URL向服务器发送请求时，服务器看到该URL发送的请求头并没有带上Cookie，便可以知道用户没有登陆，于是便在自己服务器里创建了一个对象（一串数据），这个对象里有一个随机id，这个对象就是session。在服务器向浏览器发送响应头的时候，加上了Set-Cookie，把id给set上，当用户再次打开该网站的时候，就有了这个Cookie。<br>当用户再次刷新页面的时候，请求头带上了这个Coolie，服务器通过接收到的id和当时存在的对象进行对比，得出是该用户再次访问了该页面。<br>可以认为session是结合Cookie实行的一种机制，用于识别用户的身份。<br>session对象可以存在服务器内存中，也可以保存在数据库中。</p><img src="./6.png" style="width:500px"><hr><h3 id="LocalStorage"><a href="#LocalStorage" class="headerlink" title="LocalStorage"></a>LocalStorage</h3><p>localStorage就是一个存数据的地方，将数据存到浏览器里。<br>特点是存储数据量大，并且不会失效。</p><img src="./2.png" style="width:500px"><p>LocalStorage对应一个key和value，可以存储很多的内容，并且没有过期的时效。</p><img src="./7.png" style="width:500px">]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;关于LocalStorage,Cookie和Session &lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
-    
-    
-      <category term="Session" scheme="https://kisky3.github.io/tags/Session/"/>
-    
-      <category term="LocalStorage" scheme="https://kisky3.github.io/tags/LocalStorage/"/>
-    
-      <category term="Cookie" scheme="https://kisky3.github.io/tags/Cookie/"/>
     
   </entry>
   
