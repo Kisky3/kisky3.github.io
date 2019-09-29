@@ -445,7 +445,8 @@ blockquote {
   text-align: center;
   margin-top: 70px;
   height: auto;
-  padding: 20px 20px; }
+  padding: 20px 20px;
+  background: radial-gradient(black, transparent); }
 
 #header {
   display: block;
@@ -641,8 +642,9 @@ blockquote {
   font-family: SimHei;
   height: 100%;
   position: fixed;
+  background: rgba(0, 0, 0, 0.5);
   top: 0;
-  background: rgba(17, 26, 35, 0);
+  background: rgba(0, 0, 0, 0.5);
   overflow: auto;
   z-index: 20;
   transition: transform .25s ease-in-out;
@@ -650,8 +652,7 @@ blockquote {
   -webkit-font-smoothing: antialiased;
   font-smoothing: antialiased; }
   #sidebar .sidebar-container {
-    overflow: auto;
-    background: rgba(0, 0, 0, 0.5); }
+    overflow: auto; }
   #sidebar .sidebar-profile {
     color: #ebebeb;
     text-align: center;
@@ -2173,8 +2174,7 @@ a.fancybox {
 
 .postShorten-group .postShorten {
   margin-top: 15px;
-  border-bottom: 1px solid #eef2f8;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4); }
+  border-bottom: 1px solid #eef2f8; }
 
 .postShorten {
   position: relative;
@@ -2250,13 +2250,11 @@ a.fancybox {
     .postShorten .postShorten-thumbnailimg img {
       display: none; }
   .postShorten .postShorten-wrap {
-    padding: 15px;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4); } }
+    padding: 15px; } }
 
 @media only screen and (min-width: 480px) {
   .postShorten.postShorten--thumbnailimg-right .postShorten-wrap {
-    padding: 35px;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4); }
+    padding: 35px; }
   .postShorten.postShorten--thumbnailimg-left .postShorten-thumbnailimg {
     float: left;
     margin: 50px 0 0 30px; }
