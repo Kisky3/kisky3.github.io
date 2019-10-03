@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://kisky3.github.io/2019/08/25/TheCove/</loc>
+    <lastmod>2019-10-03</lastmod>
+  </url>  <url>
+    <loc>https://kisky3.github.io/2019/09/14/Started/</loc>
+    <lastmod>2019-10-03</lastmod>
+  </url>  <url>
     <loc>https://kisky3.github.io/2019/09/29/Homebrew/</loc>
     <lastmod>2019-10-03</lastmod>
   </url>  <url>
@@ -9,9 +15,6 @@
   </url>  <url>
     <loc>https://kisky3.github.io/2019/09/26/Elisabeth/</loc>
     <lastmod>2019-09-29</lastmod>
-  </url>  <url>
-    <loc>https://kisky3.github.io/2019/09/14/Started/</loc>
-    <lastmod>2019-09-15</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2019/08/30/Ajax/</loc>
     <lastmod>2019-09-14</lastmod>
@@ -23,9 +26,6 @@
     <lastmod>2019-09-09</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2019/08/27/jQuery%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6/</loc>
-    <lastmod>2019-09-07</lastmod>
-  </url>  <url>
-    <loc>https://kisky3.github.io/2019/08/25/TheCove/</loc>
     <lastmod>2019-09-07</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2019/06/23/FirstBlog/</loc>
