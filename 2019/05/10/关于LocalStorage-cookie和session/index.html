@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Xiang Yu&#39;s Blog">
+    <title>About LocalStorage,Cookie And Session - Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于LocalStorage,Cookie和Session \n\n\nCookie网页的application下的Storage里的Cookie里可以看到Cookie的信息。网站只要设计登陆功能就一定会用到Cookie。\nCookie可以把一些需要存储的信息存储在当前的页面下。\n\n\n包括Name和Value等。Domain表示在哪个域下是生效的。Path表示是否有下级的Path。Expries表示生效时间。设置Cookie时会设置生效时间，过了该时间之后则会失效。\n当输入URL时，服务器会发送响应头，里面包含Set-Cookie，便可以设定Cookie。\n\n\n当Cookie被保存在浏览器之后，再次刷新网页时，因为Cookie已经存在，所以响应头上就不会再带有同样的Set-Cookie了。\n当浏览器被种下Cookie时，之后浏览器向该域名发送请求，比如请求图片等时，请求头都会带上Cookie。\n\n\n关于Cookie，综上：\n\n\n\nSession当一个用户打开淘宝登陆后，刷新浏览器仍然显示登陆状态。服务器如何分辨这次发起请求的用户是刚才登陆过的用户呢。用户没有登陆时，在地址栏输入URL向服务器发送请求时，服务器看到该URL发送的请求头并没有带上Cookie，便可以知道用户没有登陆，于是便在自己服务器里创建了一个对象（一串数据），这个对象里有一个随机id，这个对象就是session。在服务器向浏览器发送响应头的时候，加上了Set-Cookie，把id给set上，当用户再次打开该网站的时候，就有了这个Cookie。当用户再次刷新页面的时候，请求头带上了这个Coolie，服务器通过接收到的id和当时存在的对象进行对比，得出是该用户再次访问了该页面。可以认为session是结合Cookie实行的一种机制，用于识别用户的身份。session对象可以存在服务器内存中，也可以保存在数据库中。\n\n\n\nLocalStoragelocalStorage就是一个存数据的地方，将数据存到浏览器里。特点是存储数据量大，并且不会失效。\n\n\nLocalStorage对应一个key和value，可以存储很多的内容，并且没有过期的时效。\n\n","dateCreated":"2019-05-10T21:30:55+09:00","dateModified":"2019-08-17T16:40:08+09:00","datePublished":"2019-05-10T21:30:55+09:00","description":"关于LocalStorage,Cookie和Session ","headline":"About LocalStorage,Cookie And Session","image":["20190510.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/","keywords":"Session, LocalStorage, Cookie","thumbnailUrl":"20190510.png"}</script>
+    <meta name="description" content="关于LocalStorage,Cookie和Session">
+<meta name="keywords" content="Session,LocalStorage,Cookie">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="About LocalStorage,Cookie And Session">
+<meta property="og:url" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/index.html">
+<meta property="og:site_name" content="Xiang Yu&#39;s Blog">
+<meta property="og:description" content="关于LocalStorage,Cookie和Session">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/3.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/4.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/5.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/6.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/7.png">
+<meta property="og:updated_time" content="2019-08-17T07:40:08.748Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="About LocalStorage,Cookie And Session">
+<meta name="twitter:description" content="关于LocalStorage,Cookie和Session">
+<meta name="twitter:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/20190510.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/20190510.png" />
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/cover.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/cover.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-aqwvotonicu5af28lj56vkoqakz31g9nzwiwpfr0pdfrowjqfuaht64ljvh5.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <body style="margin: 0; height:100%">
+        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Hello World, Hello Programming</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--partial"
+             style="background-image:url('/2019/05/10/关于LocalStorage-cookie和session/cover.jpg');"
+             data-behavior="5">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            About LocalStorage,Cookie And Session
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-05-10T21:30:55+09:00">
+	
+		    May 10, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="5"
+                 class="hasCover
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>关于LocalStorage,Cookie和Session </p>
+<a id="more"></a>
+
+<h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>网页的application下的Storage里的Cookie里可以看到Cookie的信息。网站只要设计登陆功能就一定会用到Cookie。</p>
+<p>Cookie可以把一些需要存储的信息存储在当前的页面下。</p>
+<img src="./1.png" style="width:500px">
+
+<p>包括Name和Value等。Domain表示在哪个域下是生效的。Path表示是否有下级的Path。Expries表示生效时间。设置Cookie时会设置生效时间，过了该时间之后则会失效。</p>
+<p>当输入URL时，服务器会发送响应头，里面包含Set-Cookie，便可以设定Cookie。</p>
+<img src="./3.png" style="width:500px">
+
+<p>当Cookie被保存在浏览器之后，再次刷新网页时，因为Cookie已经存在，所以响应头上就不会再带有同样的Set-Cookie了。</p>
+<p>当浏览器被种下Cookie时，之后浏览器向该域名发送请求，比如请求图片等时，请求头都会带上Cookie。</p>
+<img src="./4.png" style="width:500px">
+
+<p>关于Cookie，综上：</p>
+<img src="./5.png" style="width:500px">
+
+<hr>
+<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>当一个用户打开淘宝登陆后，刷新浏览器仍然显示登陆状态。服务器如何分辨这次发起请求的用户是刚才登陆过的用户呢。<br>用户没有登陆时，在地址栏输入URL向服务器发送请求时，服务器看到该URL发送的请求头并没有带上Cookie，便可以知道用户没有登陆，于是便在自己服务器里创建了一个对象（一串数据），这个对象里有一个随机id，这个对象就是session。在服务器向浏览器发送响应头的时候，加上了Set-Cookie，把id给set上，当用户再次打开该网站的时候，就有了这个Cookie。<br>当用户再次刷新页面的时候，请求头带上了这个Coolie，服务器通过接收到的id和当时存在的对象进行对比，得出是该用户再次访问了该页面。<br>可以认为session是结合Cookie实行的一种机制，用于识别用户的身份。<br>session对象可以存在服务器内存中，也可以保存在数据库中。</p>
+<img src="./6.png" style="width:500px">
+
+<hr>
+<h3 id="LocalStorage"><a href="#LocalStorage" class="headerlink" title="LocalStorage"></a>LocalStorage</h3><p>localStorage就是一个存数据的地方，将数据存到浏览器里。<br>特点是存储数据量大，并且不会失效。</p>
+<img src="./2.png" style="width:500px">
+
+<p>LocalStorage对应一个key和value，可以存储很多的内容，并且没有过期的时效。</p>
+<img src="./7.png" style="width:500px">
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Cookie/">Cookie</a> <a class="tag tag--primary tag--small t-link" href="/tags/LocalStorage/">LocalStorage</a> <a class="tag tag--primary tag--small t-link" href="/tags/Session/">Session</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/05/20/关于事件传播机制/" data-tooltip="About DOM Event Flow" aria-label="PREVIOUS: About DOM Event Flow">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/04/25/关于BOM对象/" data-tooltip="About Brower Object Model" aria-label="NEXT: About Brower Object Model">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer">
+    <i class="fas fa-paw"></i>
+    <span id="busuanzi_container_site_pv">
+      <span id="busuanzi_value_site_pv" style="color: CadetBlue; font-size: 20px"></span> visitors 
+    </span>
+    <br>
+    <span class="copyrights">
+        Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+<script>
+  var bszCaller,bszTag;!function(){var c,d,e,a=!1,b=[];ready=function(c){return a||"interactive"===document.readyState||"complete"===document.readyState?c.call(document):b.push(function(){return c.call(this)}),this},d=function(){for(var a=0,c=b.length;c>a;a++)b[a].apply(document);b=[]},e=function(){a||(a=!0,d.call(window),document.removeEventListener?document.removeEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.detachEvent("onreadystatechange",e),window==window.top&&(clearInterval(c),c=null)))},document.addEventListener?document.addEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.attachEvent("onreadystatechange",function(){/loaded|complete/.test(document.readyState)&&e()}),window==window.top&&(c=setInterval(function(){try{a||document.documentElement.doScroll("left")}catch(b){return}e()},5)))}(),bszCaller={fetch:function(a,b){var c="BusuanziCallback_"+Math.floor(1099511627776*Math.random());window[c]=this.evalCall(b),a=a.replace("=BusuanziCallback","="+c),scriptTag=document.createElement("SCRIPT"),scriptTag.type="text/javascript",scriptTag.defer=!0,scriptTag.src=a,document.getElementsByTagName("HEAD")[0].appendChild(scriptTag)},evalCall:function(a){return function(b){ready(function(){try{a(b),scriptTag.parentElement.removeChild(scriptTag)}catch(c){bszTag.hides()}})}}},bszCaller.fetch("//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback",function(a){bszTag.texts(a),bszTag.shows()}),bszTag={bszs:["site_pv","page_pv","site_uv"],texts:function(a){this.bszs.map(function(b){var c=document.getElementById("busuanzi_value_"+b);c&&(c.innerHTML=a[b])})},hides:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="none")})},shows:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="inline")})}};
+</script>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/05/20/关于事件传播机制/" data-tooltip="About DOM Event Flow" aria-label="PREVIOUS: About DOM Event Flow">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/04/25/关于BOM对象/" data-tooltip="About Brower Object Model" aria-label="NEXT: About Brower Object Model">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Hello World, Hello Programming</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end Enginner</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');">
+</div>
+
+<script>
+  class Circle {
+    //创建对象
+    //以一个圆为对象
+    //设置随机的 x，y坐标，r半径，_mx，_my移动的距离
+    //this.r是创建圆的半径，参数越大半径越大
+    //this._mx,this._my是移动的距离，参数越大移动
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.r = Math.random() * 10;
+      this._mx = Math.random();
+      this._my = Math.random();
+    }
+    //canvas 画圆和画直线
+    //画圆就是正常的用canvas画一个圆
+    //画直线是两个圆连线，为了避免直线过多，给圆圈距离设置了一个值，距离很远的圆圈，就不做连线处理
+    drawCircle(ctx) {
+      ctx.beginPath();
+      //arc() 方法使用一个中心点和半径，为一个画布的当前子路径添加一条弧。
+      ctx.arc(this.x, this.y, this.r, 0, 360)
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(204, 204, 204, 0.3)';
+      ctx.fill();
+    }
+    drawLine(ctx, _circle) {
+      let dx = this.x - _circle.x;
+      let dy = this.y - _circle.y;
+      let d = Math.sqrt(dx * dx + dy * dy)
+      if (d < 150) {
+        ctx.beginPath();
+        //开始一条路径，移动到位置 this.x,this.y。创建到达位置 _circle.x,_circle.y 的一条线：
+        ctx.moveTo(this.x, this.y); //起始点
+        ctx.lineTo(_circle.x, _circle.y); //终点
+        ctx.closePath();
+        ctx.strokeStyle = 'rgba(204, 204, 204, 0.3)';
+        ctx.stroke();
+      }
+    }
+    // 圆圈移动
+    // 圆圈移动的距离必须在屏幕范围内
+    move(w, h) {
+      this._mx = (this.x < w && this.x > 0) ? this._mx : (-this._mx);
+      this._my = (this.y < h && this.y > 0) ? this._my : (-this._my);
+      this.x += this._mx / 2;
+      this.y += this._my / 2;
+    }
+  }
+  //鼠标点画圆闪烁变动
+  class currentCirle extends Circle {
+    constructor(x, y) {
+      super(x, y)
+    }
+    drawCircle(ctx) {
+      ctx.beginPath();
+      //注释内容为鼠标焦点的地方圆圈半径变化
+      //this.r = (this.r < 14 && this.r > 1) ? this.r + (Math.random() * 2 - 1) : 2;
+      this.r = 8;
+      ctx.arc(this.x, this.y, this.r, 0, 360);
+      ctx.closePath();
+      //ctx.fillStyle = 'rgba(0,0,0,' + (parseInt(Math.random() * 100) / 100) + ')'
+      ctx.fillStyle = 'rgba(255, 77, 54, 0.6)'
+      ctx.fill();
+    }
+  }
+  //更新页面用requestAnimationFrame替代setTimeout
+  window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+  let canvas = document.getElementById('canvas');
+  let ctx = canvas.getContext('2d');
+  let w = canvas.width = canvas.offsetWidth;
+  let h = canvas.height = canvas.offsetHeight;
+  let circles = [];
+  let current_circle = new currentCirle(0, 0)
+  let draw = function() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < circles.length; i++) {
+      circles[i].move(w, h);
+      circles[i].drawCircle(ctx);
+      for (j = i + 1; j < circles.length; j++) {
+        circles[i].drawLine(ctx, circles[j])
+      }
+    }
+    if (current_circle.x) {
+      current_circle.drawCircle(ctx);
+      for (var k = 1; k < circles.length; k++) {
+        current_circle.drawLine(ctx, circles[k])
+      }
+    }
+    requestAnimationFrame(draw)
+  }
+  let init = function(num) {
+    for (var i = 0; i < num; i++) {
+      circles.push(new Circle(Math.random() * w, Math.random() * h));
+    }
+    draw();
+  }
+  window.addEventListener('load', init(60));
+  window.onmousemove = function(e) {
+    e = e || window.event;
+    current_circle.x = e.clientX;
+    current_circle.y = e.clientY;
+  }
+  window.onmouseout = function() {
+    current_circle.x = null;
+    current_circle.y = null;
+  }
+  </script>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-3aqcegpda1qmips6yoo6eaovp7rgkcwkwkzahnh8l81r35gsi8r4c2apcos7.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    </body>
+</html>

@@ -1,0 +1,683 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Xiang Yu&#39;s Blog">
+    <title>Webpack Getting Started - Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"Webpack的环境设置\n\n\n2018年8月25日更新，目前 webpack 已经更新值 4.17.1！不用配置很复杂的config也能运行了!!\n今天搭建webpack环境时顺便记录一下.\n什么是webpack\nwebpack is used to compile JavaScript modules. Once installed, you can interface with webpack either from its CLI or API. If you’re still new to webpack, please read through the core concepts and this comparison to learn why you might use it over the other tools that are out in the community.\n\n\nWebPack可以看做是模块打包机：它做的事情是，分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其转换和打包为合适的格式供浏览器使用。\n\n\n为什么要使用webpack很多人开发了各种优秀的 JavaScript 模块或组件，我们不想重复发明轮子，而是想直接利用别人的模块，就是类似 require 或 include 这样的机制，把别人的模块引入进来，这就是modules(模块化).但是 JavaScript 又没有 类或包 这样的概念，那应该如何做呢？如何去引入别人的模块？引入之后保证各种依赖关系不出错？这就是 webpack 要解决的问题。Webpack的处理速度更快更直接，能打包更多不同类型的文件。\nWebpack与其他打包工具的比较Webpack的核心原理\n\nWebpack的安装（版本4.40.1）1.首先创建自己的文件夹，初始化npm，安装本地化webpack并安装webpack-cli(一个能在命令行运行webpack的工具)\n12345mkdir webpack-democd webpack-demonpm init -ynpm install webpack --save-devnpm install webpack-cli --save-dev\n\n2.创建以下的文件结构以及内容\nproject:\n12345  webpack-demo  |- package.json+ |- index.html+ |- /src+   |- index.js\n\nsrc/index.js\n12345678910function component() &#123;  const element = document.createElement('div');  // Lodash, currently included via a script, is required for this line to work  element.innerHTML = _.join(['Hello', 'webpack'], ' ');  return element;&#125;document.body.appendChild(component());\n\nimdex.html\n12345678910&lt;!doctype html&gt;&lt;html&gt;  &lt;head&gt;    &lt;title&gt;Getting Started&lt;/title&gt;    &lt;script src='https://unpkg.com/lodash@4.16.6'&gt;&lt;/script&gt;  &lt;/head&gt;  &lt;body&gt;    &lt;script src='./src/index.js'&gt;&lt;/script&gt;  &lt;/body&gt;&lt;/html&gt;\n\n我们还想需要编辑package.json文件，使其我们的package私有化，并同时移除main入口，防止代码误公开。\npackage.json\n123456789101112131415161718&#123;    \"name\": \"webpack-demo\",    \"version\": \"1.0.0\",    \"description\": \"\",+   \"private\": true,-   \"main\": \"index.js\",    \"scripts\": &#123;      \"test\": \"echo \\\"Error: no test specified\\\" &amp;&amp; exit 1\"    &#125;,    \"keywords\": [],    \"author\": \"\",    \"license\": \"ISC\",    \"devDependencies\": &#123;      \"webpack\": \"^4.20.2\",      \"webpack-cli\": \"^3.1.2\"    &#125;,    \"dependencies\": &#123;&#125;  &#125;\n\n这个例子与&lt;script&gt;标签有默认依存关系，我们的index.js文件是依存于lodash并且在运行前是包含在网页里的.这是因为index.js并没有明确声明需要lodash，它只是假定默认了全局变量’_’的存在.所以我们需要创建打包.\n\n创建打包在以上的步骤中我们微调整了文件树结构，将源代码从发布代码中分离开.源代码就是我们可以直接编辑和修改的代码，发布代码就是通过压缩和最优化之后,在打包时最终输出的代码.它最终将会被加载到浏览器上.\nproject\n1234567  webpack-demo  |- package.json+ |- /dist+   |- index.html- |- index.html  |- /src    |- index.js\n\n为了打包依存于index.js的lodash，我们需要安装本地包.\n1npm install --save lodash\n\n然后引用lodash到我们的script里src/index.js\n123456789101112+ import _ from 'lodash';+  function component() &#123;    const element = document.createElement('div');-   // Lodash, currently included via a script, is required for this line to work    element.innerHTML = _.join(['Hello', 'webpack'], ' ');    return element;  &#125;  document.body.appendChild(component());\n\n现在，因为我们已经打包了script,我们需要更新index.html文件，删除原有的lodash&lt;script&gt;并import之后加入另一个&lt;script&gt;来加载打包.(替换/src文件)\n\ndist/index.html\n1234567891011  &lt;!doctype html&gt;  &lt;html&gt;   &lt;head&gt;     &lt;title&gt;Getting Started&lt;/title&gt;-    &lt;script src=\"https://unpkg.com/lodash@4.16.6\"&gt;&lt;/script&gt;   &lt;/head&gt;   &lt;body&gt;-    &lt;script src=\"./src/index.js\"&gt;&lt;/script&gt;+    &lt;script src=\"main.js\"&gt;&lt;/script&gt;   &lt;/body&gt;  &lt;/html&gt;\n\n在这个设置中，index.js 显式要求引入的 lodash 必须存在，然后将它绑定为 _（没有全局作用域污染）。通过声明模块所需的依赖，webpack 能够利用这些信息去构建依赖图，然后使用图生成一个会以正确顺序执行的优化 bundle。\n可以这样说，执行 npx webpack，会将我们的脚本 src/index.js 作为 入口起点，也会生成 dist/main.js 作为 输出。Node 8.2/npm 5.2.0 以上版本提供的 npx 命令，可以运行在开始安装的 webpack package 中的 webpack 二进制文件（即 ./node_modules/.bin/webpack）\n\n1234567891011npx webpack...Built at: 13/06/2018 11:52:07  Asset      Size  Chunks             Chunk Namesmain.js  70.4 KiB       0  [emitted]  main...WARNING in configuration(配置警告)The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/concepts/mode/('mode' 选项还未设置，webpack 会将其值回退至 'production'。将 'mode' 选项设置为 'development' 或 'production'，来启用对应环境的默认优化设置。)\n\n在浏览器中打开 index.html，如果一切正常，你应该能看到以下文本：’Hello webpack’\n","dateCreated":"2019-09-14T18:28:10+09:00","dateModified":"2019-10-05T20:09:38+09:00","datePublished":"2019-09-14T18:28:10+09:00","description":"Webpack的环境设置","headline":"Webpack Getting Started","image":["20190914.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/09/14/Started/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/09/14/Started/","keywords":"webpack, getting started","thumbnailUrl":"20190914.png"}</script>
+    <meta name="description" content="Webpack的环境设置">
+<meta name="keywords" content="webpack,getting started">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Webpack Getting Started">
+<meta property="og:url" content="https://kisky3.github.io/2019/09/14/Started/index.html">
+<meta property="og:site_name" content="Xiang Yu&#39;s Blog">
+<meta property="og:description" content="Webpack的环境设置">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-05T11:09:38.969Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Webpack Getting Started">
+<meta name="twitter:description" content="Webpack的环境设置">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/09/14/Started/20190914.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/09/14/Started/20190914.png" />
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/09/14/Started/cover.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/09/14/Started/cover.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-aqwvotonicu5af28lj56vkoqakz31g9nzwiwpfr0pdfrowjqfuaht64ljvh5.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <body style="margin: 0; height:100%">
+        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Hello World, Hello Programming</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--partial"
+             style="background-image:url('/2019/09/14/Started/cover.jpg');"
+             data-behavior="5">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Webpack Getting Started
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-09-14T18:28:10+09:00">
+	
+		    Sep 14, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/System-Setting/">System Setting</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="5"
+                 class="hasCover
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Webpack的环境设置</p>
+<a id="more"></a>
+
+<p>2018年8月25日更新，目前 webpack 已经更新值 4.17.1！不用配置很复杂的config也能运行了!!
+今天搭建webpack环境时顺便记录一下.</p>
+<h3 id="什么是webpack"><a href="#什么是webpack" class="headerlink" title="什么是webpack"></a>什么是webpack</h3><blockquote>
+<p>webpack is used to compile JavaScript modules. Once installed, you can interface with webpack either from its CLI or API. If you’re still new to webpack, please read through the core concepts and this comparison to learn why you might use it over the other tools that are out in the community.</p>
+</blockquote>
+<br>
+WebPack可以看做是模块打包机：它做的事情是，分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其转换和打包为合适的格式供浏览器使用。
+
+<hr>
+<h3 id="为什么要使用webpack"><a href="#为什么要使用webpack" class="headerlink" title="为什么要使用webpack"></a>为什么要使用webpack</h3><p>很多人开发了各种优秀的 JavaScript 模块或组件，我们不想重复发明轮子，而是想直接利用别人的模块，就是类似 require 或 include 这样的机制，把别人的模块引入进来，这就是modules(模块化).<br>但是 JavaScript 又没有 类或包 这样的概念，那应该如何做呢？如何去引入别人的模块？引入之后保证各种依赖关系不出错？这就是 webpack 要解决的问题。<br>Webpack的处理速度更快更直接，能打包更多不同类型的文件。</p>
+<p><a href="https://webpack.js.org/comparison/" target="_blank" rel="noopener">Webpack与其他打包工具的比较</a><br><a href="https://webpack.js.org/concepts/" target="_blank" rel="noopener">Webpack的核心原理</a></p>
+<hr>
+<h3 id="Webpack的安装（版本4-40-1）"><a href="#Webpack的安装（版本4-40-1）" class="headerlink" title="Webpack的安装（版本4.40.1）"></a>Webpack的安装（版本4.40.1）</h3><p>1.首先创建自己的文件夹，初始化npm，安装本地化webpack并安装webpack-cli(一个能在命令行运行webpack的工具)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir webpack-demo</span><br><span class="line">cd webpack-demo</span><br><span class="line">npm init -y</span><br><span class="line">npm install webpack --save-dev</span><br><span class="line">npm install webpack-cli --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>2.创建以下的文件结构以及内容</p>
+<p>project:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  webpack-demo</span><br><span class="line">  |- package.json</span><br><span class="line">+ |- index.html</span><br><span class="line">+ |- <span class="regexp">/src</span></span><br><span class="line"><span class="regexp">+   |- index.js</span></span><br></pre></td></tr></table></figure>
+
+<p>src/index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">component</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Lodash, currently included via a script, is required for this line to work</span></span><br><span class="line">  element.innerHTML = _.join([<span class="string">'Hello'</span>, <span class="string">'webpack'</span>], <span class="string">' '</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> element;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.body.appendChild(component());</span><br></pre></td></tr></table></figure>
+
+<p>imdex.html</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;Getting Started&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;script src='https:/</span><span class="regexp">/unpkg.com/</span>lodash@<span class="number">4.16</span><span class="number">.6</span><span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;/head&gt;</span></span><br><span class="line"><span class="string">  &lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;script src='</span>./src/index.js<span class="string">'&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">  &lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们还想需要编辑package.json文件，使其我们的package私有化，并同时移除main入口，防止代码误公开。</p>
+<p>package.json</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">"webpack-demo"</span>,</span><br><span class="line">    <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">    <span class="string">"description"</span>: <span class="string">""</span>,</span><br><span class="line">+   <span class="string">"private"</span>: <span class="literal">true</span>,</span><br><span class="line">-   <span class="string">"main"</span>: <span class="string">"index.js"</span>,</span><br><span class="line">    <span class="string">"scripts"</span>: &#123;</span><br><span class="line">      <span class="string">"test"</span>: <span class="string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"keywords"</span>: [],</span><br><span class="line">    <span class="string">"author"</span>: <span class="string">""</span>,</span><br><span class="line">    <span class="string">"license"</span>: <span class="string">"ISC"</span>,</span><br><span class="line">    <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">      <span class="string">"webpack"</span>: <span class="string">"^4.20.2"</span>,</span><br><span class="line">      <span class="string">"webpack-cli"</span>: <span class="string">"^3.1.2"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"dependencies"</span>: &#123;&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子与&lt;script&gt;标签有默认依存关系，我们的index.js文件是依存于lodash并且在运行前是包含在网页里的.<br>这是因为index.js并没有明确声明需要lodash，它只是假定默认了全局变量’_’的存在.<br>所以我们需要创建打包.</p>
+<hr>
+<h3 id="创建打包"><a href="#创建打包" class="headerlink" title="创建打包"></a>创建打包</h3><p>在以上的步骤中我们微调整了文件树结构，将源代码从发布代码中分离开.<br>源代码就是我们可以直接编辑和修改的代码，发布代码就是通过压缩和最优化之后,在打包时最终输出的代码.它最终将会被加载到浏览器上.</p>
+<p>project</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  webpack-demo</span><br><span class="line">  |- package.json</span><br><span class="line">+ |- <span class="regexp">/dist</span></span><br><span class="line"><span class="regexp">+   |- index.html</span></span><br><span class="line"><span class="regexp">- |- index.html</span></span><br><span class="line"><span class="regexp">  |- /</span>src</span><br><span class="line">    |- index.js</span><br></pre></td></tr></table></figure>
+
+<p>为了打包依存于index.js的lodash，我们需要安装本地包.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save lodash</span><br></pre></td></tr></table></figure>
+
+<p>然后引用lodash到我们的script里<br>src/index.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">+ <span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;</span><br><span class="line">+</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">component</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span><br><span class="line"></span><br><span class="line">-   <span class="comment">// Lodash, currently included via a script, is required for this line to work</span></span><br><span class="line">    element.innerHTML = _.join([<span class="string">'Hello'</span>, <span class="string">'webpack'</span>], <span class="string">' '</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> element;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(component());</span><br></pre></td></tr></table></figure>
+
+<p>现在，因为我们已经打包了script,我们需要更新index.html文件，删除原有的lodash&lt;script&gt;并import之后加入另一个&lt;script&gt;来加载打包.(替换/src文件)</p>
+<hr>
+<p>dist/index.html</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">  &lt;!doctype html&gt;</span><br><span class="line">  &lt;html&gt;</span><br><span class="line">   &lt;head&gt;</span><br><span class="line">     &lt;title&gt;Getting Started&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">-    &lt;script src="https:/</span><span class="regexp">/unpkg.com/</span>lodash@<span class="number">4.16</span><span class="number">.6</span><span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">   &lt;/head&gt;</span></span><br><span class="line"><span class="string">   &lt;body&gt;</span></span><br><span class="line"><span class="string">-    &lt;script src="</span>./src/index.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">+    &lt;script src="</span>main.js<span class="string">"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">   &lt;/body&gt;</span></span><br><span class="line"><span class="string">  &lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个设置中，index.js 显式要求引入的 lodash 必须存在，然后将它绑定为 _（没有全局作用域污染）。通过声明模块所需的依赖，webpack 能够利用这些信息去构建依赖图，然后使用图生成一个会以正确顺序执行的优化 bundle。</p>
+<p>可以这样说，执行 npx webpack，会将我们的脚本 src/index.js 作为 入口起点，也会生成 dist/main.js 作为 输出。Node 8.2/npm 5.2.0 以上版本提供的 npx 命令，可以运行在开始安装的 webpack package 中的 webpack 二进制文件（即 ./node_modules/.bin/webpack）</p>
+<hr>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">npx webpack</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">Built at: <span class="number">13</span>/<span class="number">06</span>/<span class="number">2018</span> <span class="number">11</span>:<span class="number">52</span>:<span class="number">07</span></span><br><span class="line">  Asset      Size  Chunks             Chunk Names</span><br><span class="line">main.js  <span class="number">70.4</span> KiB       <span class="number">0</span>  [emitted]  main</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">WARNING <span class="keyword">in</span> configuration(配置警告)</span><br><span class="line">The <span class="string">'mode'</span> option has not been <span class="keyword">set</span>, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.</span><br><span class="line">You can also <span class="keyword">set</span> it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/concepts/mode/('mode' 选项还未设置，webpack 会将其值回退至 'production'。将 'mode' 选项设置为 'development' 或 'production'，来启用对应环境的默认优化设置。)</span><br></pre></td></tr></table></figure>
+
+<p>在浏览器中打开 index.html，如果一切正常，你应该能看到以下文本：’Hello webpack’</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/getting-started/">getting started</a> <a class="tag tag--primary tag--small t-link" href="/tags/webpack/">webpack</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/09/26/Elisabeth/" data-tooltip="Elisabeth（musical 2005）" aria-label="PREVIOUS: Elisabeth（musical 2005）">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/08/30/Ajax/" data-tooltip="About jQuery ajax &amp; jsonp" aria-label="NEXT: About jQuery ajax &amp; jsonp">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/09/14/Started/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer">
+    <i class="fas fa-paw"></i>
+    <span id="busuanzi_container_site_pv">
+      <span id="busuanzi_value_site_pv" style="color: CadetBlue; font-size: 20px"></span> visitors 
+    </span>
+    <br>
+    <span class="copyrights">
+        Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+<script>
+  var bszCaller,bszTag;!function(){var c,d,e,a=!1,b=[];ready=function(c){return a||"interactive"===document.readyState||"complete"===document.readyState?c.call(document):b.push(function(){return c.call(this)}),this},d=function(){for(var a=0,c=b.length;c>a;a++)b[a].apply(document);b=[]},e=function(){a||(a=!0,d.call(window),document.removeEventListener?document.removeEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.detachEvent("onreadystatechange",e),window==window.top&&(clearInterval(c),c=null)))},document.addEventListener?document.addEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.attachEvent("onreadystatechange",function(){/loaded|complete/.test(document.readyState)&&e()}),window==window.top&&(c=setInterval(function(){try{a||document.documentElement.doScroll("left")}catch(b){return}e()},5)))}(),bszCaller={fetch:function(a,b){var c="BusuanziCallback_"+Math.floor(1099511627776*Math.random());window[c]=this.evalCall(b),a=a.replace("=BusuanziCallback","="+c),scriptTag=document.createElement("SCRIPT"),scriptTag.type="text/javascript",scriptTag.defer=!0,scriptTag.src=a,document.getElementsByTagName("HEAD")[0].appendChild(scriptTag)},evalCall:function(a){return function(b){ready(function(){try{a(b),scriptTag.parentElement.removeChild(scriptTag)}catch(c){bszTag.hides()}})}}},bszCaller.fetch("//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback",function(a){bszTag.texts(a),bszTag.shows()}),bszTag={bszs:["site_pv","page_pv","site_uv"],texts:function(a){this.bszs.map(function(b){var c=document.getElementById("busuanzi_value_"+b);c&&(c.innerHTML=a[b])})},hides:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="none")})},shows:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="inline")})}};
+</script>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/09/26/Elisabeth/" data-tooltip="Elisabeth（musical 2005）" aria-label="PREVIOUS: Elisabeth（musical 2005）">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/08/30/Ajax/" data-tooltip="About jQuery ajax &amp; jsonp" aria-label="NEXT: About jQuery ajax &amp; jsonp">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/09/14/Started/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/09/14/Started/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Hello World, Hello Programming</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end Enginner</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');">
+</div>
+
+<script>
+  class Circle {
+    //创建对象
+    //以一个圆为对象
+    //设置随机的 x，y坐标，r半径，_mx，_my移动的距离
+    //this.r是创建圆的半径，参数越大半径越大
+    //this._mx,this._my是移动的距离，参数越大移动
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+      this.r = Math.random() * 10;
+      this._mx = Math.random();
+      this._my = Math.random();
+    }
+    //canvas 画圆和画直线
+    //画圆就是正常的用canvas画一个圆
+    //画直线是两个圆连线，为了避免直线过多，给圆圈距离设置了一个值，距离很远的圆圈，就不做连线处理
+    drawCircle(ctx) {
+      ctx.beginPath();
+      //arc() 方法使用一个中心点和半径，为一个画布的当前子路径添加一条弧。
+      ctx.arc(this.x, this.y, this.r, 0, 360)
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(204, 204, 204, 0.3)';
+      ctx.fill();
+    }
+    drawLine(ctx, _circle) {
+      let dx = this.x - _circle.x;
+      let dy = this.y - _circle.y;
+      let d = Math.sqrt(dx * dx + dy * dy)
+      if (d < 150) {
+        ctx.beginPath();
+        //开始一条路径，移动到位置 this.x,this.y。创建到达位置 _circle.x,_circle.y 的一条线：
+        ctx.moveTo(this.x, this.y); //起始点
+        ctx.lineTo(_circle.x, _circle.y); //终点
+        ctx.closePath();
+        ctx.strokeStyle = 'rgba(204, 204, 204, 0.3)';
+        ctx.stroke();
+      }
+    }
+    // 圆圈移动
+    // 圆圈移动的距离必须在屏幕范围内
+    move(w, h) {
+      this._mx = (this.x < w && this.x > 0) ? this._mx : (-this._mx);
+      this._my = (this.y < h && this.y > 0) ? this._my : (-this._my);
+      this.x += this._mx / 2;
+      this.y += this._my / 2;
+    }
+  }
+  //鼠标点画圆闪烁变动
+  class currentCirle extends Circle {
+    constructor(x, y) {
+      super(x, y)
+    }
+    drawCircle(ctx) {
+      ctx.beginPath();
+      //注释内容为鼠标焦点的地方圆圈半径变化
+      //this.r = (this.r < 14 && this.r > 1) ? this.r + (Math.random() * 2 - 1) : 2;
+      this.r = 8;
+      ctx.arc(this.x, this.y, this.r, 0, 360);
+      ctx.closePath();
+      //ctx.fillStyle = 'rgba(0,0,0,' + (parseInt(Math.random() * 100) / 100) + ')'
+      ctx.fillStyle = 'rgba(255, 77, 54, 0.6)'
+      ctx.fill();
+    }
+  }
+  //更新页面用requestAnimationFrame替代setTimeout
+  window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+  let canvas = document.getElementById('canvas');
+  let ctx = canvas.getContext('2d');
+  let w = canvas.width = canvas.offsetWidth;
+  let h = canvas.height = canvas.offsetHeight;
+  let circles = [];
+  let current_circle = new currentCirle(0, 0)
+  let draw = function() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < circles.length; i++) {
+      circles[i].move(w, h);
+      circles[i].drawCircle(ctx);
+      for (j = i + 1; j < circles.length; j++) {
+        circles[i].drawLine(ctx, circles[j])
+      }
+    }
+    if (current_circle.x) {
+      current_circle.drawCircle(ctx);
+      for (var k = 1; k < circles.length; k++) {
+        current_circle.drawLine(ctx, circles[k])
+      }
+    }
+    requestAnimationFrame(draw)
+  }
+  let init = function(num) {
+    for (var i = 0; i < num; i++) {
+      circles.push(new Circle(Math.random() * w, Math.random() * h));
+    }
+    draw();
+  }
+  window.addEventListener('load', init(60));
+  window.onmousemove = function(e) {
+    e = e || window.event;
+    current_circle.x = e.clientX;
+    current_circle.y = e.clientY;
+  }
+  window.onmouseout = function() {
+    current_circle.x = null;
+    current_circle.y = null;
+  }
+  </script>
+        <!--SCRIPTS-->
+<script src="/assets/js/script-3aqcegpda1qmips6yoo6eaovp7rgkcwkwkzahnh8l81r35gsi8r4c2apcos7.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    </body>
+</html>
