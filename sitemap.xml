@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kisky3.github.io/2019/06/23/FirstBlog/</loc>
+    
+    <lastmod>2019-11-07T14:45:19.902Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kisky3.github.io/2019/10/31/createDockerModx/</loc>
     
     <lastmod>2019-11-07T14:10:32.387Z</lastmod>
@@ -124,13 +131,6 @@
     <loc>https://kisky3.github.io/2019/08/27/jQuery%E7%BB%91%E5%AE%9A%E4%BA%8B%E4%BB%B6/</loc>
     
     <lastmod>2019-09-07T16:16:32.679Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://kisky3.github.io/2019/06/23/FirstBlog/</loc>
-    
-    <lastmod>2019-09-07T11:59:46.163Z</lastmod>
     
   </url>
   
