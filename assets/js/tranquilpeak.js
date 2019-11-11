@@ -33,15 +33,6 @@
         e.preventDefault();
         self.playBack();
       });
-      // Detect click on close button outside of card
-      self.$about.click(function(e) {
-        e.preventDefault();
-        self.playBack();
-      });
-      // Deny closing the about page when users click on the card
-      self.$aboutCard.click(function(event) {
-        event.stopPropagation();
-      });
     },
 
     /**
@@ -1320,36 +1311,42 @@
 ;(function($) {
   'use strict';
 
+  // Animate tabs of tabbed code blocks
+
   /**
-   * Animate tabs and tab contents of tabbed codeblocks
-   * @param {Object} $tabbedCodeblocks
-   * @return {undefined}
+   * TabbedCodeBlock
+   * @param {String} elems
+   * @constructor
    */
-  function animateTabbedCodeBlocks($tabbedCodeblocks) {
-    $tabbedCodeblocks.find('.tab').click(function() {
-      var $currentTabButton = $(this);
-      var $currentTabbedCodeblock = $currentTabButton.parent().parent().parent();
-      var $codeblocks = $currentTabbedCodeblock.find('.tabs-content').children('pre, .highlight');
-      var $activeCodeblock = $codeblocks.eq($currentTabButton.index());
-      var $tabButtons = $currentTabButton.siblings();
+  var TabbedCodeBlock = function(elems) {
+    this.$tabbedCodeBlocs = $(elems);
+  };
 
-      $tabButtons.removeClass('active');
-      $currentTabButton.addClass('active');
-      $codeblocks.hide();
-      $activeCodeblock.show();
-
-      // Resize the active codeblock according to the width of the window.
-      var $gutter = $activeCodeblock.find('.gutter');
-      var $code = $activeCodeblock.find('.code');
-      var codePaddings = $code.width() - $code.innerWidth();
-      var width = $activeCodeblock.outerWidth() - $gutter.outerWidth() + codePaddings;
-      $code.css('width', width);
-      $code.children('pre').css('width', width);
-    });
-  }
+  TabbedCodeBlock.prototype = {
+    /**
+     * Run TabbedCodeBlock feature
+     * @return {void}
+     */
+    run: function() {
+      var self = this;
+      self.$tabbedCodeBlocs.find('.tab').click(function() {
+        var $codeblock = $(this).parent().parent().parent();
+        var $tabsContent = $codeblock.find('.tabs-content').children('pre, .highlight');
+        // remove `active` css class on all tabs
+        $(this).siblings().removeClass('active');
+        // add `active` css class on the clicked tab
+        $(this).addClass('active');
+        // hide all tab contents
+        $tabsContent.hide();
+        // show only the right one
+        $tabsContent.eq($(this).index()).show();
+      });
+    }
+  };
 
   $(document).ready(function() {
-    animateTabbedCodeBlocks($('.codeblock--tabbed'));
+    var tabbedCodeBlocks = new TabbedCodeBlock('.codeblock--tabbed');
+    tabbedCodeBlocks.run();
   });
 })(jQuery);
 ;(function($) {
