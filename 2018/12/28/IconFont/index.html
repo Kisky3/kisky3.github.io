@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en" style="height:100%">
+<html lang="en">
     
 <head>
     <meta charset="UTF-8">
@@ -12,12 +12,10 @@
         <meta name="keywords" content="hexo,javascript,front-end,">
     
     
-        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
-    
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于 IconFont\n\nIcon Font简而言之也就是把字体做成图标\nIcon Font的原理例：\n123456&lt;p&gt;Hello &amp;#x9965; &amp;#x4eba;&amp;#x8c37;&lt;/p&gt;&lt;style&gt;p&#123;  font-family: serif;&#125;&lt;/style&gt;\n\n这里把「饥人谷」这几个字改为 unicode 编码，此时页面上仍然能以serif 字体展示「饥人谷」三个字。使用浏览器打开页面时，浏览器会读取 HTML 文件进行解析渲染。当读到「饥人谷」三个字时会转换成对应的 unicode码（可以认为是世界上任意一种文字的特定编号）。再根据HTML 里设置的 font-family （如果没设置则使用浏览器默认设置）去查找电脑里（如果有自定义字体@font-face ，则加载对应字体文件）对应字体的字体文件。找到文件后根据 unicode 码去查找绘制外形，找到后绘制到页面上。 所以对于第二个范例， 「&amp;#9965」是「饥」的 unicede 码，所以用户最终也能看到serf字体样式的「饥」字。\n\nIcon Font生成和使用步骤1.制作字体文件这个需要设计师把字体文件做好。一般不属于前端工作范畴，在这里掠过不讲。\n2.声明font-family\n使用本地链接\n使用第三方链接\n\n3.使用font-family\n使用HTML实体\n使用CSS：before\n\n\n最常用的Icon Font生成步骤1. 点击打开阿里巴巴的免费字体工具网站2. 在搜索栏里搜索自己需要的图标（英文）\n\n3. 用Github登陆后选择自己中意的图标，添加入库\n\n4. 可以选择添加至项目或者直接下载至本地下图的search下的&amp;#xe71d为HTML实体，可以用实体显示但是不便记忆所以不推荐也可以使用CSS before 的content加上/ 导出icon\n1.icon-search:before &#123; content: \"\\e71d\"; &#125;\n\n\n\n5. 下载至本地后解压为了浏览器兼容，建议复制后缀名为.eot,svg,ttf和woff的4个文件到自己的目录下\n\n\n6. 复制iconfont.css的内容到自己的页面，并直接添加span和class引用生产的字体文件\n\n7. 保存并查看","dateCreated":"2018-12-28T19:38:46+09:00","dateModified":"2019-08-17T16:38:37+09:00","datePublished":"2018-12-28T19:38:46+09:00","description":"关于 IconFont","headline":"About IconFont","image":["20181228.jpg","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/12/28/IconFont/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2018/12/28/IconFont/","keywords":"CSS, IconFont","thumbnailUrl":"20181228.jpg"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"关于 IconFont\n\nIcon Font简而言之也就是把字体做成图标\nIcon Font的原理例：\n123456&lt;p&gt;Hello &amp;#x9965; &amp;#x4eba;&amp;#x8c37;&lt;/p&gt;&lt;style&gt;p&#123;  font-family: serif;&#125;&lt;/style&gt;\n\n这里把「饥人谷」这几个字改为 unicode 编码，此时页面上仍然能以serif 字体展示「饥人谷」三个字。使用浏览器打开页面时，浏览器会读取 HTML 文件进行解析渲染。当读到「饥人谷」三个字时会转换成对应的 unicode码（可以认为是世界上任意一种文字的特定编号）。再根据HTML 里设置的 font-family （如果没设置则使用浏览器默认设置）去查找电脑里（如果有自定义字体@font-face ，则加载对应字体文件）对应字体的字体文件。找到文件后根据 unicode 码去查找绘制外形，找到后绘制到页面上。 所以对于第二个范例， 「&amp;#9965」是「饥」的 unicede 码，所以用户最终也能看到serf字体样式的「饥」字。\n\nIcon Font生成和使用步骤1.制作字体文件这个需要设计师把字体文件做好。一般不属于前端工作范畴，在这里掠过不讲。\n2.声明font-family\n使用本地链接\n使用第三方链接\n\n3.使用font-family\n使用HTML实体\n使用CSS：before\n\n\n最常用的Icon Font生成步骤1. 点击打开阿里巴巴的免费字体工具网站2. 在搜索栏里搜索自己需要的图标（英文）\n\n3. 用Github登陆后选择自己中意的图标，添加入库\n\n4. 可以选择添加至项目或者直接下载至本地下图的search下的&amp;#xe71d为HTML实体，可以用实体显示但是不便记忆所以不推荐也可以使用CSS before 的content加上/ 导出icon\n1.icon-search:before &#123; content: \"\\e71d\"; &#125;\n\n\n\n5. 下载至本地后解压为了浏览器兼容，建议复制后缀名为.eot,svg,ttf和woff的4个文件到自己的目录下\n\n\n6. 复制iconfont.css的内容到自己的页面，并直接添加span和class引用生产的字体文件\n\n7. 保存并查看","dateCreated":"2018-12-28T19:38:46+09:00","dateModified":"2019-08-17T16:38:37+09:00","datePublished":"2018-12-28T19:38:46+09:00","description":"关于 IconFont","headline":"About IconFont","image":["20181228.jpg","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/12/28/IconFont/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kisky3.github.io/2018/12/28/IconFont/","keywords":"CSS, IconFont","thumbnailUrl":"20181228.jpg"}</script>
     <meta name="description" content="关于 IconFont">
 <meta name="keywords" content="CSS,IconFont">
 <meta property="og:type" content="blog">
@@ -41,8 +39,6 @@
         
     
     
-        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
-    
     
         <meta property="og:image" content="https://kisky3.github.io/2018/12/28/IconFont/20181228.jpg"/>
         <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/12/28/IconFont/20181228.jpg" />
@@ -53,36 +49,24 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-aqwvotonicu5af28lj56vkoqakz31g9nzwiwpfr0pdfrowjqfuaht64ljvh5.min.css">
+    <link rel="stylesheet" href="/assets/css/all.css">
+    <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" href="/assets/css/thumbs.css">
+    <link rel="stylesheet" href="/assets/css/tranquilpeak.css">
     <!--STYLES END-->
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-143035141-1');
-    </script>
-
 
     
 </head>
 
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <body style="margin: 0; height:100%">
-        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
+    <body>
         <div id="blog">
             <!-- Define author's picture -->
 
 
     
-        
-            
-        
-    
 
-<header id="header" data-behavior="5">
+<header id="header" data-behavior="4">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
@@ -93,8 +77,6 @@
                 href="#about">
         
         
-            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
-        
         </a>
     
 </header>
@@ -102,23 +84,8 @@
             <!-- Define author's picture -->
 
 
-
-        
-    
-
-<nav id="sidebar" data-behavior="5">
+<nav id="sidebar" data-behavior="4">
     <div class="sidebar-container">
-        
-            <div class="sidebar-profile">
-                <a href="/#about">
-                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
-                </a>
-                <h4 class="sidebar-profile-name">Xiang Yu</h4>
-                
-                    <h5 class="sidebar-profile-bio"><p>Hello World, Hello Programming</p>
-</h5>
-                
-            </div>
         
         
             <ul class="sidebar-buttons">
@@ -175,13 +142,39 @@
                     </a>
             </li>
             
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="Search"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
         </ul>
         
             <ul class="sidebar-buttons">
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
                     
                         <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">GitHub</span>
@@ -190,7 +183,25 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
+                        <a  class="sidebar-button-link " href="http://stackoverflow.com/users" target="_blank" rel="noopener" title="Stack Overflow">
+                    
+                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Stack Overflow</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://twitter.com/" target="_blank" rel="noopener" title="Twitter">
+                    
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
                     
                         <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">Facebook</span>
@@ -199,21 +210,26 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link "
-                             href="/categories/About-Me"
-                            
-                            title="Diaries"
-                        >
+                        <a  class="sidebar-button-link " href="https://plus.google.com/" target="_blank" rel="noopener" title="Google +">
                     
-                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Diaries</span>
+                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Google +</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.linkedin.com/profile/" target="_blank" rel="noopener" title="LinkedIn">
+                    
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
                     </a>
             </li>
             
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/kisky3@126.com"
+                             href="/mailto"
                             title="Mail"
                         >
                     
@@ -249,7 +265,7 @@
                     text-left
                     post-header-cover--partial"
              style="background-image:url('/2018/12/28/IconFont/cover.jpg');"
-             data-behavior="5">
+             data-behavior="4">
             
                 <div class="post-header main-content-wrap text-left">
     
@@ -279,7 +295,7 @@
             
         </div>
 
-            <div id="main" data-behavior="5"
+            <div id="main" data-behavior="4"
                  class="hasCover
                         hasCoverMetaIn
                         hasCoverCaption">
@@ -371,7 +387,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2018/12/28/IconFont/" title="Share on Facebook">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -379,8 +395,16 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2018/12/28/IconFont/" title="global.share_on_movies">
-                    <i class="fa file-video" aria-hidden="true"></i>
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2018/12/28/IconFont/" title="Share on Twitter">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2018/12/28/IconFont/" title="Share on Google+">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
                 </a>
             </li>
         
@@ -403,23 +427,15 @@
 
 
 
-                <footer id="footer">
-    <i class="fas fa-paw"></i>
-    <span id="busuanzi_container_site_pv">
-      <span id="busuanzi_value_site_pv" style="color: CadetBlue; font-size: 20px"></span> visitors 
-    </span>
-    <br>
+                <footer id="footer" class="main-content-wrap">
     <span class="copyrights">
         Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
     </span>
 </footer>
-<script>
-  var bszCaller,bszTag;!function(){var c,d,e,a=!1,b=[];ready=function(c){return a||"interactive"===document.readyState||"complete"===document.readyState?c.call(document):b.push(function(){return c.call(this)}),this},d=function(){for(var a=0,c=b.length;c>a;a++)b[a].apply(document);b=[]},e=function(){a||(a=!0,d.call(window),document.removeEventListener?document.removeEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.detachEvent("onreadystatechange",e),window==window.top&&(clearInterval(c),c=null)))},document.addEventListener?document.addEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.attachEvent("onreadystatechange",function(){/loaded|complete/.test(document.readyState)&&e()}),window==window.top&&(c=setInterval(function(){try{a||document.documentElement.doScroll("left")}catch(b){return}e()},5)))}(),bszCaller={fetch:function(a,b){var c="BusuanziCallback_"+Math.floor(1099511627776*Math.random());window[c]=this.evalCall(b),a=a.replace("=BusuanziCallback","="+c),scriptTag=document.createElement("SCRIPT"),scriptTag.type="text/javascript",scriptTag.defer=!0,scriptTag.src=a,document.getElementsByTagName("HEAD")[0].appendChild(scriptTag)},evalCall:function(a){return function(b){ready(function(){try{a(b),scriptTag.parentElement.removeChild(scriptTag)}catch(c){bszTag.hides()}})}}},bszCaller.fetch("//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback",function(a){bszTag.texts(a),bszTag.shows()}),bszTag={bszs:["site_pv","page_pv","site_uv"],texts:function(a){this.bszs.map(function(b){var c=document.getElementById("busuanzi_value_"+b);c&&(c.innerHTML=a[b])})},hides:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="none")})},shows:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="inline")})}};
-</script>
 
             </div>
             
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
                     <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
@@ -453,7 +469,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2018/12/28/IconFont/" title="Share on Facebook">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -461,8 +477,16 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2018/12/28/IconFont/" title="global.share_on_movies">
-                    <i class="fa file-video" aria-hidden="true"></i>
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2018/12/28/IconFont/" title="Share on Twitter">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2018/12/28/IconFont/" title="Share on Google+">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
                 </a>
             </li>
         
@@ -480,14 +504,14 @@
 
                 </div>
                 
-    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
         <i id="btn-close-shareoptions" class="fa fa-times"></i>
         <ul class="share-options">
             
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2018/12/28/IconFont/">
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
                     </a>
                 </li>
@@ -495,8 +519,16 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2018/12/28/IconFont/">
-                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2018/12/28/IconFont/">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2018/12/28/IconFont/">
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
                     </a>
                 </li>
             
@@ -509,37 +541,25 @@
         
 
 
-    
-        
-    
-
 <div id="about">
     <div id="about-card">
         <div id="about-btn-close">
             <i class="fa fa-times"></i>
         </div>
         
-            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
-        
             <h4 id="about-card-name">Xiang Yu</h4>
         
-            <div id="about-card-bio"><p>Hello World, Hello Programming</p>
+            <div id="about-card-bio"><p>author.bio</p>
 </div>
         
         
             <div id="about-card-job">
                 <i class="fa fa-briefcase"></i>
                 <br/>
-                <p>Front-end Enginner</p>
+                <p>author.job</p>
 
             </div>
         
-        
-            <div id="about-card-location">
-                <i class="fa fa-map-marker-alt"></i>
-                <br/>
-                Tokyo
-            </div>
         
     </div>
 </div>
@@ -547,56 +567,11 @@
         
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
-<script>
-  document.addEventListener('touchmove', function (e) {
-      e.preventDefault()
-  })
-  var c = document.getElementsByTagName('canvas')[0],
-      x = c.getContext('2d'),
-      pr = window.devicePixelRatio || 1,
-      w = window.innerWidth,
-      h = window.innerHeight,
-      f = 90,
-      q,
-      m = Math,
-      r = 0,
-      u = m.PI*2,
-      v = m.cos,
-      z = m.random
-  c.width = w*pr
-  c.height = h*pr
-  x.scale(pr, pr)
-  x.globalAlpha = 0.6
-  function i(){
-      x.clearRect(0,0,w,h)
-      q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-      while(q[1].x<w+f) d(q[0], q[1])
-    }
-    function d(i,j){   
-        x.beginPath()
-        x.moveTo(i.x, i.y)
-        x.lineTo(j.x, j.y)
-        var k = j.x + (z()*2-0.25)*f,
-            n = y(j.y)
-        x.lineTo(k, n)
-        x.closePath()
-        r-=u/-50
-        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-        x.fill()
-        q[0] = q[1]
-        q[1] = {x:k,y:n}
-    }
-    function y(p){
-        var t = p + (z()*2-1.1)*f
-        return (t>h||t<0) ? y(p) : t
-    }
-    document.onclick = i
-    document.ontouchstart = i
-    i()
-</script>
-
         <!--SCRIPTS-->
-<script src="/assets/js/script-3aqcegpda1qmips6yoo6eaovp7rgkcwkwkzahnh8l81r35gsi8r4c2apcos7.min.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/thumbs.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
 <!--SCRIPTS END-->
 
 
