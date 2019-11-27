@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-11-25T13:27:37.836Z</updated>
+  <updated>2019-11-27T14:34:52.491Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>nodebrew</title>
+    <link href="https://kisky3.github.io/2019/11/27/nodebrew/"/>
+    <id>https://kisky3.github.io/2019/11/27/nodebrew/</id>
+    <published>2019-11-27T14:34:52.000Z</published>
+    <updated>2019-11-27T14:34:52.491Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Npm And Yarn</title>
@@ -474,28 +488,6 @@
     <summary type="html">
     
       &lt;p&gt;jQuery常用API&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
-    
-    
-      <category term="jQuery" scheme="https://kisky3.github.io/tags/jQuery/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>About jQuery</title>
-    <link href="https://kisky3.github.io/2019/07/12/jQuery/"/>
-    <id>https://kisky3.github.io/2019/07/12/jQuery/</id>
-    <published>2019-07-12T12:05:02.000Z</published>
-    <updated>2019-08-17T07:41:14.600Z</updated>
-    
-    <content type="html"><![CDATA[<p>关于jQuery</p><a id="more"></a><h3 id="jQuery-1-x-版本和-2-x-版本有什么区别"><a href="#jQuery-1-x-版本和-2-x-版本有什么区别" class="headerlink" title="jQuery 1.x 版本和 2.x 版本有什么区别"></a>jQuery 1.x 版本和 2.x 版本有什么区别</h3><p>1.x：<br>兼容ie678,使用最为广泛的，官方只做BUG维护，功能不再新增。因此一般项目来说，使用1.x版本就可以了，最终版本：1.12.4 (2016年5月20日)</p><p>2.x：<br>不兼容ie678，很少有人使用，官方只做BUG维护，功能不再新增。如果不考虑兼容低版本的浏览器可以使用2.x，最终版本：2.2.4 (2016年5月20日)</p><hr><h3 id="jQuery-常见的选择器"><a href="#jQuery-常见的选择器" class="headerlink" title="jQuery 常见的选择器"></a>jQuery 常见的选择器</h3><p>例子</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"ul"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"li3"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span>&gt;</span>3<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>p1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>4<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>p2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>我被选中了<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure><h4 id="eq-index"><a href="#eq-index" class="headerlink" title=".eq(index)"></a>.eq(index)</h4><p>对于一个特定结果集，我们想获取到指定index的jQuery对象，可以使用eq方法<br><img src="./1.png" style="width:200px;margin:40px 0"></p><h4 id="next"><a href="#next" class="headerlink" title=".next()"></a>.next()</h4><p>next取得匹配的元素集合中每一个元素紧邻的后面同辈元素的元素集合。如果提供一个选择器，那么只有紧跟着的兄弟元素满足选择器时，才会返回此元素。<br><img src="./2.png" style="width:200px;margin:40px 0"></p><h4 id="prev"><a href="#prev" class="headerlink" title=".prev()"></a>.prev()</h4><p>prev正好相反，获取元素之前的同辈元素,如果同辈之前没有元素则返回空<br><img src="./3.png" style="width:200px;margin:40px 0"></p><h4 id="nextAll"><a href="#nextAll" class="headerlink" title=".nextAll()"></a>.nextAll()</h4><p>nextAll获得每个匹配元素集合中每个元素所有后面的同辈元素，选择性筛选的选择器<br><img src="./4.png" style="width:200px;margin:40px 0"></p><h4 id="prevAll"><a href="#prevAll" class="headerlink" title=".prevAll()"></a>.prevAll()</h4><p>prevAll与nextAll相反，获取元素前面的同辈元素<br><img src="./5.png" style="width:200px;margin:40px 0"></p><h4 id="siblings"><a href="#siblings" class="headerlink" title=".siblings()"></a>.siblings()</h4><p>获得匹配元素集合中每个元素的兄弟元素,可以提供一个可选的选择器<br><img src="./6.png" style="width:200px;margin:40px 0"></p><h4 id="parent"><a href="#parent" class="headerlink" title=".parent()"></a>.parent()</h4><p>取得匹配元素集合中，每个元素的父元素，可以提供一个可选的选择器<br><img src="./7.png" style="width:200px;margin:40px 0"></p><h4 id="parents"><a href="#parents" class="headerlink" title=".parents()"></a>.parents()</h4><p>获得集合中每个匹配元素的祖先元素，可以提供一个可选的选择器作为参数<br><img src="./8.png" style="width:200px;margin:40px 0"></p><h4 id="children"><a href="#children" class="headerlink" title=".children()"></a>.children()</h4><p>获得匹配元素集合中每个元素的子元素，选择器选择性筛选<br><img src="./9.png" style="width:200px;margin:40px 0"></p><h4 id="find"><a href="#find" class="headerlink" title=".find()"></a>.find()</h4><p>查找符合选择器的后代元素<br><img src="./10.png" style="width:200px;margin:40px 0"></p><h4 id="filter"><a href="#filter" class="headerlink" title=".filter()"></a>.filter()</h4><p>筛选当前结果集中符合条件的对象，参数可以是一个选择器或者一个函数<br><img src="./11.png" style="width:300px;margin:40px 0"></p><h4 id="has"><a href="#has" class="headerlink" title=".has()"></a>.has()</h4><p>筛选匹配元素集合中的那些有相匹配的选择器或DOM元素的后代元素<br><img src="./12.png" style="width:300px;margin:40px 0"></p><h4 id="is"><a href="#is" class="headerlink" title=".is()"></a>.is()</h4><p>判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素，或者jQuery对象，如果这些元素至少一个匹配给定的参数，那么返回true<br><img src="./13.png" style="width:300px;margin:40px 0"></p><hr><h3 id="DOM和jQuery的相互转换"><a href="#DOM和jQuery的相互转换" class="headerlink" title="DOM和jQuery的相互转换"></a>DOM和jQuery的相互转换</h3><p>jQuery对象与dom的区别<br>jQuery对象是一个类数组的对象，对象原型中封装了许多jQuery自定义的方法。在jQuery对象中无法使用DOM对象的任何方法。</p><ul><li><p>DOM对象===&gt;jQuery对象</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var dom =document.getElementById(&quot;id&quot;);  // DOM对象</span><br><span class="line">var $dom = $(dom);  // jQuery对象</span><br></pre></td></tr></table></figure></li><li><p>Query对象====&gt;DOM对象</p></li></ul><p>1.jQuery对象是一个数据对象，通过 [index] 的方法</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var $dom = $(&quot;#id&quot;) ;  // jQuery对象</span><br><span class="line">var dom = $dom [0];   // DOM对象</span><br></pre></td></tr></table></figure><p>2.jQuery提供方法，通过 .get(index) 方法</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var $dom = $(&quot;#id&quot;);  // jQuery对象</span><br><span class="line">var dom = $dom.get(0); // DOM对象</span><br></pre></td></tr></table></figure><h3 id="window-onload和-document-ready有什么区别？document-onDOMContentLoaded呢"><a href="#window-onload和-document-ready有什么区别？document-onDOMContentLoaded呢" class="headerlink" title="window.onload和$(document).ready有什么区别？document.onDOMContentLoaded呢?"></a>window.onload和$(document).ready有什么区别？document.onDOMContentLoaded呢?</h3><p>window.onload是在dom文档树加载完和所有文件加载完之后执行一个函数document.ready原生中没有这个方法。<br>jquery中有$().ready(function),在dom文档树加载完之后执行一个函数（注意，这里面的文档树加载完全不代表全部文件加载完）。<br>$(document).ready要比winndow.onload先执行window.onload只能出来一次，$(document).ready可以出现多次。</p><p>当document.onDOMContentLoaded事件触发时，仅当DOM加载完成，不包括样式表，图片，flash。<br>两者触发时机不同，window.触发的更晚。<br>jQuery的$(document).ready就是利用了DOMContentLoaded来实现的，但是DOMContentLoaded在IE9以下不支持，需要对IE9以下版本进行兼容处理。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;关于jQuery&lt;/p&gt;
     
     </summary>
     
