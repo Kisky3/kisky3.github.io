@@ -12,10 +12,12 @@
         <meta name="keywords" content="hexo,javascript,front-end,">
     
     
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"关于React的虚拟Dom和JSX\n\nReact的实行理念首先JS的DOM操作一般经历了从页面获取已存在的元素，进行修改操作，再渲染回页面这三个过程。比如页面里有一个span标签，JS想要编辑的时候需要先从页面获取标签(利用id等),进行操作(数字加1),再将编辑后的数据返回页面（innerText等）。\n而react有一种更先进的理念，也就相当于不从Dom获取数据，而是只是向页面更新数据。比如一开始页面里什么都没有，react里有一个number变量，并且在JSX里生成一个span的对象（虚拟Dom),再将对象生同步成到页面中，JSX里进行span内容的修改操作，然后再一次自动更新到页面的span里。\nreact在生成新的虚拟Dom之后,会与旧的虚拟Dom的内容进行比较,再将有变化的那一部分,同步到页面中。而进行内部对象span的更新速度远比JS直接更新Dom的速度要快很多,并且少了从页面获取元素的这一过程,导致react的效率和性能都高于普通JS。\n关于JSXJSX不是html,而是相当于利用Html的形式来更简便地写JS。\nJSX就是将下面的语法2翻译成上面的JS语法1，这相当于以简便的Html的形式来写JS，这里包含了几个虚拟Dom，也就是表示DOM节点的对象。\n1234567891011121314151617// JS语法1function render()&#123;  let h = React.createElement;  let div =   h('div',&#123;className:'parent'&#125;,    h('span',&#123;className:'red'&#125;,number),    h('button',&#123;onClick:onClickButton&#125;,'+'),    h('button',&#123;onClickButton&#125;,'-')  )&#125;// 语法2&lt;div className=\"parent\"&gt;  &lt;span className=\"red\"&gt;&#123;number&#125;&lt;/span&gt;  &lt;button onClick = &#123;onClickButton&#125;&gt;+&lt;/button&gt;  &lt;button onClick = &#123;onClickButton2&#125;&gt;-&lt;/button&gt;&lt;/div&gt;\n\n不同的是将对象和函数用括号括起来{},然后JS就会从当前作用域往上找相应的变量。\n\nclass要写作className（有时两种写法都可以）。\n在onClick = {onClickButton}时要向react传递一个对象而不是返回值，相当于React.createElement(‘button’,{onClick:onClickButton}),所以不加括号。\n\n完整代码例子：\n12345678910111213141516171819202122232425262728293031let number = 0;let onClickButton = ()=&gt; &#123;  number +=1  render();&#125;let onClickButton2 = ()=&gt; &#123;  number -= 1  render();&#125;// JS语法1function render()&#123;  let h = React.createElement;  let div =   h('div',&#123;className:'parent'&#125;,    h('span',&#123;className:'red'&#125;,number),    h('button',&#123;onClick:onClickButton&#125;,'+'),    h('button',&#123;onClickButton&#125;,'-')  )&#125;// 语法2&lt;div className=\"parent\"&gt;  &lt;span className=\"red\"&gt;&#123;number&#125;&lt;/span&gt;  &lt;button onClick = &#123;onClickButton&#125;&gt;+&lt;/button&gt;  &lt;button onClick = &#123;onClickButton2&#125;&gt;-&lt;/button&gt;&lt;/div&gt;ReactDOM.render(div,document.querySelector('#root'));\n\nJSX的翻译机制下面的左右代码是等价的。\n","dateCreated":"2019-07-04T22:47:43+09:00","dateModified":"2019-08-17T16:41:09+09:00","datePublished":"2019-07-04T22:47:43+09:00","description":"关于React的虚拟Dom和JSX","headline":"About React Virtual Dom And JSX","image":["20190704.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/07/04/React-Virtual-Dom/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kisky3.github.io/2019/07/04/React-Virtual-Dom/","keywords":"React, Virtual Dom, JSX","thumbnailUrl":"20190704.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于React的虚拟Dom和JSX\n\nReact的实行理念首先JS的DOM操作一般经历了从页面获取已存在的元素，进行修改操作，再渲染回页面这三个过程。比如页面里有一个span标签，JS想要编辑的时候需要先从页面获取标签(利用id等),进行操作(数字加1),再将编辑后的数据返回页面（innerText等）。\n而react有一种更先进的理念，也就相当于不从Dom获取数据，而是只是向页面更新数据。比如一开始页面里什么都没有，react里有一个number变量，并且在JSX里生成一个span的对象（虚拟Dom),再将对象生同步成到页面中，JSX里进行span内容的修改操作，然后再一次自动更新到页面的span里。\nreact在生成新的虚拟Dom之后,会与旧的虚拟Dom的内容进行比较,再将有变化的那一部分,同步到页面中。而进行内部对象span的更新速度远比JS直接更新Dom的速度要快很多,并且少了从页面获取元素的这一过程,导致react的效率和性能都高于普通JS。\n关于JSXJSX不是html,而是相当于利用Html的形式来更简便地写JS。\nJSX就是将下面的语法2翻译成上面的JS语法1，这相当于以简便的Html的形式来写JS，这里包含了几个虚拟Dom，也就是表示DOM节点的对象。\n1234567891011121314151617// JS语法1function render()&#123;  let h = React.createElement;  let div =   h('div',&#123;className:'parent'&#125;,    h('span',&#123;className:'red'&#125;,number),    h('button',&#123;onClick:onClickButton&#125;,'+'),    h('button',&#123;onClickButton&#125;,'-')  )&#125;// 语法2&lt;div className=\"parent\"&gt;  &lt;span className=\"red\"&gt;&#123;number&#125;&lt;/span&gt;  &lt;button onClick = &#123;onClickButton&#125;&gt;+&lt;/button&gt;  &lt;button onClick = &#123;onClickButton2&#125;&gt;-&lt;/button&gt;&lt;/div&gt;\n\n不同的是将对象和函数用括号括起来{},然后JS就会从当前作用域往上找相应的变量。\n\nclass要写作className（有时两种写法都可以）。\n在onClick = {onClickButton}时要向react传递一个对象而不是返回值，相当于React.createElement(‘button’,{onClick:onClickButton}),所以不加括号。\n\n完整代码例子：\n12345678910111213141516171819202122232425262728293031let number = 0;let onClickButton = ()=&gt; &#123;  number +=1  render();&#125;let onClickButton2 = ()=&gt; &#123;  number -= 1  render();&#125;// JS语法1function render()&#123;  let h = React.createElement;  let div =   h('div',&#123;className:'parent'&#125;,    h('span',&#123;className:'red'&#125;,number),    h('button',&#123;onClick:onClickButton&#125;,'+'),    h('button',&#123;onClickButton&#125;,'-')  )&#125;// 语法2&lt;div className=\"parent\"&gt;  &lt;span className=\"red\"&gt;&#123;number&#125;&lt;/span&gt;  &lt;button onClick = &#123;onClickButton&#125;&gt;+&lt;/button&gt;  &lt;button onClick = &#123;onClickButton2&#125;&gt;-&lt;/button&gt;&lt;/div&gt;ReactDOM.render(div,document.querySelector('#root'));\n\nJSX的翻译机制下面的左右代码是等价的。\n","dateCreated":"2019-07-04T22:47:43+09:00","dateModified":"2019-08-17T16:41:09+09:00","datePublished":"2019-07-04T22:47:43+09:00","description":"关于React的虚拟Dom和JSX","headline":"About React Virtual Dom And JSX","image":["20190704.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/07/04/React-Virtual-Dom/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/07/04/React-Virtual-Dom/","keywords":"React, Virtual Dom, JSX","thumbnailUrl":"20190704.png"}</script>
     <meta name="description" content="关于React的虚拟Dom和JSX">
 <meta name="keywords" content="React,Virtual Dom,JSX">
 <meta property="og:type" content="blog">
@@ -37,6 +39,8 @@
         
     
     
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
     
         <meta property="og:image" content="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/20190704.png"/>
         <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/20190704.png" />
@@ -53,6 +57,15 @@
     <link rel="stylesheet" href="/assets/css/tranquilpeak.css">
     <!--STYLES END-->
     
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
 
     
 </head>
@@ -63,8 +76,12 @@
 
 
     
+        
+            
+        
+    
 
-<header id="header" data-behavior="4">
+<header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
@@ -75,6 +92,8 @@
                 href="#about">
         
         
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
         </a>
     
 </header>
@@ -82,8 +101,23 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="4">
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
     <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
         
         
             <ul class="sidebar-buttons">
@@ -140,39 +174,13 @@
                     </a>
             </li>
             
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link open-algolia-search"
-                             href="#search"
-                            
-                            title="Search"
-                        >
-                    
-                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Search</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link "
-                             href="#about"
-                            
-                            title="About"
-                        >
-                    
-                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">About</span>
-                    </a>
-            </li>
-            
         </ul>
         
             <ul class="sidebar-buttons">
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
                     
                         <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">GitHub</span>
@@ -181,25 +189,7 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="http://stackoverflow.com/users" target="_blank" rel="noopener" title="Stack Overflow">
-                    
-                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Stack Overflow</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://twitter.com/" target="_blank" rel="noopener" title="Twitter">
-                    
-                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Twitter</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
                     
                         <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">Facebook</span>
@@ -208,26 +198,21 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://plus.google.com/" target="_blank" rel="noopener" title="Google +">
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
                     
-                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Google +</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://www.linkedin.com/profile/" target="_blank" rel="noopener" title="LinkedIn">
-                    
-                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">LinkedIn</span>
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
                     </a>
             </li>
             
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/mailto"
+                             href="/kisky3@126.com"
                             title="Mail"
                         >
                     
@@ -263,7 +248,7 @@
                     text-left
                     post-header-cover--partial"
              style="background-image:url('/2019/07/04/React-Virtual-Dom/cover.jpg');"
-             data-behavior="4">
+             data-behavior="5">
             
                 <div class="post-header main-content-wrap text-left">
     
@@ -293,7 +278,7 @@
             
         </div>
 
-            <div id="main" data-behavior="4"
+            <div id="main" data-behavior="5"
                  class="hasCover
                         hasCoverMetaIn
                         hasCoverCaption">
@@ -371,7 +356,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/" title="Share on Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -379,16 +364,8 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/" title="Share on Twitter">
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/" title="Share on Google+">
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
@@ -419,7 +396,7 @@
 
             </div>
             
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
                     <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
@@ -453,7 +430,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/" title="Share on Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -461,16 +438,8 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/" title="Share on Twitter">
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/" title="Share on Google+">
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
@@ -488,14 +457,14 @@
 
                 </div>
                 
-    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
         <i id="btn-close-shareoptions" class="fa fa-times"></i>
         <ul class="share-options">
             
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
                     </a>
                 </li>
@@ -503,16 +472,8 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/">
-                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/">
-                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/07/04/React-Virtual-Dom/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
                     </a>
                 </li>
             
@@ -525,11 +486,17 @@
         
 
 
+    
+        
+    
+
 <div id="about">
     <div id="about-card">
         <div id="about-btn-close">
             <i class="fa fa-times"></i>
         </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
         
             <h4 id="about-card-name">Xiang Yu</h4>
         
@@ -544,6 +511,12 @@
 
             </div>
         
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
         
     </div>
 </div>

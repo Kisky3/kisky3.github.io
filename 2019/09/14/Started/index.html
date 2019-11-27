@@ -12,10 +12,12 @@
         <meta name="keywords" content="hexo,javascript,front-end,">
     
     
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Webpack的环境设置\n\n\n2018年8月25日更新，目前 webpack 已经更新值 4.17.1！不用配置很复杂的config也能运行了!!\n今天搭建webpack环境时顺便记录一下.\n什么是webpack\nwebpack is used to compile JavaScript modules. Once installed, you can interface with webpack either from its CLI or API. If you’re still new to webpack, please read through the core concepts and this comparison to learn why you might use it over the other tools that are out in the community.\n\n\nWebPack可以看做是模块打包机：它做的事情是，分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其转换和打包为合适的格式供浏览器使用。\n\n\n为什么要使用webpack很多人开发了各种优秀的 JavaScript 模块或组件，我们不想重复发明轮子，而是想直接利用别人的模块，就是类似 require 或 include 这样的机制，把别人的模块引入进来，这就是modules(模块化).但是 JavaScript 又没有 类或包 这样的概念，那应该如何做呢？如何去引入别人的模块？引入之后保证各种依赖关系不出错？这就是 webpack 要解决的问题。Webpack的处理速度更快更直接，能打包更多不同类型的文件。\nWebpack与其他打包工具的比较Webpack的核心原理\n\nWebpack的安装（版本4.40.1）1.首先创建自己的文件夹，初始化npm，安装本地化webpack并安装webpack-cli(一个能在命令行运行webpack的工具)\n12345mkdir webpack-democd webpack-demonpm init -ynpm install webpack --save-devnpm install webpack-cli --save-dev\n\n2.创建以下的文件结构以及内容\nproject:\n12345  webpack-demo  |- package.json+ |- index.html+ |- /src+   |- index.js\n\nsrc/index.js\n12345678910function component() &#123;  const element = document.createElement('div');  // Lodash, currently included via a script, is required for this line to work  element.innerHTML = _.join(['Hello', 'webpack'], ' ');  return element;&#125;document.body.appendChild(component());\n\nimdex.html\n12345678910&lt;!doctype html&gt;&lt;html&gt;  &lt;head&gt;    &lt;title&gt;Getting Started&lt;/title&gt;    &lt;script src='https://unpkg.com/lodash@4.16.6'&gt;&lt;/script&gt;  &lt;/head&gt;  &lt;body&gt;    &lt;script src='./src/index.js'&gt;&lt;/script&gt;  &lt;/body&gt;&lt;/html&gt;\n\n我们还想需要编辑package.json文件，使其我们的package私有化，并同时移除main入口，防止代码误公开。\npackage.json\n123456789101112131415161718&#123;    \"name\": \"webpack-demo\",    \"version\": \"1.0.0\",    \"description\": \"\",+   \"private\": true,-   \"main\": \"index.js\",    \"scripts\": &#123;      \"test\": \"echo \\\"Error: no test specified\\\" &amp;&amp; exit 1\"    &#125;,    \"keywords\": [],    \"author\": \"\",    \"license\": \"ISC\",    \"devDependencies\": &#123;      \"webpack\": \"^4.20.2\",      \"webpack-cli\": \"^3.1.2\"    &#125;,    \"dependencies\": &#123;&#125;  &#125;\n\n这个例子与&lt;script&gt;标签有默认依存关系，我们的index.js文件是依存于lodash并且在运行前是包含在网页里的.这是因为index.js并没有明确声明需要lodash，它只是假定默认了全局变量’_’的存在.所以我们需要创建打包.\n\n创建打包在以上的步骤中我们微调整了文件树结构，将源代码从发布代码中分离开.源代码就是我们可以直接编辑和修改的代码，发布代码就是通过压缩和最优化之后,在打包时最终输出的代码.它最终将会被加载到浏览器上.\nproject\n1234567  webpack-demo  |- package.json+ |- /dist+   |- index.html- |- index.html  |- /src    |- index.js\n\n为了打包依存于index.js的lodash，我们需要安装本地包.\n1npm install --save lodash\n\n然后引用lodash到我们的script里src/index.js\n123456789101112+ import _ from 'lodash';+  function component() &#123;    const element = document.createElement('div');-   // Lodash, currently included via a script, is required for this line to work    element.innerHTML = _.join(['Hello', 'webpack'], ' ');    return element;  &#125;  document.body.appendChild(component());\n\n现在，因为我们已经打包了script,我们需要更新index.html文件，删除原有的lodash&lt;script&gt;并import之后加入另一个&lt;script&gt;来加载打包.(替换/src文件)\n\ndist/index.html\n1234567891011  &lt;!doctype html&gt;  &lt;html&gt;   &lt;head&gt;     &lt;title&gt;Getting Started&lt;/title&gt;-    &lt;script src=\"https://unpkg.com/lodash@4.16.6\"&gt;&lt;/script&gt;   &lt;/head&gt;   &lt;body&gt;-    &lt;script src=\"./src/index.js\"&gt;&lt;/script&gt;+    &lt;script src=\"main.js\"&gt;&lt;/script&gt;   &lt;/body&gt;  &lt;/html&gt;\n\n在这个设置中，index.js 显式要求引入的 lodash 必须存在，然后将它绑定为 _（没有全局作用域污染）。通过声明模块所需的依赖，webpack 能够利用这些信息去构建依赖图，然后使用图生成一个会以正确顺序执行的优化 bundle。\n可以这样说，执行 npx webpack，会将我们的脚本 src/index.js 作为 入口起点，也会生成 dist/main.js 作为 输出。Node 8.2/npm 5.2.0 以上版本提供的 npx 命令，可以运行在开始安装的 webpack package 中的 webpack 二进制文件（即 ./node_modules/.bin/webpack）\n\n1234567891011npx webpack...Built at: 13/06/2018 11:52:07  Asset      Size  Chunks             Chunk Namesmain.js  70.4 KiB       0  [emitted]  main...WARNING in configuration(配置警告)The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/concepts/mode/('mode' 选项还未设置，webpack 会将其值回退至 'production'。将 'mode' 选项设置为 'development' 或 'production'，来启用对应环境的默认优化设置。)\n\n在浏览器中打开 index.html，如果一切正常，你应该能看到以下文本：’Hello webpack’\n","dateCreated":"2019-09-14T18:28:10+09:00","dateModified":"2019-10-05T20:09:38+09:00","datePublished":"2019-09-14T18:28:10+09:00","description":"Webpack的环境设置","headline":"Webpack Getting Started","image":["20190914.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/09/14/Started/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kisky3.github.io/2019/09/14/Started/","keywords":"webpack, getting started","thumbnailUrl":"20190914.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"Webpack的环境设置\n\n\n2018年8月25日更新，目前 webpack 已经更新值 4.17.1！不用配置很复杂的config也能运行了!!\n今天搭建webpack环境时顺便记录一下.\n什么是webpack\nwebpack is used to compile JavaScript modules. Once installed, you can interface with webpack either from its CLI or API. If you’re still new to webpack, please read through the core concepts and this comparison to learn why you might use it over the other tools that are out in the community.\n\n\nWebPack可以看做是模块打包机：它做的事情是，分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其转换和打包为合适的格式供浏览器使用。\n\n\n为什么要使用webpack很多人开发了各种优秀的 JavaScript 模块或组件，我们不想重复发明轮子，而是想直接利用别人的模块，就是类似 require 或 include 这样的机制，把别人的模块引入进来，这就是modules(模块化).但是 JavaScript 又没有 类或包 这样的概念，那应该如何做呢？如何去引入别人的模块？引入之后保证各种依赖关系不出错？这就是 webpack 要解决的问题。Webpack的处理速度更快更直接，能打包更多不同类型的文件。\nWebpack与其他打包工具的比较Webpack的核心原理\n\nWebpack的安装（版本4.40.1）1.首先创建自己的文件夹，初始化npm，安装本地化webpack并安装webpack-cli(一个能在命令行运行webpack的工具)\n12345mkdir webpack-democd webpack-demonpm init -ynpm install webpack --save-devnpm install webpack-cli --save-dev\n\n2.创建以下的文件结构以及内容\nproject:\n12345  webpack-demo  |- package.json+ |- index.html+ |- /src+   |- index.js\n\nsrc/index.js\n12345678910function component() &#123;  const element = document.createElement('div');  // Lodash, currently included via a script, is required for this line to work  element.innerHTML = _.join(['Hello', 'webpack'], ' ');  return element;&#125;document.body.appendChild(component());\n\nimdex.html\n12345678910&lt;!doctype html&gt;&lt;html&gt;  &lt;head&gt;    &lt;title&gt;Getting Started&lt;/title&gt;    &lt;script src='https://unpkg.com/lodash@4.16.6'&gt;&lt;/script&gt;  &lt;/head&gt;  &lt;body&gt;    &lt;script src='./src/index.js'&gt;&lt;/script&gt;  &lt;/body&gt;&lt;/html&gt;\n\n我们还想需要编辑package.json文件，使其我们的package私有化，并同时移除main入口，防止代码误公开。\npackage.json\n123456789101112131415161718&#123;    \"name\": \"webpack-demo\",    \"version\": \"1.0.0\",    \"description\": \"\",+   \"private\": true,-   \"main\": \"index.js\",    \"scripts\": &#123;      \"test\": \"echo \\\"Error: no test specified\\\" &amp;&amp; exit 1\"    &#125;,    \"keywords\": [],    \"author\": \"\",    \"license\": \"ISC\",    \"devDependencies\": &#123;      \"webpack\": \"^4.20.2\",      \"webpack-cli\": \"^3.1.2\"    &#125;,    \"dependencies\": &#123;&#125;  &#125;\n\n这个例子与&lt;script&gt;标签有默认依存关系，我们的index.js文件是依存于lodash并且在运行前是包含在网页里的.这是因为index.js并没有明确声明需要lodash，它只是假定默认了全局变量’_’的存在.所以我们需要创建打包.\n\n创建打包在以上的步骤中我们微调整了文件树结构，将源代码从发布代码中分离开.源代码就是我们可以直接编辑和修改的代码，发布代码就是通过压缩和最优化之后,在打包时最终输出的代码.它最终将会被加载到浏览器上.\nproject\n1234567  webpack-demo  |- package.json+ |- /dist+   |- index.html- |- index.html  |- /src    |- index.js\n\n为了打包依存于index.js的lodash，我们需要安装本地包.\n1npm install --save lodash\n\n然后引用lodash到我们的script里src/index.js\n123456789101112+ import _ from 'lodash';+  function component() &#123;    const element = document.createElement('div');-   // Lodash, currently included via a script, is required for this line to work    element.innerHTML = _.join(['Hello', 'webpack'], ' ');    return element;  &#125;  document.body.appendChild(component());\n\n现在，因为我们已经打包了script,我们需要更新index.html文件，删除原有的lodash&lt;script&gt;并import之后加入另一个&lt;script&gt;来加载打包.(替换/src文件)\n\ndist/index.html\n1234567891011  &lt;!doctype html&gt;  &lt;html&gt;   &lt;head&gt;     &lt;title&gt;Getting Started&lt;/title&gt;-    &lt;script src=\"https://unpkg.com/lodash@4.16.6\"&gt;&lt;/script&gt;   &lt;/head&gt;   &lt;body&gt;-    &lt;script src=\"./src/index.js\"&gt;&lt;/script&gt;+    &lt;script src=\"main.js\"&gt;&lt;/script&gt;   &lt;/body&gt;  &lt;/html&gt;\n\n在这个设置中，index.js 显式要求引入的 lodash 必须存在，然后将它绑定为 _（没有全局作用域污染）。通过声明模块所需的依赖，webpack 能够利用这些信息去构建依赖图，然后使用图生成一个会以正确顺序执行的优化 bundle。\n可以这样说，执行 npx webpack，会将我们的脚本 src/index.js 作为 入口起点，也会生成 dist/main.js 作为 输出。Node 8.2/npm 5.2.0 以上版本提供的 npx 命令，可以运行在开始安装的 webpack package 中的 webpack 二进制文件（即 ./node_modules/.bin/webpack）\n\n1234567891011npx webpack...Built at: 13/06/2018 11:52:07  Asset      Size  Chunks             Chunk Namesmain.js  70.4 KiB       0  [emitted]  main...WARNING in configuration(配置警告)The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment.You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/concepts/mode/('mode' 选项还未设置，webpack 会将其值回退至 'production'。将 'mode' 选项设置为 'development' 或 'production'，来启用对应环境的默认优化设置。)\n\n在浏览器中打开 index.html，如果一切正常，你应该能看到以下文本：’Hello webpack’\n","dateCreated":"2019-09-14T18:28:10+09:00","dateModified":"2019-10-05T20:09:38+09:00","datePublished":"2019-09-14T18:28:10+09:00","description":"Webpack的环境设置","headline":"Webpack Getting Started","image":["20190914.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/09/14/Started/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/09/14/Started/","keywords":"webpack, getting started","thumbnailUrl":"20190914.png"}</script>
     <meta name="description" content="Webpack的环境设置">
 <meta name="keywords" content="webpack,getting started">
 <meta property="og:type" content="blog">
@@ -33,6 +35,8 @@
         
     
     
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
     
         <meta property="og:image" content="https://kisky3.github.io/2019/09/14/Started/20190914.png"/>
         <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/09/14/Started/20190914.png" />
@@ -49,6 +53,15 @@
     <link rel="stylesheet" href="/assets/css/tranquilpeak.css">
     <!--STYLES END-->
     
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
 
     
 </head>
@@ -59,8 +72,12 @@
 
 
     
+        
+            
+        
+    
 
-<header id="header" data-behavior="4">
+<header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
@@ -71,6 +88,8 @@
                 href="#about">
         
         
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
         </a>
     
 </header>
@@ -78,8 +97,23 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="4">
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
     <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
         
         
             <ul class="sidebar-buttons">
@@ -136,39 +170,13 @@
                     </a>
             </li>
             
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link open-algolia-search"
-                             href="#search"
-                            
-                            title="Search"
-                        >
-                    
-                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Search</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link "
-                             href="#about"
-                            
-                            title="About"
-                        >
-                    
-                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">About</span>
-                    </a>
-            </li>
-            
         </ul>
         
             <ul class="sidebar-buttons">
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
                     
                         <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">GitHub</span>
@@ -177,25 +185,7 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="http://stackoverflow.com/users" target="_blank" rel="noopener" title="Stack Overflow">
-                    
-                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Stack Overflow</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://twitter.com/" target="_blank" rel="noopener" title="Twitter">
-                    
-                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Twitter</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
                     
                         <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">Facebook</span>
@@ -204,26 +194,21 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://plus.google.com/" target="_blank" rel="noopener" title="Google +">
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
                     
-                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Google +</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://www.linkedin.com/profile/" target="_blank" rel="noopener" title="LinkedIn">
-                    
-                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">LinkedIn</span>
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
                     </a>
             </li>
             
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/mailto"
+                             href="/kisky3@126.com"
                             title="Mail"
                         >
                     
@@ -259,7 +244,7 @@
                     text-left
                     post-header-cover--partial"
              style="background-image:url('/2019/09/14/Started/cover.jpg');"
-             data-behavior="4">
+             data-behavior="5">
             
                 <div class="post-header main-content-wrap text-left">
     
@@ -289,7 +274,7 @@
             
         </div>
 
-            <div id="main" data-behavior="4"
+            <div id="main" data-behavior="5"
                  class="hasCover
                         hasCoverMetaIn
                         hasCoverCaption">
@@ -404,7 +389,7 @@ WebPack可以看做是模块打包机：它做的事情是，分析你的项目�
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/09/14/Started/" title="Share on Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -412,16 +397,8 @@ WebPack可以看做是模块打包机：它做的事情是，分析你的项目�
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/09/14/Started/" title="Share on Twitter">
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/09/14/Started/" title="Share on Google+">
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/09/14/Started/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
@@ -452,7 +429,7 @@ WebPack可以看做是模块打包机：它做的事情是，分析你的项目�
 
             </div>
             
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
                     <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
@@ -486,7 +463,7 @@ WebPack可以看做是模块打包机：它做的事情是，分析你的项目�
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/09/14/Started/" title="Share on Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -494,16 +471,8 @@ WebPack可以看做是模块打包机：它做的事情是，分析你的项目�
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/09/14/Started/" title="Share on Twitter">
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/09/14/Started/" title="Share on Google+">
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/09/14/Started/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
@@ -521,14 +490,14 @@ WebPack可以看做是模块打包机：它做的事情是，分析你的项目�
 
                 </div>
                 
-    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
         <i id="btn-close-shareoptions" class="fa fa-times"></i>
         <ul class="share-options">
             
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/09/14/Started/">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
                     </a>
                 </li>
@@ -536,16 +505,8 @@ WebPack可以看做是模块打包机：它做的事情是，分析你的项目�
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/09/14/Started/">
-                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/09/14/Started/">
-                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/09/14/Started/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
                     </a>
                 </li>
             
@@ -558,11 +519,17 @@ WebPack可以看做是模块打包机：它做的事情是，分析你的项目�
         
 
 
+    
+        
+    
+
 <div id="about">
     <div id="about-card">
         <div id="about-btn-close">
             <i class="fa fa-times"></i>
         </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
         
             <h4 id="about-card-name">Xiang Yu</h4>
         
@@ -577,6 +544,12 @@ WebPack可以看做是模块打包机：它做的事情是，分析你的项目�
 
             </div>
         
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
         
     </div>
 </div>

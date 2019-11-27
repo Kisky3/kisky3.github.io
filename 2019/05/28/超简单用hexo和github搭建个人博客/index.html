@@ -12,10 +12,12 @@
         <meta name="keywords" content="hexo,javascript,front-end,">
     
     
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"超简单! 教你从零用Hexo和Github搭建个人博客\n\n\n前言Hexo是高效的静态站点生成框架，它基于Node.js搭建博客，并可以托管于github服务器上。之后便可以用markdown语法进行你的博客记录了。生成上传命令行简便快捷，值得推荐！\n准备工作1. 下载node.js 点击下载安装Node.js\n 无特殊要求可以一路默认点击Next直到安装完成。\n\n2. 安装Git点击下载Git\n以上两步完成后可以在命令行输入以下命令来确认node.js和git安装是否成功\n123node -vnpm -vgit --version\n\n\n3. 在github上新建项目\n\n输入你的Github用户名+.github.io，例子：Kisky3.github.io\n注意勾选下面的生成README选项\n\n\n在新项目的setting里，添加生成可视化page\n\n\n\n4. 安装Hexo新建文件夹用来存放博客文章。比如MyBlog\n然后在该文件夹下执行一下命令行安装Hexo 1234$ npm install hexo-cli -g  $ hexo init $ npm install  $ hexo server\n 当启动hexo server后，打开 http://localhost:4000 就可以看到生成的默认页面了！\n \n\n5.推送至Github在博客文件夹MyBlog下的_config.yml配置文件的url换成你的项目主URL¥，否则后续图片的显示会出问题\n123# URL## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'url: https://kisky3.github.io/\n\n之后在deploy里修改type为git,并且写入你在Github生成的项目地址\n123456# Deployment## Docs: https://hexo.io/docs/deployment.htmldeploy:  type: git  repository: https://github.com/Kisky3/Kisky3.github.io  branch: master\n\n并在MyBlog文件夹下运行以下命令行\n123npm install hexo-deployer-git –save //下载hexo-deployer-git，否则deploy会出现errorhexo g // 生成本地静态文件hexo d // 将本地文件deploy到Github上\n\n此时访问项目的主页http://你的Github名.github.io，就可以看到初始页面了\n\n6. 更新博文并在MyBlog文件夹下运行以下命令行来写博文\n1hexo new 你的博文题目 // 生成博文\n\n用markdown语法完成博客记录后\n12hexo g // 生成本地静态文件hexo d // 将本地文件deploy到Github上\n\n7. 更换主题默认主题太没个性了，可以在网上下载自己喜欢的主题\n例：\n\n下载地址\n参考文档\n\n8. 部分翻译主题安装\n下载最新版本\n重命名下载文件夹为 tranquilpeak,并将其放置于你MyBlog/theme文件夹下\n修改_config.yml文件夹的theme为tranquilpeak\n执行hexo clean删除public文件夹、并再次执行hexo generate重新生成。\n\n博文内配置解释例子\n1234567891011121314151617181920212223242526272829---title: 超简单! 用Hexo和Github搭建个人博客date: 2019-05-28 20:30:05tags:- hexo- blog- githubclearReading: truethumbnailImage: 20190528.jpgthumbnailImagePosition: leftcoverImage: 20190528.jpgcoverCaption: \"Hello World, Hello Programming\"coverSize: partialcomments: falsecategories: Front-end Knowledge---这里是文章的概览，显示在主页缩略内容上面&lt;!-- more --&gt;这里是自动生成的文章目录&lt;!-- toc --&gt;# 这是大标题## 这是二级标题## 这里有个本地图片&lt;!-- 图片需要放置于你生成博文名字的文件夹里面 --&gt;&lt;img src=\"./1.png\"&gt;\n\n博文内常用配置设定说明:\n1234567891011121314151617・ tags:   定义该文章的标签，定义之后可以在分类里面查看自动建立的索引・ thumbnailImage:   首页的文章标题旁边图片・ thumbnailImagePosition:   首页的文章图片位置・ coverImage:   文章打开时顶部的封面图片・ &lt;!-- more --&gt;   这个标志之前的内容将会自动生成首页的概览,如果不写thumbnailImagePosition的设置将不起作用・ &lt;!-- toc --&gt;   这个标志的位置将会自动生成文章目录\n\n\n文章置顶修改node_modules/hexo-generator-index/lib/generator.js\n 12345678910111213141516171819202122232425262728 'use strict';var pagination = require('hexo-pagination');module.exports = function(locals)&#123;  var config = this.config;  var posts = locals.posts;    posts.data = posts.data.sort(function(a, b) &#123;        if(a.top &amp;&amp; b.top) &#123; // 两篇文章top都有定义            if(a.top == b.top) return b.date - a.date; // 若top值一样则按照文章日期降序排            else return b.top - a.top; // 否则按照top值降序排        &#125;        else if(a.top &amp;&amp; !b.top) &#123; // 以下是只有一篇文章top有定义，那么将有top的排在前面（这里用异或操作居然不行233）            return -1;        &#125;        else if(!a.top &amp;&amp; b.top) &#123;            return 1;        &#125;        else return b.date - a.date; // 都没定义按照文章日期降序排    &#125;);  var paginationDir = config.pagination_dir || 'page';  return pagination('', posts, &#123;    perPage: config.index_generator.per_page,    layout: ['index', 'archive'],    format: paginationDir + '/%d/',    data: &#123;      __index: true    &#125;  &#125;);&#125;;\n\n在文章Front-matter中添加top值，数值越大文章越靠前，如：\n12345678---title: Hexo date: 2019-05-28 21:49:33tags:- Hexocategories: Front-end Knowledgetop: 10---\n\n注意:\n这里的github推送地址和当前Hexo项目地址是分开的，也就是说，github.io的地址上面是没有hexo源码的，只有生成的静态页面。\n所以最好将源文件夹做一个备份，以防更换机子或者文件丢失时无法维护博客\n","dateCreated":"2019-05-28T20:30:05+09:00","dateModified":"2019-10-05T20:12:40+09:00","datePublished":"2019-05-28T20:30:05+09:00","description":"超简单! 教你从零用Hexo和Github搭建个人博客","headline":"So Easy! Let's Start Your Blog With Hexo And Github From Zero","image":["20190528.jpg","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/","keywords":"hexo, blog, github","thumbnailUrl":"20190528.jpg"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"超简单! 教你从零用Hexo和Github搭建个人博客\n\n\n前言Hexo是高效的静态站点生成框架，它基于Node.js搭建博客，并可以托管于github服务器上。之后便可以用markdown语法进行你的博客记录了。生成上传命令行简便快捷，值得推荐！\n准备工作1. 下载node.js 点击下载安装Node.js\n 无特殊要求可以一路默认点击Next直到安装完成。\n\n2. 安装Git点击下载Git\n以上两步完成后可以在命令行输入以下命令来确认node.js和git安装是否成功\n123node -vnpm -vgit --version\n\n\n3. 在github上新建项目\n\n输入你的Github用户名+.github.io，例子：Kisky3.github.io\n注意勾选下面的生成README选项\n\n\n在新项目的setting里，添加生成可视化page\n\n\n\n4. 安装Hexo新建文件夹用来存放博客文章。比如MyBlog\n然后在该文件夹下执行一下命令行安装Hexo 1234$ npm install hexo-cli -g  $ hexo init $ npm install  $ hexo server\n 当启动hexo server后，打开 http://localhost:4000 就可以看到生成的默认页面了！\n \n\n5.推送至Github在博客文件夹MyBlog下的_config.yml配置文件的url换成你的项目主URL¥，否则后续图片的显示会出问题\n123# URL## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'url: https://kisky3.github.io/\n\n之后在deploy里修改type为git,并且写入你在Github生成的项目地址\n123456# Deployment## Docs: https://hexo.io/docs/deployment.htmldeploy:  type: git  repository: https://github.com/Kisky3/Kisky3.github.io  branch: master\n\n并在MyBlog文件夹下运行以下命令行\n123npm install hexo-deployer-git –save //下载hexo-deployer-git，否则deploy会出现errorhexo g // 生成本地静态文件hexo d // 将本地文件deploy到Github上\n\n此时访问项目的主页http://你的Github名.github.io，就可以看到初始页面了\n\n6. 更新博文并在MyBlog文件夹下运行以下命令行来写博文\n1hexo new 你的博文题目 // 生成博文\n\n用markdown语法完成博客记录后\n12hexo g // 生成本地静态文件hexo d // 将本地文件deploy到Github上\n\n7. 更换主题默认主题太没个性了，可以在网上下载自己喜欢的主题\n例：\n\n下载地址\n参考文档\n\n8. 部分翻译主题安装\n下载最新版本\n重命名下载文件夹为 tranquilpeak,并将其放置于你MyBlog/theme文件夹下\n修改_config.yml文件夹的theme为tranquilpeak\n执行hexo clean删除public文件夹、并再次执行hexo generate重新生成。\n\n博文内配置解释例子\n1234567891011121314151617181920212223242526272829---title: 超简单! 用Hexo和Github搭建个人博客date: 2019-05-28 20:30:05tags:- hexo- blog- githubclearReading: truethumbnailImage: 20190528.jpgthumbnailImagePosition: leftcoverImage: 20190528.jpgcoverCaption: \"Hello World, Hello Programming\"coverSize: partialcomments: falsecategories: Front-end Knowledge---这里是文章的概览，显示在主页缩略内容上面&lt;!-- more --&gt;这里是自动生成的文章目录&lt;!-- toc --&gt;# 这是大标题## 这是二级标题## 这里有个本地图片&lt;!-- 图片需要放置于你生成博文名字的文件夹里面 --&gt;&lt;img src=\"./1.png\"&gt;\n\n博文内常用配置设定说明:\n1234567891011121314151617・ tags:   定义该文章的标签，定义之后可以在分类里面查看自动建立的索引・ thumbnailImage:   首页的文章标题旁边图片・ thumbnailImagePosition:   首页的文章图片位置・ coverImage:   文章打开时顶部的封面图片・ &lt;!-- more --&gt;   这个标志之前的内容将会自动生成首页的概览,如果不写thumbnailImagePosition的设置将不起作用・ &lt;!-- toc --&gt;   这个标志的位置将会自动生成文章目录\n\n\n文章置顶修改node_modules/hexo-generator-index/lib/generator.js\n 12345678910111213141516171819202122232425262728 'use strict';var pagination = require('hexo-pagination');module.exports = function(locals)&#123;  var config = this.config;  var posts = locals.posts;    posts.data = posts.data.sort(function(a, b) &#123;        if(a.top &amp;&amp; b.top) &#123; // 两篇文章top都有定义            if(a.top == b.top) return b.date - a.date; // 若top值一样则按照文章日期降序排            else return b.top - a.top; // 否则按照top值降序排        &#125;        else if(a.top &amp;&amp; !b.top) &#123; // 以下是只有一篇文章top有定义，那么将有top的排在前面（这里用异或操作居然不行233）            return -1;        &#125;        else if(!a.top &amp;&amp; b.top) &#123;            return 1;        &#125;        else return b.date - a.date; // 都没定义按照文章日期降序排    &#125;);  var paginationDir = config.pagination_dir || 'page';  return pagination('', posts, &#123;    perPage: config.index_generator.per_page,    layout: ['index', 'archive'],    format: paginationDir + '/%d/',    data: &#123;      __index: true    &#125;  &#125;);&#125;;\n\n在文章Front-matter中添加top值，数值越大文章越靠前，如：\n12345678---title: Hexo date: 2019-05-28 21:49:33tags:- Hexocategories: Front-end Knowledgetop: 10---\n\n注意:\n这里的github推送地址和当前Hexo项目地址是分开的，也就是说，github.io的地址上面是没有hexo源码的，只有生成的静态页面。\n所以最好将源文件夹做一个备份，以防更换机子或者文件丢失时无法维护博客\n","dateCreated":"2019-05-28T20:30:05+09:00","dateModified":"2019-10-05T20:12:40+09:00","datePublished":"2019-05-28T20:30:05+09:00","description":"超简单! 教你从零用Hexo和Github搭建个人博客","headline":"So Easy! Let's Start Your Blog With Hexo And Github From Zero","image":["20190528.jpg","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/","keywords":"hexo, blog, github","thumbnailUrl":"20190528.jpg"}</script>
     <meta name="description" content="超简单! 教你从零用Hexo和Github搭建个人博客">
 <meta name="keywords" content="hexo,blog,github">
 <meta property="og:type" content="blog">
@@ -39,6 +41,8 @@
         
     
     
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
     
         <meta property="og:image" content="https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/20190528.jpg"/>
         <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/20190528.jpg" />
@@ -55,6 +59,15 @@
     <link rel="stylesheet" href="/assets/css/tranquilpeak.css">
     <!--STYLES END-->
     
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
 
     
 </head>
@@ -65,8 +78,12 @@
 
 
     
+        
+            
+        
+    
 
-<header id="header" data-behavior="4">
+<header id="header" data-behavior="5">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
@@ -77,6 +94,8 @@
                 href="#about">
         
         
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
         </a>
     
 </header>
@@ -84,8 +103,23 @@
             <!-- Define author's picture -->
 
 
-<nav id="sidebar" data-behavior="4">
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
     <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
         
         
             <ul class="sidebar-buttons">
@@ -142,39 +176,13 @@
                     </a>
             </li>
             
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link open-algolia-search"
-                             href="#search"
-                            
-                            title="Search"
-                        >
-                    
-                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Search</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link "
-                             href="#about"
-                            
-                            title="About"
-                        >
-                    
-                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">About</span>
-                    </a>
-            </li>
-            
         </ul>
         
             <ul class="sidebar-buttons">
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
                     
                         <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">GitHub</span>
@@ -183,25 +191,7 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="http://stackoverflow.com/users" target="_blank" rel="noopener" title="Stack Overflow">
-                    
-                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Stack Overflow</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://twitter.com/" target="_blank" rel="noopener" title="Twitter">
-                    
-                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Twitter</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
                     
                         <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">Facebook</span>
@@ -210,26 +200,21 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://plus.google.com/" target="_blank" rel="noopener" title="Google +">
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
                     
-                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Google +</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://www.linkedin.com/profile/" target="_blank" rel="noopener" title="LinkedIn">
-                    
-                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">LinkedIn</span>
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
                     </a>
             </li>
             
                 <li class="sidebar-button">
                     
                         <a  class="sidebar-button-link "
-                             href="/mailto"
+                             href="/kisky3@126.com"
                             title="Mail"
                         >
                     
@@ -265,7 +250,7 @@
                     text-left
                     post-header-cover--partial"
              style="background-image:url('/2019/05/28/超简单用hexo和github搭建个人博客/cover.jpg');"
-             data-behavior="4">
+             data-behavior="5">
             
                 <div class="post-header main-content-wrap text-left">
     
@@ -295,7 +280,7 @@
             
         </div>
 
-            <div id="main" data-behavior="4"
+            <div id="main" data-behavior="5"
                  class="hasCover
                         hasCoverMetaIn
                         hasCoverCaption">
@@ -427,7 +412,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/" title="Share on Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -435,16 +420,8 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/" title="Share on Twitter">
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/" title="Share on Google+">
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
@@ -475,7 +452,7 @@
 
             </div>
             
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
                     <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
@@ -509,7 +486,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/" title="Share on Facebook">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
                     <i class="fab fa-facebook" aria-hidden="true"></i>
                 </a>
             </li>
@@ -517,16 +494,8 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/" title="Share on Twitter">
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/" title="Share on Google+">
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
@@ -544,14 +513,14 @@
 
                 </div>
                 
-    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
         <i id="btn-close-shareoptions" class="fa fa-times"></i>
         <ul class="share-options">
             
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
                     </a>
                 </li>
@@ -559,16 +528,8 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/">
-                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/">
-                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/05/28/超简单用hexo和github搭建个人博客/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
                     </a>
                 </li>
             
@@ -581,11 +542,17 @@
         
 
 
+    
+        
+    
+
 <div id="about">
     <div id="about-card">
         <div id="about-btn-close">
             <i class="fa fa-times"></i>
         </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
         
             <h4 id="about-card-name">Xiang Yu</h4>
         
@@ -600,6 +567,12 @@
 
             </div>
         
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
         
     </div>
 </div>
