@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://kisky3.github.io/2019/11/27/nodebrew/</loc>
+    <lastmod>2019-11-27</lastmod>
+  </url>  <url>
     <loc>https://kisky3.github.io/2019/11/11/ssh/</loc>
-    <lastmod>2019-11-23</lastmod>
+    <lastmod>2019-11-26</lastmod>
+  </url>  <url>
+    <loc>https://kisky3.github.io/2019/11/24/aboutnpm/</loc>
+    <lastmod>2019-11-25</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2019/11/11/CreatePhpEnvironmentInDocker/</loc>
     <lastmod>2019-11-11</lastmod>

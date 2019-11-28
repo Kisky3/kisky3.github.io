@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Xiang Yu&#39;s Blog">
+    <title>Npm And Yarn - Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"articleBody":"Npm和Yarn\n\nnpm概念Npm就是Node Package Manager，也就是Node包管理工具。\n\nnpm用途如果不使用包管理器，有什么麻烦的呢？\n这是源于代码包分享的理念，包和依赖越来越多，每个包都有自己的版本和发展，而包与包之间也有依赖。版本管理就成了一件令人头痛的事。\n比如jQuery插件A(版本1)，依赖于jQuery(版本1)，当你把jQuery版本更新为2的时候，A很可能就挂掉了。各个插件间也有依赖，插件A挂掉了，可能B也挂掉了，连接挂掉是噩梦一般，你要一个个去查文档，看每个包要求依赖的版本，然后自己协调。这时候npm就应运而生了，不仅可以帮你把各种包从网上download下来，最主要的是还可以帮你管理不同包之间的关系，比如你当前的版本号是多少，你依赖着谁，你依赖的版本号是多少都一目了然。\n\nnpm实现具体步骤NPM 的思路大概是这样的：\n\n买个服务器作为代码仓库（registry），在里面放所有需要被共享的代码\n\n发邮件通知 jQuery、Bootstrap、Underscore 作者使用 npm publish 把代码提交到 registry 上，分别取名 jquery、bootstrap 和 underscore（注意大小写）\n\n社区里的其他人如果想使用这些代码，就把 jquery、bootstrap 和 underscore 写到 package.json 里，然后运行 npm install ，npm 就会帮他们下载代码\n\n下载完的代码出现在 node_modules 目录里，可以随意使用了。\n\n\n这些可以被使用的代码被叫做「包」（package），这就是 NPM 名字的由来：Node Package(包) Manager(管理器)。\n\nnpm的发展那么 npm 是怎么火的呢？\nnpm 的发展是跟 Node.js 的发展相辅相成的。\nNode.js 是由一个在德国工作的美国程序员 Ryan Dahl 写的。他写了 Node.js，但是 Node.js 缺少一个包管理器，于是他和 npm 的作者一拍即合、抱团取暖，最终 Node.js 内置了 npm。\n后来的事情大家都知道，Node.js 火了。随着 Node.js 的火爆，大家开始用 npm 来共享 JS 代码了，于是 jQuery 作者也将 jQuery 发布到 npm 了。\n所以现在，你可以使用 npm install jquery 来下载 jQuery 代码。\n现在用 npm 来分享代码已经成了前端的标配。\n\nnpm使用方法进入新建的工作目录，然后进行npm的初始化。\n1npm init -t\n\n\n\n在项目目录下生成了一个package.json文件。然后安装jQuery包。然后npm就会帮你看有没有jQuery这个包。如果存在的话就帮你安装到根目录下node_modules这个文件夹下。\n1npm i jQuery\n\n\n\n并且你安装的包的版本信息还会被自动记录到package.json的dependencies里面。是一对一的。即使之后你把node_modules文件夹全部删除了，在你重新初始化的时候，它会读取dependencies里的信息，然后再重新生成对应的node_modules文件夹。\n\nnpm常用配置package.json的script在script里会执行你指定的命令。比如写一个yo，输出yo的指令，然后npm run yo,就会看到命令行输出了yo。\n区别生产环境和开发环境用下面的命令。\n1npm i webpack --save-dev\n\n安装成功之后可以看到package.json里多了一个devDependencies。也就是用于生产环境下的依赖。\n","dateCreated":"2019-11-24T17:01:22+09:00","dateModified":"2019-11-25T22:27:37+09:00","datePublished":"2019-11-24T17:01:22+09:00","description":"Npm和Yarn","headline":"Npm And Yarn","image":["20191124.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/11/24/aboutnpm/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/","http://stackoverflow.com/users","https://twitter.com/","https://facebook.com/","https://plus.google.com/","https://www.linkedin.com/profile/","mailto"]},"url":"https://kisky3.github.io/2019/11/24/aboutnpm/","keywords":"Npm, Yarn","thumbnailUrl":"20191124.png"}</script>
+    <meta name="description" content="Npm和Yarn">
+<meta name="keywords" content="Npm,Yarn">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Npm And Yarn">
+<meta property="og:url" content="https://kisky3.github.io/2019/11/24/aboutnpm/index.html">
+<meta property="og:site_name" content="Xiang Yu&#39;s Blog">
+<meta property="og:description" content="Npm和Yarn">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2019/11/24/aboutnpm/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/11/24/aboutnpm/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/11/24/aboutnpm/3.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/11/24/aboutnpm/4.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/11/24/aboutnpm/5.png">
+<meta property="og:updated_time" content="2019-11-25T13:27:37.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Npm And Yarn">
+<meta name="twitter:description" content="Npm和Yarn">
+<meta name="twitter:image" content="https://kisky3.github.io/2019/11/24/aboutnpm/1.png">
+    
+    
+        
+    
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/11/24/aboutnpm/20191124.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/11/24/aboutnpm/20191124.png" />
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/11/24/aboutnpm/cover.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/11/24/aboutnpm/cover.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/all.css">
+    <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" href="/assets/css/thumbs.css">
+    <link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+    <!--STYLES END-->
+    
+
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link open-algolia-search"
+                             href="#search"
+                            
+                            title="Search"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="#about"
+                            
+                            title="About"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="http://stackoverflow.com/users" target="_blank" rel="noopener" title="Stack Overflow">
+                    
+                        <i class="sidebar-button-icon fab fa-stack-overflow" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Stack Overflow</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://twitter.com/" target="_blank" rel="noopener" title="Twitter">
+                    
+                        <i class="sidebar-button-icon fab fa-twitter" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Twitter</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://facebook.com/" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://plus.google.com/" target="_blank" rel="noopener" title="Google +">
+                    
+                        <i class="sidebar-button-icon fab fa-google-plus" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Google +</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.linkedin.com/profile/" target="_blank" rel="noopener" title="LinkedIn">
+                    
+                        <i class="sidebar-button-icon fab fa-linkedin" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">LinkedIn</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/mailto"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--partial"
+             style="background-image:url('/2019/11/24/aboutnpm/cover.jpg');"
+             data-behavior="4">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Npm And Yarn
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-11-24T17:01:22+09:00">
+	
+		    Nov 24, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/System-Setting/">System Setting</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="4"
+                 class="hasCover
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Npm和Yarn</p>
+<a id="more"></a>
+<h3 id="npm概念"><a href="#npm概念" class="headerlink" title="npm概念"></a>npm概念</h3><p>Npm就是Node Package Manager，也就是Node包管理工具。</p>
+<hr>
+<h3 id="npm用途"><a href="#npm用途" class="headerlink" title="npm用途"></a>npm用途</h3><p>如果不使用包管理器，有什么麻烦的呢？</p>
+<p>这是源于代码包分享的理念，包和依赖越来越多，每个包都有自己的版本和发展，而包与包之间也有依赖。版本管理就成了一件令人头痛的事。</p>
+<p>比如jQuery插件A(版本1)，依赖于jQuery(版本1)，当你把jQuery版本更新为2的时候，A很可能就挂掉了。各个插件间也有依赖，插件A挂掉了，可能B也挂掉了，<br>连接挂掉是噩梦一般，你要一个个去查文档，看每个包要求依赖的版本，然后自己协调。<br>这时候npm就应运而生了，不仅可以帮你把各种包从网上download下来，最主要的是还可以帮你管理不同包之间的关系，<br>比如你当前的版本号是多少，你依赖着谁，你依赖的版本号是多少都一目了然。</p>
+<hr>
+<h3 id="npm实现具体步骤"><a href="#npm实现具体步骤" class="headerlink" title="npm实现具体步骤"></a>npm实现具体步骤</h3><p>NPM 的思路大概是这样的：</p>
+<ol>
+<li><p>买个服务器作为代码仓库（registry），在里面放所有需要被共享的代码</p>
+</li>
+<li><p>发邮件通知 jQuery、Bootstrap、Underscore 作者使用 npm publish 把代码提交到 registry 上，分别取名 jquery、bootstrap 和 underscore（注意大小写）</p>
+</li>
+<li><p>社区里的其他人如果想使用这些代码，就把 jquery、bootstrap 和 underscore 写到 package.json 里，然后运行 npm install ，npm 就会帮他们下载代码</p>
+</li>
+<li><p>下载完的代码出现在 node_modules 目录里，可以随意使用了。</p>
+</li>
+</ol>
+<p>这些可以被使用的代码被叫做「包」（package），这就是 NPM 名字的由来：Node Package(包) Manager(管理器)。</p>
+<hr>
+<h3 id="npm的发展"><a href="#npm的发展" class="headerlink" title="npm的发展"></a>npm的发展</h3><p>那么 npm 是怎么火的呢？</p>
+<p>npm 的发展是跟 Node.js 的发展相辅相成的。</p>
+<p>Node.js 是由一个在德国工作的美国程序员 Ryan Dahl 写的。他写了 Node.js，但是 Node.js 缺少一个包管理器，于是他和 npm 的作者一拍即合、抱团取暖，最终 Node.js 内置了 npm。</p>
+<p>后来的事情大家都知道，Node.js 火了。<br>随着 Node.js 的火爆，大家开始用 npm 来共享 JS 代码了，于是 jQuery 作者也将 jQuery 发布到 npm 了。</p>
+<p>所以现在，你可以使用 npm install jquery 来下载 jQuery 代码。</p>
+<p>现在用 npm 来分享代码已经成了前端的标配。</p>
+<hr>
+<h3 id="npm使用方法"><a href="#npm使用方法" class="headerlink" title="npm使用方法"></a>npm使用方法</h3><p>进入新建的工作目录，然后进行npm的初始化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -t</span><br></pre></td></tr></table></figure>
+
+<img src="./1.png" style="width:500px ">
+
+<p>在项目目录下生成了一个<strong>package.json</strong>文件。<br>然后安装jQuery包。然后npm就会帮你看有没有jQuery这个包。如果存在的话就帮你安装到根目录下<strong>node_modules</strong>这个文件夹下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i jQuery</span><br></pre></td></tr></table></figure>
+
+<img src="./2.png" style="width:500px ">
+
+<p>并且你安装的包的版本信息还会被自动记录到<strong>package.json</strong>的<strong>dependencies</strong>里面。是一对一的。即使之后你把node_modules文件夹全部删除了，<br>在你重新初始化的时候，它会读取dependencies里的信息，然后再重新生成对应的node_modules文件夹。<br><img src="./3.png" style="width:500px "></p>
+<hr>
+<h3 id="npm常用配置"><a href="#npm常用配置" class="headerlink" title="npm常用配置"></a>npm常用配置</h3><p><strong>package.json</strong>的<strong>script</strong><br>在script里会执行你指定的命令。<br>比如写一个yo，输出yo的指令，然后<strong>npm run yo</strong>,就会看到命令行输出了yo。<br><img src="./4.png" style="width:500px "></p>
+<p>区别生产环境和开发环境用下面的命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i webpack --save-dev</span><br></pre></td></tr></table></figure>
+
+<p>安装成功之后可以看到package.json里多了一个devDependencies。也就是用于生产环境下的依赖。<br><img src="./5.png" style="width:500px "></p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Npm/">Npm</a> <a class="tag tag--primary tag--small t-link" href="/tags/Yarn/">Yarn</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/11/27/nodebrew/" data-tooltip="nodebrew" aria-label="PREVIOUS: nodebrew">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/11/11/CreatePhpEnvironmentInDocker/" data-tooltip="Create PHP Environment With Docker" aria-label="NEXT: Create PHP Environment With Docker">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/11/24/aboutnpm/" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/11/24/aboutnpm/" title="Share on Twitter">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/11/24/aboutnpm/" title="Share on Google+">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/11/27/nodebrew/" data-tooltip="nodebrew" aria-label="PREVIOUS: nodebrew">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/11/11/CreatePhpEnvironmentInDocker/" data-tooltip="Create PHP Environment With Docker" aria-label="NEXT: Create PHP Environment With Docker">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/11/24/aboutnpm/" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/11/24/aboutnpm/" title="Share on Twitter">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/11/24/aboutnpm/" title="Share on Google+">
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://kisky3.github.io/2019/11/24/aboutnpm/">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https://kisky3.github.io/2019/11/24/aboutnpm/">
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https://kisky3.github.io/2019/11/24/aboutnpm/">
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/thumbs.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    </body>
+</html>

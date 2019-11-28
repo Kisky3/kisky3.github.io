@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Xiang Yu&#39;s Blog">
+    <title>Create A Login&amp;Register Modal With Rotation Animation - Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"实现一个翻转注册登陆页面\n\n\n使用语言为CSS和原生JS大致思路如下：\n1.创造两个模态框，一个为login，一个为register.\nHTML\n\n123456789&lt;main&gt;  &lt;div class=\"flip-modal login\"&gt;    /* 登陆模态框 */    &lt;div class=\"modal modal-login\"&gt;&lt;/div&gt;    /* 注册模态框 */     &lt;div class=\"modal modal-login\"&gt;&lt;/div&gt;  &lt;/div&gt;&lt;/main&gt;\n\n\n2.并使用JS来控制flip-modal下的class为login或者register.\nJS\n\n12345678910111213141516$('.flip-modal').addEventListener('click', function(e)&#123;  e.stopPropagation();  if(e.target.classList.contains('login'))&#123;    $('.flip-modal').classList.remove('register');    $('.flip-modal').classList.add('login');  &#125;    if(e.target.classList.contains('register'))&#123;    $('.flip-modal').classList.add('register');    $('.flip-modal').classList.remove('login');  &#125;    if(e.target.classList.contains('close'))&#123;    $('.flip-modal').style.display = 'none';  &#125;&#125;);\n\n\n3.CSS控制模态框翻转时,根据flip-modal下的class类型进行两个模态框的水平Y轴翻转，并隐藏翻转后的背面.加上transition的过渡效果使翻转更自然。\n12345678910111213.flip-modal.login .modal-login,.flip-modal.register .modal-register &#123;  transform: translate(-50%,-50%) rotateY(0deg);  backface-visibility: hidden;  transition: all 1s;&#125;.flip-modal.login .modal-register,.flip-modal.register .modal-login &#123;  transform: translate(-50%,-50%) rotateY(180deg);  backface-visibility: hidden;  transition: all 1s;&#125;\n\n\n效果图如下\n\n代码预览地址\n\n完整代码HTML\n\n12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;  &lt;meta charset=\"utf-8\"&gt;  &lt;title&gt;Login|Regist&lt;/title&gt;  &lt;link rel=\"stylesheet\" href=\"https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css\"&gt;&lt;/head&gt;&lt;body&gt;&lt;main&gt;  &lt;header&gt;    &lt;a class=\"login\" href=\"#\"&gt;      &lt;i class=\"fa fa-user-circle\"&gt;&lt;/i&gt;    &lt;/a&gt;  &lt;/header&gt;  &lt;div class=\"flip-modal login\"&gt;    &lt;div class=\"modal modal-login\"&gt;      &lt;a class=\"close fa fa-close\" href=\"#\"&gt;&lt;/a&gt;      &lt;div class=\"tabs\"&gt;        &lt;a href=\"#\" class=\"login active\"&gt;登录&lt;/a&gt;        &lt;a href=\"#\" class=\"register\"&gt;注册&lt;/a&gt;      &lt;/div&gt;      &lt;div class=\"content\"&gt;        &lt;div class=\"errormsg\"&gt;&lt;/div&gt;        &lt;form action=\"/login\" method=\"post\"&gt;          &lt;div class=\"input-field\"&gt;            &lt;i class=\"fa fa-user-o\"&gt;&lt;/i&gt;            &lt;input name=\"username\" type=\"text\" placeholder=\"用户名\"&gt;          &lt;/div&gt;          &lt;div class=\"input-field\"&gt;            &lt;i class=\"fa fa-lock\"&gt;&lt;/i&gt;            &lt;input name=\"password\" type=\"password\" placeholder=\"密码\"&gt;          &lt;/div&gt;          &lt;div class=\"input-field\"&gt;            &lt;input type=\"submit\" value=\"登录\"&gt;          &lt;/div&gt;        &lt;/form&gt;      &lt;/div&gt;    &lt;/div&gt;    &lt;div class=\"modal modal-register\"&gt;      &lt;a class=\"close fa fa-close\" href=\"#\"&gt;&lt;/a&gt;      &lt;div class=\"tabs\"&gt;        &lt;a href=\"#\" class=\"login\"&gt;登录&lt;/a&gt;        &lt;a href=\"#\" class=\"register active\"&gt;注册&lt;/a&gt;      &lt;/div&gt;      &lt;div class=\"content\"&gt;        &lt;div class=\"errormsg\"&gt;&lt;/div&gt;        &lt;form action=\"/login\" method=\"post\"&gt;          &lt;div class=\"input-field\"&gt;            &lt;i class=\"fa fa-user-o\"&gt;&lt;/i&gt;            &lt;input name=\"username\" type=\"text\" placeholder=\"用户名\"&gt;          &lt;/div&gt;          &lt;div class=\"input-field\"&gt;            &lt;i class=\"fa fa-lock\"&gt;&lt;/i&gt;            &lt;input name=\"password\" type=\"password\" placeholder=\"密码\"&gt;          &lt;/div&gt;          &lt;div class=\"input-field\"&gt;            &lt;i class=\"fa fa-lock\"&gt;&lt;/i&gt;            &lt;input name=\"password2\" type=\"password\" placeholder=\"再次输入密码\"&gt;          &lt;/div&gt;          &lt;div class=\"input-field\"&gt;            &lt;input type=\"submit\" value=\"注册\"&gt;          &lt;/div&gt;        &lt;/form&gt;      &lt;/div&gt;    &lt;/div&gt;  &lt;/div&gt;&lt;/main&gt;&lt;/body&gt;&lt;/html&gt;\n\nJS\n\n123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566function $(selector)&#123;  return document.querySelector(selector);&#125;function $$(selector)&#123;  return document.querySelectorAll(selector);&#125;$('header .login').onclick = function(e)&#123;  e.stopPropagation();  $('.flip-modal').style.display = 'block';&#125;;$('.flip-modal').addEventListener('click', function(e)&#123;  e.stopPropagation();  if(e.target.classList.contains('login'))&#123;    $('.flip-modal').classList.remove('register');    $('.flip-modal').classList.add('login');  &#125;    if(e.target.classList.contains('register'))&#123;    $('.flip-modal').classList.add('register');    $('.flip-modal').classList.remove('login');  &#125;    if(e.target.classList.contains('close'))&#123;    $('.flip-modal').style.display = 'none';  &#125;&#125;);document.addEventListener ('click',function()&#123;  $('.flip-modal').style.display = 'none';&#125;);$('.modal-login form').addEventListener('submit',function(e)&#123;  e.preventDefault();  if(!/^\\w&#123;3,8&#125;$/.test($('.modal-login input[name=username]').value))&#123;    $('.modal-login .errormsg').innerText = '用户名需要输入3-8个字符，包括字母数字和下划线';    return false;  &#125;    if(!/^\\w&#123;6,10&#125;$/.test($('.modal-login input[name=password]').value))&#123;    $('.modal-login .errormsg').innerText = '密码需要输入6-10个字符，包括字母数字和下划线';    return false;  &#125;  this.submit();&#125;);$('.modal-register form').addEventListener('submit',function(e)&#123;  e.preventDefault();  if(!/^\\w&#123;3,8&#125;$/.test($('.modal-register input[name=username]').value))&#123;    $('.modal-register .errormsg').innerText = '用户名需要输入3-8个字符，包括字母数字和下划线';    return false;  &#125;    if(!/^\\w&#123;6,10&#125;$/.test($('.modal-register input[name=password]').value))&#123;    $('.modal-register .errormsg').innerText = '密码需要输入6-10个字符，包括字母数字和下划线';    return false;  &#125;     if($('.modal-register input[name = password]').value != $('.modal-register input[name = password2]').value)&#123;    $('.modal-register .errormsg').innerText = '两次密码输入不一致';    return false;  &#125;  this.submit();&#125;);\n\nCSS\n\n123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124* &#123;  margin: 0;  padding: 0;  box-sizing: border-box;&#125;html, body, main &#123;  height: 100%;&#125;body &#123;  font: 14px/1.5 Arial;&#125;a &#123;  text-decoration: none;  color: #444;&#125;main &#123;  background: linear-gradient(to right top, rgba(38,50,105,0.78), rgba(255,152,0,0.45)), url(\"http://n.sinaimg.cn/sinacn20111/348/w690h458/20190317/95f8-hukwxnu7092764.jpg\") center center no-repeat;&#125;herder &#123;  position: absolute;  top: 10px;  width: 100%;&#125;header .login &#123;  float: right;  margin-right: 20px;  font-size: 20px;&#125;.flip-modal &#123;  display: none;&#125;.show-modal &#123;  display: block!important;&#125;.modal &#123;  position: absolute;  left: 50%;  top: 50%;  transform: translate(-50%, -50%);  width: 400px;  padding: 16px;  background-color: #fff;  box-shadow: 0 3px 4px 5px rgba(0,0,0,0.2);&#125;.modal .close &#123;  position: absolute;  right: 10px;  top: 10px;&#125;.modal .tabs &#123;  text-align: center;&#125;.modal .tabs a &#123;  display: inline-block;  font-size: 16px;  margin: 0 10px;  color: #666;&#125;.modal .tabs a.active &#123;  border-bottom: 2px solid #444;  color: #444;&#125;.modal .content &#123;  padding: 20px 40px;&#125;.modal .errormsg &#123;  color: #ff9800;  font-size: 12px;&#125;.modal .content .input-field &#123;  position: relative;  margin-top: 10px;&#125;.modal .content .input-field .fa &#123;  position: absolute;  left: 13px;  top: 13px;&#125;.modal .content input[type=text],.modal .content input[type=password] &#123;  width: 100%;  padding: 10px 10px 10px 28px;  outline: none;&#125;.modal .content input[type=submit] &#123;  padding: 6px 10px;  border: none;  background: #fff;  box-shadow: 0 0 2px rgba(0,0,0,0.4);  outline: none;&#125;.flip-modal.login .modal-login,.flip-modal.register .modal-register &#123;  transform: translate(-50%,-50%) rotateY(0deg);  backface-visibility: hidden;  transition: all 1s;&#125;.flip-modal.login .modal-register,.flip-modal.register .modal-login &#123;  transform: translate(-50%,-50%) rotateY(180deg);  backface-visibility: hidden;  transition: all 1s;&#125;\n\n","dateCreated":"2019-04-20T20:09:27+09:00","dateModified":"2019-11-24T08:54:38+09:00","datePublished":"2019-04-20T20:09:27+09:00","description":"实现一个翻转注册登陆页面","headline":"Create A Login&Register Modal With Rotation Animation","image":["20190420.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/","keywords":"CSS","thumbnailUrl":"20190420.png"}</script>
+    <meta name="description" content="实现一个翻转注册登陆页面">
+<meta name="keywords" content="CSS">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Create A Login&amp;Register Modal With Rotation Animation">
+<meta property="og:url" content="https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/index.html">
+<meta property="og:site_name" content="Xiang Yu&#39;s Blog">
+<meta property="og:description" content="实现一个翻转注册登陆页面">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/1.png">
+<meta property="og:updated_time" content="2019-11-23T23:54:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Create A Login&amp;Register Modal With Rotation Animation">
+<meta name="twitter:description" content="实现一个翻转注册登陆页面">
+<meta name="twitter:image" content="https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/20190420.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/20190420.png" />
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/cover.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/cover.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-cp4r4lzbvdgtsqux0bz8gef7mbnza7hvzqoldgoabfuwl18rpvlbvko6sqb4.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <body style="margin: 0; height:100%">
+        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--partial"
+             style="background-image:url('/2019/04/20/实现一个翻转注册登陆页面/cover.jpg');"
+             data-behavior="5">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Create A Login&amp;Register Modal With Rotation Animation
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-04-20T20:09:27+09:00">
+	
+		    Apr 20, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="5"
+                 class="hasCover
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>实现一个翻转注册登陆页面</p>
+<a id="more"></a>
+
+<h3 id="使用语言为CSS和原生JS"><a href="#使用语言为CSS和原生JS" class="headerlink" title="使用语言为CSS和原生JS"></a>使用语言为CSS和原生JS</h3><p>大致思路如下：</p>
+<p>1.创造两个模态框，一个为login，一个为register.</p>
+<span class="highlight-text" style="background-color:#FFCCCC;">HTML</span>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flip-modal login"</span>&gt;</span></span><br><span class="line">    /* 登陆模态框 */</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"modal modal-login"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    /* 注册模态框 */</span><br><span class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"modal modal-login"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>2.并使用JS来控制flip-modal下的class为login或者register.</p>
+<span class="highlight-text" style="background-color:#FFCCCC;">JS</span>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$('.flip-modal').addEventListener('click', function(e)&#123;</span><br><span class="line">  e.stopPropagation();</span><br><span class="line">  if(e.target.classList.contains('login'))&#123;</span><br><span class="line">    $('.flip-modal').classList.remove('register');</span><br><span class="line">    $('.flip-modal').classList.add('login');</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  if(e.target.classList.contains('register'))&#123;</span><br><span class="line">    $('.flip-modal').classList.add('register');</span><br><span class="line">    $('.flip-modal').classList.remove('login');</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  if(e.target.classList.contains('close'))&#123;</span><br><span class="line">    $('.flip-modal').style.display = 'none';</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>3.CSS控制模态框翻转时,根据flip-modal下的class类型进行两个模态框的水平Y轴翻转，并隐藏翻转后的背面.<br>加上transition的过渡效果使翻转更自然。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.flip-modal.login .modal-login,</span><br><span class="line">.flip-modal.register .modal-register &#123;</span><br><span class="line">  transform: translate(<span class="number">-50</span>%,<span class="number">-50</span>%) rotateY(<span class="number">0</span>deg);</span><br><span class="line">  backface-visibility: hidden;</span><br><span class="line">  transition: all <span class="number">1</span>s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.flip-modal.login .modal-register,</span><br><span class="line">.flip-modal.register .modal-login &#123;</span><br><span class="line">  transform: translate(<span class="number">-50</span>%,<span class="number">-50</span>%) rotateY(<span class="number">180</span>deg);</span><br><span class="line">  backface-visibility: hidden;</span><br><span class="line">  transition: all <span class="number">1</span>s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="效果图如下"><a href="#效果图如下" class="headerlink" title="效果图如下"></a>效果图如下</h3><img src="./1.png" style="width:500px">
+
+<p><a href="http://js.jirengu.com/xukec/43/edit?html,css,js]" target="_blank" rel="noopener">代码预览地址</a></p>
+<hr>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><span class="highlight-text" style="background-color:#FFCCCC;">HTML</span>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Login|Regist<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">main</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"login"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-user-circle"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"flip-modal login"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"modal modal-login"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"close fa fa-close"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tabs"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"login active"</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"register"</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"errormsg"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/login"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-field"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-user-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"用户名"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-field"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-lock"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">placeholder</span>=<span class="string">"密码"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-field"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"登录"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"modal modal-register"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"close fa fa-close"</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tabs"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"login"</span>&gt;</span>登录<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"register active"</span>&gt;</span>注册<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"errormsg"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/login"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-field"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-user-o"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"用户名"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-field"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-lock"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">placeholder</span>=<span class="string">"密码"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-field"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-lock"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"password2"</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">placeholder</span>=<span class="string">"再次输入密码"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-field"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"注册"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<span class="highlight-text" style="background-color:#FFCCCC;">JS</span>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">$</span>(<span class="params">selector</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">document</span>.querySelector(selector);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">$$</span>(<span class="params">selector</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">document</span>.querySelectorAll(selector);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(<span class="string">'header .login'</span>).onclick = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  e.stopPropagation();</span><br><span class="line">  $(<span class="string">'.flip-modal'</span>).style.display = <span class="string">'block'</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$(<span class="string">'.flip-modal'</span>).addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  e.stopPropagation();</span><br><span class="line">  <span class="keyword">if</span>(e.target.classList.contains(<span class="string">'login'</span>))&#123;</span><br><span class="line">    $(<span class="string">'.flip-modal'</span>).classList.remove(<span class="string">'register'</span>);</span><br><span class="line">    $(<span class="string">'.flip-modal'</span>).classList.add(<span class="string">'login'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(e.target.classList.contains(<span class="string">'register'</span>))&#123;</span><br><span class="line">    $(<span class="string">'.flip-modal'</span>).classList.add(<span class="string">'register'</span>);</span><br><span class="line">    $(<span class="string">'.flip-modal'</span>).classList.remove(<span class="string">'login'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(e.target.classList.contains(<span class="string">'close'</span>))&#123;</span><br><span class="line">    $(<span class="string">'.flip-modal'</span>).style.display = <span class="string">'none'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">document</span>.addEventListener (<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  $(<span class="string">'.flip-modal'</span>).style.display = <span class="string">'none'</span>;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">$(<span class="string">'.modal-login form'</span>).addEventListener(<span class="string">'submit'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  e.preventDefault();</span><br><span class="line">  <span class="keyword">if</span>(!<span class="regexp">/^\w&#123;3,8&#125;$/</span>.test($(<span class="string">'.modal-login input[name=username]'</span>).value))&#123;</span><br><span class="line">    $(<span class="string">'.modal-login .errormsg'</span>).innerText = <span class="string">'用户名需要输入3-8个字符，包括字母数字和下划线'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(!<span class="regexp">/^\w&#123;6,10&#125;$/</span>.test($(<span class="string">'.modal-login input[name=password]'</span>).value))&#123;</span><br><span class="line">    $(<span class="string">'.modal-login .errormsg'</span>).innerText = <span class="string">'密码需要输入6-10个字符，包括字母数字和下划线'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">this</span>.submit();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">$(<span class="string">'.modal-register form'</span>).addEventListener(<span class="string">'submit'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">  e.preventDefault();</span><br><span class="line">  <span class="keyword">if</span>(!<span class="regexp">/^\w&#123;3,8&#125;$/</span>.test($(<span class="string">'.modal-register input[name=username]'</span>).value))&#123;</span><br><span class="line">    $(<span class="string">'.modal-register .errormsg'</span>).innerText = <span class="string">'用户名需要输入3-8个字符，包括字母数字和下划线'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span>(!<span class="regexp">/^\w&#123;6,10&#125;$/</span>.test($(<span class="string">'.modal-register input[name=password]'</span>).value))&#123;</span><br><span class="line">    $(<span class="string">'.modal-register .errormsg'</span>).innerText = <span class="string">'密码需要输入6-10个字符，包括字母数字和下划线'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>($(<span class="string">'.modal-register input[name = password]'</span>).value != $(<span class="string">'.modal-register input[name = password2]'</span>).value)&#123;</span><br><span class="line">    $(<span class="string">'.modal-register .errormsg'</span>).innerText = <span class="string">'两次密码输入不一致'</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">this</span>.submit();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<span class="highlight-text" style="background-color:#FFCCCC;">CSS</span>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line">* &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">html</span>, <span class="selector-tag">body</span>, <span class="selector-tag">main</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">font</span>: <span class="number">14px</span>/<span class="number">1.5</span> Arial;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#444</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">main</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(to right top, rgba(38,50,105,0.78), <span class="built_in">rgba</span>(255,152,0,0.45)), <span class="built_in">url</span>(<span class="string">"http://n.sinaimg.cn/sinacn20111/348/w690h458/20190317/95f8-hukwxnu7092764.jpg"</span>) center center no-repeat;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">herder</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">header</span> <span class="selector-class">.login</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: right;</span><br><span class="line">  <span class="attribute">margin-right</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.flip-modal</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.show-modal</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block<span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%);</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">3px</span> <span class="number">4px</span> <span class="number">5px</span> <span class="built_in">rgba</span>(0,0,0,0.2);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.close</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.tabs</span> &#123;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.tabs</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#666</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.tabs</span> <span class="selector-tag">a</span><span class="selector-class">.active</span> &#123;</span><br><span class="line">  <span class="attribute">border-bottom</span>: <span class="number">2px</span> solid <span class="number">#444</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#444</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.content</span> &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">20px</span> <span class="number">40px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.errormsg</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#ff9800</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.content</span> <span class="selector-class">.input-field</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.content</span> <span class="selector-class">.input-field</span> <span class="selector-class">.fa</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">13px</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">13px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.content</span> <span class="selector-tag">input</span><span class="selector-attr">[type=text]</span>,</span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.content</span> <span class="selector-tag">input</span><span class="selector-attr">[type=password]</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">10px</span> <span class="number">10px</span> <span class="number">10px</span> <span class="number">28px</span>;</span><br><span class="line">  <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal</span> <span class="selector-class">.content</span> <span class="selector-tag">input</span><span class="selector-attr">[type=submit]</span> &#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">border</span>: none;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">2px</span> <span class="built_in">rgba</span>(0,0,0,0.4);</span><br><span class="line">  <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.flip-modal</span><span class="selector-class">.login</span> <span class="selector-class">.modal-login</span>,</span><br><span class="line"><span class="selector-class">.flip-modal</span><span class="selector-class">.register</span> <span class="selector-class">.modal-register</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%,-50%) <span class="built_in">rotateY</span>(0deg);</span><br><span class="line">  <span class="attribute">backface-visibility</span>: hidden;</span><br><span class="line">  <span class="attribute">transition</span>: all <span class="number">1s</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.flip-modal</span><span class="selector-class">.login</span> <span class="selector-class">.modal-register</span>,</span><br><span class="line"><span class="selector-class">.flip-modal</span><span class="selector-class">.register</span> <span class="selector-class">.modal-login</span> &#123;</span><br><span class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%,-50%) <span class="built_in">rotateY</span>(180deg);</span><br><span class="line">  <span class="attribute">backface-visibility</span>: hidden;</span><br><span class="line">  <span class="attribute">transition</span>: all <span class="number">1s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/CSS/">CSS</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/04/25/关于BOM对象/" data-tooltip="About Brower Object Model" aria-label="PREVIOUS: About Brower Object Model">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/04/06/Docker环境下使用bake自动生成页面/" data-tooltip="Create A Temple Page With Docker Bake" aria-label="NEXT: Create A Temple Page With Docker Bake">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/04/25/关于BOM对象/" data-tooltip="About Brower Object Model" aria-label="PREVIOUS: About Brower Object Model">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/04/06/Docker环境下使用bake自动生成页面/" data-tooltip="Create A Temple Page With Docker Bake" aria-label="NEXT: Create A Temple Page With Docker Bake">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/04/20/实现一个翻转注册登陆页面/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+<script>
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault()
+    })
+    var c = document.getElementsByTagName('canvas')[0],
+        x = c.getContext('2d'),
+        pr = window.devicePixelRatio || 1,
+        w = window.innerWidth,
+        h = window.innerHeight,
+        f = 90,
+        q,
+        m = Math,
+        r = 0,
+        u = m.PI*2,
+        v = m.cos,
+        z = m.random
+    c.width = w*pr
+    c.height = h*pr
+    x.scale(pr, pr)
+    x.globalAlpha = 0.6
+    function i(){
+        x.clearRect(0,0,w,h)
+        q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
+        while(q[1].x<w+f) d(q[0], q[1])
+    }
+    function d(i,j){   
+        x.beginPath()
+        x.moveTo(i.x, i.y)
+        x.lineTo(j.x, j.y)
+        var k = j.x + (z()*2-0.25)*f,
+            n = y(j.y)
+        x.lineTo(k, n)
+        x.closePath()
+        r-=u/-50
+        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
+        x.fill()
+        q[0] = q[1]
+        q[1] = {x:k,y:n}
+    }
+    function y(p){
+        var t = p + (z()*2-1.1)*f
+        return (t>h||t<0) ? y(p) : t
+    }
+    document.onclick = i
+    document.ontouchstart = i
+    i()
+</script>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-cp5cm5q41vsluavgrnvsvvn7coigizg2jehgclpkt4rkvpsxmjmpfr3c8am4.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    </body>
+</html>
