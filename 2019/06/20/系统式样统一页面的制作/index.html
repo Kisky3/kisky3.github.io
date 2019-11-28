@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Xiang Yu&#39;s Blog">
+    <title>Created A StyleGuide For SPACE CLOUD Servive - Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"はじめに\nみなさん、こんにちは！!\nフロントエンドエンジニアの向宇(こう　う)と申します。 開発経験はまだ浅いですが、毎日楽しんで開発をチャレンジしています。\n今回はSPACE CLOUDのスタイルガイドの開発について、お話しさせていただきますね。\n開発目的私気づいた問題点は、フロントの書き方と全体スタイルの統一性はよくないと感じました。\n例えば、入力ボックスを実装する時に、 Reactを利用してComponentを作る人もいるし、 CakePHPのテンプレートで直接実装する人もいます。\n書き方を統一して、コピペだけですぐ実装できるスタイルガイドがあると統一感を持たせることができると考え、 SPACE CLOUD専用のスタイルガイドを作成始めました。\n開発流れスタイルガイドのトップページについてまずはHTMLとCSSを利用して、トップページをオシャレにしました〜\n出来上がったものはこんな感じです！ ちょっとだけアニメーションも追加しました。\n\n\n\nスタイルガイドの各ページについてまずReactを利用して、各ページの枠を作ります。 ソース構造と主なフォルダー説明は下記でございます〜\nAtomic: SPACE CLOUD専用のReactコンポーネントのベースです\n\n\nComponent: スタイルガイドの各ページ用のコンポーネントです\n\n\nComponent/Pages: 最後各コンポーネントをまとめて表示するためのコンポーネント\n\n\n\n\n\n\nアップロードのForm部品の例Formの画像アップロードを例として説明しますね〜 \n下記はForm ImgUploadのReactコンポーネントの一部です。利用しているのはReactのライブラリreact-dropzoneです。\n123456789101112131415&lt;div  onMouseEnter=&#123;() =&gt; this.onMouseEnter(this.state.uploadStatus)&#125;  onMouseLeave=&#123;() =&gt; this.onMouseLeave(this.state.uploadStatus)&#125;&gt;  &lt;Dropzone    type=&#123;\"field\"&#125;    accept=&#123;\"image/jpeg,image/png,image/jpg\"&#125;    onDrop=&#123;this.onDrop&#125;    multiple=&#123;false&#125; // 個別アップロード    style=&#123;&#123; border: 0 &#125;&#125;  &gt;    &lt;div&gt;&#123;this.getContent()&#125;&lt;/div&gt;  &lt;/Dropzone&gt;  &lt;div&gt;&#123;this.getModifyModal()&#125;&lt;/div&gt;&lt;/div&gt;\n\nマウスホバーする時に画像変更と削除処理ができるように、onMouseEnterとonMouseLeaveを作りました。 プラス画像アップロードの進捗を表示するために下記の処理も追加しました。\n1234// ファイルの読み込み進捗を取得reader.onprogress = files =&gt; &#123;  this.setState(&#123; loadPercentage: files.loaded / files.total * 100 &#125;);&#125;;\n\nプレビュー状態を表示する時に、ProgressBarコンポーネントに渡します。\n12345678910111213141516171819// プレビュー状態を表示if (  this.state &amp;&amp;  this.state.file &amp;&amp;  this.state.file.image.preview !== \"\" &amp;&amp;  this.state.file.image.dataURL !== \"\" &amp;&amp;  this.state.error === \"\") &#123;  return (    &lt;div      className=&#123;imageWrapper + imageActive&#125;      style=&#123;&#123; backgroundImage: `url($&#123;this.state.file.image.dataURL&#125;)` &#125;&#125;    &gt;      &lt;ProgressBar percentage=&#123;this.state.loadPercentage&#125;&gt;        アップロード中・・・      &lt;/ProgressBar&gt;    &lt;/div&gt;  );&#125;\n\n最後はImgUploadDefaultの中でImgUploadコンポーネントを呼び出します。 実用性を考え、コピー機能のコンポーネントも作りました〜\n12345678910111213141516&lt;div className=&#123;\"c-item__container\"&#125;&gt;&lt;h2&gt;Image Upload 【画像アップロード】&lt;/h2&gt;&lt;div  className=&#123;\"c-click-box\"&#125;  role=\"button\"  onClick=&#123;() =&gt; this.onChangeState(FormText.ImgUploadText)&#125;&gt;&lt;div className=&#123;\"c-item-line\"&#125;&gt;    &lt;ImgUpload showUploadImage=&#123;true&#125; /&gt;  &lt;/div&gt;&lt;/div&gt;&lt;div id=\"button-item-text\" className=&#123;\"c-button-item-text\"&#125;&gt;  &lt;CopyButton text=&#123;this.state.text&#125; /&gt;  &lt;pre&gt;&#123;this.state.text&#125;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;\n\n出来上がったものはこんな感じです。\n\nその他のコンポーネント他の要素とページも上記と同じ感じで実装しました。 最後、一部のイメージ図を載せておきますね〜\n\nボタン\n\n\n\n\n\nフォーム\n\n\n\n\n\nカラー\n\n\n\n\n終わりにSPACE CLOUDは多くのコンポーネントが必要で、統一感のある実装が困難な状況でしたが、 スタイルガイドによって今後は統一することができるようになったと思います。\nスタイルガイドの実装を通じて、本当に色々勉強になりました〜 やっとReactコンポーネントの基本とライブラリの使い方とかの基礎知識が分かってきましたと気がします。\n今後の開発によって、スタイルガイドを変更したり、追加したりする可能性もありますが、 その時にまた記事を更新しますね〜\n最後まで読んでいただきまして、誠にありがとうございました！！\n","dateCreated":"2019-06-20T10:18:50+09:00","dateModified":"2019-11-24T08:54:38+09:00","datePublished":"2019-06-20T10:18:50+09:00","description":"はじめに","headline":"Created A StyleGuide For SPACE CLOUD Servive","image":["20190620.jpg","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/","keywords":"JS, React, Redux","thumbnailUrl":"20190620.jpg"}</script>
+    <meta name="description" content="はじめに">
+<meta name="keywords" content="JS,React,Redux">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Created A StyleGuide For SPACE CLOUD Servive">
+<meta property="og:url" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/index.html">
+<meta property="og:site_name" content="Xiang Yu&#39;s Blog">
+<meta property="og:description" content="はじめに">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/3.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/4.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/5.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/6.png">
+<meta property="og:updated_time" content="2019-11-23T23:54:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Created A StyleGuide For SPACE CLOUD Servive">
+<meta name="twitter:description" content="はじめに">
+<meta name="twitter:image" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/20190620.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/20190620.jpg" />
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/cover.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/cover.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-cp4r4lzbvdgtsqux0bz8gef7mbnza7hvzqoldgoabfuwl18rpvlbvko6sqb4.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <body style="margin: 0; height:100%">
+        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--partial"
+             style="background-image:url('/2019/06/20/系统式样统一页面的制作/cover.jpg');"
+             data-behavior="5">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Created A StyleGuide For SPACE CLOUD Servive
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-06-20T10:18:50+09:00">
+	
+		    Jun 20, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="5"
+                 class="hasCover
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <h3 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h3><a id="more"></a>
+<p>みなさん、こんにちは！!</p>
+<p>フロントエンドエンジニアの向宇(こう　う)と申します。 開発経験はまだ浅いですが、毎日楽しんで開発をチャレンジしています。</p>
+<p>今回はSPACE CLOUDのスタイルガイドの開発について、お話しさせていただきますね。</p>
+<h3 id="開発目的"><a href="#開発目的" class="headerlink" title="開発目的"></a>開発目的</h3><p>私気づいた問題点は、フロントの書き方と全体スタイルの統一性はよくないと感じました。</p>
+<p>例えば、入力ボックスを実装する時に、 Reactを利用してComponentを作る人もいるし、 CakePHPのテンプレートで直接実装する人もいます。</p>
+<p>書き方を統一して、コピペだけですぐ実装できるスタイルガイドがあると統一感を持たせることができると考え、 SPACE CLOUD専用のスタイルガイドを作成始めました。</p>
+<h3 id="開発流れ"><a href="#開発流れ" class="headerlink" title="開発流れ"></a>開発流れ</h3><h4 id="スタイルガイドのトップページについて"><a href="#スタイルガイドのトップページについて" class="headerlink" title="スタイルガイドのトップページについて"></a>スタイルガイドのトップページについて</h4><p>まずはHTMLとCSSを利用して、トップページをオシャレにしました〜</p>
+<p>出来上がったものはこんな感じです！ ちょっとだけアニメーションも追加しました。</p>
+<img src="./1.png" style="width:600px">
+
+<hr>
+<h4 id="スタイルガイドの各ページについて"><a href="#スタイルガイドの各ページについて" class="headerlink" title="スタイルガイドの各ページについて"></a>スタイルガイドの各ページについて</h4><p>まずReactを利用して、各ページの枠を作ります。 ソース構造と主なフォルダー説明は下記でございます〜</p>
+<div class="alert danger no-icon"><p>Atomic: SPACE CLOUD専用のReactコンポーネントのベースです</p>
+</div>
+
+<div class="alert danger no-icon"><p>Component: スタイルガイドの各ページ用のコンポーネントです</p>
+</div>
+
+<div class="alert danger no-icon"><p>Component/Pages: 最後各コンポーネントをまとめて表示するためのコンポーネント</p>
+</div>
+
+<br>
+<img src="./2.png" style="width:600px">
+
+<hr>
+<h4 id="アップロードのForm部品の例"><a href="#アップロードのForm部品の例" class="headerlink" title="アップロードのForm部品の例"></a>アップロードのForm部品の例</h4><p>Formの画像アップロードを例として説明しますね〜 </p>
+<p>下記はForm ImgUploadのReactコンポーネントの一部です。利用しているのはReactのライブラリ<span class="highlight-text" style="background-color:#FFCCCC;">react-dropzone</span>です。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;div</span><br><span class="line">  onMouseEnter=&#123;() =&gt; <span class="keyword">this</span>.onMouseEnter(<span class="keyword">this</span>.state.uploadStatus)&#125;</span><br><span class="line">  onMouseLeave=&#123;() =&gt; <span class="keyword">this</span>.onMouseLeave(<span class="keyword">this</span>.state.uploadStatus)&#125;</span><br><span class="line">&gt;</span><br><span class="line">  &lt;Dropzone</span><br><span class="line">    type=&#123;<span class="string">"field"</span>&#125;</span><br><span class="line">    accept=&#123;<span class="string">"image/jpeg,image/png,image/jpg"</span>&#125;</span><br><span class="line">    onDrop=&#123;<span class="keyword">this</span>.onDrop&#125;</span><br><span class="line">    multiple=&#123;<span class="literal">false</span>&#125; <span class="comment">// 個別アップロード</span></span><br><span class="line">    style=&#123;&#123; <span class="attr">border</span>: <span class="number">0</span> &#125;&#125;</span><br><span class="line">  &gt;</span><br><span class="line">    &lt;div&gt;&#123;<span class="keyword">this</span>.getContent()&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>Dropzone&gt;</span><br><span class="line">  &lt;div&gt;&#123;<span class="keyword">this</span>.getModifyModal()&#125;&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>マウスホバーする時に画像変更と削除処理ができるように、onMouseEnterとonMouseLeaveを作りました。 プラス画像アップロードの進捗を表示するために下記の処理も追加しました。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ファイルの読み込み進捗を取得</span></span><br><span class="line">reader.onprogress = <span class="function"><span class="params">files</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123; <span class="attr">loadPercentage</span>: files.loaded / files.total * <span class="number">100</span> &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>プレビュー状態を表示する時に、ProgressBarコンポーネントに渡します。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// プレビュー状態を表示</span></span><br><span class="line"><span class="keyword">if</span> (</span><br><span class="line">  <span class="keyword">this</span>.state &amp;&amp;</span><br><span class="line">  <span class="keyword">this</span>.state.file &amp;&amp;</span><br><span class="line">  <span class="keyword">this</span>.state.file.image.preview !== <span class="string">""</span> &amp;&amp;</span><br><span class="line">  <span class="keyword">this</span>.state.file.image.dataURL !== <span class="string">""</span> &amp;&amp;</span><br><span class="line">  <span class="keyword">this</span>.state.error === <span class="string">""</span></span><br><span class="line">) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div</span><br><span class="line">      className=&#123;imageWrapper + imageActive&#125;</span><br><span class="line">      style=&#123;&#123; <span class="attr">backgroundImage</span>: <span class="string">`url(<span class="subst">$&#123;<span class="keyword">this</span>.state.file.image.dataURL&#125;</span>)`</span> &#125;&#125;</span><br><span class="line">    &gt;</span><br><span class="line">      &lt;ProgressBar percentage=&#123;<span class="keyword">this</span>.state.loadPercentage&#125;&gt;</span><br><span class="line">        アップロード中・・・</span><br><span class="line">      &lt;<span class="regexp">/ProgressBar&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最後はImgUploadDefaultの中でImgUploadコンポーネントを呼び出します。 実用性を考え、コピー機能のコンポーネントも作りました〜</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&#123;<span class="string">"c-item__container"</span>&#125;&gt;</span><br><span class="line">&lt;h2&gt;Image Upload 【画像アップロード】&lt;<span class="regexp">/h2&gt;</span></span><br><span class="line"><span class="regexp">&lt;div</span></span><br><span class="line"><span class="regexp">  className=&#123;"c-click-box"&#125;</span></span><br><span class="line"><span class="regexp">  role="button"</span></span><br><span class="line"><span class="regexp">  onClick=&#123;() =&gt; this.onChangeState(FormText.ImgUploadText)&#125;</span></span><br><span class="line"><span class="regexp">&gt;</span></span><br><span class="line"><span class="regexp">&lt;div className=&#123;"c-item-line"&#125;&gt;</span></span><br><span class="line"><span class="regexp">    &lt;ImgUpload showUploadImage=&#123;true&#125; /</span>&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line">&lt;div id=<span class="string">"button-item-text"</span> className=&#123;<span class="string">"c-button-item-text"</span>&#125;&gt;</span><br><span class="line">  &lt;CopyButton text=&#123;<span class="keyword">this</span>.state.text&#125; /&gt;</span><br><span class="line">  &lt;pre&gt;&#123;<span class="keyword">this</span>.state.text&#125;&lt;<span class="regexp">/pre&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>出来上がったものはこんな感じです。<br><img src="./3.png" style="width:600px"></p>
+<hr>
+<h4 id="その他のコンポーネント"><a href="#その他のコンポーネント" class="headerlink" title="その他のコンポーネント"></a>その他のコンポーネント</h4><p>他の要素とページも上記と同じ感じで実装しました。 最後、一部のイメージ図を載せておきますね〜</p>
+<ul>
+<li>ボタン<img src="./4.png" style="width:600px">
+
+</li>
+</ul>
+<hr>
+<ul>
+<li>フォーム<img src="./5.png" style="width:600px">
+
+</li>
+</ul>
+<hr>
+<ul>
+<li>カラー<img src="./6.png" style="width:600px">
+
+</li>
+</ul>
+<hr>
+<h3 id="終わりに"><a href="#終わりに" class="headerlink" title="終わりに"></a>終わりに</h3><p>SPACE CLOUDは多くのコンポーネントが必要で、統一感のある実装が困難な状況でしたが、 スタイルガイドによって今後は統一することができるようになったと思います。</p>
+<p>スタイルガイドの実装を通じて、本当に色々勉強になりました〜 やっとReactコンポーネントの基本とライブラリの使い方とかの基礎知識が分かってきましたと気がします。</p>
+<p>今後の開発によって、スタイルガイドを変更したり、追加したりする可能性もありますが、 その時にまた記事を更新しますね〜</p>
+<p>最後まで読んでいただきまして、誠にありがとうございました！！</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/JS/">JS</a> <a class="tag tag--primary tag--small t-link" href="/tags/React/">React</a> <a class="tag tag--primary tag--small t-link" href="/tags/Redux/">Redux</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/06/23/关于闭包/" data-tooltip="About Closure" aria-label="PREVIOUS: About Closure">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/06/10/关于js跨域及解决方法/" data-tooltip="About Same Origin Policy And How To Deal With It" aria-label="NEXT: About Same Origin Policy And How To Deal With It">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/06/23/关于闭包/" data-tooltip="About Closure" aria-label="PREVIOUS: About Closure">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/06/10/关于js跨域及解决方法/" data-tooltip="About Same Origin Policy And How To Deal With It" aria-label="NEXT: About Same Origin Policy And How To Deal With It">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+<script>
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault()
+    })
+    var c = document.getElementsByTagName('canvas')[0],
+        x = c.getContext('2d'),
+        pr = window.devicePixelRatio || 1,
+        w = window.innerWidth,
+        h = window.innerHeight,
+        f = 90,
+        q,
+        m = Math,
+        r = 0,
+        u = m.PI*2,
+        v = m.cos,
+        z = m.random
+    c.width = w*pr
+    c.height = h*pr
+    x.scale(pr, pr)
+    x.globalAlpha = 0.6
+    function i(){
+        x.clearRect(0,0,w,h)
+        q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
+        while(q[1].x<w+f) d(q[0], q[1])
+    }
+    function d(i,j){   
+        x.beginPath()
+        x.moveTo(i.x, i.y)
+        x.lineTo(j.x, j.y)
+        var k = j.x + (z()*2-0.25)*f,
+            n = y(j.y)
+        x.lineTo(k, n)
+        x.closePath()
+        r-=u/-50
+        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
+        x.fill()
+        q[0] = q[1]
+        q[1] = {x:k,y:n}
+    }
+    function y(p){
+        var t = p + (z()*2-1.1)*f
+        return (t>h||t<0) ? y(p) : t
+    }
+    document.onclick = i
+    document.ontouchstart = i
+    i()
+</script>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-cp5cm5q41vsluavgrnvsvvn7coigizg2jehgclpkt4rkvpsxmjmpfr3c8am4.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    </body>
+</html>

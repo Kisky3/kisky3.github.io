@@ -1,0 +1,588 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Xiang Yu&#39;s Blog">
+    <title>What Happens When You Type in a URL - Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"从URL到页面展现\n\n专有名词解释：URL：统一资源定位符 http : 网络协议 用于找到互联网上的资源\n1.在浏览器输入URL通过输入「http://www.baidu.com」 的URL来最终定位找到百度首页。\n\n2.域名解析对于　「http://baidu.com」　的URL来说，浏览器实际上不知道baidu.com到底是什么，需要对应查找到该域名对应的服务器IP地址才能找到目标。域名解析的流程\n1.浏览器缓存如果你之前打开过百度首页，那么百度的ip地址会被缓存到浏览器里，当你打开时百度首页时就能从浏览器缓存里获取之前缓存的百度ip地址并访问它。\n2.系统缓存如果你是第一次打开百度，那么无法从浏览器获取缓存，便会从你电脑的Hosts文件查找是否有该域名和其对应ip。下图为Mac电脑的hosts文件内容。开发时可以修改hosts文件内的ip，达到打开本地文件的效果。\n\n\n3.路由器缓存如果浏览器缓存和系统缓存都没有，就会看你的路由器缓存。路由器曾经登陆过也会缓存域名信息，如果你或别人在该路由器上登陆过网站，则可以获取到baidu的ip地址。\n4.ISPDNS缓存如果路由器也没有缓存就会找你的服务商，比如到电信的DNS上查找。\n5.如果都没有找到就会到你的根域名服务器查找域名对应ip，根域名服务器把请求转发到下一级，直到找到ip。(找不到就返回404 找不到服务器)\n\n3.服务器处理服务器是一台安装电脑的机器，常见的系统如Linux，Windows Server 系统里安装的处理请求的应用叫做Web Server。常见的Web服务器有Apache，Nginx，IIS，Lighttpd等。Web服务器接收用户的Request交给网站代码，或者接受请求反向代理到其他Web服务器。也就是一个管理者的作用。下图的白色区域为Web服务器。\n\n\n\n4.网站处理流程经服务器处理后，网站接受请求后进行处理，最后将页面呈现给用户。比如下图的MVC模型\n\n\n\n5.浏览器读取并再次请求HTML字符串被浏览器接受后被一句句读取解析，解析到link标签后重新发送请求获取CSS。解析到script标签后发送请求获取js，并执行代码。解析到img标签后发送请求获取图片。\n\n6.浏览器渲染浏览器根据获取到的HTML和CSS计算并渲染，绘制到屏幕上的js会被执行。到此你就能看到你所打开的网页了。\n","dateCreated":"2018-11-10T16:54:13+09:00","dateModified":"2019-11-24T08:54:38+09:00","datePublished":"2018-11-10T16:54:13+09:00","description":"从URL到页面展现","headline":"What Happens When You Type in a URL","image":["20181110.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/11/10/从URL到页面展现/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2018/11/10/从URL到页面展现/","keywords":"URL","thumbnailUrl":"20181110.png"}</script>
+    <meta name="description" content="从URL到页面展现">
+<meta name="keywords" content="URL">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="What Happens When You Type in a URL">
+<meta property="og:url" content="https://kisky3.github.io/2018/11/10/从URL到页面展现/index.html">
+<meta property="og:site_name" content="Xiang Yu&#39;s Blog">
+<meta property="og:description" content="从URL到页面展现">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2018/11/10/从URL到页面展现/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/11/10/从URL到页面展现/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2018/11/10/从URL到页面展现/3.png">
+<meta property="og:updated_time" content="2019-11-23T23:54:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What Happens When You Type in a URL">
+<meta name="twitter:description" content="从URL到页面展现">
+<meta name="twitter:image" content="https://kisky3.github.io/2018/11/10/从URL到页面展现/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2018/11/10/从URL到页面展现/20181110.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/11/10/从URL到页面展现/20181110.png" />
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/2018/11/10/从URL到页面展现/cover.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/11/10/从URL到页面展现/cover.jpg" />
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-cp4r4lzbvdgtsqux0bz8gef7mbnza7hvzqoldgoabfuwl18rpvlbvko6sqb4.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <body style="margin: 0; height:100%">
+        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
+                    
+                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Facebook</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+        <div class="post-header-cover
+                    text-left
+                    post-header-cover--partial"
+             style="background-image:url('/2018/11/10/从URL到页面展现/cover.jpg');"
+             data-behavior="5">
+            
+                <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            What Happens When You Type in a URL
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2018-11-10T16:54:13+09:00">
+	
+		    Nov 10, 2018
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+            
+        </div>
+
+            <div id="main" data-behavior="5"
+                 class="hasCover
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>从URL到页面展现</p>
+<a id="more"></a>
+<p>专有名词解释：URL：统一资源定位符 http : 网络协议 用于找到互联网上的资源</p>
+<h3 id="1-在浏览器输入URL"><a href="#1-在浏览器输入URL" class="headerlink" title="1.在浏览器输入URL"></a>1.在浏览器输入URL</h3><p>通过输入「<a href="http://www.baidu.com」" target="_blank" rel="noopener">http://www.baidu.com」</a> 的URL来最终定位找到百度首页。</p>
+<hr>
+<h3 id="2-域名解析"><a href="#2-域名解析" class="headerlink" title="2.域名解析"></a>2.域名解析</h3><p>对于　「<a href="http://baidu.com」" target="_blank" rel="noopener">http://baidu.com」</a>　的URL来说，浏览器实际上不知道baidu.com到底是什么，需要对应查找到该域名对应的服务器IP地址才能找到目标。<br>域名解析的流程</p>
+<p>1.浏览器缓存<br>如果你之前打开过百度首页，那么百度的ip地址会被缓存到浏览器里，当你打开时百度首页时就能从浏览器缓存里获取之前缓存的百度ip地址并访问它。</p>
+<p>2.系统缓存<br>如果你是第一次打开百度，那么无法从浏览器获取缓存，便会从你电脑的Hosts文件查找是否有该域名和其对应ip。<br>下图为Mac电脑的hosts文件内容。开发时可以修改hosts文件内的ip，达到打开本地文件的效果。</p>
+<img src="./1.png" style="width:500px">
+
+<p>3.路由器缓存<br>如果浏览器缓存和系统缓存都没有，就会看你的路由器缓存。路由器曾经登陆过也会缓存域名信息，如果你或别人在该路由器上登陆过网站，则可以获取到baidu的ip地址。</p>
+<p>4.ISPDNS缓存<br>如果路由器也没有缓存就会找你的服务商，比如到电信的DNS上查找。</p>
+<p>5.如果都没有找到就会到你的根域名服务器查找域名对应ip，根域名服务器把请求转发到下一级，直到找到ip。(找不到就返回404 找不到服务器)</p>
+<hr>
+<h3 id="3-服务器处理"><a href="#3-服务器处理" class="headerlink" title="3.服务器处理"></a>3.服务器处理</h3><p>服务器是一台安装电脑的机器，常见的系统如Linux，Windows Server 系统里安装的处理请求的应用叫做Web Server。<br>常见的Web服务器有Apache，Nginx，IIS，Lighttpd等。Web服务器接收用户的Request交给网站代码，或者接受请求反向代理到其他Web服务器。也就是一个管理者的作用。<br>下图的白色区域为Web服务器。</p>
+<img src="./2.png" style="width:500px">
+
+<hr>
+<h3 id="4-网站处理流程"><a href="#4-网站处理流程" class="headerlink" title="4.网站处理流程"></a>4.网站处理流程</h3><p>经服务器处理后，网站接受请求后进行处理，最后将页面呈现给用户。<br>比如下图的MVC模型</p>
+<img src="./3.png" style="width:500px">
+
+<hr>
+<h3 id="5-浏览器读取并再次请求"><a href="#5-浏览器读取并再次请求" class="headerlink" title="5.浏览器读取并再次请求"></a>5.浏览器读取并再次请求</h3><p>HTML字符串被浏览器接受后被一句句读取解析，解析到link标签后重新发送请求获取CSS。解析到script标签后发送请求获取js，并执行代码。解析到img标签后发送请求获取图片。</p>
+<hr>
+<h3 id="6-浏览器渲染"><a href="#6-浏览器渲染" class="headerlink" title="6.浏览器渲染"></a>6.浏览器渲染</h3><p>浏览器根据获取到的HTML和CSS计算并渲染，绘制到屏幕上的js会被执行。<br>到此你就能看到你所打开的网页了。</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/URL/">URL</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/11/15/CSS选择器类型与用法/" data-tooltip="About CSS Selectors" aria-label="PREVIOUS: About CSS Selectors">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/10/29/常见浏览器及浏览器内核/" data-tooltip="Common Browser and Rendering Engine" aria-label="NEXT: Common Browser and Rendering Engine">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2018/11/10/从URL到页面展现/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/11/15/CSS选择器类型与用法/" data-tooltip="About CSS Selectors" aria-label="PREVIOUS: About CSS Selectors">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2018/10/29/常见浏览器及浏览器内核/" data-tooltip="Common Browser and Rendering Engine" aria-label="NEXT: Common Browser and Rendering Engine">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2018/11/10/从URL到页面展现/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2018/11/10/从URL到页面展现/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+<script>
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault()
+    })
+    var c = document.getElementsByTagName('canvas')[0],
+        x = c.getContext('2d'),
+        pr = window.devicePixelRatio || 1,
+        w = window.innerWidth,
+        h = window.innerHeight,
+        f = 90,
+        q,
+        m = Math,
+        r = 0,
+        u = m.PI*2,
+        v = m.cos,
+        z = m.random
+    c.width = w*pr
+    c.height = h*pr
+    x.scale(pr, pr)
+    x.globalAlpha = 0.6
+    function i(){
+        x.clearRect(0,0,w,h)
+        q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
+        while(q[1].x<w+f) d(q[0], q[1])
+    }
+    function d(i,j){   
+        x.beginPath()
+        x.moveTo(i.x, i.y)
+        x.lineTo(j.x, j.y)
+        var k = j.x + (z()*2-0.25)*f,
+            n = y(j.y)
+        x.lineTo(k, n)
+        x.closePath()
+        r-=u/-50
+        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
+        x.fill()
+        q[0] = q[1]
+        q[1] = {x:k,y:n}
+    }
+    function y(p){
+        var t = p + (z()*2-1.1)*f
+        return (t>h||t<0) ? y(p) : t
+    }
+    document.onclick = i
+    document.ontouchstart = i
+    i()
+</script>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-cp5cm5q41vsluavgrnvsvvn7coigizg2jehgclpkt4rkvpsxmjmpfr3c8am4.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    </body>
+</html>
