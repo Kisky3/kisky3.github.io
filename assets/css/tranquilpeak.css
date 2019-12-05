@@ -1748,10 +1748,10 @@ a.fancybox {
 
 .main-content-wrap {
   display: block;
-  max-width: 750px;
+  max-width: 850px;
   margin: 0 auto;
   padding: 20px 40px;
-  background: white; }
+  background: rgba(255, 255, 255, 0.9); }
 
 @media only screen and (min-width: 1024px) {
   .markdown h1 {
