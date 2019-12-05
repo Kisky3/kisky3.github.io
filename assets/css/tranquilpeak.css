@@ -2170,8 +2170,8 @@ a.fancybox {
       transform: translate3d(75px, 0, 0); } }
 
 .postShorten-group .postShorten {
-  margin-top: 15px;
-  border-bottom: 1px solid #eef2f8; }
+  margin-top: 25px;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1); }
 
 .postShorten {
   position: relative;
