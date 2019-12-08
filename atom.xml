@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-12-08T10:04:35.042Z</updated>
+  <updated>2019-12-08T10:59:09.568Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -17,17 +17,17 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>How To Modify Nuxt Server Start Port</title>
+    <title>Set Nuxt.js Options</title>
     <link href="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/"/>
     <id>https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/</id>
     <published>2019-12-08T09:47:03.000Z</published>
-    <updated>2019-12-08T10:04:35.042Z</updated>
+    <updated>2019-12-08T10:59:09.568Z</updated>
     
-    <content type="html"><![CDATA[<p>如何更改Nuxt默认端口号</p><a id="more"></a><p>我们知道Nuxt项目运行的默认端口是localhost:3000,<br>但是有时候我们需要多个项目同时运行，那么一个端口必然不够用，那么我们如何去修改项目的本地运行端口呢。</p><p>如果你已经启动运行了一个nuxt项目<br>在不更改本地运行端口的情况下就会出现如下错误：</p> <img src="./1.png" style="width:500px"><p>更改项目的本地运行端口很简单<br>只需要在项目的package.json文件中做出相关配置就可以了。</p><p>更改之前package.json的配置:<br> <img src="./2.png" style="width:500px"></p><p> 在package.json中增加config的相关配置，如下图所示:</p><img src="./3.png" style="width:500px"><p>运行:<br><img src="./4.png" style="width:500px"></p><p>可以看到端口号已经修改成功了！</p>]]></content>
+    <content type="html"><![CDATA[<p>Nuxt.js常用配置</p><a id="more"></a><h3 id="如何更改Nuxt默认端口号"><a href="#如何更改Nuxt默认端口号" class="headerlink" title="如何更改Nuxt默认端口号"></a>如何更改Nuxt默认端口号</h3><p>我们知道Nuxt项目运行的默认端口是localhost:3000,<br>但是有时候我们需要多个项目同时运行，那么一个端口必然不够用，那么我们如何去修改项目的本地运行端口呢。</p><p>如果你已经启动运行了一个nuxt项目<br>在不更改本地运行端口的情况下就会出现如下错误：</p> <img src="./1.png" style="width:500px"><p>更改项目的本地运行端口很简单<br>只需要在项目的package.json文件中做出相关配置就可以了。</p><p>更改之前package.json的配置:<br> <img src="./2.png" style="width:500px"></p><p> 在package.json中增加config的相关配置，如下图所示:</p><img src="./3.png" style="width:500px"><p>运行:<br><img src="./4.png" style="width:500px"></p><p>可以看到端口号已经修改成功了！</p><hr><h3 id="配置全局css"><a href="#配置全局css" class="headerlink" title="配置全局css"></a>配置全局css</h3><p>比如在asset下创建css文件夹，并创建全局css normalize.css<br><img src="./5.png" style="width:500px"><br><br><br>然后在nuxt.config.js设置文件里添加css全局设置选项。~就是代表根目录。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">css:[&apos;~asset/css/normalize.css&apos;],</span><br></pre></td></tr></table></figure><img src="./6.png" style="width:500px">]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;如何更改Nuxt默认端口号&lt;/p&gt;
+      &lt;p&gt;Nuxt.js常用配置&lt;/p&gt;
     
     </summary>
     
@@ -35,6 +35,14 @@
     
     
       <category term="Nuxt.js" scheme="https://kisky3.github.io/tags/Nuxt-js/"/>
+    
+      <category term="package.json" scheme="https://kisky3.github.io/tags/package-json/"/>
+    
+      <category term="port" scheme="https://kisky3.github.io/tags/port/"/>
+    
+      <category term="css" scheme="https://kisky3.github.io/tags/css/"/>
+    
+      <category term="nuxt.config.js" scheme="https://kisky3.github.io/tags/nuxt-config-js/"/>
     
   </entry>
   
