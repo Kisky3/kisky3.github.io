@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Xiang Yu&#39;s Blog">
-    <title>Set Nuxt.js Options - Xiang Yu&#39;s Blog</title>
+    <title>About Nuxt Router and Params - Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,26 +17,25 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"Nuxt.js常用配置\n\n\n如何更改Nuxt默认端口号我们知道Nuxt项目运行的默认端口是localhost:3000,但是有时候我们需要多个项目同时运行，那么一个端口必然不够用，那么我们如何去修改项目的本地运行端口呢。\n如果你已经启动运行了一个nuxt项目在不更改本地运行端口的情况下就会出现如下错误：\n \n\n更改项目的本地运行端口很简单只需要在项目的package.json文件中做出相关配置就可以了。\n更改之前package.json的配置: \n 在package.json中增加config的相关配置，如下图所示:\n\n\n运行:\n可以看到端口号已经修改成功了！\n\n配置全局css比如在asset下创建css文件夹，并创建全局css normalize.css然后在nuxt.config.js设置文件里添加css全局设置选项。~就是代表根目录。\n1css:[&apos;~asset/css/normalize.css&apos;],\n\n\n","dateCreated":"2019-12-08T18:47:03+09:00","dateModified":"2019-12-08T20:26:58+09:00","datePublished":"2019-12-08T18:47:03+09:00","description":"Nuxt.js常用配置","headline":"Set Nuxt.js Options","image":["20191208.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/","keywords":"Nuxt.js, package.json, port, css, nuxt.config.js","thumbnailUrl":"20191208.png"}</script>
-    <meta name="description" content="Nuxt.js常用配置">
-<meta name="keywords" content="Nuxt.js,package.json,port,css,nuxt.config.js">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于Nuxt路由设置及传参\n\n首先在pages路径下建立about.vue，news.vue，和index.vue文件，并在index.vue里引用三个link\n运行打开页面可以发现路由生效，并可以通过a标签进行跳转。\n下面我们利用nuxt的写法，将a标签写成下面的形式：\n1&lt;nuxt-link :to = &quot;&#123;name: &apos;index&apos;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;\n\n\n\n打开画面验证，效果是一样的。\n下面进行画面间的传参。在给news的link上传一个参数params的对象，newsId = 3306\n1&lt;nuxt-link :to = &quot;&#123;name: &apos;news&apos;, params:&#123;newsId:3306&#125;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;\n\n\n然后在news.vue里接受参数，并显示。在这里是使用双花括号进行显示，也可以通过js里进行设置之后再显示。\n1&#123;&#123;$router.params.newsId&#125;&#125;\n\n\n\n运行，打开页面，发现传递的参数newsId已经被news页面接受到并成功显示\b了。\n以上!\n","dateCreated":"2019-12-08T20:33:18+09:00","dateModified":"2019-12-08T21:04:20+09:00","datePublished":"2019-12-08T20:33:18+09:00","description":"关于Nuxt路由设置及传参","headline":"About Nuxt Router and Params","image":["20191209.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/08/AboutNuxtRouter/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/08/AboutNuxtRouter/","keywords":"Nuxt.js, Router","thumbnailUrl":"20191209.png"}</script>
+    <meta name="description" content="关于Nuxt路由设置及传参">
+<meta name="keywords" content="Nuxt.js,Router">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Set Nuxt.js Options">
-<meta property="og:url" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/index.html">
+<meta property="og:title" content="About Nuxt Router and Params">
+<meta property="og:url" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/index.html">
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
-<meta property="og:description" content="Nuxt.js常用配置">
+<meta property="og:description" content="关于Nuxt路由设置及传参">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/1.png">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/2.png">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/3.png">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/4.png">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/5.png">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/6.png">
-<meta property="og:updated_time" content="2019-12-08T11:26:58.274Z">
+<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/3.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/4.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/5.png">
+<meta property="og:updated_time" content="2019-12-08T12:04:20.294Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Set Nuxt.js Options">
-<meta name="twitter:description" content="Nuxt.js常用配置">
-<meta name="twitter:image" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/1.png">
+<meta name="twitter:title" content="About Nuxt Router and Params">
+<meta name="twitter:description" content="关于Nuxt路由设置及传参">
+<meta name="twitter:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/1.png">
     
     
         
@@ -45,12 +44,12 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/20191208.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/20191208.png" />
+        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/20191209.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/20191209.png" />
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/cover.jpg" />
+        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/cover.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/cover.jpg" />
     
     
     <!--STYLES-->
@@ -252,18 +251,18 @@
         <div class="post-header-cover
                     text-left
                     post-header-cover--partial"
-             style="background-image:url('/2019/12/08/howtomodifynuxtserverstartport/cover.jpg');"
+             style="background-image:url('/2019/12/08/AboutNuxtRouter/cover.jpg');"
              data-behavior="5">
             
                 <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            Set Nuxt.js Options
+            About Nuxt Router and Params
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2019-12-08T18:47:03+09:00">
+    <time datetime="2019-12-08T20:33:18+09:00">
 	
 		    Dec 08, 2019
     	
@@ -271,7 +270,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/System-Setting/">System Setting</a>
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
 
 
     
@@ -295,25 +294,27 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>Nuxt.js常用配置</p>
+            <p>关于Nuxt路由设置及传参</p>
 <a id="more"></a>
+<p>首先在pages路径下建立about.vue，news.vue，和index.vue文件，并在index.vue里引用三个link<br><br><br><img src="./1.png" style="width: 500px"></p>
+<p>运行打开页面可以发现路由生效，并可以通过a标签进行跳转。</p>
+<p>下面我们利用nuxt的写法，将a标签写成下面的形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;nuxt-link :to = &quot;&#123;name: &apos;index&apos;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="如何更改Nuxt默认端口号"><a href="#如何更改Nuxt默认端口号" class="headerlink" title="如何更改Nuxt默认端口号"></a>如何更改Nuxt默认端口号</h3><p>我们知道Nuxt项目运行的默认端口是localhost:3000,<br>但是有时候我们需要多个项目同时运行，那么一个端口必然不够用，那么我们如何去修改项目的本地运行端口呢。</p>
-<p>如果你已经启动运行了一个nuxt项目<br>在不更改本地运行端口的情况下就会出现如下错误：</p>
- <img src="./1.png" style="width:500px">
+<img src="./2.png" style="width: 500px">
 
-<p>更改项目的本地运行端口很简单<br>只需要在项目的package.json文件中做出相关配置就可以了。</p>
-<p>更改之前package.json的配置:<br> <img src="./2.png" style="width:500px"></p>
-<p> 在package.json中增加config的相关配置，如下图所示:</p>
-<img src="./3.png" style="width:500px">
+<p>打开画面验证，效果是一样的。</p>
+<p>下面进行画面间的传参。在给news的link上传一个参数params的对象，newsId = 3306</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;nuxt-link :to = &quot;&#123;name: &apos;news&apos;, params:&#123;newsId:3306&#125;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;</span><br></pre></td></tr></table></figure>
 
-<p>运行:<br><img src="./4.png" style="width:500px"></p>
-<p>可以看到端口号已经修改成功了！</p>
-<hr>
-<h3 id="配置全局css"><a href="#配置全局css" class="headerlink" title="配置全局css"></a>配置全局css</h3><p>比如在asset下创建css文件夹，并创建全局css normalize.css<br><img src="./5.png" style="width:500px"><br><br><br>然后在nuxt.config.js设置文件里添加css全局设置选项。~就是代表根目录。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">css:[&apos;~asset/css/normalize.css&apos;],</span><br></pre></td></tr></table></figure>
+<img src="./3.png" style="width: 500px">
+然后在news.vue里接受参数，并显示。在这里是使用双花括号进行显示，也可以通过js里进行设置之后再显示。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;$router.params.newsId&#125;&#125;</span><br></pre></td></tr></table></figure>
 
-<img src="./6.png" style="width:500px">
+<img src="./4.png" style="width: 500px">
+
+<p>运行，打开页面，发现传递的参数newsId已经被news页面接受到并成功显示了。<br><br><br><img src="./5.png" style="width: 500px"></p>
+<p>以上!</p>
 
             
 
@@ -324,7 +325,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/Nuxt-js/">Nuxt.js</a> <a class="tag tag--primary tag--small t-link" href="/tags/css/">css</a> <a class="tag tag--primary tag--small t-link" href="/tags/nuxt-config-js/">nuxt.config.js</a> <a class="tag tag--primary tag--small t-link" href="/tags/package-json/">package.json</a> <a class="tag tag--primary tag--small t-link" href="/tags/port/">port</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/Nuxt-js/">Nuxt.js</a> <a class="tag tag--primary tag--small t-link" href="/tags/Router/">Router</a>
 
             </div>
         
@@ -334,8 +335,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/AboutNuxtRouter/" data-tooltip="About Nuxt Router and Params" aria-label="PREVIOUS: About Nuxt Router and Params">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -344,7 +344,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/ConnectMysql8-0-14ContainerToSequel/" data-tooltip="Connect Mysql8.0.14 Container To Sequel" aria-label="NEXT: Connect Mysql8.0.14 Container To Sequel">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/howtomodifynuxtserverstartport/" data-tooltip="Set Nuxt.js Options" aria-label="NEXT: Set Nuxt.js Options">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -370,7 +370,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/AboutNuxtRouter/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
@@ -412,8 +412,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/AboutNuxtRouter/" data-tooltip="About Nuxt Router and Params" aria-label="PREVIOUS: About Nuxt Router and Params">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -422,7 +421,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/ConnectMysql8-0-14ContainerToSequel/" data-tooltip="Connect Mysql8.0.14 Container To Sequel" aria-label="NEXT: Connect Mysql8.0.14 Container To Sequel">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/howtomodifynuxtserverstartport/" data-tooltip="Set Nuxt.js Options" aria-label="NEXT: Set Nuxt.js Options">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -448,7 +447,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/AboutNuxtRouter/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
@@ -482,7 +481,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/howtomodifynuxtserverstartport/">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/AboutNuxtRouter/">
                         <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
                     </a>
                 </li>
