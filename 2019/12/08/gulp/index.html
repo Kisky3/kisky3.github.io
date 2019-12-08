@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Xiang Yu&#39;s Blog">
-    <title>About Nuxt Router and Params - Xiang Yu&#39;s Blog</title>
+    <title>About Gulp - Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,25 +17,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于Nuxt路由设置及传参\n\n首先在pages路径下建立about.vue，news.vue，和index.vue文件，并在index.vue里引用三个link\n运行打开页面可以发现路由生效，并可以通过a标签进行跳转。\n下面我们利用nuxt的写法，将a标签写成下面的形式：\n1&lt;nuxt-link :to = &quot;&#123;name: &apos;index&apos;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;\n\n\n\n打开画面验证，效果是一样的。\n下面进行画面间的传参。在给news的link上传一个参数params的对象，newsId = 3306\n1&lt;nuxt-link :to = &quot;&#123;name: &apos;news&apos;, params:&#123;newsId:3306&#125;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;\n\n\n然后在news.vue里接受参数，并显示。在这里是使用双花括号进行显示，也可以通过js里进行设置之后再显示。\n1&#123;&#123;$router.params.newsId&#125;&#125;\n\n\n\n运行，打开页面，发现传递的参数newsId已经被news页面接受到并成功显示\b了。\n以上!！\n","dateCreated":"2019-12-08T20:33:18+09:00","dateModified":"2019-12-08T21:33:45+09:00","datePublished":"2019-12-08T20:33:18+09:00","description":"关于Nuxt路由设置及传参","headline":"About Nuxt Router and Params","image":["20191209.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/08/AboutNuxtRouter/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/08/AboutNuxtRouter/","keywords":"Nuxt.js, Router","thumbnailUrl":"20191209.png"}</script>
-    <meta name="description" content="关于Nuxt路由设置及传参">
-<meta name="keywords" content="Nuxt.js,Router">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于Gulp\n\ngulp是什么？gulp是一个基于流的构建工具，可以自动执行指定的任务，简洁且高效。\n\ngulp能做什么1.开发环境下，想要能够按模块组织代码，监听实时变化2.css/js预编译，postcss等方案，浏览器前缀自动补全等3.条件输出不同的网页，比如app页面和mobile页面4.线上环境下，我想要合并、压缩 html/css/javascritp/图片，减少网络请求，同时降低网络负担\n\n安装gulp12npm install -g gulp     //全局安装npm install --save-dev gulp //安装到当前项目并在package.json中添加依赖\n\n\n核心API・gulp.task task(name[, deps], fn)task()方法用于定义任务，传入名字、依赖任务数组、函数即可，gulp会先执行任务数组，结束后调用定义的函数，可以通过此手段控制任务的执行顺利。\n例子：要定义一个任务build来执行css、js、imgs这三个任务，我们可以通过指定一个任务数组而不是函数来完成。\n1gulp.task(&apos;build&apos;, [&apos;css&apos;, &apos;js&apos;, &apos;imgs&apos;]);\n\n\n・gulp.src src(globs[, options])src()方法输入一个glob或者glob数组，然后返回一个可以传递给插件的数据流\nGulp使用node-glob来从你指定的glob里面获取文件：\n\napp.js 精确匹配\n*.js 能匹配js后缀的文件\n*/.js 能匹配多级目录下的js文件（也包含当前目录下）\n!js/app.js 精确排除\n\n例子：js目录下包含了压缩和未压缩的js文件，我们想要压缩还没有被压缩的文件\n1gulp.src([&apos;js/**/*.js&apos;, &apos;!js/**/*.min.js&apos;])\n\n\n・gulp.watch watch(globs[, opts], cb) or watch(globs[, opts], tasks)watch()方法可以监听文件，它接受一个glob或者glob数组以及一个任务数组来执行回调// 当templates目录下的模板文件发生变化，自动执行编译任务\n12345gulp.task(&apos;watch&apos;, function (event) &#123;  gulp.watch(&apos;templates/*.tmpl.html&apos;, [&apos;artTemplate&apos;]);  console.log(&apos;Event type: &apos; + event.type); // added, changed, or deleted     console.log(&apos;Event path: &apos; + event.path); // The path of the modified file&#125;);\n\n\n配置文件 gulpfile.js任务会让所有的文件匹配js/*.js，并且执行JSHint，然后打印输出结果，取消文件缩进，最后把他们合并起来，保存为build/app.js，整个过程如下图所示：\n12345678910111213var gulp = require(&apos;gulp&apos;),    jshint = require(&apos;gulp-jshint&apos;),    uglify = require(&apos;gulp-uglify&apos;),    concat = require(&apos;gulp-concat&apos;);gulp.task(&apos;js&apos;, function () &#123;   return gulp.src(&apos;js/*.js&apos;)      .pipe(jshint())      .pipe(jshint.reporter(&apos;default&apos;))      .pipe(uglify())      .pipe(concat(&apos;app.js&apos;))      .pipe(gulp.dest(&apos;build&apos;));&#125;);\n\n\n参考絶対つまずかないGulp 4入門（2019年版）インストールとSassを使うまでの手順\n","dateCreated":"2019-12-08T22:17:02+09:00","dateModified":"2019-12-08T22:24:52+09:00","datePublished":"2019-12-08T22:17:02+09:00","description":"关于Gulp","headline":"About Gulp","image":["20191209.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/08/gulp/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/08/gulp/","keywords":"Gulp","thumbnailUrl":"20191209.png"}</script>
+    <meta name="description" content="关于Gulp">
+<meta name="keywords" content="Gulp">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="About Nuxt Router and Params">
-<meta property="og:url" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/index.html">
+<meta property="og:title" content="About Gulp">
+<meta property="og:url" content="https://kisky3.github.io/2019/12/08/gulp/index.html">
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
-<meta property="og:description" content="关于Nuxt路由设置及传参">
+<meta property="og:description" content="关于Gulp">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/1.png">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/2.png">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/3.png">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/4.png">
-<meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/5.png">
-<meta property="og:updated_time" content="2019-12-08T12:33:45.708Z">
+<meta property="og:updated_time" content="2019-12-08T13:24:52.473Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About Nuxt Router and Params">
-<meta name="twitter:description" content="关于Nuxt路由设置及传参">
-<meta name="twitter:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/1.png">
+<meta name="twitter:title" content="About Gulp">
+<meta name="twitter:description" content="关于Gulp">
     
     
         
@@ -44,12 +38,12 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/20191209.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/20191209.png" />
+        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/gulp/20191209.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/gulp/20191209.png" />
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/cover.jpg" />
+        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/gulp/cover.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/gulp/cover.jpg" />
     
     
     <!--STYLES-->
@@ -251,18 +245,18 @@
         <div class="post-header-cover
                     text-left
                     post-header-cover--partial"
-             style="background-image:url('/2019/12/08/AboutNuxtRouter/cover.jpg');"
+             style="background-image:url('/2019/12/08/gulp/cover.jpg');"
              data-behavior="5">
             
                 <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            About Nuxt Router and Params
+            About Gulp
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2019-12-08T20:33:18+09:00">
+    <time datetime="2019-12-08T22:17:02+09:00">
 	
 		    Dec 08, 2019
     	
@@ -294,27 +288,41 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>关于Nuxt路由设置及传参</p>
+            <p>关于Gulp</p>
 <a id="more"></a>
-<p>首先在pages路径下建立about.vue，news.vue，和index.vue文件，并在index.vue里引用三个link<br><br><br><img src="./1.png" style="width: 500px"></p>
-<p>运行打开页面可以发现路由生效，并可以通过a标签进行跳转。</p>
-<p>下面我们利用nuxt的写法，将a标签写成下面的形式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;nuxt-link :to = &quot;&#123;name: &apos;index&apos;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="gulp是什么？"><a href="#gulp是什么？" class="headerlink" title="gulp是什么？"></a>gulp是什么？</h3><p>gulp是一个基于流的构建工具，可以自动执行指定的任务，简洁且高效。</p>
+<hr>
+<h3 id="gulp能做什么"><a href="#gulp能做什么" class="headerlink" title="gulp能做什么"></a>gulp能做什么</h3><p>1.开发环境下，想要能够按模块组织代码，监听实时变化<br>2.css/js预编译，postcss等方案，浏览器前缀自动补全等<br>3.条件输出不同的网页，比如app页面和mobile页面<br>4.线上环境下，我想要合并、压缩 html/css/javascritp/图片，减少网络请求，同时降低网络负担</p>
+<hr>
+<h3 id="安装gulp"><a href="#安装gulp" class="headerlink" title="安装gulp"></a>安装gulp</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g gulp     //全局安装</span><br><span class="line">npm install --save-dev gulp //安装到当前项目并在package.json中添加依赖</span><br></pre></td></tr></table></figure>
 
-<img src="./2.png" style="width: 500px">
+<hr>
+<h3 id="核心API"><a href="#核心API" class="headerlink" title="核心API"></a>核心API</h3><h5 id="・gulp-task-task-name-deps-fn"><a href="#・gulp-task-task-name-deps-fn" class="headerlink" title="・gulp.task task(name[, deps], fn)"></a>・gulp.task task(name[, deps], fn)</h5><p>task()方法用于定义任务，传入名字、依赖任务数组、函数即可，gulp会先执行任务数组，结束后调用定义的函数，可以通过此手段控制任务的执行顺利。</p>
+<p>例子：要定义一个任务build来执行css、js、imgs这三个任务，我们可以通过指定一个任务数组而不是函数来完成。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;build&apos;, [&apos;css&apos;, &apos;js&apos;, &apos;imgs&apos;]);</span><br></pre></td></tr></table></figure>
 
-<p>打开画面验证，效果是一样的。</p>
-<p>下面进行画面间的传参。在给news的link上传一个参数params的对象，newsId = 3306</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;nuxt-link :to = &quot;&#123;name: &apos;news&apos;, params:&#123;newsId:3306&#125;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="・gulp-src-src-globs-options"><a href="#・gulp-src-src-globs-options" class="headerlink" title="・gulp.src src(globs[, options])"></a>・gulp.src src(globs[, options])</h5><p>src()方法输入一个glob或者glob数组，然后返回一个可以传递给插件的数据流</p>
+<p>Gulp使用node-glob来从你指定的glob里面获取文件：</p>
+<ul>
+<li>app.js 精确匹配</li>
+<li>*.js 能匹配js后缀的文件</li>
+<li><em>*/</em>.js 能匹配多级目录下的js文件（也包含当前目录下）</li>
+<li>!js/app.js 精确排除</li>
+</ul>
+<p>例子：js目录下包含了压缩和未压缩的js文件，我们想要压缩还没有被压缩的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gulp.src([&apos;js/**/*.js&apos;, &apos;!js/**/*.min.js&apos;])</span><br></pre></td></tr></table></figure>
 
-<img src="./3.png" style="width: 500px">
-然后在news.vue里接受参数，并显示。在这里是使用双花括号进行显示，也可以通过js里进行设置之后再显示。
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;$router.params.newsId&#125;&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h5 id="・gulp-watch-watch-globs-opts-cb-or-watch-globs-opts-tasks"><a href="#・gulp-watch-watch-globs-opts-cb-or-watch-globs-opts-tasks" class="headerlink" title="・gulp.watch watch(globs[, opts], cb) or watch(globs[, opts], tasks)"></a>・gulp.watch watch(globs[, opts], cb) or watch(globs[, opts], tasks)</h5><p>watch()方法可以监听文件，它接受一个glob或者glob数组以及一个任务数组来执行回调<br>// 当templates目录下的模板文件发生变化，自动执行编译任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gulp.task(&apos;watch&apos;, function (event) &#123;</span><br><span class="line">  gulp.watch(&apos;templates/*.tmpl.html&apos;, [&apos;artTemplate&apos;]);</span><br><span class="line">  console.log(&apos;Event type: &apos; + event.type); // added, changed, or deleted   </span><br><span class="line">  console.log(&apos;Event path: &apos; + event.path); // The path of the modified file</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<img src="./4.png" style="width: 500px">
+<hr>
+<h3 id="配置文件-gulpfile-js"><a href="#配置文件-gulpfile-js" class="headerlink" title="配置文件 gulpfile.js"></a>配置文件 gulpfile.js</h3><p>任务会让所有的文件匹配js/*.js，并且执行JSHint，然后打印输出结果，取消文件缩进，最后把他们合并起来，保存为build/app.js，整个过程如下图所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var gulp = require(&apos;gulp&apos;),</span><br><span class="line">    jshint = require(&apos;gulp-jshint&apos;),</span><br><span class="line">    uglify = require(&apos;gulp-uglify&apos;),</span><br><span class="line">    concat = require(&apos;gulp-concat&apos;);</span><br><span class="line"></span><br><span class="line">gulp.task(&apos;js&apos;, function () &#123;</span><br><span class="line">   return gulp.src(&apos;js/*.js&apos;)</span><br><span class="line">      .pipe(jshint())</span><br><span class="line">      .pipe(jshint.reporter(&apos;default&apos;))</span><br><span class="line">      .pipe(uglify())</span><br><span class="line">      .pipe(concat(&apos;app.js&apos;))</span><br><span class="line">      .pipe(gulp.dest(&apos;build&apos;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<p>运行，打开页面，发现传递的参数newsId已经被news页面接受到并成功显示了。<br><br><br><img src="./5.png" style="width: 500px"></p>
-<p>以上!！</p>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://ics.media/entry/3290/" target="_blank" rel="noopener">絶対つまずかないGulp 4入門（2019年版）<br>インストールとSassを使うまでの手順</a></p>
 
             
 
@@ -325,7 +333,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/Nuxt-js/">Nuxt.js</a> <a class="tag tag--primary tag--small t-link" href="/tags/Router/">Router</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/Gulp/">Gulp</a>
 
             </div>
         
@@ -335,8 +343,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/gulp/" data-tooltip="About Gulp" aria-label="PREVIOUS: About Gulp">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -345,7 +352,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/howtomodifynuxtserverstartport/" data-tooltip="Set Nuxt.js Options" aria-label="NEXT: Set Nuxt.js Options">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/AboutNuxtRouter/" data-tooltip="About Nuxt Router and Params" aria-label="NEXT: About Nuxt Router and Params">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -371,7 +378,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/AboutNuxtRouter/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/gulp/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
@@ -413,8 +420,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/gulp/" data-tooltip="About Gulp" aria-label="PREVIOUS: About Gulp">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -423,7 +429,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/howtomodifynuxtserverstartport/" data-tooltip="Set Nuxt.js Options" aria-label="NEXT: Set Nuxt.js Options">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/AboutNuxtRouter/" data-tooltip="About Nuxt Router and Params" aria-label="NEXT: About Nuxt Router and Params">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -449,7 +455,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/AboutNuxtRouter/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/gulp/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
@@ -483,7 +489,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/AboutNuxtRouter/">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/gulp/">
                         <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
                     </a>
                 </li>
