@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-12-08T12:04:20.294Z</updated>
+  <updated>2019-12-08T12:33:45.708Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/"/>
     <id>https://kisky3.github.io/2019/12/08/AboutNuxtRouter/</id>
     <published>2019-12-08T11:33:18.000Z</published>
-    <updated>2019-12-08T12:04:20.294Z</updated>
+    <updated>2019-12-08T12:33:45.708Z</updated>
     
-    <content type="html"><![CDATA[<p>关于Nuxt路由设置及传参</p><a id="more"></a><p>首先在pages路径下建立about.vue，news.vue，和index.vue文件，并在index.vue里引用三个link<br><br><br><img src="./1.png" style="width: 500px"></p><p>运行打开页面可以发现路由生效，并可以通过a标签进行跳转。</p><p>下面我们利用nuxt的写法，将a标签写成下面的形式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;nuxt-link :to = &quot;&#123;name: &apos;index&apos;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;</span><br></pre></td></tr></table></figure><img src="./2.png" style="width: 500px"><p>打开画面验证，效果是一样的。</p><p>下面进行画面间的传参。在给news的link上传一个参数params的对象，newsId = 3306</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;nuxt-link :to = &quot;&#123;name: &apos;news&apos;, params:&#123;newsId:3306&#125;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;</span><br></pre></td></tr></table></figure><img src="./3.png" style="width: 500px">然后在news.vue里接受参数，并显示。在这里是使用双花括号进行显示，也可以通过js里进行设置之后再显示。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;$router.params.newsId&#125;&#125;</span><br></pre></td></tr></table></figure><img src="./4.png" style="width: 500px"><p>运行，打开页面，发现传递的参数newsId已经被news页面接受到并成功显示了。<br><br><br><img src="./5.png" style="width: 500px"></p><p>以上!</p>]]></content>
+    <content type="html"><![CDATA[<p>关于Nuxt路由设置及传参</p><a id="more"></a><p>首先在pages路径下建立about.vue，news.vue，和index.vue文件，并在index.vue里引用三个link<br><br><br><img src="./1.png" style="width: 500px"></p><p>运行打开页面可以发现路由生效，并可以通过a标签进行跳转。</p><p>下面我们利用nuxt的写法，将a标签写成下面的形式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;nuxt-link :to = &quot;&#123;name: &apos;index&apos;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;</span><br></pre></td></tr></table></figure><img src="./2.png" style="width: 500px"><p>打开画面验证，效果是一样的。</p><p>下面进行画面间的传参。在给news的link上传一个参数params的对象，newsId = 3306</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;nuxt-link :to = &quot;&#123;name: &apos;news&apos;, params:&#123;newsId:3306&#125;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;</span><br></pre></td></tr></table></figure><img src="./3.png" style="width: 500px">然后在news.vue里接受参数，并显示。在这里是使用双花括号进行显示，也可以通过js里进行设置之后再显示。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;$router.params.newsId&#125;&#125;</span><br></pre></td></tr></table></figure><img src="./4.png" style="width: 500px"><p>运行，打开页面，发现传递的参数newsId已经被news页面接受到并成功显示了。<br><br><br><img src="./5.png" style="width: 500px"></p><p>以上!！</p>]]></content>
     
     <summary type="html">
     
