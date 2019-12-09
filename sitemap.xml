@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kisky3.github.io/2019/12/09/SSRAndCSR/</loc>
+    
+    <lastmod>2019-12-09T13:56:07.282Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kisky3.github.io/2019/12/08/gulp/</loc>
     
     <lastmod>2019-12-08T13:39:15.136Z</lastmod>
@@ -65,7 +72,7 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-tags/index.html</loc>
+    <loc>https://kisky3.github.io/2018/12/06/GitTip/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
@@ -240,7 +247,7 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2018/12/06/GitTip/</loc>
+    <loc>https://kisky3.github.io/all-tags/index.html</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
@@ -408,14 +415,14 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-archives/index.html</loc>
+    <loc>https://kisky3.github.io/all-categories/index.html</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-categories/index.html</loc>
+    <loc>https://kisky3.github.io/all-archives/index.html</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
