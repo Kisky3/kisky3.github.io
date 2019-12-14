@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kisky3.github.io/2019/12/14/XiangyuBenJi/</loc>
+    
+    <lastmod>2019-12-14T14:23:28.042Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kisky3.github.io/2019/12/09/SSRAndCSR/</loc>
     
     <lastmod>2019-12-13T13:27:03.631Z</lastmod>
@@ -72,7 +79,7 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2018/12/06/GitTip/</loc>
+    <loc>https://kisky3.github.io/all-categories/index.html</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
@@ -212,14 +219,14 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/07/04/React-Virtual-Dom/</loc>
+    <loc>https://kisky3.github.io/2019/01/11/CSSTip/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/01/11/CSSTip/</loc>
+    <loc>https://kisky3.github.io/2019/06/23/%E5%85%B3%E4%BA%8E%E9%97%AD%E5%8C%85/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
@@ -247,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-tags/index.html</loc>
+    <loc>https://kisky3.github.io/2018/12/06/GitTip/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
@@ -415,13 +422,6 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-categories/index.html</loc>
-    
-    <lastmod>2019-11-23T23:54:38.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://kisky3.github.io/all-archives/index.html</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
@@ -429,7 +429,14 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/06/23/%E5%85%B3%E4%BA%8E%E9%97%AD%E5%8C%85/</loc>
+    <loc>https://kisky3.github.io/all-tags/index.html</loc>
+    
+    <lastmod>2019-11-23T23:54:38.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://kisky3.github.io/2019/07/04/React-Virtual-Dom/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
