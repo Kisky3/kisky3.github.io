@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kisky3.github.io/2019/12/21/GitCommitTemplate/</loc>
+    
+    <lastmod>2019-12-21T14:28:18.016Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kisky3.github.io/2019/12/21/AboutGithubssh/</loc>
     
     <lastmod>2019-12-21T14:25:38.858Z</lastmod>
@@ -268,7 +275,7 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-categories/index.html</loc>
+    <loc>https://kisky3.github.io/all-tags/index.html</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
@@ -443,7 +450,7 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-tags/index.html</loc>
+    <loc>https://kisky3.github.io/all-categories/index.html</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
