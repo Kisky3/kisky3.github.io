@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"利用ssh连接Github\n\n","dateCreated":"2019-12-21T17:40:36+09:00","dateModified":"2019-12-21T17:45:22+09:00","datePublished":"2019-12-21T17:40:36+09:00","description":"利用ssh连接Github","headline":"AboutGithubssh","image":[null,"cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/21/AboutGithubssh/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/21/AboutGithubssh/","keywords":"Git, ssh","thumbnailUrl":"cover.jpg"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"利用ssh连接Github\n\n虽然已经用ssh连接Github好几次了，但是一直以来对公钥和密钥的加密过程不清不楚，所以在这里总结以下\n什么是公钥和私钥公钥（Public Key）与私钥（Private Key）是通过一种算法得到的一个密钥对。公钥是密钥对中公开的部分。\n公钥加密法的步骤如下：\n\n首先接受方生成一对密钥，即私钥和公钥。\n然后接收方将公钥法送给发送方。\n发送方用收到的公钥对数据加密,再发送给接收方。\n接收方收到数据后，使用自己的私钥解密。\n\n由于再非对称算法中，公钥加密的数据必须使用对应的私钥才能解密，而私钥又只有接受方自己知道，这样就保证了数据传输的安全性。\n\n公钥和密钥的生成连接Github的时候，需要再本地生成公钥和密钥，密钥自己保存而公钥需要发送给Github。\n\n\n\n","dateCreated":"2019-12-21T17:40:36+09:00","dateModified":"2019-12-21T18:12:38+09:00","datePublished":"2019-12-21T17:40:36+09:00","description":"利用ssh连接Github","headline":"AboutGithubssh","image":[null,"cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/21/AboutGithubssh/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/21/AboutGithubssh/","keywords":"Git, ssh","thumbnailUrl":"cover.jpg"}</script>
     <meta name="description" content="利用ssh连接Github">
 <meta name="keywords" content="Git,ssh">
 <meta property="og:type" content="blog">
@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
 <meta property="og:description" content="利用ssh连接Github">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-21T08:45:22.322Z">
+<meta property="og:updated_time" content="2019-12-21T09:12:38.279Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AboutGithubssh">
 <meta name="twitter:description" content="利用ssh连接Github">
@@ -287,6 +287,21 @@
         <div class="main-content-wrap">
             <p>利用ssh连接Github</p>
 <a id="more"></a>
+<p>虽然已经用ssh连接Github好几次了，但是一直以来对公钥和密钥的加密过程不清不楚，所以在这里总结以下</p>
+<h3 id="什么是公钥和私钥"><a href="#什么是公钥和私钥" class="headerlink" title="什么是公钥和私钥"></a>什么是公钥和私钥</h3><p>公钥（Public Key）与私钥（Private Key）是通过一种算法得到的一个密钥对。<br>公钥是密钥对中公开的部分。</p>
+<p>公钥加密法的步骤如下：</p>
+<ol>
+<li>首先接受方生成一对密钥，即私钥和公钥。</li>
+<li>然后接收方将公钥法送给发送方。</li>
+<li>发送方用收到的公钥对数据加密,再发送给接收方。</li>
+<li>接收方收到数据后，使用自己的私钥解密。</li>
+</ol>
+<p>由于再非对称算法中，公钥加密的数据必须使用对应的私钥才能解密，而私钥又只有接受方自己知道，<br>这样就保证了数据传输的安全性。</p>
+<hr>
+<h3 id="公钥和密钥的生成"><a href="#公钥和密钥的生成" class="headerlink" title="公钥和密钥的生成"></a>公钥和密钥的生成</h3><p>连接Github的时候，需要再本地生成公钥和密钥，密钥自己保存而公钥需要发送给Github。</p>
+<ol>
+<li></li>
+</ol>
 
             
 
