@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-12-21T13:57:31.177Z</updated>
+  <updated>2019-12-21T14:22:53.666Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>node.js Error:Listen EADDRINUSE</title>
+    <link href="https://kisky3.github.io/2019/12/21/EADDRINUSE/"/>
+    <id>https://kisky3.github.io/2019/12/21/EADDRINUSE/</id>
+    <published>2019-12-21T14:07:45.000Z</published>
+    <updated>2019-12-21T14:22:53.666Z</updated>
+    
+    <content type="html"><![CDATA[<p>node.js启动错误: Error: listen EADDRINUSE</p><a id="more"></a><p>在启动node app.js的时候出现了下面的错误：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">events.js:72</span><br><span class="line">        throw er; // Unhandled &apos;error&apos; event</span><br><span class="line">              ^</span><br><span class="line">Error: listen EADDRINUSE</span><br><span class="line">    at errnoException (net.js:904:11)</span><br><span class="line">    at Server._listen2 (net.js:1042:14)</span><br><span class="line">    at listen (net.js:1064:10)</span><br><span class="line">    at Server.listen (net.js:1138:5)</span><br><span class="line">    at Function.app.listen (/vagrant/girly/girly-batch/node_modules/express/lib/application.js:532:24)</span><br><span class="line">    at Object.&lt;anonymous&gt; (/vagrant/girly/girly-batch/bin/www:7:18)</span><br><span class="line">    at Module._compile (module.js:456:26)</span><br><span class="line">    at Object.Module._extensions..js (module.js:474:10)</span><br><span class="line">    at Module.load (module.js:356:32)</span><br><span class="line">    at Function.Module._load (module.js:312:12)</span><br></pre></td></tr></table></figure><p>原因是因为端口号被占用了。关闭占用该端口号的进程然后再次启动就好。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ps aux | grep node</span><br><span class="line">vagrant  14761  0.0  2.0 704016 38520 pts/0    Sl+  01:22   0:01 node app.js</span><br><span class="line">vagrant  15069  0.0  0.0 107456   908 pts/2    S+   01:59   0:00 grep --color=auto node</span><br><span class="line"></span><br><span class="line">$ sudo kill -9 14761</span><br><span class="line">$ node app.js</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;node.js启动错误: Error: listen EADDRINUSE&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="node.js" scheme="https://kisky3.github.io/tags/node-js/"/>
+    
+  </entry>
   
   <entry>
     <title>Connecting to GitHub with SSH</title>
@@ -493,30 +515,6 @@
       <category term="react" scheme="https://kisky3.github.io/tags/react/"/>
     
       <category term="github pages" scheme="https://kisky3.github.io/tags/github-pages/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Install homebrew</title>
-    <link href="https://kisky3.github.io/2019/09/29/Homebrew/"/>
-    <id>https://kisky3.github.io/2019/09/29/Homebrew/</id>
-    <published>2019-09-29T14:03:54.000Z</published>
-    <updated>2019-11-23T23:54:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>安装homebrew</p><a id="more"></a><h3 id="1-AppStore下载Xcode"><a href="#1-AppStore下载Xcode" class="headerlink" title="1. AppStore下载Xcode"></a>1. AppStore下载Xcode</h3><h3 id="2-global-install"><a href="#2-global-install" class="headerlink" title="2. global install"></a>2. global install</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure><h3 id="3-安装Homebrew"><a href="#3-安装Homebrew" class="headerlink" title="3.安装Homebrew"></a>3.安装Homebrew</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure><h3 id="4-确认"><a href="#4-确认" class="headerlink" title="4. 确认"></a>4. 确认</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew doctor</span><br></pre></td></tr></table></figure><p>没有安装 yarn。create-react-app 需要你事先安装好了 yarn，如果你没有安装，那就需要去下载 安装即可。如果你没安装 yarn，会自动降级为 npm.<br>Mac 安装 yarn 的方式很简单: brew install yarn 即可。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;安装homebrew&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="System Setting" scheme="https://kisky3.github.io/categories/System-Setting/"/>
-    
-    
-      <category term="tip" scheme="https://kisky3.github.io/tags/tip/"/>
-    
-      <category term="homebrew" scheme="https://kisky3.github.io/tags/homebrew/"/>
     
   </entry>
   
