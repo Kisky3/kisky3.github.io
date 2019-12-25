@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kisky3.github.io/2019/12/25/SlackBot/</loc>
+    
+    <lastmod>2019-12-25T14:50:23.104Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kisky3.github.io/2019/12/21/GitCommitTemplate/</loc>
     
     <lastmod>2019-12-22T10:19:17.613Z</lastmod>
@@ -226,14 +233,14 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/07/16/API/</loc>
+    <loc>https://kisky3.github.io/2019/01/11/CSSTip/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/01/11/CSSTip/</loc>
+    <loc>https://kisky3.github.io/2019/07/12/jQuery/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
@@ -457,7 +464,7 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/07/12/jQuery/</loc>
+    <loc>https://kisky3.github.io/2019/07/16/API/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
