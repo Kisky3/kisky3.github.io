@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2019-12-25T14:50:23.104Z</updated>
+  <updated>2019-12-25T14:54:11.667Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -17,16 +17,30 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>SlackBot</title>
+    <title>Easy Slack bot from Google Apps Script</title>
     <link href="https://kisky3.github.io/2019/12/25/SlackBot/"/>
     <id>https://kisky3.github.io/2019/12/25/SlackBot/</id>
     <published>2019-12-25T14:50:23.000Z</published>
-    <updated>2019-12-25T14:50:23.104Z</updated>
+    <updated>2019-12-25T14:54:11.667Z</updated>
+    
+    <content type="html"><![CDATA[<p>如何利用GAS做一个简单的机器人</p><a id="more"></a>]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;如何利用GAS做一个简单的机器人&lt;/p&gt;
+    
     </summary>
     
+      <category term="System Setting" scheme="https://kisky3.github.io/categories/System-Setting/"/>
+    
+    
+      <category term="setting" scheme="https://kisky3.github.io/tags/setting/"/>
+    
+      <category term="slack bot" scheme="https://kisky3.github.io/tags/slack-bot/"/>
+    
+      <category term="slack" scheme="https://kisky3.github.io/tags/slack/"/>
+    
+      <category term="Google Apps Script" scheme="https://kisky3.github.io/tags/Google-Apps-Script/"/>
     
   </entry>
   
