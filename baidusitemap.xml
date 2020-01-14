@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://kisky3.github.io/2020/01/14/form/</loc>
+    <lastmod>2020-01-14</lastmod>
+  </url>  <url>
     <loc>https://kisky3.github.io/2020/01/07/VueImageUpdate/</loc>
     <lastmod>2020-01-12</lastmod>
   </url>  <url>
@@ -51,9 +54,6 @@
   </url>  <url>
     <loc>https://kisky3.github.io/2019/06/23/FirstBlog/</loc>
     <lastmod>2019-12-01</lastmod>
-  </url>  <url>
-    <loc>https://kisky3.github.io/2019/09/29/Homebrew/</loc>
-    <lastmod>2019-11-23</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2019/03/22/JS-DOM%E5%85%83%E7%B4%A0%E4%BB%A5%E5%8F%8ADOM%E5%85%83%E7%B4%A0%E6%93%8D%E4%BD%9C%E5%B8%B8%E7%94%A8API/</loc>
     <lastmod>2019-11-23</lastmod>
@@ -191,6 +191,9 @@
     <lastmod>2019-11-23</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2019/01/22/CSS%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/</loc>
+    <lastmod>2019-11-23</lastmod>
+  </url>  <url>
+    <loc>https://kisky3.github.io/2019/09/29/Homebrew/</loc>
     <lastmod>2019-11-23</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2019/10/31/createDockerModx/</loc>
