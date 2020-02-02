@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2020-02-02T07:07:47.067Z</updated>
+  <updated>2020-02-02T07:15:37.716Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -17,13 +17,17 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>Connect iPhone to Mac localhost Server</title>
     <link href="https://kisky3.github.io/2020/01/25/MacIphoneLocalhost/"/>
     <id>https://kisky3.github.io/2020/01/25/MacIphoneLocalhost/</id>
     <published>2020-01-25T06:43:21.000Z</published>
-    <updated>2020-02-02T07:07:47.067Z</updated>
+    <updated>2020-02-02T07:15:37.716Z</updated>
+    
+    <content type="html"><![CDATA[<p>用iphone连接Mac的Localhost服务器</p><a id="more"></a><p>1.iphone用USB连接Mac</p><p>2.<strong>iphone和Mac连接同一个wifi</strong></p><p>3.Mac ： System Setting =&gt; Network 查看该网络下的ip地址比如192.168.100.xxx</p><p>4.iphone地址栏输入ip地址 + port号即可以预览localhost</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.100.xxx:8080</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
+    
+      &lt;p&gt;用iphone连接Mac的Localhost服务器&lt;/p&gt;
     
     </summary>
     
