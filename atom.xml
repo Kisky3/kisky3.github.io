@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2020-02-02T09:33:46.467Z</updated>
+  <updated>2020-02-02T09:40:10.198Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Vue VeeValidation Sample</title>
-    <link href="https://kisky3.github.io/2020/02/02/VeeValidation/"/>
-    <id>https://kisky3.github.io/2020/02/02/VeeValidation/</id>
-    <published>2020-02-02T08:57:50.000Z</published>
-    <updated>2020-02-02T09:33:46.467Z</updated>
+    <link href="https://kisky3.github.io/2020/01/30/VeeValidation/"/>
+    <id>https://kisky3.github.io/2020/01/30/VeeValidation/</id>
+    <published>2020-01-30T08:57:50.000Z</published>
+    <updated>2020-02-02T09:40:10.198Z</updated>
     
     <content type="html"><![CDATA[<p>Vue的表单验证组件 VeeValidation</p><a id="more"></a>]]></content>
     
@@ -39,6 +39,10 @@
       <category term="Validation" scheme="https://kisky3.github.io/tags/Validation/"/>
     
       <category term="VeeValidation" scheme="https://kisky3.github.io/tags/VeeValidation/"/>
+    
+      <category term="ValidationObserver" scheme="https://kisky3.github.io/tags/ValidationObserver/"/>
+    
+      <category term="ValidationProvider" scheme="https://kisky3.github.io/tags/ValidationProvider/"/>
     
   </entry>
   
