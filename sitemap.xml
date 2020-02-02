@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kisky3.github.io/2019/01/11/CSSTip/</loc>
+    
+    <lastmod>2020-02-02T11:07:48.901Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kisky3.github.io/2020/01/30/VeeValidation/</loc>
     
     <lastmod>2020-02-02T11:04:02.682Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>https://kisky3.github.io/2020/01/07/VueImageUpdate/</loc>
     
     <lastmod>2020-02-02T07:08:21.584Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://kisky3.github.io/2019/01/11/CSSTip/</loc>
-    
-    <lastmod>2020-02-02T07:03:31.743Z</lastmod>
     
   </url>
   
