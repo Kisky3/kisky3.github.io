@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2020-01-14T14:46:35.281Z</updated>
+  <updated>2020-02-02T06:43:21.210Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MacIphoneLocalhost</title>
+    <link href="https://kisky3.github.io/2020/02/02/MacIphoneLocalhost/"/>
+    <id>https://kisky3.github.io/2020/02/02/MacIphoneLocalhost/</id>
+    <published>2020-02-02T06:43:21.000Z</published>
+    <updated>2020-02-02T06:43:21.210Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Vue Form Component</title>
@@ -489,32 +503,6 @@
     
     
       <category term="CMS" scheme="https://kisky3.github.io/tags/CMS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Install Modx Revolution With Docker</title>
-    <link href="https://kisky3.github.io/2019/10/31/createDockerModx/"/>
-    <id>https://kisky3.github.io/2019/10/31/createDockerModx/</id>
-    <published>2019-10-31T01:22:48.000Z</published>
-    <updated>2019-11-23T23:54:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>用docker构建modx安装环境</p><a id="more"></a><h3 id="什么是Modx"><a href="#什么是Modx" class="headerlink" title="什么是Modx"></a>什么是Modx</h3><p>MODx 是一个完全开源免费的 php 内容管理系统（CMS）. 是一个PHP 应用框架，可以帮助使用者控制自己的网上内容。<br>它是开发人员和高级用户理想的控制系统，任何人都可以使用 MODx 发布、更新、维护动态网站，或 html 静态页面的网站内容。</p><hr><h3 id="使用docker构建环境"><a href="#使用docker构建环境" class="headerlink" title="使用docker构建环境"></a>使用docker构建环境</h3><p>环境可自行定义，本例的环境参照下面：</p><ul><li>server: nginx:1.12.2</li><li>DB: mysql:5.6.34</li><li>Modx Revolition :modx-2.7.2-pl</li><li>php</li></ul><h4 id="1-从GitLab下载modx-docker"><a href="#1-从GitLab下载modx-docker" class="headerlink" title="1.从GitLab下载modx-docker"></a>1.从GitLab下载modx-docker</h4><p><a href="https://gitlab.com/EUsipov/modx-docker" target="_blank" rel="noopener">modx-docker Repo</a></p><hr><h4 id="2-设置nginx服务器"><a href="#2-设置nginx服务器" class="headerlink" title="2.设置nginx服务器"></a>2.设置nginx服务器</h4><p>在nginx/site.conf文件里修改服务器名以及监听窗口号。记得不要漏了分号！否则之后无法启动的！</p><p>nginx/site.conf</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    index index.php index.html;</span><br><span class="line">    server_name localhost;</span><br><span class="line">    listen 8899;</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure><hr><h4 id="3-设置docker启动时的配置"><a href="#3-设置docker启动时的配置" class="headerlink" title="3. 设置docker启动时的配置"></a>3. 设置docker启动时的配置</h4><p>docker-compose可以理解可以让你一条命令运行多个配置的容器。docker-compose.yml就是配置文件。<br>下面将nginx的端口号设置成和ngin配置文件里一样：8899，记得这里要加上本地机默认域名，写成这样！ =&gt; “127.0.0.1:8899:8899”<br>然后写上mysql的用户名和密码，mysql的端口号为了避免重复，这里使用’13306:3306’<br>最后如下文所示：</p><p>docker-compose.yml</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">nginx:</span><br><span class="line">   image: nginx:1.12.2</span><br><span class="line">   container_name: nginx</span><br><span class="line">   restart: always</span><br><span class="line">   ports:</span><br><span class="line">      - &quot;127.0.0.1:8899:8899&quot;</span><br><span class="line">   volumes:</span><br><span class="line">      - ./code:/code</span><br><span class="line">      - ./nginx/site.conf:/etc/nginx/conf.d/site.conf</span><br><span class="line">   links:</span><br><span class="line">      - php</span><br><span class="line"></span><br><span class="line">php:</span><br><span class="line">   build: ./php</span><br><span class="line">   container_name: php</span><br><span class="line">   restart: always</span><br><span class="line">   volumes:</span><br><span class="line">      - ./code:/code:rw</span><br><span class="line">   links:</span><br><span class="line">      - mysql</span><br><span class="line"></span><br><span class="line">mysql:</span><br><span class="line">   image: mysql:5.6.34</span><br><span class="line">   environment:</span><br><span class="line">      MYSQL_ROOT_PASSWORD: mysql</span><br><span class="line">      MYSQL_DATABASE: modx</span><br><span class="line">      MYSQL_USER: modx</span><br><span class="line">      MYSQL_PASSWORD: modx</span><br><span class="line">   ports:</span><br><span class="line">      - &apos;13306:3306&apos;</span><br><span class="line">   command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION</span><br><span class="line">   volumes:</span><br><span class="line">      - &apos;./mysql:/var/lib/mysql&apos;</span><br></pre></td></tr></table></figure><hr><h4 id="创建DB数据储存文件夹"><a href="#创建DB数据储存文件夹" class="headerlink" title="创建DB数据储存文件夹"></a>创建DB数据储存文件夹</h4><p>在根目录下创建mysql文件夹，用于储存数据库数据。这里的文件夹名与docker-compose.yml里mysql的volumes对应：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">      - &apos;./mysql:/var/lib/mysql&apos;</span><br></pre></td></tr></table></figure><hr><h4 id="创建code文件夹"><a href="#创建code文件夹" class="headerlink" title="创建code文件夹"></a>创建code文件夹</h4><p>用于存放modx相关文件</p><hr><h4 id="安装modx"><a href="#安装modx" class="headerlink" title="安装modx"></a>安装modx</h4><p>移动到code文件夹并在该路径内安装所需的modx</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd code</span><br><span class="line">wget http://modx.com/download/direct/modx-2.7.2-pl.zip</span><br></pre></td></tr></table></figure><p>解压安装包并重命名文件夹，修改权限</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">unzip modx-2.7.2-pl.zip</span><br><span class="line">mv modx-2.7.2-pl modx</span><br><span class="line">chmod -R 775 modx</span><br></pre></td></tr></table></figure><p>修改路径回到上层菜单并启动docker容器</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ..</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure><p>这时打开/modx/setup就可以看到modx的安装页面了<br><img src="./1.png" style="width:500px"></p><hr><h3 id="安装Modx"><a href="#安装Modx" class="headerlink" title="安装Modx"></a>安装Modx</h3><p>安装页面选择语言，点击下一步<br><img src="./2.png" style="width:500px"><br><br><br><img src="./3.png" style="width:500px"><br>设置mysql，将之前设定的用户名密码输入，注意在host处写入mysql，点击验证<br>在本地连接登陆mysql数据库可以使用下面的命令行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u modx -h 127.0.0.1 -P 13306 --protocol=tcp -p</span><br></pre></td></tr></table></figure><br>也可以用SequelPro打开<img src="./12.png" style="width:500px"><br><img src="./4.png" style="width:500px"><br>验证成功后选择文字编码,并验证<img src="./5.png" style="width:500px"><br>写入用户名和密码点击下一步<img src="./6.png" style="width:500px"><br>全部检查项目显示绿色，通过之后就可以安装了<img src="./7.png" style="width:500px"><br>安装成功后输入刚刚设定的用户名和密码进行登陆<img src="./8.png" style="width:500px"><br><img src="./9.png" style="width:500px"><br><img src="./10.png" style="width:500px"><br><p>大功告成！<br>进入管理页面之后就可以进行你自己的CMS页面开发了！<br><br><br><img src="./11.png" style="width:500px"><br><br></p><h3 id="遗留课题"><a href="#遗留课题" class="headerlink" title="遗留课题"></a>遗留课题</h3><p>如何将现存的数据导入数据库并在本地进行开发</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;用docker构建modx安装环境&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Back-end Knowledge" scheme="https://kisky3.github.io/categories/Back-end-Knowledge/"/>
-    
-    
-      <category term="Docker" scheme="https://kisky3.github.io/tags/Docker/"/>
-    
-      <category term="Modx" scheme="https://kisky3.github.io/tags/Modx/"/>
-    
-      <category term="Modx-docker" scheme="https://kisky3.github.io/tags/Modx-docker/"/>
     
   </entry>
   

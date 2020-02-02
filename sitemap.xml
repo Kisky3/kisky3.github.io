@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kisky3.github.io/2019/01/11/CSSTip/</loc>
+    
+    <lastmod>2020-02-02T07:03:31.743Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://kisky3.github.io/2020/02/02/MacIphoneLocalhost/</loc>
+    
+    <lastmod>2020-02-02T06:43:21.210Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kisky3.github.io/2020/01/14/form/</loc>
     
     <lastmod>2020-01-14T14:46:35.281Z</lastmod>
@@ -128,13 +142,6 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/11/11/CreatePhpEnvironmentInDocker/</loc>
-    
-    <lastmod>2019-11-23T23:54:38.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://kisky3.github.io/2019/11/11/ssh/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
@@ -240,7 +247,7 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/01/11/CSSTip/</loc>
+    <loc>https://kisky3.github.io/all-tags/index.html</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
@@ -296,7 +303,7 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-tags/index.html</loc>
+    <loc>https://kisky3.github.io/2019/11/11/CreatePhpEnvironmentInDocker/</loc>
     
     <lastmod>2019-11-23T23:54:38.000Z</lastmod>
     
