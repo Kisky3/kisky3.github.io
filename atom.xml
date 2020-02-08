@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2020-02-02T11:04:02.682Z</updated>
+  <updated>2020-02-08T07:27:55.192Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>npm Error</title>
+    <link href="https://kisky3.github.io/2020/02/08/npmError/"/>
+    <id>https://kisky3.github.io/2020/02/08/npmError/</id>
+    <published>2020-02-08T07:14:59.000Z</published>
+    <updated>2020-02-08T07:27:55.192Z</updated>
+    
+    <content type="html"><![CDATA[<p> 常见npm错误</p><a id="more"></a><h3 id="npm-install-error"><a href="#npm-install-error" class="headerlink" title="npm install error"></a>npm install error</h3><p>在npm install时候发生error的话可以检查以下：</p><ol><li>是否存在package.json,因为npm安装的时候是根据package.json获取相应包的。没有源文件的话就无法获取资源。</li></ol><hr><ol start="2"><li><p>在有package.json的情况下有可能是重复多次安装npm，导致冲突。<br>可以尝试以下步骤后再次安装。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 删除原先安装好的node_modules</span><br><span class="line">rm -rf node_modules</span><br><span class="line"></span><br><span class="line">// 清楚缓存</span><br><span class="line">npm cache clean --force</span><br><span class="line"></span><br><span class="line">// 更新npm</span><br><span class="line">npm update -g npm</span><br><span class="line"></span><br><span class="line">// 卸载npm</span><br><span class="line">npm uninstall npm -g</span><br></pre></td></tr></table></figure></li><li><p>当出现以下error的时候说明端口被占用,可以修改端口或者kill其他占用此端口的程序。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&gt; frontend@1.0.0 dev /Users/apple/Desktop/vue-s3-dropzone/frontend</span><br><span class="line">&gt; node build/dev-server.js</span><br><span class="line"></span><br><span class="line">events.js:174</span><br><span class="line">      throw er; // Unhandled &apos;error&apos; event</span><br><span class="line">      ^</span><br><span class="line"></span><br><span class="line">Error: listen EADDRINUSE: address already in use :::8080</span><br><span class="line">    at Server.setupListenHandle [as _listen2] (net.js:1279:14)</span><br><span class="line">    at listenInCluster (net.js:1327:12)</span><br><span class="line">    at Server.listen (net.js:1414:7)</span><br><span class="line">    at Function.listen (/Users/apple/Desktop/vue-s3-dropzone/frontend/node_modules/express/lib/application.js:617:24)</span><br><span class="line">    at Object.&lt;anonymous&gt; (/Users/apple/Desktop/vue-s3-dropzone/frontend/build/dev-server.js:60:22)</span><br><span class="line">    at Module._compile (internal/modules/cjs/loader.js:776:30)</span><br><span class="line">    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)</span><br><span class="line">    at Module.load (internal/modules/cjs/loader.js:653:32)</span><br><span class="line">    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)</span><br><span class="line">    at Function.Module._load (internal/modules/cjs/loader.js:585:3)</span><br><span class="line">    at Function.Module.runMain (internal/modules/cjs/loader.js:829:12)</span><br><span class="line">    at startup (internal/bootstrap/node.js:283:19)</span><br><span class="line">    at bootstrapNodeJSCore (internal/bootstrap/node.js:622:3)</span><br><span class="line">Emitted &apos;error&apos; event at:</span><br><span class="line">    at emitErrorNT (net.js:1306:8)</span><br><span class="line">    at process._tickCallback (internal/process/next_tick.js:63:19)</span><br><span class="line">    at Function.Module.runMain (internal/modules/cjs/loader.js:832:11)</span><br><span class="line">    at startup (internal/bootstrap/node.js:283:19)</span><br><span class="line">    at bootstrapNodeJSCore (internal/bootstrap/node.js:622:3)</span><br><span class="line">npm ERR! code ELIFECYCLE</span><br><span class="line">npm ERR! errno 1</span><br><span class="line">npm ERR! frontend@1.0.0 dev: `node build/dev-server.js`</span><br><span class="line">npm ERR! Exit status 1</span><br><span class="line">npm ERR!</span><br><span class="line">npm ERR! Failed at the frontend@1.0.0 dev script.</span><br><span class="line">npm ERR! This is probably not a problem with npm. There is likely additional logging output above.</span><br><span class="line"></span><br><span class="line">npm ERR! A complete log of this run can be found in:</span><br><span class="line">npm ERR!     /Users/apple/.npm/_logs/2020-02-08T07_13_59_039Z-debug.log</span><br></pre></td></tr></table></figure></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt; 常见npm错误&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="npm" scheme="https://kisky3.github.io/tags/npm/"/>
+    
+  </entry>
   
   <entry>
     <title>Vue VeeValidation Sample</title>
@@ -493,34 +515,6 @@
       <category term="mysql" scheme="https://kisky3.github.io/tags/mysql/"/>
     
       <category term="nginx" scheme="https://kisky3.github.io/tags/nginx/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>About SSH Login And How To Connect To Cyberduck</title>
-    <link href="https://kisky3.github.io/2019/11/11/ssh/"/>
-    <id>https://kisky3.github.io/2019/11/11/ssh/</id>
-    <published>2019-11-11T08:48:10.000Z</published>
-    <updated>2019-11-23T23:54:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>关于SSH登陆以及如何连接Cyberduck</p><a id="more"></a><h3 id="什么是SSH"><a href="#什么是SSH" class="headerlink" title="什么是SSH"></a>什么是SSH</h3><p>SSH（Secure Shell）是一种网络协议，用于计算机之间的加密登录。如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。</p><h3 id="什么是FTP"><a href="#什么是FTP" class="headerlink" title="什么是FTP"></a>什么是FTP</h3><p>FTP（File Transfer Protocol）就是就是专门用来传输文件的协议。<br>FTP服务器（File Transfer Protocol Server）是在互联网上提供文件存储和访问服务的计算机，它们依照FTP协议提供服务。</p><h3 id="什么是SFTP"><a href="#什么是SFTP" class="headerlink" title="什么是SFTP"></a>什么是SFTP</h3><p>SFTP（SSH File Transfer Protocol），安全文件传送协议。<br>可以为传输文件提供一种安全的加密方法。sftp 与 ftp 有着几乎一样的语法和功能。SFTP 为 SSH的一部分，是一种传输档案至 Blogger 伺服器的安全方式。其实在SSH软件包中，已经包含了一个叫作SFTP(Secure File Transfer Protocol)的安全文件传输子系统。</p><h3 id="FTP与SFTP的区别"><a href="#FTP与SFTP的区别" class="headerlink" title="FTP与SFTP的区别"></a>FTP与SFTP的区别</h3><p>FTP是一种文件传输协议，一般是为了方便数据共享的。包括一个FTP服务器和多个FTP客户端。FTP客户端通过FTP协议在服务器上下载资源。而SFTP协议是在FTP的基础上对数据进行加密，使得传输的数据相对来说更安全。但是这种安全是以牺牲效率为代价的，也就是说SFTP的传输效率比FTP要低(不过现实使用当中，没有发现多大差别)。</p><p>总结：<br>1.FTP要安装，SFTP不要安装。<br>当我们需要传输文件到Linux服务器当中，我们习惯用ftp来传输，其实Linux默认是不提供ftp的，需要你额外安装FTP服务器。而SFTP不需要单独配置，开启SSH默认就开启了SFTP。</p><p>2.SFTP使用加密传输认证信息和传输数据更安全，但更安全带来副作用就是的效率比FTP要低。</p><h3 id="SFTP-SSH登录及命令行用法"><a href="#SFTP-SSH登录及命令行用法" class="headerlink" title="SFTP/SSH登录及命令行用法"></a>SFTP/SSH登录及命令行用法</h3><p>SFTP：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">get xxx.txt 下载xxx文件</span><br><span class="line">put xxx.txt 上传xxx文件</span><br><span class="line">quit / bye / exit 退出sftp</span><br><span class="line">sftp  xxx.xxx.xxx.xxx   登录root用户</span><br><span class="line">sftp zygf@xxx.xxx.xxx.xxx  进行登录zygf用户。</span><br></pre></td></tr></table></figure><p>例：：<br>1.首先如果要登陆你需要「远程服务器的秘密键」，「用户名」和「邮件地址」。<br>2.在本地存在公开键的情况下，你需要将远程服务器的秘密键保存在本地。<br>  生成一个秘密键文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　cd ~/.ssh</span><br><span class="line">　cp kou_id_rsa wordpress_rsa</span><br><span class="line">vim wordpress_rsa</span><br></pre></td></tr></table></figure><img src="./1.png" style="width:500px"><p>3.登陆服务器并且传送你生成的秘密键,不用写端口号!(默认为22)。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh ユーザー名@IPアドレス -i ~/.ssh/wordpress_rsa(生成した秘密鍵ファイル名)</span><br></pre></td></tr></table></figure><p>4.有问题则回答yes，然后就可以看到登陆成功了。<br><img src="./2.png" style="width:500px"></p><h3 id="使用FTP软件进行登陆及文件操作"><a href="#使用FTP软件进行登陆及文件操作" class="headerlink" title="使用FTP软件进行登陆及文件操作"></a>使用FTP软件进行登陆及文件操作</h3><p>mac可以使用免费的FTP软件<a href="https://cyberduck.io/download/" target="_blank" rel="noopener">Cyberduck</a><br>就是这个小黄鸭！！<br><img src="./7.png" style="width:500px"></p><p>1.点击新建连接<br><img src="./3.png" style="width:500px"></p><p>2.在界面上选择SFTP连接<br><img src="./4.png" style="width:500px"></p><p>3.输入用户名。密码以及选择本地秘密键文件，点击连接。<br><img src="./5.png" style="width:500px"></p><p>成功！！<br><img src="./6.png" style="width:500px"></p><h3 id="可能发生的错误"><a href="#可能发生的错误" class="headerlink" title="可能发生的错误"></a>可能发生的错误</h3><h5 id="1-没有给ssh文件夹权限"><a href="#1-没有给ssh文件夹权限" class="headerlink" title="1.没有给ssh文件夹权限"></a>1.没有给ssh文件夹权限</h5><p>解决方法：<br>给下面的ssh文件夹以及你生成的秘密键权限。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 600 ~/.ssh/wordpress_rsa</span><br><span class="line">chmod 700 ~/.ssh</span><br></pre></td></tr></table></figure><h5 id="2-复制秘密键的时候转换软件导致字符改变"><a href="#2-复制秘密键的时候转换软件导致字符改变" class="headerlink" title="2.复制秘密键的时候转换软件导致字符改变"></a>2.复制秘密键的时候转换软件导致字符改变</h5><p>解决方法：<br>下载之后用记事本打开再进行复制粘贴。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;关于SSH登陆以及如何连接Cyberduck&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Back-end Knowledge" scheme="https://kisky3.github.io/categories/Back-end-Knowledge/"/>
-    
-    
-      <category term="SSH" scheme="https://kisky3.github.io/tags/SSH/"/>
-    
-      <category term="Cyberduck" scheme="https://kisky3.github.io/tags/Cyberduck/"/>
-    
-      <category term="FTP" scheme="https://kisky3.github.io/tags/FTP/"/>
-    
-      <category term="SFTP" scheme="https://kisky3.github.io/tags/SFTP/"/>
     
   </entry>
   
