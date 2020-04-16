@@ -198,38 +198,25 @@ categories: Front-end Knowledge
 ***
 
 ##### 文章置顶
-修改node_modules/hexo-generator-index/lib/generator.js
-
+修改themes/tranquilpeak/layout/_partial/index.ejs
 
  ```HTML
- 'use strict';
-var pagination = require('hexo-pagination');
-module.exports = function(locals){
-  var config = this.config;
-  var posts = locals.posts;
-    posts.data = posts.data.sort(function(a, b) {
-        if(a.top && b.top) { // 两篇文章top都有定义
-            if(a.top == b.top) return b.date - a.date; // 若top值一样则按照文章日期降序排
-            else return b.top - a.top; // 否则按照top值降序排
-        }
-        else if(a.top && !b.top) { // 以下是只有一篇文章top有定义，那么将有top的排在前面（这里用异或操作居然不行233）
-            return -1;
-        }
-        else if(!a.top && b.top) {
-            return 1;
-        }
-        else return b.date - a.date; // 都没定义按照文章日期降序排
-    });
-  var paginationDir = config.pagination_dir || 'page';
-  return pagination('', posts, {
-    perPage: config.index_generator.per_page,
-    layout: ['index', 'archive'],
-    format: paginationDir + '/%d/',
-    data: {
-      __index: true
-    }
-  });
-};
+                <h1 class="postShorten-title">
+                    <% if (post.link) { %>
+                    <a class="link-unstyled" href="<%- url_for(post.link) %>">
+                        <%= post.title || '(' + __('post.no_title') + ')' %>
+                    </a>
+                    <% } else { %>
+                        <% if (post.top) { %>
+                            <i class="fa fa-thumbtack" style="color:gray;font-size:20px"></i>
+                            <font style="color:gray;font-size:20px">pinned</font>
+                            <span class="post-meta-divider">|</span>
+                            <% } %>
+                    <a class="link-unstyled" href="<%- url_for(post.path) %>">
+                        <%= post.title || '(' + __('post.no_title') + ')' %>
+                    </a>
+                    <% } %>
+                </h1>
 ```
 在文章Front-matter中添加top值，数值越大文章越靠前，如：
 ```HTML
@@ -239,12 +226,27 @@ date: 2019-05-28 21:49:33
 tags:
 - Hexo
 categories: Front-end Knowledge
-top: 10
+top: true
 ---
 ```
 
+***
+##### 添加访客数和访问量
+lauout/_footer.scss给页脚添加访客数和访问量。
+```HTML
+<footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv">Pageviews</span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv">Visitors</span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; <%= date(new Date(), 'YYYY') + ' ' + config.author || config.title %>. All Rights Reserved.
+    </span>
+</footer>
+```
 注意:
 
 这里的github推送地址和当前Hexo项目地址是分开的，也就是说，github.io的地址上面是没有hexo源码的，只有生成的静态页面。
 
-所以最好将源文件夹做一个备份，以防更换机子或者文件丢失时无法维护博客
+所以最好将源文件夹做一个备份，以防更换机子或者文件丢失时无法维护博客。

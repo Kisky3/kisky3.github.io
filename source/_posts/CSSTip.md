@@ -183,3 +183,90 @@ pre{
   display: block;
  }
 ```
+***
+{% alert info no-icon %}
+#### 8. div内显示两行，超出部分用省略号显示
+{% endalert %}
+```CSS
+.break-word {
+word-wrap:break-word;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+}
+```
+***
+{% alert info no-icon %}
+#### 9. 常用的box-shadow
+{% endalert %}
+```CSS
+.box-shadow {
+box-shadow: rgba(0,0,0,.2) 0 1px 5px 0px;
+}
+```
+***
+{% alert info no-icon %}
+#### 10. Footer在页面最下固定
+{% endalert %}
+```html
+<body>
+  <div id="wrapper">
+    <main>
+    </main>
+
+    <footer>
+    </footer>
+  </div>
+</body>
+```
+
+```CSS
+body,
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  margin-top: auto;
+}
+```
+***
+{% alert info no-icon %}
+#### 11. CSS渐变色
+{% endalert %}
+<img src="./1.png" style="width:400px "/>
+
+图1:
+```CSS
+background: linear-gradient(#58a, #fb3);
+```
+
+
+图2:
+```CSS
+background: linear-gradient(45deg, #58a, #fb3);
+```
+
+
+图3:
+```CSS
+background: linear-gradient(to right, #58a 20%, #fb3 60%);
+```
+***
+{% alert info no-icon %}
+#### 12. CSS3设置Border内边框 / 外边框
+{% endalert %}
+内边框：
+
+```css
+box-sizing: border-box;
+
+```
+
+外边框：
+```css
+box-sizing: content-box;
+```
+
