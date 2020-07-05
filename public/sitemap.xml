@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kisky3.github.io/2020/02/10/UseServerlessFrameworkToCreateRESTAPI/</loc>
+    
+    <lastmod>2020-07-04T16:18:56.021Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kisky3.github.io/2020/03/03/SettingVueCLI-env/</loc>
     
     <lastmod>2020-06-03T00:31:35.552Z</lastmod>
@@ -264,13 +271,6 @@
     <loc>https://kisky3.github.io/2019/12/14/XiangyuBenJi/</loc>
     
     <lastmod>2020-04-18T09:22:32.358Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://kisky3.github.io/2020/02/10/UseServerlessFrameworkToCreateRESTAPI/</loc>
-    
-    <lastmod>2020-04-18T09:22:32.357Z</lastmod>
     
   </url>
   
