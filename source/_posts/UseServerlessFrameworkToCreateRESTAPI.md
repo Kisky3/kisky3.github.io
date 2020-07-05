@@ -109,7 +109,7 @@ lambda function的template,里面已经定义好了测试用的hello function.
 - serverless.yml
 用于记录Serverless Framework的设定
 `sls create` 命令行的选项
-```
+```js
 $ sls create --help
 Plugin: Create
 create ........................ Create new Serverless service
