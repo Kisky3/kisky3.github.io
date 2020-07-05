@@ -179,7 +179,7 @@ invoke local .................. Invoke function locally
 ```
 
 刚刚的测试是什么都没有传递，要传递数据的时候加上`-d`
-```
+```js
 $ sls invoke -f hello -d '{"key":"value"}'
 {
 "body": "{\"input\": {\"key\": \"value\"}, \"message\": \"Go Serverless v1.0! Your function executed successfully!\"}",
@@ -196,7 +196,7 @@ region: ap-northeast-1  # 在这里编辑
 ```
 
 保存设定并且再实行一次，顺便使用`-v`选项进行动作的确认
-```
+```js
 $ sls deploy -v
 Serverless: Creating Stack...
 Serverless: Checking Stack create progress...
