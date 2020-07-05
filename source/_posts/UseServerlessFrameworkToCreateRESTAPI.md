@@ -17,7 +17,7 @@ categories: Back-end Knowledge
 使用serverless框架创建REST API
 <!--more-->
 ### 安装环境
-- node.js (npm) v4以上
+- node.js (npm) v4以上..
 - awsアカウント
 - awscli
 
