@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Xiang Yu&#39;s Blog">
-    <title>Tag: React - Xiang Yu&#39;s Blog</title>
+    <title>Tag: react - Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -21,7 +21,7 @@
     <meta name="keywords" content="hexo,javascript,front-end">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="Xiang Yu&#39;s Blog">
-<meta property="og:url" content="https://kisky3.github.io/tags/React/index.html">
+<meta property="og:url" content="https://kisky3.github.io/tags/react/index.html">
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
@@ -247,15 +247,15 @@
                 <h1 class="postShorten-title">
                     
                         
-                    <a class="link-unstyled" href="/2019/07/04/React-Virtual-Dom/">
-                        About React Virtual Dom And JSX
+                    <a class="link-unstyled" href="/2019/09/30/Pages/">
+                        Deploying React Applications to Github Pages
                     </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2019-07-04T22:47:43+09:00">
+    <time datetime="2019-09-30T01:46:01+09:00">
 	
-		    Jul 04, 2019
+		    Sep 30, 2019
     	
     </time>
     
@@ -270,9 +270,9 @@
             </div>
             
             <div class="postShorten-excerpt">
-                <p>关于React的虚拟Dom和JSX</p>
+                <p>把React项目部署到Github Page线上环境</p>
                 
-                <a href="/2019/07/04/React-Virtual-Dom/" class="postShorten-excerpt_link link">
+                <a href="/2019/09/30/Pages/" class="postShorten-excerpt_link link">
                     Continue reading
                 </a>
                 
@@ -281,60 +281,9 @@
             
         </div>
         
-        <a href="/2019/07/04/React-Virtual-Dom/">
+        <a href="/2019/09/30/Pages/">
             <div class="postShorten-thumbnailimg">
-                <img alt="" src="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/20190704.png" />
-            </div>
-        </a>
-        
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-left">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        
-                    <a class="link-unstyled" href="/2019/06/20/系统式样统一页面的制作/">
-                        Created A StyleGuide For SPACE CLOUD Servive
-                    </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2019-06-20T10:18:50+09:00">
-	
-		    Jun 20, 2019
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
-
-
-    
-</div>
-
-            </div>
-            
-            <div class="postShorten-excerpt">
-                <h3 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h3>
-                
-                <a href="/2019/06/20/系统式样统一页面的制作/" class="postShorten-excerpt_link link">
-                    Continue reading
-                </a>
-                
-                
-            </div>
-            
-        </div>
-        
-        <a href="/2019/06/20/系统式样统一页面的制作/">
-            <div class="postShorten-thumbnailimg">
-                <img alt="" src="https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/20190620.jpg" />
+                <img alt="" src="https://kisky3.github.io/2019/09/30/Pages/20190930.png" />
             </div>
         </a>
         
@@ -400,6 +349,72 @@
                 <br/>
                 Tokyo
             </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+<script>
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault()
+    })
+    var c = document.getElementsByTagName('canvas')[0],
+        x = c.getContext('2d'),
+        pr = window.devicePixelRatio || 1,
+        w = window.innerWidth,
+        h = window.innerHeight,
+        f = 90,
+        q,
+        m = Math,
+        r = 0,
+        u = m.PI*2,
+        v = m.cos,
+        z = m.random
+    c.width = w*pr
+    c.height = h*pr
+    x.scale(pr, pr)
+    x.globalAlpha = 0.6
+    function i(){
+        x.clearRect(0,0,w,h)
+        q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
+        while(q[1].x<w+f) d(q[0], q[1])
+    }
+    function d(i,j){   
+        x.beginPath()
+        x.moveTo(i.x, i.y)
+        x.lineTo(j.x, j.y)
+        var k = j.x + (z()*2-0.25)*f,
+            n = y(j.y)
+        x.lineTo(k, n)
+        x.closePath()
+        r-=u/-50
+        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
+        x.fill()
+        q[0] = q[1]
+        q[1] = {x:k,y:n}
+    }
+    function y(p){
+        var t = p + (z()*2-1.1)*f
+        return (t>h||t<0) ? y(p) : t
+    }
+    document.onclick = i
+    document.ontouchstart = i
+    i()
+</script>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/thumbs.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    </body>
+</html>
         
     </div>
 </div>

@@ -198,7 +198,30 @@ git remote add origin 〜
 此时需要使用git remote rm origin删除origin，然后再次上传即可
 
 ```
-$ git remote rm origin
-$ git remote add origin git@github.com:user_name/repository_name.git
-$ git push -u origin master
+git remote rm origin
+git remote add origin git@github.com:user_name/repository_name.git
+git push -u origin master
+```
+***
+<br>
+{% alert success no-icon %}
+#### 8.修改git的commit的用户名
+{% endalert %}
+commit的时候Author和Committer的本地Policy是被保存在.git/config里的。
+
+查看设定
+```
+git config --list
+```
+
+显示个别项目
+```
+git config user.name
+git config user.email
+```
+
+修改commit时的用户名和邮箱
+```
+git config user.name "hogehoge"
+git config user.email hoge@fuga.com
 ```
