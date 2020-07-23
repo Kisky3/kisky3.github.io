@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://kisky3.github.io/2020/04/21/AboutAWSAmplify/</loc>
+    
+    <lastmod>2020-07-18T15:22:19.297Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://kisky3.github.io/2019/12/21/AboutGithubssh/</loc>
+    
+    <lastmod>2020-07-18T14:48:00.522Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://kisky3.github.io/2020/04/20/package-lock/</loc>
+    
+    <lastmod>2020-07-13T14:56:40.899Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://kisky3.github.io/2020/04/17/MakeMyFirstPrAnimationVideo/</loc>
     
     <lastmod>2020-07-12T10:36:10.155Z</lastmod>
@@ -44,14 +65,14 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-tags/index.html</loc>
+    <loc>https://kisky3.github.io/all-categories/index.html</loc>
     
     <lastmod>2020-07-12T08:09:56.834Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/all-categories/index.html</loc>
+    <loc>https://kisky3.github.io/all-tags/index.html</loc>
     
     <lastmod>2020-07-12T08:09:56.834Z</lastmod>
     
@@ -142,14 +163,14 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2018/12/30/%E5%85%B3%E4%BA%8ECSS%E6%B5%AE%E5%8A%A8/</loc>
+    <loc>https://kisky3.github.io/2019/04/25/%E5%85%B3%E4%BA%8EBOM%E5%AF%B9%E8%B1%A1/</loc>
     
     <lastmod>2020-07-12T08:09:56.733Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/04/25/%E5%85%B3%E4%BA%8EBOM%E5%AF%B9%E8%B1%A1/</loc>
+    <loc>https://kisky3.github.io/2018/12/30/%E5%85%B3%E4%BA%8ECSS%E6%B5%AE%E5%8A%A8/</loc>
     
     <lastmod>2020-07-12T08:09:56.733Z</lastmod>
     
@@ -289,14 +310,14 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2020/01/07/VueImageUpdate/</loc>
+    <loc>https://kisky3.github.io/2020/01/30/VeeValidation/</loc>
     
     <lastmod>2020-07-12T08:09:56.454Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2020/01/30/VeeValidation/</loc>
+    <loc>https://kisky3.github.io/2020/01/07/VueImageUpdate/</loc>
     
     <lastmod>2020-07-12T08:09:56.454Z</lastmod>
     
@@ -555,21 +576,14 @@
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/12/21/AboutGithubssh/</loc>
-    
-    <lastmod>2020-07-12T08:09:55.968Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://kisky3.github.io/2019/07/16/API/</loc>
+    <loc>https://kisky3.github.io/2019/11/02/AboutCMS/</loc>
     
     <lastmod>2020-07-12T08:09:55.967Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://kisky3.github.io/2019/11/02/AboutCMS/</loc>
+    <loc>https://kisky3.github.io/2019/07/16/API/</loc>
     
     <lastmod>2020-07-12T08:09:55.967Z</lastmod>
     
