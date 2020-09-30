@@ -4,9 +4,6 @@ date: 2018-12-30 23:00:12
 tags:
 - CSS
 clearReading: true
-thumbnailImage: 20181230.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

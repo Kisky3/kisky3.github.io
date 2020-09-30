@@ -5,9 +5,6 @@ tags:
 - musical
 - Miss Saigon
 clearReading: true
-thumbnailImage: 20191020.jpg
-thumbnailImagePosition: top
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

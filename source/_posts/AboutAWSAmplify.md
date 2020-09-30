@@ -6,9 +6,6 @@ tags:
 - Amplify
 - Amplify Vue
 clearReading: true
-thumbnailImage: 20200421.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

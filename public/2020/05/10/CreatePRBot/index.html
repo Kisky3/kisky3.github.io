@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"制造一个github的PR BOT\n\n简单来说就是利用Github 的Github Hook，选择在PR生成并指定Reviwer的时候进行事件呼出。而利用GAS的api生成功能接受Hook发来的信息，再往slack的频道里发送消息。\nGithub webhooks：Github/Setting/Webhooks/Add Webhook选择类型为json，url为gas生成的app的url\nGAS：deploy as a web app然后选择Anyone,even anonymous can access to the app.\nGAS的内容：\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192var CHANNEL = \"YOUR_CHSNNEL_NAME\";function doPost(e) &#123;  try &#123;    recievePayload(e.postData.getDataAsString());  &#125; catch (ex) &#123;    notifyToSlack(CHANNEL, ex);  &#125;&#125;function recievePayload(json) &#123;  var payload = JSON.parse(json);  if (payload.action === \"opened\") &#123;    notifyToSlack(CHANNEL, review_request(payload))  &#125;  if (payload.action === \"submitted\") &#123;    notifyToSlack(CHANNEL, approve(payload))  &#125;&#125;function approve (payload) &#123;  var message = \"\";  var reviwers = \"\";  payload.pull_request.requested_reviewers.forEach( i =&gt; &#123;    reviwers += i.login + \"さん、\"  &#125;)  // PR Approvedされた時：    if (payload.review.state === \"approved\") &#123;      message =  convert_user(payload.pull_request.user.login) + \"さん、\\n下記のPR :lgtm2: をもらいました！ \\n\"      + \"問題なければマージしてね \\n\\n\"      + \"--------------------------------------------------\\n \"      + \"■PR TITLE: \\n\"      + payload.pull_request.title + \"\\n\\n\"      + \"■PR URL: \\n\"      + \"\\n\" + payload.pull_request.html_url + \"\\n\\n\"      + \"--------------------------------------------------\\n \"    &#125; else &#123;      return;    &#125;  return message;&#125;function review_request(payload) &#123;  var message = \"\";  var reviwers = \"\";  payload.pull_request.requested_reviewers.forEach( i =&gt; &#123;    reviwers += convert_user(i.login) + \"さん  \"  &#125;)  // PR新規作成された時：    if (payload.pull_request.state === \"open\" &amp;&amp; reviwers !== \"\") &#123;      message = reviwers + payload.pull_request.user.login + \"からのPR依頼がきました！ \\n\"      + \"手が空いてる時に、下記のPRのレビューをお願い致します〜 \\n\\n\"      + \"--------------------------------------------------\\n \"      + \"■PR TITLE: \\n\"      + payload.pull_request.title + \"\\n\\n\"      + \"■PR URL: \\n\"      + \"\\n\" + payload.pull_request.html_url + \"\\n\\n\"      + \"--------------------------------------------------\\n \"    &#125; else &#123;      return      //message = payload.pull_request.user.login + \"下記のPRにReviewerを指定してください \\n\" + payload.pull_request.title + \"\\n\" + payload.pull_request.html_url;    &#125;  return message;&#125;function convert_user(name) &#123;  switch(name) &#123;      case \"&lt;github-user-name&gt;\":        return \"&lt;slack-user-id&gt;\"        break;      default:        break;  &#125;&#125;function notifyToSlack(channel, message) &#123;  var prop = PropertiesService.getScriptProperties().getProperties();  var slackApp = SlackApp.create('xoxp-xxxxxxxxxxxxxx');  slackApp.chatPostMessage(channel, message, &#123;　    username: \"PR_娘\",    icon_emoji: \":musume:\"  &#125;);&#125;","dateCreated":"2020-05-10T00:26:11+09:00","dateModified":"2020-10-01T00:28:42+09:00","datePublished":"2020-05-10T00:26:11+09:00","description":"制造一个github的PR BOT","headline":"Create a PR Bot","image":["20200510.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/05/10/CreatePRBot/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/05/10/CreatePRBot/","keywords":"setting, slack bot, slack, PRBot","thumbnailUrl":"20200510.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"制造一个github的PR BOT\n\n简单来说就是利用Github 的Github Hook，选择在PR生成并指定Reviwer的时候进行事件呼出。而利用GAS的api生成功能接受Hook发来的信息，再往slack的频道里发送消息。\nGithub webhooks：Github/Setting/Webhooks/Add Webhook选择类型为json，url为gas生成的app的url\nGAS：deploy as a web app然后选择Anyone,even anonymous can access to the app.\nGAS的内容：\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192var CHANNEL = \"YOUR_CHSNNEL_NAME\";function doPost(e) &#123;  try &#123;    recievePayload(e.postData.getDataAsString());  &#125; catch (ex) &#123;    notifyToSlack(CHANNEL, ex);  &#125;&#125;function recievePayload(json) &#123;  var payload = JSON.parse(json);  if (payload.action === \"opened\") &#123;    notifyToSlack(CHANNEL, review_request(payload))  &#125;  if (payload.action === \"submitted\") &#123;    notifyToSlack(CHANNEL, approve(payload))  &#125;&#125;function approve (payload) &#123;  var message = \"\";  var reviwers = \"\";  payload.pull_request.requested_reviewers.forEach( i =&gt; &#123;    reviwers += i.login + \"さん、\"  &#125;)  // PR Approvedされた時：    if (payload.review.state === \"approved\") &#123;      message =  convert_user(payload.pull_request.user.login) + \"さん、\\n下記のPR :lgtm2: をもらいました！ \\n\"      + \"問題なければマージしてね \\n\\n\"      + \"--------------------------------------------------\\n \"      + \"■PR TITLE: \\n\"      + payload.pull_request.title + \"\\n\\n\"      + \"■PR URL: \\n\"      + \"\\n\" + payload.pull_request.html_url + \"\\n\\n\"      + \"--------------------------------------------------\\n \"    &#125; else &#123;      return;    &#125;  return message;&#125;function review_request(payload) &#123;  var message = \"\";  var reviwers = \"\";  payload.pull_request.requested_reviewers.forEach( i =&gt; &#123;    reviwers += convert_user(i.login) + \"さん  \"  &#125;)  // PR新規作成された時：    if (payload.pull_request.state === \"open\" &amp;&amp; reviwers !== \"\") &#123;      message = reviwers + payload.pull_request.user.login + \"からのPR依頼がきました！ \\n\"      + \"手が空いてる時に、下記のPRのレビューをお願い致します〜 \\n\\n\"      + \"--------------------------------------------------\\n \"      + \"■PR TITLE: \\n\"      + payload.pull_request.title + \"\\n\\n\"      + \"■PR URL: \\n\"      + \"\\n\" + payload.pull_request.html_url + \"\\n\\n\"      + \"--------------------------------------------------\\n \"    &#125; else &#123;      return      //message = payload.pull_request.user.login + \"下記のPRにReviewerを指定してください \\n\" + payload.pull_request.title + \"\\n\" + payload.pull_request.html_url;    &#125;  return message;&#125;function convert_user(name) &#123;  switch(name) &#123;      case \"&lt;github-user-name&gt;\":        return \"&lt;slack-user-id&gt;\"        break;      default:        break;  &#125;&#125;function notifyToSlack(channel, message) &#123;  var prop = PropertiesService.getScriptProperties().getProperties();  var slackApp = SlackApp.create('xoxp-xxxxxxxxxxxxxx');  slackApp.chatPostMessage(channel, message, &#123;　    username: \"PR_娘\",    icon_emoji: \":musume:\"  &#125;);&#125;","dateCreated":"2020-05-10T00:26:11+09:00","dateModified":"2020-10-01T00:58:30+09:00","datePublished":"2020-05-10T00:26:11+09:00","description":"制造一个github的PR BOT","headline":"Create a PR Bot","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/05/10/CreatePRBot/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/05/10/CreatePRBot/","keywords":"setting, slack bot, slack, PRBot"}</script>
     <meta name="description" content="制造一个github的PR BOT">
 <meta name="keywords" content="setting,slack bot,slack,PRBot">
 <meta property="og:type" content="blog">
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://kisky3.github.io/2020/05/10/CreatePRBot/1.png">
 <meta property="og:image" content="https://kisky3.github.io/2020/05/10/CreatePRBot/2.png">
-<meta property="og:updated_time" content="2020-09-30T15:28:42.980Z">
+<meta property="og:updated_time" content="2020-09-30T15:58:30.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Create a PR Bot">
 <meta name="twitter:description" content="制造一个github的PR BOT">
@@ -41,12 +41,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2020/05/10/CreatePRBot/20200510.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2020/05/10/CreatePRBot/20200510.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2020/05/10/CreatePRBot/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2020/05/10/CreatePRBot/cover.jpg" />
     
     
     <!--STYLES-->
@@ -245,13 +239,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2020/05/10/CreatePRBot/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             Create a PR Bot
@@ -276,18 +274,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

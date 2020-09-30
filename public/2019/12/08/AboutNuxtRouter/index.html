@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于Nuxt路由设置及传参\n\n首先在pages路径下建立about.vue，news.vue，和index.vue文件，并在index.vue里引用三个link\n运行打开页面可以发现路由生效，并可以通过a标签进行跳转。\n下面我们利用nuxt的写法，将a标签写成下面的形式：\n1&lt;nuxt-link :to = &quot;&#123;name: &apos;index&apos;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;\n\n\n\n打开画面验证，效果是一样的。\n下面进行画面间的传参。在给news的link上传一个参数params的对象，newsId = 3306\n1&lt;nuxt-link :to = &quot;&#123;name: &apos;news&apos;, params:&#123;newsId:3306&#125;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;\n\n\n然后在news.vue里接受参数，并显示。在这里是使用双花括号进行显示，也可以通过js里进行设置之后再显示。\n1&#123;&#123;$router.params.newsId&#125;&#125;\n\n\n\n运行，打开页面，发现传递的参数newsId已经被news页面接受到并成功显示\b了。\n以上!！\n","dateCreated":"2019-12-08T20:33:18+09:00","dateModified":"2020-09-06T23:58:22+09:00","datePublished":"2019-12-08T20:33:18+09:00","description":"关于Nuxt路由设置及传参","headline":"About Nuxt Router and Params","image":["20191209.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/08/AboutNuxtRouter/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/08/AboutNuxtRouter/","keywords":"Nuxt.js, Router","thumbnailUrl":"20191209.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于Nuxt路由设置及传参\n\n首先在pages路径下建立about.vue，news.vue，和index.vue文件，并在index.vue里引用三个link\n运行打开页面可以发现路由生效，并可以通过a标签进行跳转。\n下面我们利用nuxt的写法，将a标签写成下面的形式：\n1&lt;nuxt-link :to = &quot;&#123;name: &apos;index&apos;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;\n\n\n\n打开画面验证，效果是一样的。\n下面进行画面间的传参。在给news的link上传一个参数params的对象，newsId = 3306\n1&lt;nuxt-link :to = &quot;&#123;name: &apos;news&apos;, params:&#123;newsId:3306&#125;&#125;&quot;&gt;HOME&lt;/nuxt-link&gt;\n\n\n然后在news.vue里接受参数，并显示。在这里是使用双花括号进行显示，也可以通过js里进行设置之后再显示。\n1&#123;&#123;$router.params.newsId&#125;&#125;\n\n\n\n运行，打开页面，发现传递的参数newsId已经被news页面接受到并成功显示\b了。\n以上!！\n","dateCreated":"2019-12-08T20:33:18+09:00","dateModified":"2020-10-01T00:59:37+09:00","datePublished":"2019-12-08T20:33:18+09:00","description":"关于Nuxt路由设置及传参","headline":"About Nuxt Router and Params","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/08/AboutNuxtRouter/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/08/AboutNuxtRouter/","keywords":"Nuxt.js, Router"}</script>
     <meta name="description" content="关于Nuxt路由设置及传参">
 <meta name="keywords" content="Nuxt.js,Router">
 <meta property="og:type" content="blog">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/3.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/4.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/5.png">
-<meta property="og:updated_time" content="2020-09-06T14:58:22.566Z">
+<meta property="og:updated_time" content="2020-09-30T15:59:37.144Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About Nuxt Router and Params">
 <meta name="twitter:description" content="关于Nuxt路由设置及传参">
@@ -44,12 +44,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/20191209.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/20191209.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/12/08/AboutNuxtRouter/cover.jpg" />
     
     
     <!--STYLES-->
@@ -248,13 +242,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2019/12/08/AboutNuxtRouter/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             About Nuxt Router and Params
@@ -279,18 +277,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

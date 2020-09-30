@@ -6,9 +6,6 @@ tags:
 - blog
 - github
 clearReading: true
-thumbnailImage: 20190528.jpg
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

@@ -6,11 +6,9 @@ tags:
 - Humanbeing
 - Body
 clearReading: true
-coverImage: cover.jpg
-thumbnailImage: 20200425.png
-thumbnailImagePosition: top
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
+comments: false
 categories: About Me
 ---
 人体内旅行

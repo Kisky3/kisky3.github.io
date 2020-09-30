@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"给特定的Git Repojitory设定用户名和邮箱\n\n我们知道config是配置的意思，那么git config命令就是对git进行一些配置。git里面一共有3个配置文件\n1.仓库级配置文件：方法1：找到该文件，直接打开：该文件位于当前仓库下，路径.git/，文件名为config这个配置中的设置只对当前所在仓库（H:\\MyGit目录下的test仓库）有效\n方法2：通过命令查看项目配置（仓库级配置）：git config –local -l\n\n2.全局级配置文件：方法1：以win10个人的PC机为例，在用户目录下，其路径为：C:\\Users\\Administrator，文件名为 .gitconfig\n方法2:通过命令查看全局级配置：git config –global -l\n\n3.系统级配置文件：方法1：本地git的安装目录下，以我的git安装路径为例：F:\\software\\Git\\mingw64\\etc，文件名为：gitconfig\n方法2：通过命令查看系统配置：git config –system -l\n\n对于git来说，配置文件的权重是仓库&gt;全局&gt;系统\n二、 用git config命令查看配置文件命令参数 –list, 简写 -l格式：git config [–local|–global|–system] -l查看仓库级的config，命令：git config –local -l查看全局级的config，命令：git config –global -l查看系统级的config，命令：git config –system -l查看当前生效的配置，命令：git config -l，这个时候会显示最终三个配置文件计算后的配置信息\n\n三、 使用git config命令编辑配置文件编辑的英文单词是什么，没错，edit\n命令参数 –edit, 简写 -e\n格式：git config [–local|–global|–system] -e\n编辑仓库级的config，命令：git config –local -e，与–list参数不同的是，git config -e默认是编辑仓库级的配置文件。\n编辑全局级的config，命令：git config –global -e\n编辑系统级的config，命令：git config –system -e\n注：执行这个命令的时候，git会用配置文件中设定的编辑器打开配置文件。\n例子：\n12345678$ git config user.name &quot;hogehoge&quot;$ git config user.email hoge@gmail.com$ git config --global user.name &quot;hogehoge&quot;$ git config --global user.email hoge@gmail.com$ git config --local user.name &quot;hogehoge&quot;$ git config --local user.email hoge@gmail.com","dateCreated":"2020-03-08T23:48:44+09:00","dateModified":"2020-09-06T23:58:22+09:00","datePublished":"2020-03-08T23:48:44+09:00","description":"给特定的Git Repojitory设定用户名和邮箱","headline":"Set Repository-specific Username/Email","image":["20200308.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/03/08/GitRepositoryCOmmitUserName/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/03/08/GitRepositoryCOmmitUserName/","keywords":"Git, GitConfig","thumbnailUrl":"20200308.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"给特定的Git Repojitory设定用户名和邮箱\n\n我们知道config是配置的意思，那么git config命令就是对git进行一些配置。git里面一共有3个配置文件\n1.仓库级配置文件：方法1：找到该文件，直接打开：该文件位于当前仓库下，路径.git/，文件名为config这个配置中的设置只对当前所在仓库（H:\\MyGit目录下的test仓库）有效\n方法2：通过命令查看项目配置（仓库级配置）：git config –local -l\n\n2.全局级配置文件：方法1：以win10个人的PC机为例，在用户目录下，其路径为：C:\\Users\\Administrator，文件名为 .gitconfig\n方法2:通过命令查看全局级配置：git config –global -l\n\n3.系统级配置文件：方法1：本地git的安装目录下，以我的git安装路径为例：F:\\software\\Git\\mingw64\\etc，文件名为：gitconfig\n方法2：通过命令查看系统配置：git config –system -l\n\n对于git来说，配置文件的权重是仓库&gt;全局&gt;系统\n二、 用git config命令查看配置文件命令参数 –list, 简写 -l格式：git config [–local|–global|–system] -l查看仓库级的config，命令：git config –local -l查看全局级的config，命令：git config –global -l查看系统级的config，命令：git config –system -l查看当前生效的配置，命令：git config -l，这个时候会显示最终三个配置文件计算后的配置信息\n\n三、 使用git config命令编辑配置文件编辑的英文单词是什么，没错，edit\n命令参数 –edit, 简写 -e\n格式：git config [–local|–global|–system] -e\n编辑仓库级的config，命令：git config –local -e，与–list参数不同的是，git config -e默认是编辑仓库级的配置文件。\n编辑全局级的config，命令：git config –global -e\n编辑系统级的config，命令：git config –system -e\n注：执行这个命令的时候，git会用配置文件中设定的编辑器打开配置文件。\n例子：\n12345678$ git config user.name &quot;hogehoge&quot;$ git config user.email hoge@gmail.com$ git config --global user.name &quot;hogehoge&quot;$ git config --global user.email hoge@gmail.com$ git config --local user.name &quot;hogehoge&quot;$ git config --local user.email hoge@gmail.com","dateCreated":"2020-03-08T23:48:44+09:00","dateModified":"2020-10-01T01:01:41+09:00","datePublished":"2020-03-08T23:48:44+09:00","description":"给特定的Git Repojitory设定用户名和邮箱","headline":"Set Repository-specific Username/Email","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/03/08/GitRepositoryCOmmitUserName/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/03/08/GitRepositoryCOmmitUserName/","keywords":"Git, GitConfig"}</script>
     <meta name="description" content="给特定的Git Repojitory设定用户名和邮箱">
 <meta name="keywords" content="Git,GitConfig">
 <meta property="og:type" content="blog">
@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
 <meta property="og:description" content="给特定的Git Repojitory设定用户名和邮箱">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-09-06T14:58:22.860Z">
+<meta property="og:updated_time" content="2020-09-30T16:01:41.575Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Set Repository-specific Username&#x2F;Email">
 <meta name="twitter:description" content="给特定的Git Repojitory设定用户名和邮箱">
@@ -38,12 +38,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2020/03/08/GitRepositoryCOmmitUserName/20200308.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2020/03/08/GitRepositoryCOmmitUserName/20200308.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2020/03/08/GitRepositoryCOmmitUserName/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2020/03/08/GitRepositoryCOmmitUserName/cover.jpg" />
     
     
     <!--STYLES-->
@@ -242,13 +236,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2020/03/08/GitRepositoryCOmmitUserName/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             Set Repository-specific Username/Email
@@ -273,18 +271,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

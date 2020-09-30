@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于React的虚拟Dom和JSX\n\nReact的实行理念首先JS的DOM操作一般经历了从页面获取已存在的元素，进行修改操作，再渲染回页面这三个过程。比如页面里有一个span标签，JS想要编辑的时候需要先从页面获取标签(利用id等),进行操作(数字加1),再将编辑后的数据返回页面（innerText等）。\n而react有一种更先进的理念，也就相当于不从Dom获取数据，而是只是向页面更新数据。比如一开始页面里什么都没有，react里有一个number变量，并且在JSX里生成一个span的对象（虚拟Dom),再将对象生同步成到页面中，JSX里进行span内容的修改操作，然后再一次自动更新到页面的span里。\nreact在生成新的虚拟Dom之后,会与旧的虚拟Dom的内容进行比较,再将有变化的那一部分,同步到页面中。而进行内部对象span的更新速度远比JS直接更新Dom的速度要快很多,并且少了从页面获取元素的这一过程,导致react的效率和性能都高于普通JS。\n关于JSXJSX不是html,而是相当于利用Html的形式来更简便地写JS。\nJSX就是将下面的语法2翻译成上面的JS语法1，这相当于以简便的Html的形式来写JS，这里包含了几个虚拟Dom，也就是表示DOM节点的对象。\n1234567891011121314151617// JS语法1function render()&#123;  let h = React.createElement;  let div =   h('div',&#123;className:'parent'&#125;,    h('span',&#123;className:'red'&#125;,number),    h('button',&#123;onClick:onClickButton&#125;,'+'),    h('button',&#123;onClickButton&#125;,'-')  )&#125;// 语法2&lt;div className=\"parent\"&gt;  &lt;span className=\"red\"&gt;&#123;number&#125;&lt;/span&gt;  &lt;button onClick = &#123;onClickButton&#125;&gt;+&lt;/button&gt;  &lt;button onClick = &#123;onClickButton2&#125;&gt;-&lt;/button&gt;&lt;/div&gt;\n\n不同的是将对象和函数用括号括起来{},然后JS就会从当前作用域往上找相应的变量。\n\nclass要写作className（有时两种写法都可以）。\n在onClick = {onClickButton}时要向react传递一个对象而不是返回值，相当于React.createElement(‘button’,{onClick:onClickButton}),所以不加括号。\n\n完整代码例子：\n12345678910111213141516171819202122232425262728293031let number = 0;let onClickButton = ()=&gt; &#123;  number +=1  render();&#125;let onClickButton2 = ()=&gt; &#123;  number -= 1  render();&#125;// JS语法1function render()&#123;  let h = React.createElement;  let div =   h('div',&#123;className:'parent'&#125;,    h('span',&#123;className:'red'&#125;,number),    h('button',&#123;onClick:onClickButton&#125;,'+'),    h('button',&#123;onClickButton&#125;,'-')  )&#125;// 语法2&lt;div className=\"parent\"&gt;  &lt;span className=\"red\"&gt;&#123;number&#125;&lt;/span&gt;  &lt;button onClick = &#123;onClickButton&#125;&gt;+&lt;/button&gt;  &lt;button onClick = &#123;onClickButton2&#125;&gt;-&lt;/button&gt;&lt;/div&gt;ReactDOM.render(div,document.querySelector('#root'));\n\nJSX的翻译机制下面的左右代码是等价的。\n","dateCreated":"2019-07-04T22:47:43+09:00","dateModified":"2020-09-06T23:58:23+09:00","datePublished":"2019-07-04T22:47:43+09:00","description":"关于React的虚拟Dom和JSX","headline":"About React Virtual Dom And JSX","image":["20190704.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/07/04/React-Virtual-Dom/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/07/04/React-Virtual-Dom/","keywords":"React, Virtual Dom, JSX","thumbnailUrl":"20190704.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于React的虚拟Dom和JSX\n\nReact的实行理念首先JS的DOM操作一般经历了从页面获取已存在的元素，进行修改操作，再渲染回页面这三个过程。比如页面里有一个span标签，JS想要编辑的时候需要先从页面获取标签(利用id等),进行操作(数字加1),再将编辑后的数据返回页面（innerText等）。\n而react有一种更先进的理念，也就相当于不从Dom获取数据，而是只是向页面更新数据。比如一开始页面里什么都没有，react里有一个number变量，并且在JSX里生成一个span的对象（虚拟Dom),再将对象生同步成到页面中，JSX里进行span内容的修改操作，然后再一次自动更新到页面的span里。\nreact在生成新的虚拟Dom之后,会与旧的虚拟Dom的内容进行比较,再将有变化的那一部分,同步到页面中。而进行内部对象span的更新速度远比JS直接更新Dom的速度要快很多,并且少了从页面获取元素的这一过程,导致react的效率和性能都高于普通JS。\n关于JSXJSX不是html,而是相当于利用Html的形式来更简便地写JS。\nJSX就是将下面的语法2翻译成上面的JS语法1，这相当于以简便的Html的形式来写JS，这里包含了几个虚拟Dom，也就是表示DOM节点的对象。\n1234567891011121314151617// JS语法1function render()&#123;  let h = React.createElement;  let div =   h('div',&#123;className:'parent'&#125;,    h('span',&#123;className:'red'&#125;,number),    h('button',&#123;onClick:onClickButton&#125;,'+'),    h('button',&#123;onClickButton&#125;,'-')  )&#125;// 语法2&lt;div className=\"parent\"&gt;  &lt;span className=\"red\"&gt;&#123;number&#125;&lt;/span&gt;  &lt;button onClick = &#123;onClickButton&#125;&gt;+&lt;/button&gt;  &lt;button onClick = &#123;onClickButton2&#125;&gt;-&lt;/button&gt;&lt;/div&gt;\n\n不同的是将对象和函数用括号括起来{},然后JS就会从当前作用域往上找相应的变量。\n\nclass要写作className（有时两种写法都可以）。\n在onClick = {onClickButton}时要向react传递一个对象而不是返回值，相当于React.createElement(‘button’,{onClick:onClickButton}),所以不加括号。\n\n完整代码例子：\n12345678910111213141516171819202122232425262728293031let number = 0;let onClickButton = ()=&gt; &#123;  number +=1  render();&#125;let onClickButton2 = ()=&gt; &#123;  number -= 1  render();&#125;// JS语法1function render()&#123;  let h = React.createElement;  let div =   h('div',&#123;className:'parent'&#125;,    h('span',&#123;className:'red'&#125;,number),    h('button',&#123;onClick:onClickButton&#125;,'+'),    h('button',&#123;onClickButton&#125;,'-')  )&#125;// 语法2&lt;div className=\"parent\"&gt;  &lt;span className=\"red\"&gt;&#123;number&#125;&lt;/span&gt;  &lt;button onClick = &#123;onClickButton&#125;&gt;+&lt;/button&gt;  &lt;button onClick = &#123;onClickButton2&#125;&gt;-&lt;/button&gt;&lt;/div&gt;ReactDOM.render(div,document.querySelector('#root'));\n\nJSX的翻译机制下面的左右代码是等价的。\n","dateCreated":"2019-07-04T22:47:43+09:00","dateModified":"2020-10-01T01:03:50+09:00","datePublished":"2019-07-04T22:47:43+09:00","description":"关于React的虚拟Dom和JSX","headline":"About React Virtual Dom And JSX","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/07/04/React-Virtual-Dom/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/07/04/React-Virtual-Dom/","keywords":"React, Virtual Dom, JSX"}</script>
     <meta name="description" content="关于React的虚拟Dom和JSX">
 <meta name="keywords" content="React,Virtual Dom,JSX">
 <meta property="og:type" content="blog">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/1.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/2.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/3.png">
-<meta property="og:updated_time" content="2020-09-06T14:58:23.328Z">
+<meta property="og:updated_time" content="2020-09-30T16:03:50.842Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About React Virtual Dom And JSX">
 <meta name="twitter:description" content="关于React的虚拟Dom和JSX">
@@ -42,12 +42,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/20190704.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/20190704.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/07/04/React-Virtual-Dom/cover.jpg" />
     
     
     <!--STYLES-->
@@ -246,13 +240,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2019/07/04/React-Virtual-Dom/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             About React Virtual Dom And JSX
@@ -277,18 +275,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"用docker构建modx安装环境\n\n\n什么是ModxMODx 是一个完全开源免费的 php 内容管理系统（CMS）. 是一个PHP 应用框架，可以帮助使用者控制自己的网上内容。它是开发人员和高级用户理想的控制系统，任何人都可以使用 MODx 发布、更新、维护动态网站，或 html 静态页面的网站内容。\n\n使用docker构建环境环境可自行定义，本例的环境参照下面：\n\nserver: nginx:1.12.2\nDB: mysql:5.6.34\nModx Revolition :modx-2.7.2-pl\nphp\n\n1.从GitLab下载modx-dockermodx-docker Repo\n\n2.设置nginx服务器在nginx/site.conf文件里修改服务器名以及监听窗口号。记得不要漏了分号！否则之后无法启动的！\nnginx/site.conf\n12345server &#123;    index index.php index.html;    server_name localhost;    listen 8899;    ...\n\n\n3. 设置docker启动时的配置docker-compose可以理解可以让你一条命令运行多个配置的容器。docker-compose.yml就是配置文件。下面将nginx的端口号设置成和ngin配置文件里一样：8899，记得这里要加上本地机默认域名，写成这样！ =&gt; “127.0.0.1:8899:8899”然后写上mysql的用户名和密码，mysql的端口号为了避免重复，这里使用’13306:3306’最后如下文所示：\ndocker-compose.yml\n123456789101112131415161718192021222324252627282930313233nginx:   image: nginx:1.12.2   container_name: nginx   restart: always   ports:      - &quot;127.0.0.1:8899:8899&quot;   volumes:      - ./code:/code      - ./nginx/site.conf:/etc/nginx/conf.d/site.conf   links:      - phpphp:   build: ./php   container_name: php   restart: always   volumes:      - ./code:/code:rw   links:      - mysqlmysql:   image: mysql:5.6.34   environment:      MYSQL_ROOT_PASSWORD: mysql      MYSQL_DATABASE: modx      MYSQL_USER: modx      MYSQL_PASSWORD: modx   ports:      - &apos;13306:3306&apos;   command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION   volumes:      - &apos;./mysql:/var/lib/mysql&apos;\n\n\n创建DB数据储存文件夹在根目录下创建mysql文件夹，用于储存数据库数据。这里的文件夹名与docker-compose.yml里mysql的volumes对应：\n12volumes:      - &apos;./mysql:/var/lib/mysql&apos;\n\n\n创建code文件夹用于存放modx相关文件\n\n安装modx移动到code文件夹并在该路径内安装所需的modx\n12cd codewget http://modx.com/download/direct/modx-2.7.2-pl.zip\n\n解压安装包并重命名文件夹，修改权限\n123unzip modx-2.7.2-pl.zipmv modx-2.7.2-pl modxchmod -R 775 modx\n\n修改路径回到上层菜单并启动docker容器\n12cd ..docker-compose up -d\n\n这时打开/modx/setup就可以看到modx的安装页面了\n\n安装Modx安装页面选择语言，点击下一步设置mysql，将之前设定的用户名密码输入，注意在host处写入mysql，点击验证在本地连接登陆mysql数据库可以使用下面的命令行\n1mysql -u modx -h 127.0.0.1 -P 13306 --protocol=tcp -p\n\n\n也可以用SequelPro打开\n\n\n\n\n验证成功后选择文字编码,并验证\n\n\n写入用户名和密码点击下一步\n\n\n全部检查项目显示绿色，通过之后就可以安装了\n\n\n安装成功后输入刚刚设定的用户名和密码进行登陆\n\n\n\n\n\n\n\n大功告成！进入管理页面之后就可以进行你自己的CMS页面开发了！\n遗留课题如何将现存的数据导入数据库并在本地进行开发\n","dateCreated":"2019-10-31T10:22:48+09:00","dateModified":"2020-09-06T23:58:23+09:00","datePublished":"2019-10-31T10:22:48+09:00","description":"用docker构建modx安装环境","headline":"Install Modx Revolution With Docker","image":["20191031.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/10/31/createDockerModx/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/10/31/createDockerModx/","keywords":"Docker, Modx, Modx-docker","thumbnailUrl":"20191031.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"用docker构建modx安装环境\n\n\n什么是ModxMODx 是一个完全开源免费的 php 内容管理系统（CMS）. 是一个PHP 应用框架，可以帮助使用者控制自己的网上内容。它是开发人员和高级用户理想的控制系统，任何人都可以使用 MODx 发布、更新、维护动态网站，或 html 静态页面的网站内容。\n\n使用docker构建环境环境可自行定义，本例的环境参照下面：\n\nserver: nginx:1.12.2\nDB: mysql:5.6.34\nModx Revolition :modx-2.7.2-pl\nphp\n\n1.从GitLab下载modx-dockermodx-docker Repo\n\n2.设置nginx服务器在nginx/site.conf文件里修改服务器名以及监听窗口号。记得不要漏了分号！否则之后无法启动的！\nnginx/site.conf\n12345server &#123;    index index.php index.html;    server_name localhost;    listen 8899;    ...\n\n\n3. 设置docker启动时的配置docker-compose可以理解可以让你一条命令运行多个配置的容器。docker-compose.yml就是配置文件。下面将nginx的端口号设置成和ngin配置文件里一样：8899，记得这里要加上本地机默认域名，写成这样！ =&gt; “127.0.0.1:8899:8899”然后写上mysql的用户名和密码，mysql的端口号为了避免重复，这里使用’13306:3306’最后如下文所示：\ndocker-compose.yml\n123456789101112131415161718192021222324252627282930313233nginx:   image: nginx:1.12.2   container_name: nginx   restart: always   ports:      - &quot;127.0.0.1:8899:8899&quot;   volumes:      - ./code:/code      - ./nginx/site.conf:/etc/nginx/conf.d/site.conf   links:      - phpphp:   build: ./php   container_name: php   restart: always   volumes:      - ./code:/code:rw   links:      - mysqlmysql:   image: mysql:5.6.34   environment:      MYSQL_ROOT_PASSWORD: mysql      MYSQL_DATABASE: modx      MYSQL_USER: modx      MYSQL_PASSWORD: modx   ports:      - &apos;13306:3306&apos;   command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION   volumes:      - &apos;./mysql:/var/lib/mysql&apos;\n\n\n创建DB数据储存文件夹在根目录下创建mysql文件夹，用于储存数据库数据。这里的文件夹名与docker-compose.yml里mysql的volumes对应：\n12volumes:      - &apos;./mysql:/var/lib/mysql&apos;\n\n\n创建code文件夹用于存放modx相关文件\n\n安装modx移动到code文件夹并在该路径内安装所需的modx\n12cd codewget http://modx.com/download/direct/modx-2.7.2-pl.zip\n\n解压安装包并重命名文件夹，修改权限\n123unzip modx-2.7.2-pl.zipmv modx-2.7.2-pl modxchmod -R 775 modx\n\n修改路径回到上层菜单并启动docker容器\n12cd ..docker-compose up -d\n\n这时打开/modx/setup就可以看到modx的安装页面了\n\n安装Modx安装页面选择语言，点击下一步设置mysql，将之前设定的用户名密码输入，注意在host处写入mysql，点击验证在本地连接登陆mysql数据库可以使用下面的命令行\n1mysql -u modx -h 127.0.0.1 -P 13306 --protocol=tcp -p\n\n\n也可以用SequelPro打开\n\n\n\n\n验证成功后选择文字编码,并验证\n\n\n写入用户名和密码点击下一步\n\n\n全部检查项目显示绿色，通过之后就可以安装了\n\n\n安装成功后输入刚刚设定的用户名和密码进行登陆\n\n\n\n\n\n\n\n大功告成！进入管理页面之后就可以进行你自己的CMS页面开发了！\n遗留课题如何将现存的数据导入数据库并在本地进行开发\n","dateCreated":"2019-10-31T10:22:48+09:00","dateModified":"2020-10-01T01:00:04+09:00","datePublished":"2019-10-31T10:22:48+09:00","description":"用docker构建modx安装环境","headline":"Install Modx Revolution With Docker","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/10/31/createDockerModx/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/10/31/createDockerModx/","keywords":"Docker, Modx, Modx-docker"}</script>
     <meta name="description" content="用docker构建modx安装环境">
 <meta name="keywords" content="Docker,Modx,Modx-docker">
 <meta property="og:type" content="blog">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://kisky3.github.io/2019/10/31/createDockerModx/9.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/10/31/createDockerModx/10.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/10/31/createDockerModx/11.png">
-<meta property="og:updated_time" content="2020-09-06T14:58:23.429Z">
+<meta property="og:updated_time" content="2020-09-30T16:00:04.889Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Install Modx Revolution With Docker">
 <meta name="twitter:description" content="用docker构建modx安装环境">
@@ -51,12 +51,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/10/31/createDockerModx/20191031.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/10/31/createDockerModx/20191031.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2019/10/31/createDockerModx/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/10/31/createDockerModx/cover.jpg" />
     
     
     <!--STYLES-->
@@ -255,13 +249,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2019/10/31/createDockerModx/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             Install Modx Revolution With Docker
@@ -286,18 +284,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

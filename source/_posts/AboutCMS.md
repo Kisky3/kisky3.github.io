@@ -4,9 +4,6 @@ date: 2019-11-02 10:30:56
 tags:
 - CMS
 clearReading: true
-thumbnailImage: 20191102.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

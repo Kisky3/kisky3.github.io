@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于事件传播机制\n\n\n事件：JavaScript 和 HTML的交互是通过事件实现的。\n事件是某个行为或触发，比如点击，鼠标移动：\n当用户点击鼠标时\n当网页已加载时\n当图像已经加载时\n当鼠标移动到元素上时\n当用户触发按键时\n\n\n事件流事件冒泡点击div区域时，从下往上往父元素传播\n\n\n\n事件捕获点击div时先从树根Document开始捕获，再一层层传给子元素\n\n\nDOM事件流DOM2级事件规定事件流包括3个阶段，事件捕获阶段，处于目标阶段，时间冒泡阶段，首先发生的是事件捕获，为截取事件提供机会，然后是世纪目标接受事件，最后是冒泡阶段。相当于先进行一次捕获阶段，再到冒泡阶段\n\n\n阻止传播阻止传播一般使用stopPropagation取消事件的进一步冒泡或者捕获 也就是取消进一步的事件捕获或冒泡，防止再触发定义在别的节点上的监听函数，但不包括再当前节点上新定义的事件监听函数。 例： 我们可以在button的事件处理程序中调用stopPropagation()从而避免注册在body上的事件发生。 若是注释掉e.stopPropagation()；在点击button的时候，由于事件冒泡，body的click事件也会触发，但是调用后这句后，事件会停止传播。 undefined ##### 取消默认行为 preventDefault方法取消浏览器对当前事件的默认行为，比如点击链接后，浏览器跳转到指定页面，或者按一下空格键，页面向下滚动一段距离。该方法生效的前提是，事件的cancleable属性为true， 如果为false，则该方法没有效果。该方法不会阻止事件的进一步传播，只是该事件的默认方法不会执行。\n例：可以为文本框设置校验条件。如果用户的输入不符合条件，就无法将字符输入文本框。keypress监听函数，只能输入小写字母，否则输入事件的默认事件（写入文本框）将本取消。\n12345function checkName(e)&#123;    if(e.charCode &lt; 97 || e.charCode &gt; 122)&#123;        e.preventDafault();    &#125;&#125;\n\n事件代理事件代理就是利用事件冒泡，只指定一个事件处理程序，就可以管理某一类型的所有事件。(delegation)。我们知道当一个元素上的事件被触发时，比如说点击了一个按钮，同样的事件将会在那个元素的所有祖先元素中被触发。（事件冒泡）因此我们可以给父元素田间事件监听器，子元素添加事件，事件触发冒泡上来，可以把多个子元素的事件进行统一处理。这叫做事件的代理。\n例：上面代码的click事件的监听函数定义在ul节点，但是实际上，它处理的是子节点li的click事件。这样的好处是，只要定义一个监听函数，就能处理多个子节点的事件，且以后再添加子节点，监听函数依然有效。\n123456var ul = document.querySelector('ul');ul.addEventListener('click', function(event)&#123;    if(event.target.tagName.toLowerCase() === 'li')&#123;        //...    &#125;&#125;)\n\n事件传播过程的DEMO，演示阻止传播的效果\n\n演示地址\nHTML\n12345678910111213141516171819&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt;   &lt;meta charset = \"utf-8\"&gt;   &lt;title&gt;Homework&lt;/title&gt; &lt;/head&gt;  &lt;body&gt;    &lt;button id=\"btn\"&gt;click&lt;/button&gt;    &lt;div class=\"container\"&gt;      container      &lt;div class=\"box\"&gt;        box        &lt;div class=\"target\"&gt;          target        &lt;/div&gt;      &lt;/div&gt;    &lt;/div&gt;  &lt;/body&gt;&lt;/html&gt;\n\nCSS\n1234567.container,.box,.target&#123; border: 2px solid pink;  padding: 10px;&#125;\n\nJS\n123456789101112131415161718192021222324252627282930313233343536373839var btn = document.querySelector('#btn');btn.onclick = function (e)&#123;  console.log(e);&#125;;btn.addEventListener('click',function(e)&#123;  console.log(this);&#125;);// EVENT CAPTURINGdocument.querySelector('.container').addEventListener('click', function(e)&#123;  console.log('container click.. in 捕获阶段');&#125;, true);document.querySelector('.box').addEventListener('click', function(e)&#123;  console.log('box click.. in 捕获阶段');&#125;, true);document.querySelector('.target').addEventListener('click', function(e)&#123;  console.log('target click.. in 捕获阶段');&#125;, true);// DUBBED BUBBLINGdocument.querySelector('.container').addEventListener('click', function(e)&#123;  console.log('container click.. in 冒泡阶段');&#125;);document.querySelector('.box').addEventListener('click', function(e)&#123;  // STOP EVENT HERE  e.stopPropagation();  console.log('box click.. in 冒泡阶段');&#125;);document.querySelector('.target').addEventListener('click', function(e)&#123;  console.log('target click.. in 冒泡阶段');&#125;);\n\n","dateCreated":"2019-05-20T21:41:07+09:00","dateModified":"2020-09-06T23:58:23+09:00","datePublished":"2019-05-20T21:41:07+09:00","description":"关于事件传播机制","headline":"About DOM Event Flow","image":["20190520.jpg","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/05/20/关于事件传播机制/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/05/20/关于事件传播机制/","keywords":"JS, Event Flow, Event  Capturing, Dubbed Bubbling","thumbnailUrl":"20190520.jpg"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于事件传播机制\n\n\n事件：JavaScript 和 HTML的交互是通过事件实现的。\n事件是某个行为或触发，比如点击，鼠标移动：\n当用户点击鼠标时\n当网页已加载时\n当图像已经加载时\n当鼠标移动到元素上时\n当用户触发按键时\n\n\n事件流事件冒泡点击div区域时，从下往上往父元素传播\n\n\n\n事件捕获点击div时先从树根Document开始捕获，再一层层传给子元素\n\n\nDOM事件流DOM2级事件规定事件流包括3个阶段，事件捕获阶段，处于目标阶段，时间冒泡阶段，首先发生的是事件捕获，为截取事件提供机会，然后是世纪目标接受事件，最后是冒泡阶段。相当于先进行一次捕获阶段，再到冒泡阶段\n\n\n阻止传播阻止传播一般使用stopPropagation取消事件的进一步冒泡或者捕获 也就是取消进一步的事件捕获或冒泡，防止再触发定义在别的节点上的监听函数，但不包括再当前节点上新定义的事件监听函数。 例： 我们可以在button的事件处理程序中调用stopPropagation()从而避免注册在body上的事件发生。 若是注释掉e.stopPropagation()；在点击button的时候，由于事件冒泡，body的click事件也会触发，但是调用后这句后，事件会停止传播。 undefined ##### 取消默认行为 preventDefault方法取消浏览器对当前事件的默认行为，比如点击链接后，浏览器跳转到指定页面，或者按一下空格键，页面向下滚动一段距离。该方法生效的前提是，事件的cancleable属性为true， 如果为false，则该方法没有效果。该方法不会阻止事件的进一步传播，只是该事件的默认方法不会执行。\n例：可以为文本框设置校验条件。如果用户的输入不符合条件，就无法将字符输入文本框。keypress监听函数，只能输入小写字母，否则输入事件的默认事件（写入文本框）将本取消。\n12345function checkName(e)&#123;    if(e.charCode &lt; 97 || e.charCode &gt; 122)&#123;        e.preventDafault();    &#125;&#125;\n\n事件代理事件代理就是利用事件冒泡，只指定一个事件处理程序，就可以管理某一类型的所有事件。(delegation)。我们知道当一个元素上的事件被触发时，比如说点击了一个按钮，同样的事件将会在那个元素的所有祖先元素中被触发。（事件冒泡）因此我们可以给父元素田间事件监听器，子元素添加事件，事件触发冒泡上来，可以把多个子元素的事件进行统一处理。这叫做事件的代理。\n例：上面代码的click事件的监听函数定义在ul节点，但是实际上，它处理的是子节点li的click事件。这样的好处是，只要定义一个监听函数，就能处理多个子节点的事件，且以后再添加子节点，监听函数依然有效。\n123456var ul = document.querySelector('ul');ul.addEventListener('click', function(event)&#123;    if(event.target.tagName.toLowerCase() === 'li')&#123;        //...    &#125;&#125;)\n\n事件传播过程的DEMO，演示阻止传播的效果\n\n演示地址\nHTML\n12345678910111213141516171819&lt;!DOCTYPE html&gt;&lt;html&gt; &lt;head&gt;   &lt;meta charset = \"utf-8\"&gt;   &lt;title&gt;Homework&lt;/title&gt; &lt;/head&gt;  &lt;body&gt;    &lt;button id=\"btn\"&gt;click&lt;/button&gt;    &lt;div class=\"container\"&gt;      container      &lt;div class=\"box\"&gt;        box        &lt;div class=\"target\"&gt;          target        &lt;/div&gt;      &lt;/div&gt;    &lt;/div&gt;  &lt;/body&gt;&lt;/html&gt;\n\nCSS\n1234567.container,.box,.target&#123; border: 2px solid pink;  padding: 10px;&#125;\n\nJS\n123456789101112131415161718192021222324252627282930313233343536373839var btn = document.querySelector('#btn');btn.onclick = function (e)&#123;  console.log(e);&#125;;btn.addEventListener('click',function(e)&#123;  console.log(this);&#125;);// EVENT CAPTURINGdocument.querySelector('.container').addEventListener('click', function(e)&#123;  console.log('container click.. in 捕获阶段');&#125;, true);document.querySelector('.box').addEventListener('click', function(e)&#123;  console.log('box click.. in 捕获阶段');&#125;, true);document.querySelector('.target').addEventListener('click', function(e)&#123;  console.log('target click.. in 捕获阶段');&#125;, true);// DUBBED BUBBLINGdocument.querySelector('.container').addEventListener('click', function(e)&#123;  console.log('container click.. in 冒泡阶段');&#125;);document.querySelector('.box').addEventListener('click', function(e)&#123;  // STOP EVENT HERE  e.stopPropagation();  console.log('box click.. in 冒泡阶段');&#125;);document.querySelector('.target').addEventListener('click', function(e)&#123;  console.log('target click.. in 冒泡阶段');&#125;);\n\n","dateCreated":"2019-05-20T21:41:07+09:00","dateModified":"2020-10-01T01:06:03+09:00","datePublished":"2019-05-20T21:41:07+09:00","description":"关于事件传播机制","headline":"About DOM Event Flow","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/05/20/关于事件传播机制/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/05/20/关于事件传播机制/","keywords":"JS, Event Flow, Event  Capturing, Dubbed Bubbling"}</script>
     <meta name="description" content="关于事件传播机制">
 <meta name="keywords" content="JS,Event Flow,Event  Capturing,Dubbed Bubbling">
 <meta property="og:type" content="blog">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://kisky3.github.io/2019/05/20/关于事件传播机制/2.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/05/20/关于事件传播机制/3.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/05/20/关于事件传播机制/4.png">
-<meta property="og:updated_time" content="2020-09-06T14:58:23.598Z">
+<meta property="og:updated_time" content="2020-09-30T16:06:03.088Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About DOM Event Flow">
 <meta name="twitter:description" content="关于事件传播机制">
@@ -43,12 +43,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/05/20/关于事件传播机制/20190520.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/05/20/关于事件传播机制/20190520.jpg" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2019/05/20/关于事件传播机制/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/05/20/关于事件传播机制/cover.jpg" />
     
     
     <!--STYLES-->
@@ -247,13 +241,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2019/05/20/关于事件传播机制/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             About DOM Event Flow
@@ -278,18 +276,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

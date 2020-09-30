@@ -5,9 +5,6 @@ tags:
   - iPhone
   - Localhost
 clearReading: true
-thumbnailImage: 20200125.jpg
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

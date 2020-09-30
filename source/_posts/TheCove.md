@@ -6,11 +6,9 @@ tags:
 - Dolphin hunting
 - Taiji
 clearReading: true
-coverImage: cover.jpg
-thumbnailImage: 1.jpg
-thumbnailImagePosition: top
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
+comments: false
 categories: About Me
 ---
 This week I watched a 2009 documentary film named 「The Cove」 which analyzes and questions dolphin hunting in Japan Taiji.

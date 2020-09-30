@@ -6,9 +6,6 @@ tags:
 - Nuxt.js
 - Router
 clearReading: true
-thumbnailImage: 20191209.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于jQuery\n\njQuery 1.x 版本和 2.x 版本有什么区别1.x：兼容ie678,使用最为广泛的，官方只做BUG维护，功能不再新增。因此一般项目来说，使用1.x版本就可以了，最终版本：1.12.4 (2016年5月20日)\n2.x：不兼容ie678，很少有人使用，官方只做BUG维护，功能不再新增。如果不考虑兼容低版本的浏览器可以使用2.x，最终版本：2.2.4 (2016年5月20日)\n\njQuery 常见的选择器例子\n12345678910111213&lt;body&gt;  &lt;ul class=\"ul\"&gt;    &lt;li&gt;1&lt;/li&gt;    &lt;li&gt;2&lt;/li&gt;    &lt;li class=\"li3\"&gt;      &lt;span&gt;3&lt;/span&gt;    &lt;/li&gt;    &lt;p&gt;p1&lt;/p&gt;    &lt;li&gt;4&lt;/li&gt;    &lt;p&gt;p2&lt;/p&gt;  &lt;/ul&gt;  &lt;p&gt;我被选中了&lt;/p&gt;&lt;/body&gt;\n\n.eq(index)对于一个特定结果集，我们想获取到指定index的jQuery对象，可以使用eq方法\n.next()next取得匹配的元素集合中每一个元素紧邻的后面同辈元素的元素集合。如果提供一个选择器，那么只有紧跟着的兄弟元素满足选择器时，才会返回此元素。\n.prev()prev正好相反，获取元素之前的同辈元素,如果同辈之前没有元素则返回空\n.nextAll()nextAll获得每个匹配元素集合中每个元素所有后面的同辈元素，选择性筛选的选择器\n.prevAll()prevAll与nextAll相反，获取元素前面的同辈元素\n.siblings()获得匹配元素集合中每个元素的兄弟元素,可以提供一个可选的选择器\n.parent()取得匹配元素集合中，每个元素的父元素，可以提供一个可选的选择器\n.parents()获得集合中每个匹配元素的祖先元素，可以提供一个可选的选择器作为参数\n.children()获得匹配元素集合中每个元素的子元素，选择器选择性筛选\n.find()查找符合选择器的后代元素\n.filter()筛选当前结果集中符合条件的对象，参数可以是一个选择器或者一个函数\n.has()筛选匹配元素集合中的那些有相匹配的选择器或DOM元素的后代元素\n.is()判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素，或者jQuery对象，如果这些元素至少一个匹配给定的参数，那么返回true\n\nDOM和jQuery的相互转换jQuery对象与dom的区别jQuery对象是一个类数组的对象，对象原型中封装了许多jQuery自定义的方法。在jQuery对象中无法使用DOM对象的任何方法。\n\nDOM对象===&gt;jQuery对象\n12var dom =document.getElementById(&quot;id&quot;);  // DOM对象var $dom = $(dom);  // jQuery对象\n\nQuery对象====&gt;DOM对象\n\n\n1.jQuery对象是一个数据对象，通过 [index] 的方法\n12var $dom = $(&quot;#id&quot;) ;  // jQuery对象var dom = $dom [0];   // DOM对象\n\n2.jQuery提供方法，通过 .get(index) 方法\n12var $dom = $(&quot;#id&quot;);  // jQuery对象var dom = $dom.get(0); // DOM对象\n\nwindow.onload和$(document).ready有什么区别？document.onDOMContentLoaded呢?window.onload是在dom文档树加载完和所有文件加载完之后执行一个函数document.ready原生中没有这个方法。jquery中有$().ready(function),在dom文档树加载完之后执行一个函数（注意，这里面的文档树加载完全不代表全部文件加载完）。$(document).ready要比winndow.onload先执行window.onload只能出来一次，$(document).ready可以出现多次。\n当document.onDOMContentLoaded事件触发时，仅当DOM加载完成，不包括样式表，图片，flash。两者触发时机不同，window.触发的更晚。jQuery的$(document).ready就是利用了DOMContentLoaded来实现的，但是DOMContentLoaded在IE9以下不支持，需要对IE9以下版本进行兼容处理。\n","dateCreated":"2019-07-12T21:05:02+09:00","dateModified":"2020-09-06T23:58:23+09:00","datePublished":"2019-07-12T21:05:02+09:00","description":"关于jQuery","headline":"About jQuery","image":["20190712.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/07/12/jQuery/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/07/12/jQuery/","keywords":"jQuery","thumbnailUrl":"20190712.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于jQuery\n\njQuery 1.x 版本和 2.x 版本有什么区别1.x：兼容ie678,使用最为广泛的，官方只做BUG维护，功能不再新增。因此一般项目来说，使用1.x版本就可以了，最终版本：1.12.4 (2016年5月20日)\n2.x：不兼容ie678，很少有人使用，官方只做BUG维护，功能不再新增。如果不考虑兼容低版本的浏览器可以使用2.x，最终版本：2.2.4 (2016年5月20日)\n\njQuery 常见的选择器例子\n12345678910111213&lt;body&gt;  &lt;ul class=\"ul\"&gt;    &lt;li&gt;1&lt;/li&gt;    &lt;li&gt;2&lt;/li&gt;    &lt;li class=\"li3\"&gt;      &lt;span&gt;3&lt;/span&gt;    &lt;/li&gt;    &lt;p&gt;p1&lt;/p&gt;    &lt;li&gt;4&lt;/li&gt;    &lt;p&gt;p2&lt;/p&gt;  &lt;/ul&gt;  &lt;p&gt;我被选中了&lt;/p&gt;&lt;/body&gt;\n\n.eq(index)对于一个特定结果集，我们想获取到指定index的jQuery对象，可以使用eq方法\n.next()next取得匹配的元素集合中每一个元素紧邻的后面同辈元素的元素集合。如果提供一个选择器，那么只有紧跟着的兄弟元素满足选择器时，才会返回此元素。\n.prev()prev正好相反，获取元素之前的同辈元素,如果同辈之前没有元素则返回空\n.nextAll()nextAll获得每个匹配元素集合中每个元素所有后面的同辈元素，选择性筛选的选择器\n.prevAll()prevAll与nextAll相反，获取元素前面的同辈元素\n.siblings()获得匹配元素集合中每个元素的兄弟元素,可以提供一个可选的选择器\n.parent()取得匹配元素集合中，每个元素的父元素，可以提供一个可选的选择器\n.parents()获得集合中每个匹配元素的祖先元素，可以提供一个可选的选择器作为参数\n.children()获得匹配元素集合中每个元素的子元素，选择器选择性筛选\n.find()查找符合选择器的后代元素\n.filter()筛选当前结果集中符合条件的对象，参数可以是一个选择器或者一个函数\n.has()筛选匹配元素集合中的那些有相匹配的选择器或DOM元素的后代元素\n.is()判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素，或者jQuery对象，如果这些元素至少一个匹配给定的参数，那么返回true\n\nDOM和jQuery的相互转换jQuery对象与dom的区别jQuery对象是一个类数组的对象，对象原型中封装了许多jQuery自定义的方法。在jQuery对象中无法使用DOM对象的任何方法。\n\nDOM对象===&gt;jQuery对象\n12var dom =document.getElementById(&quot;id&quot;);  // DOM对象var $dom = $(dom);  // jQuery对象\n\nQuery对象====&gt;DOM对象\n\n\n1.jQuery对象是一个数据对象，通过 [index] 的方法\n12var $dom = $(&quot;#id&quot;) ;  // jQuery对象var dom = $dom [0];   // DOM对象\n\n2.jQuery提供方法，通过 .get(index) 方法\n12var $dom = $(&quot;#id&quot;);  // jQuery对象var dom = $dom.get(0); // DOM对象\n\nwindow.onload和$(document).ready有什么区别？document.onDOMContentLoaded呢?window.onload是在dom文档树加载完和所有文件加载完之后执行一个函数document.ready原生中没有这个方法。jquery中有$().ready(function),在dom文档树加载完之后执行一个函数（注意，这里面的文档树加载完全不代表全部文件加载完）。$(document).ready要比winndow.onload先执行window.onload只能出来一次，$(document).ready可以出现多次。\n当document.onDOMContentLoaded事件触发时，仅当DOM加载完成，不包括样式表，图片，flash。两者触发时机不同，window.触发的更晚。jQuery的$(document).ready就是利用了DOMContentLoaded来实现的，但是DOMContentLoaded在IE9以下不支持，需要对IE9以下版本进行兼容处理。\n","dateCreated":"2019-07-12T21:05:02+09:00","dateModified":"2020-10-01T01:02:30+09:00","datePublished":"2019-07-12T21:05:02+09:00","description":"关于jQuery","headline":"About jQuery","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/07/12/jQuery/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/07/12/jQuery/","keywords":"jQuery"}</script>
     <meta name="description" content="关于jQuery">
 <meta name="keywords" content="jQuery">
 <meta property="og:type" content="blog">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://kisky3.github.io/2019/07/12/jQuery/11.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/07/12/jQuery/12.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/07/12/jQuery/13.png">
-<meta property="og:updated_time" content="2020-09-06T14:58:23.524Z">
+<meta property="og:updated_time" content="2020-09-30T16:02:30.837Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About jQuery">
 <meta name="twitter:description" content="关于jQuery">
@@ -52,12 +52,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/07/12/jQuery/20190712.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/07/12/jQuery/20190712.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2019/07/12/jQuery/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/07/12/jQuery/cover.jpg" />
     
     
     <!--STYLES-->
@@ -256,13 +250,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2019/07/12/jQuery/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             About jQuery
@@ -287,18 +285,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

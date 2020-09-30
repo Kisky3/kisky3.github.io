@@ -4,9 +4,6 @@ date: 2019-03-22 19:36:45
 tags:
 - JS
 clearReading: true
-thumbnailImage: 20190322.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

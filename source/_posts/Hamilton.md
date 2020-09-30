@@ -5,9 +5,6 @@ tags:
 - musical
 - Hamilton
 clearReading: true
-thumbnailImage: 20200503.jpg
-thumbnailImagePosition: top
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

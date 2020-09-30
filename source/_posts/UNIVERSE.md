@@ -5,11 +5,9 @@ tags:
 - movie
 - universe
 clearReading: true
-coverImage: cover.jpg
-thumbnailImage: 1.jpg
-thumbnailImagePosition: top
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
+comments: false
 categories: About Me
 ---
 Recently, I am into something about our universe.

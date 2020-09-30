@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"CSS选择器类型与用法\n\n选择器类型选择器分为基础选择器，组合选择器，属性选择器，伪类选择器，伪元素选择器\n\n基础选择器\n\n\n选择器\n含义\n\n\n\n*\n通用元素选择器，匹配页面任何元素（这也就决定了我们很少使用）\n\n\n#id\nid选择器，匹配特定id元素\n\n\n.class\n类选择器，匹配class包含（不是等于）特定类的元素\n\n\nelement\n标签选择器\n\n\n例子：\n12345678910111213141516* &#123; margin: 0;padding:0;&#125;#id-selector &#123; color:#333;&#125;.class-selector &#123; background: #ccc;&#125;p &#123;font-size: 20px;&#125;\n\n\n组合选择器\n\n\n选择器\n含义\n\n\n\nE,F\n多元素选择器，用逗号分隔，同时匹配元素E或元素F\n\n\nE F\n后代选择器，用空格分隔，匹配E元素所有的后代（不只是子元素向下递归）元素F\n\n\nE&gt;F\n子元素选择器，用&gt;分隔，匹配E元素的所有直接子元素\n\n\nE+F\n直接相邻选择器，匹配E元素之后的相邻的同级元素F\n\n\nE~F\n普通相邻选择器(弟弟选择器)，匹配E元素之后的同级元素F(无论直接相邻与否)\n\n\n.class1.class2\nid和class选择器和选择器连写的时候中间没有分隔符， 。和#本身充当分隔符的元素\n\n\nelement#id\nid和class 选择器和选择器连写的时候中间没有分隔符，。和#本身充当分隔符的元素\n\n\n例子：\n123456789101112131415161718192021222324252627.p1,.p2 &#123; color: red;&#125;#ct .p2 &#123; color:blue;&#125;#ct &gt;.p2 &#123; color:blue;&#125;.p1+p &#123; color:red;&#125;.p1~p &#123; color:red;&#125;.p2.active &#123; color:red;&#125;div#ct &#123; background: red;&#125;\n\n属性选择器\n\n\n选择器\n含义\n\n\n\nE[attr]\n匹配所有具有属性attr的元素，div[id]就能取到所有有id属性的div\n\n\nE[attr=value]\n匹配属性attr 值为value的元素，div[id=test]，匹配id=test的div\n\n\nE[attr~=value]\n匹配所有属性attr具有多个空格分隔，其中一个值等于value的元素\n\n\nE[attr^=value]\n匹配属性attr的值以value开头的元素\n\n\nE[attr$=value]\n匹配属性attr的值以value结尾的元素\n\n\nE[attr*=value]\n匹配属性attr的值包含value的元素\n\n\n\n伪类选择器代表元素的一种状态\n\n\n\n选择器\n含义\n\n\n\nE:first-child\n匹配其E的父元素的第一个子元素\n\n\nE:nth-child(n)\n匹配其E的父元素的第n个子元素(2n+1,2n)\n\n\nE:first-of-type\nE的同种类型下的第一个元素\n\n\nE:nth-of-type(n)\nE的同种类型下的第n个元素\n\n\nE:link\n匹配所有未被点击的链接\n\n\nE:visited\n匹配所有已经被点击的链接\n\n\nE:active\n匹配鼠标已经其上按下还没有释放的E元素\n\n\nE:hover\n匹配鼠标悬停其上的E元素\n\n\nE:focus\n匹配获得当前焦点的E元素\n\n\nE:enabled\n匹配表单中可用的元素\n\n\nE:disabled\n匹配表单中禁用的元素\n\n\nE:checked\n匹配表单中被选中的radio或checkoutbox元素\n\n\nE:selection\n匹配用户当前选中的元素\n\n\na链接伪类选择器时要注意伪类的顺序\n\n伪元素选择器\n\n\n选择器\n含义\n\n\n\nE::first-line\n匹配E元素内容的第一行\n\n\nE::first-letter\n匹配E元素内容的第一个字母\n\n\nE::before\n在E元素之前插入生成的内容\n\n\nE::after\n在E元素之后插入生成的内容\n\n\n\n选择器的优先级\n\n注意：\n在一些复杂场景下，可以进行一些标记再进行比较假如选择器有两次则下面的样式会覆盖上面的样式\n","dateCreated":"2018-11-15T17:23:25+09:00","dateModified":"2020-09-06T23:58:22+09:00","datePublished":"2018-11-15T17:23:25+09:00","description":"CSS选择器类型与用法","headline":"About CSS Selectors","image":["20181115.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/","keywords":"CSS","thumbnailUrl":"20181115.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"CSS选择器类型与用法\n\n选择器类型选择器分为基础选择器，组合选择器，属性选择器，伪类选择器，伪元素选择器\n\n基础选择器\n\n\n选择器\n含义\n\n\n\n*\n通用元素选择器，匹配页面任何元素（这也就决定了我们很少使用）\n\n\n#id\nid选择器，匹配特定id元素\n\n\n.class\n类选择器，匹配class包含（不是等于）特定类的元素\n\n\nelement\n标签选择器\n\n\n例子：\n12345678910111213141516* &#123; margin: 0;padding:0;&#125;#id-selector &#123; color:#333;&#125;.class-selector &#123; background: #ccc;&#125;p &#123;font-size: 20px;&#125;\n\n\n组合选择器\n\n\n选择器\n含义\n\n\n\nE,F\n多元素选择器，用逗号分隔，同时匹配元素E或元素F\n\n\nE F\n后代选择器，用空格分隔，匹配E元素所有的后代（不只是子元素向下递归）元素F\n\n\nE&gt;F\n子元素选择器，用&gt;分隔，匹配E元素的所有直接子元素\n\n\nE+F\n直接相邻选择器，匹配E元素之后的相邻的同级元素F\n\n\nE~F\n普通相邻选择器(弟弟选择器)，匹配E元素之后的同级元素F(无论直接相邻与否)\n\n\n.class1.class2\nid和class选择器和选择器连写的时候中间没有分隔符， 。和#本身充当分隔符的元素\n\n\nelement#id\nid和class 选择器和选择器连写的时候中间没有分隔符，。和#本身充当分隔符的元素\n\n\n例子：\n123456789101112131415161718192021222324252627.p1,.p2 &#123; color: red;&#125;#ct .p2 &#123; color:blue;&#125;#ct &gt;.p2 &#123; color:blue;&#125;.p1+p &#123; color:red;&#125;.p1~p &#123; color:red;&#125;.p2.active &#123; color:red;&#125;div#ct &#123; background: red;&#125;\n\n属性选择器\n\n\n选择器\n含义\n\n\n\nE[attr]\n匹配所有具有属性attr的元素，div[id]就能取到所有有id属性的div\n\n\nE[attr=value]\n匹配属性attr 值为value的元素，div[id=test]，匹配id=test的div\n\n\nE[attr~=value]\n匹配所有属性attr具有多个空格分隔，其中一个值等于value的元素\n\n\nE[attr^=value]\n匹配属性attr的值以value开头的元素\n\n\nE[attr$=value]\n匹配属性attr的值以value结尾的元素\n\n\nE[attr*=value]\n匹配属性attr的值包含value的元素\n\n\n\n伪类选择器代表元素的一种状态\n\n\n\n选择器\n含义\n\n\n\nE:first-child\n匹配其E的父元素的第一个子元素\n\n\nE:nth-child(n)\n匹配其E的父元素的第n个子元素(2n+1,2n)\n\n\nE:first-of-type\nE的同种类型下的第一个元素\n\n\nE:nth-of-type(n)\nE的同种类型下的第n个元素\n\n\nE:link\n匹配所有未被点击的链接\n\n\nE:visited\n匹配所有已经被点击的链接\n\n\nE:active\n匹配鼠标已经其上按下还没有释放的E元素\n\n\nE:hover\n匹配鼠标悬停其上的E元素\n\n\nE:focus\n匹配获得当前焦点的E元素\n\n\nE:enabled\n匹配表单中可用的元素\n\n\nE:disabled\n匹配表单中禁用的元素\n\n\nE:checked\n匹配表单中被选中的radio或checkoutbox元素\n\n\nE:selection\n匹配用户当前选中的元素\n\n\na链接伪类选择器时要注意伪类的顺序\n\n伪元素选择器\n\n\n选择器\n含义\n\n\n\nE::first-line\n匹配E元素内容的第一行\n\n\nE::first-letter\n匹配E元素内容的第一个字母\n\n\nE::before\n在E元素之前插入生成的内容\n\n\nE::after\n在E元素之后插入生成的内容\n\n\n\n选择器的优先级\n\n注意：\n在一些复杂场景下，可以进行一些标记再进行比较假如选择器有两次则下面的样式会覆盖上面的样式\n","dateCreated":"2018-11-15T17:23:25+09:00","dateModified":"2020-10-01T01:00:41+09:00","datePublished":"2018-11-15T17:23:25+09:00","description":"CSS选择器类型与用法","headline":"About CSS Selectors","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/","keywords":"CSS"}</script>
     <meta name="description" content="CSS选择器类型与用法">
 <meta name="keywords" content="CSS">
 <meta property="og:type" content="blog">
@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/1.png">
 <meta property="og:image" content="https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/2.png">
-<meta property="og:updated_time" content="2020-09-06T14:58:22.591Z">
+<meta property="og:updated_time" content="2020-09-30T16:00:41.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About CSS Selectors">
 <meta name="twitter:description" content="CSS选择器类型与用法">
@@ -41,12 +41,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/20181115.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/20181115.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2018/11/15/CSS选择器类型与用法/cover.jpg" />
     
     
     <!--STYLES-->
@@ -245,13 +239,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2018/11/15/CSS选择器类型与用法/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             About CSS Selectors
@@ -276,18 +274,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

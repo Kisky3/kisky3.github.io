@@ -2,11 +2,8 @@
 title: Data Mocking – Ways To Fake A Backend
 date: 2019-05-21 19:52:09
 tags:
-- Mock 
+- Mock
 clearReading: true
-thumbnailImage: 20190521.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false
@@ -14,7 +11,7 @@ categories: Front-end Knowledge
 ---
 
 关于mock数据 - 怎样模拟后端数据
-<!--more--> 
+<!--more-->
 
 ### 1. 搭建一个静态服务器
 #### http-server

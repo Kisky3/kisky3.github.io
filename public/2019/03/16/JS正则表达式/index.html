@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"JS正则表达式\n\n\n什么是JS正则表达式正则表达式是计算机科学的一个概念，正则表达式使用单个字符串来描述，匹配一系列符合某个句法规则的字符串。\n在很多文本编辑器里，正则表达式常被用来检索替换某些符合某个模式的文本。\n正则表达式的创建1.构造函数\n1var reg = new RegExp(&apos;&lt;%[^%]+%&gt;&apos;,&apos;g&apos;);\n\n2.字面量\n1var reg =/&lt;%[^%]%&gt;/g;\n\n最后的g代表全局搜索，不添加的画搜索到第一个结果停止搜索\n\n预定义类\n\n\n字符\n等价类\n含义\n\n\n\n.\n[^\b\\r\\n]\n除了回车符和换行符之外的所有字符\n\n\n\\d\n[0-9]\n数字字符\n\n\n\\D\n[^0-9]\n非数字字符\n\n\n\\s\n[\\t\\n\\x0B\\f\\r]\n空白符\n\n\n\\S\n[^\\t\\n\\x0B\\f\\r]\n非空白符\n\n\n\\w\n[a-zA-Z_0-9]\n单词字符，字母，数字下划线\n\n\n\\W\n[^a-zA-Z_0-9]\n非单词字符\n\n\n\n边界正则表达式还提供里几个常用的边界匹配字符串\n\n\n\n字符\n含义\n\n\n\n^\n以xxx开头\n\n\n$\n以xxx结尾\n\n\n\\b\n单词边界\n\n\n\\B\n非单词边界\n\n\n\n量词正则表达式还提供里几个常用的边界匹配字符串\n\n\n\n字符\n含义\n\n\n\n?\n出现零次或一次（最多出现一次）\n\n\n+\n出现一次或多次（至少出现一次）\n\n\n*\n出现零次或多次（任意次）\n\n\n{n}\n出现n次\n\n\n{n，m}\n出现n到m次\n\n\n{n，}\n至少出现n次\n\n\n\n前瞻\n\n\n字符\n含义\n\n\n\nexp1(?=exp2)\n匹配后面是exp2的exp1\n\n\nexp1(?！=exp2)\n匹配后面不是exp2的exp1\n\n\n\n贪婪模式与非贪婪模式贪婪模式在贪婪模式下（一般为默认模式），正则引擎尽可能多的重复匹配字符也就是匹配时先忽略下一个条件，优先以当前条件进行匹配，完成当前条件之后才开始回溯以下一条件进行匹配\n非贪婪模式非贪婪模式和贪婪模式相反，可通过在代表适量的表示符后放置？来开启非贪婪模式如？，+？甚至是？？？，非贪婪模式是不只看当前条件还看下一条件进行检索，正则引擎尝试用最小可能的重复次数来进行匹配\n例\n12var str = 'a \"witch\" and her \"broom\" is one'; str.match( /\".*\"/g);\n\n在贪婪模式下，匹配到 “witch” and her “broom” 一个字符串\n而在非贪婪模式下匹配到的是”witch”和”broom”\n","dateCreated":"2019-03-16T19:23:28+09:00","dateModified":"2020-09-06T23:58:22+09:00","datePublished":"2019-03-16T19:23:28+09:00","description":"JS正则表达式","headline":"JS Regular Expression","image":["20190316.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/03/16/JS正则表达式/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/03/16/JS正则表达式/","keywords":"JS","thumbnailUrl":"20190316.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"JS正则表达式\n\n\n什么是JS正则表达式正则表达式是计算机科学的一个概念，正则表达式使用单个字符串来描述，匹配一系列符合某个句法规则的字符串。\n在很多文本编辑器里，正则表达式常被用来检索替换某些符合某个模式的文本。\n正则表达式的创建1.构造函数\n1var reg = new RegExp(&apos;&lt;%[^%]+%&gt;&apos;,&apos;g&apos;);\n\n2.字面量\n1var reg =/&lt;%[^%]%&gt;/g;\n\n最后的g代表全局搜索，不添加的画搜索到第一个结果停止搜索\n\n预定义类\n\n\n字符\n等价类\n含义\n\n\n\n.\n[^\b\\r\\n]\n除了回车符和换行符之外的所有字符\n\n\n\\d\n[0-9]\n数字字符\n\n\n\\D\n[^0-9]\n非数字字符\n\n\n\\s\n[\\t\\n\\x0B\\f\\r]\n空白符\n\n\n\\S\n[^\\t\\n\\x0B\\f\\r]\n非空白符\n\n\n\\w\n[a-zA-Z_0-9]\n单词字符，字母，数字下划线\n\n\n\\W\n[^a-zA-Z_0-9]\n非单词字符\n\n\n\n边界正则表达式还提供里几个常用的边界匹配字符串\n\n\n\n字符\n含义\n\n\n\n^\n以xxx开头\n\n\n$\n以xxx结尾\n\n\n\\b\n单词边界\n\n\n\\B\n非单词边界\n\n\n\n量词正则表达式还提供里几个常用的边界匹配字符串\n\n\n\n字符\n含义\n\n\n\n?\n出现零次或一次（最多出现一次）\n\n\n+\n出现一次或多次（至少出现一次）\n\n\n*\n出现零次或多次（任意次）\n\n\n{n}\n出现n次\n\n\n{n，m}\n出现n到m次\n\n\n{n，}\n至少出现n次\n\n\n\n前瞻\n\n\n字符\n含义\n\n\n\nexp1(?=exp2)\n匹配后面是exp2的exp1\n\n\nexp1(?！=exp2)\n匹配后面不是exp2的exp1\n\n\n\n贪婪模式与非贪婪模式贪婪模式在贪婪模式下（一般为默认模式），正则引擎尽可能多的重复匹配字符也就是匹配时先忽略下一个条件，优先以当前条件进行匹配，完成当前条件之后才开始回溯以下一条件进行匹配\n非贪婪模式非贪婪模式和贪婪模式相反，可通过在代表适量的表示符后放置？来开启非贪婪模式如？，+？甚至是？？？，非贪婪模式是不只看当前条件还看下一条件进行检索，正则引擎尝试用最小可能的重复次数来进行匹配\n例\n12var str = 'a \"witch\" and her \"broom\" is one'; str.match( /\".*\"/g);\n\n在贪婪模式下，匹配到 “witch” and her “broom” 一个字符串\n而在非贪婪模式下匹配到的是”witch”和”broom”\n","dateCreated":"2019-03-16T19:23:28+09:00","dateModified":"2020-10-01T01:02:45+09:00","datePublished":"2019-03-16T19:23:28+09:00","description":"JS正则表达式","headline":"JS Regular Expression","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/03/16/JS正则表达式/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/03/16/JS正则表达式/","keywords":"JS"}</script>
     <meta name="description" content="JS正则表达式">
 <meta name="keywords" content="JS">
 <meta property="og:type" content="blog">
@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="Xiang Yu&#39;s Blog">
 <meta property="og:description" content="JS正则表达式">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-09-06T14:58:22.884Z">
+<meta property="og:updated_time" content="2020-09-30T16:02:45.645Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS Regular Expression">
 <meta name="twitter:description" content="JS正则表达式">
@@ -38,12 +38,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/03/16/JS正则表达式/20190316.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/03/16/JS正则表达式/20190316.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2019/03/16/JS正则表达式/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/03/16/JS正则表达式/cover.jpg" />
     
     
     <!--STYLES-->
@@ -242,13 +236,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2019/03/16/JS正则表达式/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             JS Regular Expression
@@ -273,18 +271,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

@@ -6,9 +6,6 @@ tags:
 - Git
 - Template
 clearReading: true
-thumbnailImage: 20191221.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

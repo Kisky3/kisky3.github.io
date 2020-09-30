@@ -4,9 +4,6 @@ date: 2018-11-10 16:54:13
 tags:
 - URL
 clearReading: true
-thumbnailImage: 20181110.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

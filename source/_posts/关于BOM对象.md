@@ -4,9 +4,6 @@ date: 2019-04-25 21:22:10
 tags:
 - BOM
 clearReading: true
-thumbnailImage: 20190425.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

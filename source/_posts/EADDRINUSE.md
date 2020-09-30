@@ -4,9 +4,6 @@ date: 2019-12-21 23:07:45
 tags:
 - node.js
 clearReading: true
-thumbnailImage: 20191221.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

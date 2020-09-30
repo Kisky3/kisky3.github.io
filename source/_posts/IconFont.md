@@ -5,9 +5,6 @@ tags:
 - IconFont
 - CSS
 clearReading: true
-thumbnailImage: 20181228.jpg
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

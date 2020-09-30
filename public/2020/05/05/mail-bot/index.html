@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"做一个GAS自动送信功能的bot\n\n\n\n\n\n123456789101112131415161718192021222324252627282930313233343536373839function mailSend() &#123;  /* 名前を取得 */  var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();  var getName = activeSpreadsheet.getRange(\"D2\").getValue().trim();  var masterName = getName.replace(/　/g, \"\"); //スペース削除  /* SD日報設定ファイルから情報を取得 */  var settingUrl = \"YOUR_SHEET\";  var settingSpreadsheet= SpreadsheetApp.openByUrl(settingUrl);  var settingSheet = settingSpreadsheet.getSheetByName(\"mail\");  var lastRow = settingSheet.getLastRow() + 1;  for(var i = 1;i &lt; lastRow;i++)&#123;    var setName = settingSheet.getRange(i,1).getValue();    if(setName == masterName)&#123;      var strCc = settingSheet.getRange(i,4).getValue(); //宛先      var strFrom = settingSheet.getRange(i,2).getValue(); //差出アドレス    &#125;  &#125;  /* メールデータの準備 */  var strUrl = activeSpreadsheet.getUrl();  var strGid = activeSpreadsheet.getSheetId();  var strDate = Utilities.formatDate(new Date(),\"JST\",\"MM/dd\");  var strSubject = \"【業務日報】\" + strDate + \" \" + masterName;  var strBody = strUrl + \"#gid=\" + strGid;  /* メールを送信 */  GmailApp.sendEmail(    \"\",    strSubject,    strBody,    &#123;      cc:strCc,      from:strFrom,      name: masterName    &#125;  );&#125;","dateCreated":"2020-05-05T00:25:40+09:00","dateModified":"2020-09-07T00:36:40+09:00","datePublished":"2020-05-05T00:25:40+09:00","description":"做一个GAS自动送信功能的bot","headline":"Create a Auto Mail Bot","image":["20200505.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/05/05/mail-bot/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/05/05/mail-bot/","keywords":"setting, slack, Google Apps Script","thumbnailUrl":"20200505.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"做一个GAS自动送信功能的bot\n\n\n\n\n\n123456789101112131415161718192021222324252627282930313233343536373839function mailSend() &#123;  /* 名前を取得 */  var activeSpreadsheet = SpreadsheetApp.getActiveSpreadsheet();  var getName = activeSpreadsheet.getRange(\"D2\").getValue().trim();  var masterName = getName.replace(/　/g, \"\"); //スペース削除  /* SD日報設定ファイルから情報を取得 */  var settingUrl = \"YOUR_SHEET\";  var settingSpreadsheet= SpreadsheetApp.openByUrl(settingUrl);  var settingSheet = settingSpreadsheet.getSheetByName(\"mail\");  var lastRow = settingSheet.getLastRow() + 1;  for(var i = 1;i &lt; lastRow;i++)&#123;    var setName = settingSheet.getRange(i,1).getValue();    if(setName == masterName)&#123;      var strCc = settingSheet.getRange(i,4).getValue(); //宛先      var strFrom = settingSheet.getRange(i,2).getValue(); //差出アドレス    &#125;  &#125;  /* メールデータの準備 */  var strUrl = activeSpreadsheet.getUrl();  var strGid = activeSpreadsheet.getSheetId();  var strDate = Utilities.formatDate(new Date(),\"JST\",\"MM/dd\");  var strSubject = \"【業務日報】\" + strDate + \" \" + masterName;  var strBody = strUrl + \"#gid=\" + strGid;  /* メールを送信 */  GmailApp.sendEmail(    \"\",    strSubject,    strBody,    &#123;      cc:strCc,      from:strFrom,      name: masterName    &#125;  );&#125;","dateCreated":"2020-05-05T00:25:40+09:00","dateModified":"2020-10-01T01:03:13+09:00","datePublished":"2020-05-05T00:25:40+09:00","description":"做一个GAS自动送信功能的bot","headline":"Create a Auto Mail Bot","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/05/05/mail-bot/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/05/05/mail-bot/","keywords":"setting, slack, Google Apps Script"}</script>
     <meta name="description" content="做一个GAS自动送信功能的bot">
 <meta name="keywords" content="setting,slack,Google Apps Script">
 <meta property="og:type" content="blog">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://kisky3.github.io/2020/05/05/mail-bot/1.png">
 <meta property="og:image" content="https://kisky3.github.io/2020/05/05/mail-bot/2.png">
 <meta property="og:image" content="https://kisky3.github.io/2020/05/05/mail-bot/3.png">
-<meta property="og:updated_time" content="2020-09-06T15:36:40.801Z">
+<meta property="og:updated_time" content="2020-09-30T16:03:13.910Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Create a Auto Mail Bot">
 <meta name="twitter:description" content="做一个GAS自动送信功能的bot">
@@ -42,12 +42,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2020/05/05/mail-bot/20200505.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2020/05/05/mail-bot/20200505.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2020/05/05/mail-bot/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2020/05/05/mail-bot/cover.jpg" />
     
     
     <!--STYLES-->
@@ -246,13 +240,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2020/05/05/mail-bot/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             Create a Auto Mail Bot
@@ -277,18 +275,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

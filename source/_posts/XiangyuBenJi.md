@@ -7,9 +7,6 @@ tags:
 - Xiang Ji
 - Records of the Grand Historian
 clearReading: true
-thumbnailImage: 20191214.png
-thumbnailImagePosition: top
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

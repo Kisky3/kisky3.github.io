@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于SSH登陆以及如何连接Cyberduck\n\n\n什么是SSHSSH（Secure Shell）是一种网络协议，用于计算机之间的加密登录。如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。\n什么是FTPFTP（File Transfer Protocol）就是就是专门用来传输文件的协议。FTP服务器（File Transfer Protocol Server）是在互联网上提供文件存储和访问服务的计算机，它们依照FTP协议提供服务。\n什么是SFTPSFTP（SSH File Transfer Protocol），安全文件传送协议。可以为传输文件提供一种安全的加密方法。sftp 与 ftp 有着几乎一样的语法和功能。SFTP 为 SSH的一部分，是一种传输档案至 Blogger 伺服器的安全方式。其实在SSH软件包中，已经包含了一个叫作SFTP(Secure File Transfer Protocol)的安全文件传输子系统。\nFTP与SFTP的区别FTP是一种文件传输协议，一般是为了方便数据共享的。包括一个FTP服务器和多个FTP客户端。FTP客户端通过FTP协议在服务器上下载资源。而SFTP协议是在FTP的基础上对数据进行加密，使得传输的数据相对来说更安全。但是这种安全是以牺牲效率为代价的，也就是说SFTP的传输效率比FTP要低(不过现实使用当中，没有发现多大差别)。\n总结：1.FTP要安装，SFTP不要安装。当我们需要传输文件到Linux服务器当中，我们习惯用ftp来传输，其实Linux默认是不提供ftp的，需要你额外安装FTP服务器。而SFTP不需要单独配置，开启SSH默认就开启了SFTP。\n2.SFTP使用加密传输认证信息和传输数据更安全，但更安全带来副作用就是的效率比FTP要低。\nSFTP/SSH登录及命令行用法SFTP：\n12345get xxx.txt 下载xxx文件put xxx.txt 上传xxx文件quit / bye / exit 退出sftpsftp  xxx.xxx.xxx.xxx   登录root用户sftp zygf@xxx.xxx.xxx.xxx  进行登录zygf用户。\n\n例：：1.首先如果要登陆你需要「远程服务器的秘密键」，「用户名」和「邮件地址」。2.在本地存在公开键的情况下，你需要将远程服务器的秘密键保存在本地。  生成一个秘密键文件\n123　cd ~/.ssh　cp kou_id_rsa wordpress_rsavim wordpress_rsa\n\n\n\n3.登陆服务器并且传送你生成的秘密键,不用写端口号!(默认为22)。\n1ssh ユーザー名@IPアドレス -i ~/.ssh/wordpress_rsa(生成した秘密鍵ファイル名)\n\n4.有问题则回答yes，然后就可以看到登陆成功了。\n使用FTP软件进行登陆及文件操作mac可以使用免费的FTP软件Cyberduck就是这个小黄鸭！！\n1.点击新建连接\n2.在界面上选择SFTP连接\n3.输入用户名。密码以及选择本地秘密键文件，点击连接。\n成功！！\n可能发生的错误1.没有给ssh文件夹权限解决方法：给下面的ssh文件夹以及你生成的秘密键权限。\n12chmod 600 ~/.ssh/wordpress_rsachmod 700 ~/.ssh\n\n2.复制秘密键的时候转换软件导致字符改变解决方法：下载之后用记事本打开再进行复制粘贴。\n","dateCreated":"2019-11-11T17:48:10+09:00","dateModified":"2020-09-06T23:58:23+09:00","datePublished":"2019-11-11T17:48:10+09:00","description":"关于SSH登陆以及如何连接Cyberduck","headline":"About SSH Login And How To Connect To Cyberduck","image":["20191111.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/11/11/ssh/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/11/11/ssh/","keywords":"SSH, Cyberduck, FTP, SFTP","thumbnailUrl":"20191111.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于SSH登陆以及如何连接Cyberduck\n\n\n什么是SSHSSH（Secure Shell）是一种网络协议，用于计算机之间的加密登录。如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。\n什么是FTPFTP（File Transfer Protocol）就是就是专门用来传输文件的协议。FTP服务器（File Transfer Protocol Server）是在互联网上提供文件存储和访问服务的计算机，它们依照FTP协议提供服务。\n什么是SFTPSFTP（SSH File Transfer Protocol），安全文件传送协议。可以为传输文件提供一种安全的加密方法。sftp 与 ftp 有着几乎一样的语法和功能。SFTP 为 SSH的一部分，是一种传输档案至 Blogger 伺服器的安全方式。其实在SSH软件包中，已经包含了一个叫作SFTP(Secure File Transfer Protocol)的安全文件传输子系统。\nFTP与SFTP的区别FTP是一种文件传输协议，一般是为了方便数据共享的。包括一个FTP服务器和多个FTP客户端。FTP客户端通过FTP协议在服务器上下载资源。而SFTP协议是在FTP的基础上对数据进行加密，使得传输的数据相对来说更安全。但是这种安全是以牺牲效率为代价的，也就是说SFTP的传输效率比FTP要低(不过现实使用当中，没有发现多大差别)。\n总结：1.FTP要安装，SFTP不要安装。当我们需要传输文件到Linux服务器当中，我们习惯用ftp来传输，其实Linux默认是不提供ftp的，需要你额外安装FTP服务器。而SFTP不需要单独配置，开启SSH默认就开启了SFTP。\n2.SFTP使用加密传输认证信息和传输数据更安全，但更安全带来副作用就是的效率比FTP要低。\nSFTP/SSH登录及命令行用法SFTP：\n12345get xxx.txt 下载xxx文件put xxx.txt 上传xxx文件quit / bye / exit 退出sftpsftp  xxx.xxx.xxx.xxx   登录root用户sftp zygf@xxx.xxx.xxx.xxx  进行登录zygf用户。\n\n例：：1.首先如果要登陆你需要「远程服务器的秘密键」，「用户名」和「邮件地址」。2.在本地存在公开键的情况下，你需要将远程服务器的秘密键保存在本地。  生成一个秘密键文件\n123　cd ~/.ssh　cp kou_id_rsa wordpress_rsavim wordpress_rsa\n\n\n\n3.登陆服务器并且传送你生成的秘密键,不用写端口号!(默认为22)。\n1ssh ユーザー名@IPアドレス -i ~/.ssh/wordpress_rsa(生成した秘密鍵ファイル名)\n\n4.有问题则回答yes，然后就可以看到登陆成功了。\n使用FTP软件进行登陆及文件操作mac可以使用免费的FTP软件Cyberduck就是这个小黄鸭！！\n1.点击新建连接\n2.在界面上选择SFTP连接\n3.输入用户名。密码以及选择本地秘密键文件，点击连接。\n成功！！\n可能发生的错误1.没有给ssh文件夹权限解决方法：给下面的ssh文件夹以及你生成的秘密键权限。\n12chmod 600 ~/.ssh/wordpress_rsachmod 700 ~/.ssh\n\n2.复制秘密键的时候转换软件导致字符改变解决方法：下载之后用记事本打开再进行复制粘贴。\n","dateCreated":"2019-11-11T17:48:10+09:00","dateModified":"2020-10-01T01:04:15+09:00","datePublished":"2019-11-11T17:48:10+09:00","description":"关于SSH登陆以及如何连接Cyberduck","headline":"About SSH Login And How To Connect To Cyberduck","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/11/11/ssh/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/11/11/ssh/","keywords":"SSH, Cyberduck, FTP, SFTP"}</script>
     <meta name="description" content="关于SSH登陆以及如何连接Cyberduck">
 <meta name="keywords" content="SSH,Cyberduck,FTP,SFTP">
 <meta property="og:type" content="blog">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://kisky3.github.io/2019/11/11/ssh/4.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/11/11/ssh/5.png">
 <meta property="og:image" content="https://kisky3.github.io/2019/11/11/ssh/6.png">
-<meta property="og:updated_time" content="2020-09-06T14:58:23.545Z">
+<meta property="og:updated_time" content="2020-09-30T16:04:15.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About SSH Login And How To Connect To Cyberduck">
 <meta name="twitter:description" content="关于SSH登陆以及如何连接Cyberduck">
@@ -46,12 +46,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2019/11/11/ssh/20191111.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/11/11/ssh/20191111.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2019/11/11/ssh/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2019/11/11/ssh/cover.jpg" />
     
     
     <!--STYLES-->
@@ -250,13 +244,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2019/11/11/ssh/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             About SSH Login And How To Connect To Cyberduck
@@ -281,18 +279,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

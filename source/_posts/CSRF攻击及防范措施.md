@@ -2,13 +2,10 @@
 title: CSRF Attack And Prevention
 date: 2018-10-14 13:58:15
 clearReading: true
-thumbnailImage: 20181014.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false
-tags: 
+tags:
 - CSRF
 categories: Back-end Knowledge
 ---

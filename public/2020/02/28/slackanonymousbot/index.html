@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"做一个可以在slack匿名发言的机器人\n\n运行环境\n\nUbuntu16.04\nnode.js\n\n完成后的示意图\n添加Bot首先点击下面的link在slack里添加bot\nhttps://my.slack.com/services/new/bot\n这里用了anonymous的bot名字，也可以输入其他的，然后点击「Add bot integration」按钮。\n\n\n然后记下画面上显示的 「API Token」\n获取频道IDhttps://slack.com/api/conversations.list?token=刚刚记录下的API_Token\n还可以取得用户ID和非公开频道ID\n\n安装Botkit安装并使用Slack官方文档上的Bot框架Botkit\n123456789101112131415161718//创建路径$ cd ~$ mkdir slack_anonymous_bot $ cd slack_anonymous_bot//botkit clone$ git clone https://github.com/howdyai/botkit.git$ cd botkit//branch 移动$ git checkout origin/legacy //安装$ npm install//如果安装失败・・・$ npm audit fix$ npm install\n\n如果生成了~/botkit/example/slack_bot.js就说明成功了\n\n编码123456// 移动到你生成的路径$ cd ~$ cd slack_anonymous_bot/botkit///制作anonymous_bot.js$ touch anonymous_bot.js\n\n在anonymous_bot.js里粘贴下面的代码\n12345678910111213141516171819202122232425262728293031323334353637var Botkit = require(&quot;./lib/Botkit.js&quot;); // 注意pathvar os = require(&quot;os&quot;);var controller = Botkit.slackbot(&#123;    debug: true,&#125;);var bot = controller.spawn(&#123;    token: &quot;刚刚记录下的API_TOKEN&quot;&#125;).startRTM();controller.on(&quot;direct_message&quot;, (bot, message) =&gt; &#123;    var now = new Date(); //获取时间    var user_name = &quot;名無しさん: &quot;+ now.getFullYear()+&quot;/&quot;+(now.getMonth()+1)+&quot;/&quot;+now.getDate()+&quot;/ &quot;+now.getHours()+&quot;:&quot;+now.getMinutes()+&quot;:&quot;+now.getSeconds();    bot.reply(message, &quot;匿名で投稿しました．&quot;);    bot.startConversation(&#123;  channel : &quot;刚刚取得的频道ID&quot; &#125;, (err, convo) =&gt; &#123;        var send_message = &#123;          type: &quot;message&quot;,          channel: &quot;刚刚取得的频道ID&quot;,          text: message.text,          username: user_name,          thread_ts: null,          reply_broadcast: null,          parse: null,          link_names: null,          attachments: null,          unfurl_links: null,          unfurl_media: null,          icon_url: null,          icon_emoji: &quot;:robot_face:&quot;,          as_user: true        &#125;        convo.say(send_message);    &#125;);&#125;);\n\n\n运行12345678//debug环境$ cd ~/slack_anonymous_bot/botkit$ node anonymous_bot.js//通常一般环境$ cd ~/slack_anonymous_bot/botkit$ forever start slack_bot.js$ forever stop slack_bot.js // 停止bot\n\n\n运行结果如果bot运行成功了，bot前的灯会变绿色。\n投稿时候首先会给你回信\n然后你就可以看到匿名bot在你登陆的频道里代表你发言了\n","dateCreated":"2020-02-28T23:50:23+09:00","dateModified":"2020-09-06T23:58:23+09:00","datePublished":"2020-02-28T23:50:23+09:00","description":"做一个可以在slack匿名发言的机器人","headline":"Create a Anonymous Bot for Slack","image":["20200228.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/02/28/slackanonymousbot/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/02/28/slackanonymousbot/","keywords":"setting, slack bot, slack, AnonymousBot, BotKit","thumbnailUrl":"20200228.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"做一个可以在slack匿名发言的机器人\n\n运行环境\n\nUbuntu16.04\nnode.js\n\n完成后的示意图\n添加Bot首先点击下面的link在slack里添加bot\nhttps://my.slack.com/services/new/bot\n这里用了anonymous的bot名字，也可以输入其他的，然后点击「Add bot integration」按钮。\n\n\n然后记下画面上显示的 「API Token」\n获取频道IDhttps://slack.com/api/conversations.list?token=刚刚记录下的API_Token\n还可以取得用户ID和非公开频道ID\n\n安装Botkit安装并使用Slack官方文档上的Bot框架Botkit\n123456789101112131415161718//创建路径$ cd ~$ mkdir slack_anonymous_bot $ cd slack_anonymous_bot//botkit clone$ git clone https://github.com/howdyai/botkit.git$ cd botkit//branch 移动$ git checkout origin/legacy //安装$ npm install//如果安装失败・・・$ npm audit fix$ npm install\n\n如果生成了~/botkit/example/slack_bot.js就说明成功了\n\n编码123456// 移动到你生成的路径$ cd ~$ cd slack_anonymous_bot/botkit///制作anonymous_bot.js$ touch anonymous_bot.js\n\n在anonymous_bot.js里粘贴下面的代码\n12345678910111213141516171819202122232425262728293031323334353637var Botkit = require(&quot;./lib/Botkit.js&quot;); // 注意pathvar os = require(&quot;os&quot;);var controller = Botkit.slackbot(&#123;    debug: true,&#125;);var bot = controller.spawn(&#123;    token: &quot;刚刚记录下的API_TOKEN&quot;&#125;).startRTM();controller.on(&quot;direct_message&quot;, (bot, message) =&gt; &#123;    var now = new Date(); //获取时间    var user_name = &quot;名無しさん: &quot;+ now.getFullYear()+&quot;/&quot;+(now.getMonth()+1)+&quot;/&quot;+now.getDate()+&quot;/ &quot;+now.getHours()+&quot;:&quot;+now.getMinutes()+&quot;:&quot;+now.getSeconds();    bot.reply(message, &quot;匿名で投稿しました．&quot;);    bot.startConversation(&#123;  channel : &quot;刚刚取得的频道ID&quot; &#125;, (err, convo) =&gt; &#123;        var send_message = &#123;          type: &quot;message&quot;,          channel: &quot;刚刚取得的频道ID&quot;,          text: message.text,          username: user_name,          thread_ts: null,          reply_broadcast: null,          parse: null,          link_names: null,          attachments: null,          unfurl_links: null,          unfurl_media: null,          icon_url: null,          icon_emoji: &quot;:robot_face:&quot;,          as_user: true        &#125;        convo.say(send_message);    &#125;);&#125;);\n\n\n运行12345678//debug环境$ cd ~/slack_anonymous_bot/botkit$ node anonymous_bot.js//通常一般环境$ cd ~/slack_anonymous_bot/botkit$ forever start slack_bot.js$ forever stop slack_bot.js // 停止bot\n\n\n运行结果如果bot运行成功了，bot前的灯会变绿色。\n投稿时候首先会给你回信\n然后你就可以看到匿名bot在你登陆的频道里代表你发言了\n","dateCreated":"2020-02-28T23:50:23+09:00","dateModified":"2020-10-01T01:04:05+09:00","datePublished":"2020-02-28T23:50:23+09:00","description":"做一个可以在slack匿名发言的机器人","headline":"Create a Anonymous Bot for Slack","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/02/28/slackanonymousbot/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/02/28/slackanonymousbot/","keywords":"setting, slack bot, slack, AnonymousBot, BotKit"}</script>
     <meta name="description" content="做一个可以在slack匿名发言的机器人">
 <meta name="keywords" content="setting,slack bot,slack,AnonymousBot,BotKit">
 <meta property="og:type" content="blog">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/4.png">
 <meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/5.png">
 <meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/6.png">
-<meta property="og:updated_time" content="2020-09-06T14:58:23.542Z">
+<meta property="og:updated_time" content="2020-09-30T16:04:05.761Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Create a Anonymous Bot for Slack">
 <meta name="twitter:description" content="做一个可以在slack匿名发言的机器人">
@@ -44,12 +44,6 @@
         <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
     
     
-        <meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/20200228.png"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/20200228.png" />
-    
-    
-        <meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/cover.jpg"/>
-        <meta class="swiftype" name="image" data-type="enum" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/cover.jpg" />
     
     
     <!--STYLES-->
@@ -248,13 +242,17 @@
 </nav>
 
             
-        <div class="post-header-cover
-                    text-left
-                    post-header-cover--partial"
-             style="background-image:url('/2020/02/28/slackanonymousbot/cover.jpg');"
-             data-behavior="5">
-            
-                <div class="post-header main-content-wrap text-left">
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
             Create a Anonymous Bot for Slack
@@ -279,18 +277,6 @@
     
 </div>
 
-            
-        </div>
-
-            <div id="main" data-behavior="5"
-                 class="hasCover
-                        hasCoverMetaIn
-                        hasCoverCaption">
-                
-<article class="post">
-    
-        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
-    
     
     <div class="post-content markdown">
         <div class="main-content-wrap">

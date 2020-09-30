@@ -5,9 +5,6 @@ tags:
 - tip
 - homebrew
 clearReading: true
-thumbnailImage: 20190929.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

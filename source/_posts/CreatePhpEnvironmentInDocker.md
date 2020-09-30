@@ -7,9 +7,6 @@ tags:
 - mysql
 - nginx
 clearReading: true
-thumbnailImage: 20191111.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

@@ -4,9 +4,6 @@ date: 2019-12-08 22:17:02
 tags:
 - Gulp
 clearReading: true
-thumbnailImage: 20191209.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

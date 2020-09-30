@@ -6,9 +6,6 @@ tags:
 - aws
 - restAPI
 clearReading: true
-thumbnailImage: 20200210.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

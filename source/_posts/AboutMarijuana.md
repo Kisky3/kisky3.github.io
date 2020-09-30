@@ -7,9 +7,6 @@ tags:
 - dope
 - Marijuana
 clearReading: true
-thumbnailImage: 20200513.png
-thumbnailImagePosition: top
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

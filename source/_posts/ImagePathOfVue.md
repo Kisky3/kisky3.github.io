@@ -6,9 +6,6 @@ tags:
  - :src
  - image path
 clearReading: true
-thumbnailImage: 20200412.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

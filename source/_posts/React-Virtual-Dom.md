@@ -6,9 +6,6 @@ tags:
 - Virtual Dom
 - JSX
 clearReading: true
-thumbnailImage: 20190704.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

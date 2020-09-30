@@ -4,9 +4,6 @@ date: 2019-04-03 19:45:29
 tags:
 - Docker
 clearReading: true
-thumbnailImage: 20190403.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

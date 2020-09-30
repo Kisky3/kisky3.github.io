@@ -6,9 +6,6 @@ tags:
 - extension
 - VSCode
 clearReading: true
-thumbnailImage: 20191005.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

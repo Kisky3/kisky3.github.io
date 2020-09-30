@@ -6,9 +6,6 @@ tags:
 - Modx
 - Modx-docker
 clearReading: true
-thumbnailImage: 20191031.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false

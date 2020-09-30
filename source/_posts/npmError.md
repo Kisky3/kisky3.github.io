@@ -4,9 +4,6 @@ date: 2020-02-08 16:14:59
 tags:
 - npm
 clearReading: true
-thumbnailImage: 20200208.png
-thumbnailImagePosition: left
-coverImage: cover.jpg
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false
