@@ -1,10 +1,38 @@
 ---
-title: Create a PR_Bot
-date: 2020-08-10 00:26:11
+title: Create a PR Bot
+date: 2020-05-10 00:26:11
 tags:
+- setting
+- slack bot
+- slack
+- PRBot
+clearReading: true
+thumbnailImage: 20200510.png
+thumbnailImagePosition: left
+coverImage: cover.jpg
+coverCaption: "Hello World, Hello Programming"
+coverSize: partial
+comments: false
+categories: System Setting
 ---
-```
-var CHANNEL = "github-frontend";
+制造一个github的PR BOT
+<!--more-->
+简单来说就是利用Github 的Github Hook，选择在PR生成并指定Reviwer的时候进行事件呼出。
+而利用GAS的api生成功能接受Hook发来的信息，再往slack的频道里发送消息。
+
+Github webhooks：
+Github/Setting/Webhooks/Add Webhook
+选择类型为json，url为gas生成的app的url
+<img src="./1.png" style="width:500px;margin:40px 0">
+
+GAS：
+deploy as a web app
+然后选择Anyone,even anonymous can access to the app.
+<img src="./2.png" style="width:500px;margin:40px 0">
+
+GAS的内容：
+```js
+var CHANNEL = "YOUR_CHSNNEL_NAME";
 
 function doPost(e) {
   try {

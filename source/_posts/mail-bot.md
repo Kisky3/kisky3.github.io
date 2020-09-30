@@ -1,5 +1,5 @@
 ---
-title: mail_bot
+title: Create a Auto Mail Bot
 date: 2020-05-05 00:25:40
 tags:
 - setting
@@ -14,7 +14,7 @@ coverSize: partial
 comments: false
 categories: System Setting
 ---
-做一个GAS自动送信功能
+做一个GAS自动送信功能的bot
 <!--more-->
 <img src="./1.png" style="width: 400px">
 <img src="./2.png" style="width: 400px">
