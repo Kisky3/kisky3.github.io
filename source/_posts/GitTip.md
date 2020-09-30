@@ -5,7 +5,6 @@ tags:
 - Git
 clearReading: true
 coverCaption: "Hello World, Hello Programming"
-coverImage: cover.jpg
 coverSize: partial
 comments: false
 categories: Front-end Knowledge
