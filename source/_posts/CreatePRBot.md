@@ -12,7 +12,7 @@ coverSize: partial
 comments: false
 categories: System Setting
 ---
-制造一个github的PR BOT
+制造一个github自动通知的PR Bot
 <!--more-->
 简单来说就是利用Github 的Github Hook，选择在PR生成并指定Reviwer的时候进行事件呼出。
 而利用GAS的api生成功能接受Hook发来的信息，再往slack的频道里发送消息。

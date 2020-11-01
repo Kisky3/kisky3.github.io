@@ -6,6 +6,7 @@ tags:
 - Amplify
 - Amplify Vue
 clearReading: true
+autoThumbnailImage: yes
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false
@@ -14,7 +15,7 @@ categories: Front-end Knowledge
 AWS Amplify 框架和Vue.js
 <!--more-->
 ### Amplify框架是什么
-amplify 是aws几个月前开发的一款支持web和mobile 的无服务框架，具备身份验证，分析，API，GraphQL, 数据库，推送，机器学习等很多强大功能，可以理解为google firebase的加强版。
+amplify 是aws几个月前开发的一款支持web和mobile 的无服务框架，具备身份验证，分析，API，GraphQL, 数据库，推送，机器学习等很多强大功能，可以理解为google firebase的加强版。。
 
 ***
 ### Vue
@@ -25,9 +26,9 @@ $ vue create amplify-sample
 Vue Project
 ```
 Vue CLI v3.11.0
-? Please pick a preset: 
-  default (babel, eslint) 
-❯ Manually select features 
+? Please pick a preset:
+  default (babel, eslint)
+❯ Manually select features
 ```
 
 ```

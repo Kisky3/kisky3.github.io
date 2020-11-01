@@ -12,7 +12,7 @@ categories: Front-end Knowledge
 ---
 【Hexo异常】fatal: in unpopulated submodule '.deploy_git'
 <!--more-->
-今天又重新搞了下hexo，好久不动它居然报了错。
+今天又重新弄了下hexo，好久不动它居然报了错。
 这种情况可以先安装下相关的依赖：
 ```
 npm install hexo-deployer-git –save

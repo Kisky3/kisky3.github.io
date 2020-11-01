@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"Website","@id":"https://kisky3.github.io","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"name":"Xiang Yu's Blog","description":null,"url":"https://kisky3.github.io","keywords":"hexo, javascript, front-end"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"Website","@id":"https://kisky3.github.io","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"name":"Xiang Yu's Blog","description":null,"url":"https://kisky3.github.io","keywords":"hexo, javascript, front-end"}</script>
     <meta name="keywords" content="hexo,javascript,front-end">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="all-archives">
@@ -38,10 +38,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/all.css">
-    <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
-    <link rel="stylesheet" href="/assets/css/thumbs.css">
-    <link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+    <link rel="stylesheet" href="/assets/css/style-hivlbre7mfoann1pqxzfrmt7ugvek9oy5cxji8adkkicvogokje4jowowzfp.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
@@ -57,9 +54,7 @@
     
 </head>
 
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <body style="margin: 0; height:100%">
-        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
         <div id="blog">
             <!-- Define author's picture -->
 
@@ -178,15 +173,6 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
-                    
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
                         <a  class="sidebar-button-link "
                              href="/categories/About-Me"
                             
@@ -265,6 +251,24 @@
                         <a class="link-unstyled" href="/archives/2020/06">June</a>
                     </h5>
                 
+            
+            <li class="archive-post archive-day" data-date="20200623">
+                <a class="archive-post-title" href="/2020/06/23/VueCommons/">Vuex in parent-child communication</a>
+                <span class="archive-post-date"> - jun 23, 2020</span>
+            </li>
+        
+            
+            
+            
+            
+            <li class="archive-post archive-day" data-date="20200610">
+                <a class="archive-post-title" href="/2020/06/10/Velocity/">Basic Velocity</a>
+                <span class="archive-post-date"> - jun 10, 2020</span>
+            </li>
+        
+            
+            
+            
             
             <li class="archive-post archive-day" data-date="20200605">
                 <a class="archive-post-title" href="/2020/06/05/GitPushError/">Git Push Error 403</a>
@@ -1259,6 +1263,24 @@
                 <span class="archive-post-date"> - oct 14, 2018</span>
             </li>
         
+            
+            
+            
+            
+                
+                    </ul>
+                
+                <ul class="archive-posts archive-month" data-date="201806">
+                    <h5 class="archive-title">
+                        <a class="link-unstyled" href="/archives/2018/06">June</a>
+                    </h5>
+                
+            
+            <li class="archive-post archive-day" data-date="20180625">
+                <a class="archive-post-title" href="/2018/06/25/JSTIP/">JS/ES TIP</a>
+                <span class="archive-post-date"> - jun 25, 2018</span>
+            </li>
+        
     </section>
 </div>
 
@@ -1317,62 +1339,12 @@
         
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
-<script>
-    document.addEventListener('touchmove', function (e) {
-        e.preventDefault()
-    })
-    var c = document.getElementsByTagName('canvas')[0],
-        x = c.getContext('2d'),
-        pr = window.devicePixelRatio || 1,
-        w = window.innerWidth,
-        h = window.innerHeight,
-        f = 90,
-        q,
-        m = Math,
-        r = 0,
-        u = m.PI*2,
-        v = m.cos,
-        z = m.random
-    c.width = w*pr
-    c.height = h*pr
-    x.scale(pr, pr)
-    x.globalAlpha = 0.6
-    function i(){
-        x.clearRect(0,0,w,h)
-        q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-        while(q[1].x<w+f) d(q[0], q[1])
-    }
-    function d(i,j){   
-        x.beginPath()
-        x.moveTo(i.x, i.y)
-        x.lineTo(j.x, j.y)
-        var k = j.x + (z()*2-0.25)*f,
-            n = y(j.y)
-        x.lineTo(k, n)
-        x.closePath()
-        r-=u/-50
-        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-        x.fill()
-        q[0] = q[1]
-        q[1] = {x:k,y:n}
-    }
-    function y(p){
-        var t = p + (z()*2-1.1)*f
-        return (t>h||t<0) ? y(p) : t
-    }
-    document.onclick = i
-    document.ontouchstart = i
-    i()
-</script>
 
         <!--SCRIPTS-->
-<script src="/assets/js/jquery.js"></script>
-<script src="/assets/js/jquery.fancybox.js"></script>
-<script src="/assets/js/thumbs.js"></script>
-<script src="/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/script-3xbh5xkmfupn9pgnfodimo5ailm5qlhvtnoq8knlau2lljvpivqlqg6jgc68.min.js"></script>
 <!--SCRIPTS END-->
 
 
 
-    </body>
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
 </html>

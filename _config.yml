@@ -92,3 +92,22 @@ feed:
 
 sitemap:
   path: sitemap.xml
+
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/ # The root directory of the plugin on the site (relative path)
+  pluginJsPath: lib/ # The script file is relative to the root path of the plugin
+  pluginModelPath: assets/ # Model file relative to the root path of the plugin
+  tagMode: false # Tag mode, whether to replace the live2dtag tag instead of inserting it in all pages
+  log: false
+  model:
+    use: live2d-widget-model-hijiki
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true # Whether to display on mobile devices
+  react:
+    opacity: 0.9

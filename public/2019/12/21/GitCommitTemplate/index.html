@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"创建Git Commit的Template\n\n我们可以在commit的时候进行commit内容的统一。\n生成commit message templatecommit message template 本身可以指定路径并且让Git读取，可以在任意路径进行。\n今天我们在my-cheatsheet的project的根目录进行配置。并且设定只针对这个project有效。\n12# 任意的文件名都可以$ vi .gitmessage\n\n然后可以自行设置commit内容，包括颜文字\n123456789101112131415161718192021222324252627[branchname]# ==== Emojis ====# ✏️  :pencil2: Writing docs# 🐛  :bug: Fix bugs# 👍  :+1: Feature improvements# ✨  :sparkles: Additional partial feature# 🎉  :tada: Grand major features added to celebrate# ♻️  :recycle :Refactoring# 🚿  :shower: Removal of obsolete functions or features.# 💚  :green_heart: Modification and improvement of testing and CI# 👕  :shirt: Fixing of errors found by Lint.# 🚀  :rocket: Performance improvement# 🆙  :up: Updates, such as dependent package# 🔒  :lock: Limit of the range of new features# 👮  :cop: Security-related improvements# ==== Format ====# :emoji: Subject #issue No.## Commit body...# ==== The Seven Rules ====# 1. Separate subject from body with a blank line# 2. Limit the subject line to 50 characters# 3. Capitalize the subject line# 4. Do not end the subject line with a period# 5. Use the imperative mood in the subject line# 6. Wrap the body at 72 characters# 7. Use the body to explain what and why vs. how\n\n\n注册你的commit message template在git config里注册你生成的Template。\n1$ git config commit.template .gitmessage\n\n如果你想电脑里存在所有Git管理的项目都使用这个Template的话。要加上global option。这个例子没有加option，说明只是针对当前的项目使用这个Template。\n\n使用Template设置完成后在你commit的时候Template就会自动显示了，在commit的时候输入相应的emoji的编码就可以显示了。\n1:bug: correct a bug\n\n1$ git commit\n\n123456[branchname]# ==== Emojis ====# ✏️  :pencil2: Writing docs# 🐛  :bug: Fix bugs# 👍  :+1: Feature improvements//　省略\n\n以上！！\n","dateCreated":"2019-12-21T23:27:00+09:00","dateModified":"2020-10-01T01:01:36+09:00","datePublished":"2019-12-21T23:27:00+09:00","description":"创建Git Commit的Template","headline":"Create a Git Commit Template","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/21/GitCommitTemplate/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/21/GitCommitTemplate/","keywords":"Git, Template"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"创建Git Commit的Template\n\n我们可以在commit的时候进行commit内容的统一。\n生成commit message templatecommit message template 本身可以指定路径并且让Git读取，可以在任意路径进行。\n今天我们在my-cheatsheet的project的根目录进行配置。并且设定只针对这个project有效。\n12# 任意的文件名都可以$ vi .gitmessage\n\n然后可以自行设置commit内容，包括颜文字\n123456789101112131415161718192021222324252627[branchname]# ==== Emojis ====# ✏️  :pencil2: Writing docs# 🐛  :bug: Fix bugs# 👍  :+1: Feature improvements# ✨  :sparkles: Additional partial feature# 🎉  :tada: Grand major features added to celebrate# ♻️  :recycle :Refactoring# 🚿  :shower: Removal of obsolete functions or features.# 💚  :green_heart: Modification and improvement of testing and CI# 👕  :shirt: Fixing of errors found by Lint.# 🚀  :rocket: Performance improvement# 🆙  :up: Updates, such as dependent package# 🔒  :lock: Limit of the range of new features# 👮  :cop: Security-related improvements# ==== Format ====# :emoji: Subject #issue No.## Commit body...# ==== The Seven Rules ====# 1. Separate subject from body with a blank line# 2. Limit the subject line to 50 characters# 3. Capitalize the subject line# 4. Do not end the subject line with a period# 5. Use the imperative mood in the subject line# 6. Wrap the body at 72 characters# 7. Use the body to explain what and why vs. how\n\n\n注册你的commit message template在git config里注册你生成的Template。\n1$ git config commit.template .gitmessage\n\n如果你想电脑里存在所有Git管理的项目都使用这个Template的话。要加上global option。这个例子没有加option，说明只是针对当前的项目使用这个Template。\n\n使用Template设置完成后在你commit的时候Template就会自动显示了，在commit的时候输入相应的emoji的编码就可以显示了。\n1:bug: correct a bug\n\n1$ git commit\n\n123456[branchname]# ==== Emojis ====# ✏️  :pencil2: Writing docs# 🐛  :bug: Fix bugs# 👍  :+1: Feature improvements//　省略\n\n以上！！\n","dateCreated":"2019-12-21T23:27:00+09:00","dateModified":"2020-10-01T01:01:36+09:00","datePublished":"2019-12-21T23:27:00+09:00","description":"创建Git Commit的Template","headline":"Create a Git Commit Template","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/21/GitCommitTemplate/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/21/GitCommitTemplate/","keywords":"Git, Template"}</script>
     <meta name="description" content="创建Git Commit的Template">
 <meta name="keywords" content="Git,Template">
 <meta property="og:type" content="blog">
@@ -41,10 +41,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/all.css">
-    <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
-    <link rel="stylesheet" href="/assets/css/thumbs.css">
-    <link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+    <link rel="stylesheet" href="/assets/css/style-hivlbre7mfoann1pqxzfrmt7ugvek9oy5cxji8adkkicvogokje4jowowzfp.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
@@ -60,9 +57,7 @@
     
 </head>
 
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <body style="margin: 0; height:100%">
-        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
         <div id="blog">
             <!-- Define author's picture -->
 
@@ -176,15 +171,6 @@
                     
                         <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
                         <span class="sidebar-button-desc">GitHub</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
-                    
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
                     </a>
             </li>
             
@@ -518,62 +504,12 @@
         
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
-<script>
-    document.addEventListener('touchmove', function (e) {
-        e.preventDefault()
-    })
-    var c = document.getElementsByTagName('canvas')[0],
-        x = c.getContext('2d'),
-        pr = window.devicePixelRatio || 1,
-        w = window.innerWidth,
-        h = window.innerHeight,
-        f = 90,
-        q,
-        m = Math,
-        r = 0,
-        u = m.PI*2,
-        v = m.cos,
-        z = m.random
-    c.width = w*pr
-    c.height = h*pr
-    x.scale(pr, pr)
-    x.globalAlpha = 0.6
-    function i(){
-        x.clearRect(0,0,w,h)
-        q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-        while(q[1].x<w+f) d(q[0], q[1])
-    }
-    function d(i,j){   
-        x.beginPath()
-        x.moveTo(i.x, i.y)
-        x.lineTo(j.x, j.y)
-        var k = j.x + (z()*2-0.25)*f,
-            n = y(j.y)
-        x.lineTo(k, n)
-        x.closePath()
-        r-=u/-50
-        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-        x.fill()
-        q[0] = q[1]
-        q[1] = {x:k,y:n}
-    }
-    function y(p){
-        var t = p + (z()*2-1.1)*f
-        return (t>h||t<0) ? y(p) : t
-    }
-    document.onclick = i
-    document.ontouchstart = i
-    i()
-</script>
 
         <!--SCRIPTS-->
-<script src="/assets/js/jquery.js"></script>
-<script src="/assets/js/jquery.fancybox.js"></script>
-<script src="/assets/js/thumbs.js"></script>
-<script src="/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/script-3xbh5xkmfupn9pgnfodimo5ailm5qlhvtnoq8knlau2lljvpivqlqg6jgc68.min.js"></script>
 <!--SCRIPTS END-->
 
 
 
-    </body>
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
 </html>

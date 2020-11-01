@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Xiang Yu&#39;s Blog">
+    <title>Basic Velocity - Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于Velocity的基础语法\n\nVelocity是一个基于java的模板引擎（template engine），它允许任何人仅仅简单的使用模板语言（template language）来引用由java代码定义的对象。作为一个比较完善的模板引擎，Velocity的功能是比较强大的，但强大的同时也增加了应用复杂 性。这里简单Velocity脚本的基本语法：\n1、参数的设置可以自定义参数。参数开始于$\n1234写法\t       当值为空值当时候\t   使用方法$name\t      显示参数名\t     普通$&#123;name&#125;\t  显示参数名\t     在英文语义暧昧的时候$!name\t      不显示\t         当参数为空值的时候不显示\n\n参数所能使用的文字,参数只能使用下面的文字:\n1234・a-z A-Z・0-9・-・_\n\n参数的话就可以单纯用$name和使用花括号圈起来的写法${name},如果在只是英文数字的文字列中间插入参数的话，必须使用花括号。\n例：abc${D}efg\n\n2.注释一行的注释：使用##\n1234##commentHello $value.Hello $value.##comment\n\n多行的注释：使用#*开始, 使用#*结束。\n123456#*commentcomment*#hello #*comment*# $value.\n\n\n3.读取别的文件\n读取VM文件在头部或尾部分别读取文件的话，使用#parse.123#parse(&quot;body_header.vm.html&quot;)$data#parse(&quot;body_footer.vm.html&quot;)\n\n\n\n文件的位置是与该文件的相对位置。如果不是直接放置在根目录而是全部放置在template文件夹里的情况下，需要在Velocity初始化之前指定路径，否则可能会出现错误信息。\n1Velocity.setProperty(&quot;file.resource.loader.path&quot;,&quot;template&quot; );\n\n错误信息\n1org.apache.velocity.exception.ResourceNotFoundException: Unable to find resource\n\n\n3.读取一般的TEXT如果是读取一般的普通文档的话，使用#include.\n1#include(&quot;test.vm&quot;)\n\n\n4.循环循环使用foreach,值 in list名.在循环的最后必须要使用#end\n123#foreach ($data in $list)$data.name#end\n\n关于循环中的index号码，的话可以使用velocityCount来计算进入循环的次数.\n123#foreach( $title in [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;] )    $title $velocityCount $velocityHasNext#end\n\n运行结果:\n1a 1 true b 2 true c 3 false\n\n关于多重数列的index\n12345678910111213&lt;table border=1&gt;#set($i=0)#foreach( $cells in [[&quot;a&quot;,&quot;b&quot;],[&quot;c&quot;,&quot;d&quot;]])&lt;tr&gt;&lt;td&gt;$velocityCount&lt;/td&gt;#set($j=0)#foreach($item in $cells)&lt;td&gt;$&#123;i&#125;-$j $item&lt;/td&gt;#set($j=$j + 1)#end&lt;/tr&gt; #set($i=$i + 1)#end&lt;/table&gt;\n\n运行结果\n121 0-0 a 0-1 b2 1-0 c 1-1 d\n\n在循环的最初和途中和最后的分支.\n123456789#foreach( $value in [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;])#if($velocityCount==1)最初 $value#elseif($velocityHasNext)途中 $value#else最後 $value#end#end\n\n运行结果\n1最初 a 途中 b 途中 c 最後 d\n\n从loop开始的break\nVelocity1.6以后的版本允许在loop中使用break，来进跳出循环.\n123456#foreach( $title in $titles )    #if( $velocityCount &gt; 1 )        #break    #end    $title#end\n\n\n4. 条件文if条件, 最后一定要写#end:\n123#if($value &gt; 3)$value#end\n\nelse if 和 else\n123456789#if( $age &lt; 20 )    十代#elseif( $age &lt;30 )   二十台#elseif( $age &lt;40 )    三十台#else   その他#end\n\nnull的条件文\n123#if($value)nullでない時#end","dateCreated":"2020-06-10T23:28:46+09:00","dateModified":"2020-10-18T18:51:44+09:00","datePublished":"2020-06-10T23:28:46+09:00","description":"关于Velocity的基础语法","headline":"Basic Velocity","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/06/10/Velocity/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/06/10/Velocity/","keywords":"Velocity"}</script>
+    <meta name="description" content="关于Velocity的基础语法">
+<meta name="keywords" content="Velocity">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Basic Velocity">
+<meta property="og:url" content="https://kisky3.github.io/2020/06/10/Velocity/index.html">
+<meta property="og:site_name" content="Xiang Yu&#39;s Blog">
+<meta property="og:description" content="关于Velocity的基础语法">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-10-18T09:51:44.773Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Basic Velocity">
+<meta name="twitter:description" content="关于Velocity的基础语法">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-hivlbre7mfoann1pqxzfrmt7ugvek9oy5cxji8adkkicvogokje4jowowzfp.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Basic Velocity
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-06-10T23:28:46+09:00">
+	
+		    Jun 10, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Back-end-Knowledge/">Back-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>关于Velocity的基础语法</p>
+<a id="more"></a>
+<p>Velocity是一个基于java的模板引擎（template engine），它允许任何人仅仅简单的使用模板语言（template language）来引用由java代码定义的对象。作为一个比较完善的模板引擎，Velocity的功能是比较强大的，但强大的同时也增加了应用复杂 性。这里简单Velocity脚本的基本语法：</p>
+<h3 id="1、参数的设置"><a href="#1、参数的设置" class="headerlink" title="1、参数的设置"></a>1、参数的设置</h3><p>可以自定义参数。参数开始于$</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">写法	       当值为空值当时候	   使用方法</span><br><span class="line">$name	      显示参数名	     普通</span><br><span class="line">$&#123;name&#125;	  显示参数名	     在英文语义暧昧的时候</span><br><span class="line">$!name	      不显示	         当参数为空值的时候不显示</span><br></pre></td></tr></table></figure>
+
+<p>参数所能使用的文字,参数只能使用下面的文字:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">・a-z A-Z</span><br><span class="line">・0-9</span><br><span class="line">・-</span><br><span class="line">・_</span><br></pre></td></tr></table></figure>
+
+<p>参数的话就可以单纯用<code>$name</code>和使用花括号圈起来的写法<code>${name}</code>,如果在只是英文数字的文字列中间插入参数的话，必须使用花括号。</p>
+<p>例：abc${D}efg</p>
+<hr>
+<h3 id="2-注释"><a href="#2-注释" class="headerlink" title="2.注释"></a>2.注释</h3><p>一行的注释：使用##</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">##comment</span><br><span class="line">Hello $value.</span><br><span class="line"></span><br><span class="line">Hello $value.##comment</span><br></pre></td></tr></table></figure>
+
+<p>多行的注释：使用<code>#*</code>开始, 使用<code>#*</code>结束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#*</span><br><span class="line">comment</span><br><span class="line">comment</span><br><span class="line">*#</span><br><span class="line"></span><br><span class="line">hello #*comment*# $value.</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-读取别的文件"><a href="#3-读取别的文件" class="headerlink" title="3.读取别的文件"></a>3.读取别的文件</h3><ol>
+<li>读取VM文件<br>在头部或尾部分别读取文件的话，使用<code>#parse</code>.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#parse(&quot;body_header.vm.html&quot;)</span><br><span class="line">$data</span><br><span class="line">#parse(&quot;body_footer.vm.html&quot;)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>文件的位置是与该文件的相对位置。如果不是直接放置在根目录而是全部放置在template文件夹里的情况下，需要在Velocity初始化之前指定路径，否则可能会出现错误信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Velocity.setProperty(&quot;file.resource.loader.path&quot;,&quot;template&quot; );</span><br></pre></td></tr></table></figure>
+
+<p>错误信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.apache.velocity.exception.ResourceNotFoundException: Unable to find resource</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-读取一般的TEXT"><a href="#3-读取一般的TEXT" class="headerlink" title="3.读取一般的TEXT"></a>3.读取一般的TEXT</h3><p>如果是读取一般的普通文档的话，使用<code>#include</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include(&quot;test.vm&quot;)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-循环"><a href="#4-循环" class="headerlink" title="4.循环"></a>4.循环</h3><p>循环使用<code>foreach</code>,值 in list名.在循环的最后必须要使用<code>#end</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#foreach ($data in $list)</span><br><span class="line">$data.name</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+
+<p>关于循环中的index号码，的话可以使用<code>velocityCount</code>来计算进入循环的次数.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#foreach( $title in [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;] )</span><br><span class="line">    $title $velocityCount $velocityHasNext</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+
+<p>运行结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a 1 true b 2 true c 3 false</span><br></pre></td></tr></table></figure>
+
+<p>关于多重数列的index</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;table border=1&gt;</span><br><span class="line">#set($i=0)</span><br><span class="line">#foreach( $cells in [[&quot;a&quot;,&quot;b&quot;],[&quot;c&quot;,&quot;d&quot;]])</span><br><span class="line">&lt;tr&gt;&lt;td&gt;$velocityCount&lt;/td&gt;</span><br><span class="line">#set($j=0)</span><br><span class="line">#foreach($item in $cells)</span><br><span class="line">&lt;td&gt;$&#123;i&#125;-$j $item&lt;/td&gt;</span><br><span class="line">#set($j=$j + 1)</span><br><span class="line">#end</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line"> #set($i=$i + 1)</span><br><span class="line">#end</span><br><span class="line">&lt;/table&gt;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 0-0 a 0-1 b</span><br><span class="line">2 1-0 c 1-1 d</span><br></pre></td></tr></table></figure>
+
+<p>在循环的最初和途中和最后的分支.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#foreach( $value in [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;])</span><br><span class="line">#if($velocityCount==1)</span><br><span class="line">最初 $value</span><br><span class="line">#elseif($velocityHasNext)</span><br><span class="line">途中 $value</span><br><span class="line">#else</span><br><span class="line">最後 $value</span><br><span class="line">#end</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最初 a 途中 b 途中 c 最後 d</span><br></pre></td></tr></table></figure>
+
+<p>从loop开始的break</p>
+<p>Velocity1.6以后的版本允许在loop中使用break，来进跳出循环.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#foreach( $title in $titles )</span><br><span class="line">    #if( $velocityCount &gt; 1 )</span><br><span class="line">        #break</span><br><span class="line">    #end</span><br><span class="line">    $title</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-条件文"><a href="#4-条件文" class="headerlink" title="4. 条件文"></a>4. 条件文</h3><p>if条件, 最后一定要写<code>#end</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#if($value &gt; 3)</span><br><span class="line">$value</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+
+<p>else if 和 else</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#if( $age &lt; 20 )</span><br><span class="line">    十代</span><br><span class="line">#elseif( $age &lt;30 )</span><br><span class="line">   二十台</span><br><span class="line">#elseif( $age &lt;40 )</span><br><span class="line">    三十台</span><br><span class="line">#else</span><br><span class="line">   その他</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+
+<p>null的条件文</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#if($value)</span><br><span class="line">nullでない時</span><br><span class="line">#end</span><br></pre></td></tr></table></figure>
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Velocity/">Velocity</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/06/23/VueCommons/" data-tooltip="Vuex in parent-child communication" aria-label="PREVIOUS: Vuex in parent-child communication">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/06/05/GitPushError/" data-tooltip="Git Push Error 403" aria-label="NEXT: Git Push Error 403">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/06/10/Velocity/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv">Pageviews</span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv">Visitors</span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2020 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/06/23/VueCommons/" data-tooltip="Vuex in parent-child communication" aria-label="PREVIOUS: Vuex in parent-child communication">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/06/05/GitPushError/" data-tooltip="Git Push Error 403" aria-label="NEXT: Git Push Error 403">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/06/10/Velocity/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/06/10/Velocity/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-3xbh5xkmfupn9pgnfodimo5ailm5qlhvtnoq8knlau2lljvpivqlqg6jgc68.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>
