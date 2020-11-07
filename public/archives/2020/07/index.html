@@ -56,9 +56,7 @@
     
 </head>
 
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <body style="margin: 0; height:100%">
-        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
         <div id="blog">
             <!-- Define author's picture -->
 
@@ -69,7 +67,7 @@
         
     
 
-<header id="header" data-behavior="2">
+<header id="header" data-behavior="3">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
@@ -93,7 +91,7 @@
         
     
 
-<nav id="sidebar" data-behavior="2">
+<nav id="sidebar" data-behavior="3">
     <div class="sidebar-container">
         
             <div class="sidebar-profile">
@@ -177,15 +175,6 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
-                    
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
                         <a  class="sidebar-button-link "
                              href="/categories/About-Me"
                             
@@ -232,7 +221,7 @@
 </nav>
 
             
-            <div id="main" data-behavior="2"
+            <div id="main" data-behavior="3"
                  class="
                         hasCoverMetaIn
                         ">
@@ -240,41 +229,86 @@
     <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
+    <article class="postShorten postShorten--thumbnailimg-right">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
                 <h1 class="postShorten-title">
                     
+                     <a class="link-unstyled" href="/2020/07/06/vueeslintsetting/">
+                        Vue Eslint Setting
+                     </a>
                         
-                    <a class="link-unstyled" href="/2020/07/18/AboutAWSAmplify/">
-                        AboutAWSAmplify
-                    </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time datetime="2020-07-18T23:43:14+09:00">
+    <time datetime="2020-07-06T20:16:14+09:00">
 	
-		    Jul 18, 2020
+		    Jul 06, 2020
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/System-Setting/">System Setting</a>
+
+
     
 </div>
 
             </div>
             
-            <div class="postShorten-content">
+            <div class="postShorten-excerpt">
+                <p>Vue的Eslint设定(自动修正)</p>
+                
+                <a href="/2020/07/06/vueeslintsetting/" class="postShorten-excerpt_link link">
+                    Continue reading
+                </a>
                 
                 
-                
+            </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                     <a class="link-unstyled" href="/2020/07/01/Addlive2dCharacterToYourBlog/">
+                        Add a live2d Character To Your Hexo Blog
+                     </a>
+                        
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2020-07-01T18:13:22+09:00">
+	
+		    Jul 01, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
 
+
+    
+</div>
+
+            </div>
+            
+            <div class="postShorten-excerpt">
+                <p>给你的Hexo博客加一只会动的live2d看板娘</p>
                 
+                <a href="/2020/07/01/Addlive2dCharacterToYourBlog/" class="postShorten-excerpt_link link">
+                    Continue reading
+                </a>
                 
-                <p>
-                    <a href="/2020/07/18/AboutAWSAmplify/#post-footer" class="postShorten-excerpt_link link">
-                        Comment and share
-                    </a>
-                </p>
                 
             </div>
             
@@ -348,54 +382,7 @@
 
         
         
-<div id="cover" style="background-image:url('/assets/images/cover1.jpg');"></div>
-<script>
-    document.addEventListener('touchmove', function (e) {
-        e.preventDefault()
-    })
-    var c = document.getElementsByTagName('canvas')[0],
-        x = c.getContext('2d'),
-        pr = window.devicePixelRatio || 1,
-        w = window.innerWidth,
-        h = window.innerHeight,
-        f = 90,
-        q,
-        m = Math,
-        r = 0,
-        u = m.PI*2,
-        v = m.cos,
-        z = m.random
-    c.width = w*pr
-    c.height = h*pr
-    x.scale(pr, pr)
-    x.globalAlpha = 0.6
-    function i(){
-        x.clearRect(0,0,w,h)
-        q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-        while(q[1].x<w+f) d(q[0], q[1])
-    }
-    function d(i,j){   
-        x.beginPath()
-        x.moveTo(i.x, i.y)
-        x.lineTo(j.x, j.y)
-        var k = j.x + (z()*2-0.25)*f,
-            n = y(j.y)
-        x.lineTo(k, n)
-        x.closePath()
-        r-=u/-50
-        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-        x.fill()
-        q[0] = q[1]
-        q[1] = {x:k,y:n}
-    }
-    function y(p){
-        var t = p + (z()*2-1.1)*f
-        return (t>h||t<0) ? y(p) : t
-    }
-    document.onclick = i
-    document.ontouchstart = i
-    i()
-</script>
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
 
         <!--SCRIPTS-->
 <script src="/assets/js/jquery.js"></script>
@@ -406,5 +393,5 @@
 
 
 
-    </body>
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
 </html>

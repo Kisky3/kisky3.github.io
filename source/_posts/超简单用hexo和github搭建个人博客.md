@@ -170,7 +170,6 @@ categories: Front-end Knowledge
 
 
 ```
-
 博文内常用配置设定说明:
 ```
 ・ tags:
@@ -193,7 +192,24 @@ categories: Front-end Knowledge
 ```
 
 ***
+#### 修改博客的样式
+当你想修改该主题自带的样式的时候，你需要进行下面的操作:
+在hexo根目录下启动博客预览模式
+```
+hexo s
+```
 
+同时在themes/tranquilpeak/下运行
+```
+npm install
+npm run start
+```
+修改样式以后如果满意就可以, run prod来deploy.
+```
+npm run prod
+```
+
+***
 ##### 文章置顶
 修改themes/tranquilpeak/layout/_partial/index.ejs
 

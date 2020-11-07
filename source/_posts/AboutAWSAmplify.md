@@ -143,7 +143,7 @@ Current Environment: dev
 | Category | Resource name         | Operation | Provider plugin   |
 | -------- | --------------------- | --------- | ----------------- |
 | Auth     | amplifysample******** | Create    | awscloudformation |
-? Are you sure you want to continue? (Y/n) 
+? Are you sure you want to continue? (Y/n)
 ```
 
 看第一行的话，首先pull到远程环境，然后检测出差别。
