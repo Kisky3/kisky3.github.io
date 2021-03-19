@@ -18,9 +18,9 @@ Docker 两个主要部件：
 - Docker: 开源的容器虚拟化平台
 - Docker Hub: 用于分享、管理 Docker 容器的 Docker SaaS 平台 -- [Docker Hub](https://link.jianshu.com/?t=https://registry.hub.docker.com/search?q=library)
 
-*** 
+***
 ### 2.Docker内部
-要理解 Docker 内部构建，需要理解以下三种部件：
+要理解 Docker 内部构建，需要理解以下三种部件:
 
 - Docker 镜像 - Docker images
 - Docker 仓库 - Docker registeries

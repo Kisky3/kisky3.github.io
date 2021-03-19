@@ -12,7 +12,7 @@ categories: Back-end Knowledge
 CSRF攻击及防范措施
 <!--more-->
 ### CSRF是什么
-CSRF全称为跨站请求伪造（Cross-site request forgery），
+CSRF全称为跨站请求伪造（Cross-site request forgery),
 
 是一种网络攻击方式，也被称为 one-click attack 或者 session riding。
 简单说来就是已经利用登陆成功的User强制实行某些操作的恶意攻击行为。

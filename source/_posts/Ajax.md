@@ -14,7 +14,7 @@ categories: Front-end Knowledge
 <!--more-->
 
 ### jQuery.ajax([settings])
-   
+
 我们可以用ajax发送了请求(get/post)
 
 ajax方法提供了几个常用的setting

@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Xiang Yu&#39;s Blog">
+    <title>Vue+Vuetify Confirm and Alert Component - Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"Vue+Vuetify打造独自的消息确认组件\n\n vue框架自己好像没有弹出框\b, 而vuetify有弹出框v-dialog\b, 没有确认框confirm\b, 虽然确认框本身就是弹出框\b, 但是弹出框的功能有个特点\b, 就是确定做一件事情\b, 而取消了就是做另一件事情\b, 类似一个Promise要做的事情。\n今天主要就是要自定义一个确认框\b, 我们利用组件的思维\b, 先定义组件结构\b, 然后定义组件如何配合文档document工作\b, 最后声明和调用。按照这个思路\b, 我们分如下几步：\n1.写一个confirm的自定义组件 src/components/atoms/Confirm.vue\n123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384&lt;template&gt;  &lt;div class=\"dialogwrapper\" v-if=\"show\"&gt;    &lt;div class=\"overlay\"&gt;&lt;/div&gt;    &lt;v-card class=\"dialog\"&gt;      &lt;v-card-title&gt;&#123;&#123; title &#125;&#125;&lt;/v-card-title&gt;      &lt;v-card-text&gt; &#123;&#123; message &#125;&#125; &lt;/v-card-text&gt;      &lt;v-card-actions&gt;        &lt;v-btn @click=\"ok\"&gt;確認&lt;/v-btn&gt;        &lt;v-btn v-if=\"option === 'confirm'\" @click=\"cancel\"&gt;キャンセル&lt;/v-btn&gt;      &lt;/v-card-actions&gt;    &lt;/v-card&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script&gt;export default &#123;  data() &#123;    return &#123;      promiseStatus: null,      show: false,    &#125;;  &#125;,  methods: &#123;    confirm() &#123;      this.show = true;      return new Promise((resolve, reject) =&gt; &#123;        this.promiseStatus = &#123; resolve, reject &#125;;      &#125;);    &#125;,    ok() &#123;      this.show = false;      this.promiseStatus &amp;&amp; this.promiseStatus.resolve();    &#125;,    cancel() &#123;      this.show = false;      this.promiseStatus &amp;&amp; this.promiseStatus.reject();    &#125;,  &#125;,&#125;;&lt;/script&gt;&lt;style&gt;.dialogwrapper &#123;  align-items: center;  display: flex;  height: 100%;  justify-content: center;  left: 0px;  pointer-events: none;  position: fixed;  top: 0px;  width: 100%;  z-index: 6;  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) 0s, z-index 1ms ease 0s;  outline: none;&#125;.dialog &#123;  overflow-y: auto;  pointer-events: auto;  width: 100%;  z-index: inherit;  box-shadow: rgba(0, 0, 0, 0.2) 0px 11px 15px -7px,    rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;  border-radius: 4px;  margin: 24px;  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;  max-width: 290px;&#125;.overlay &#123;  align-items: center;  border-radius: inherit;  display: flex;  justify-content: center;  position: fixed;  top: 0;  left: 0;  right: 0;  bottom: 0;  pointer-events: auto;  background: #000;  opacity: 0.46;&#125;.v-card__actions &#123;  justify-content: space-evenly;&#125;&lt;/style&gt;\n\n2、定义插件src/plugins/confirm.tssrc/plugins/confirm.js\n1234567891011121314151617181920import Vue from \"vue\";import Confirm from \"../../src/components/atoms/Confirm.vue\";const VueComponent = Vue.extend(Confirm);const vm = new VueComponent().$mount();let init = false;const confirm = function (options) &#123;  Object.assign(vm, options, &#123;    type: \"confirm\",  &#125;);  if (!init) &#123;    document.body.appendChild(vm.$el);    init = true;  &#125;  return (vm as any).confirm();&#125;;export default confirm;\n\n3、全局声明组件src/main.js\n123456789101112131415import Vue from 'vue'import App from './App'import router from './router'import vuetify from '@/plugins/vuetify'import confirm from '@/plugins/confirm'Vue.config.productionTip = falseVue.prototype.$confirm = confirm/* eslint-disable no-new */new Vue(&#123;  el: '#app',  router,  vuetify,  components: &#123; App &#125;,  template: '&lt;App/&gt;'&#125;)\n\n4.调用src/components/TestPage.vue\n1234567891011121314151617181920212223&lt;template&gt;\t&lt;v-card&gt;\t\t&lt;v-btn @click=\"showConfirm\"&gt;open&lt;/v-btn&gt;\t&lt;/v-card&gt;&lt;/template&gt;&lt;script&gt;\tmethods: &#123;\t\tshowConfirm()&#123;\t\t  this.$confirm(&#123;          title: \"このサイトを離れますか？\",          message: \"編集中のものは保存されませんが、よろしいですか\",          option: \"confirm\",          //没有取消按钮的时候用option: \"alert\"        &#125;)        .then(() =&gt; &#123;          next();        &#125;)        .catch(() =&gt; &#123;          next(false);        &#125;);\t\t&#125;\t&#125;&lt;/script&gt;\n\n5.在src/shims-tsx.d.ts里定义类型\n12345678910type ConfirmOptions = &#123;  title: string;  message: string;  option: string;&#125;;declare module \"vue/types/vue\" &#123;  interface Vue &#123;    $confirm: (options: ConfirmOptions) =&gt; Promise;  &#125;&#125;\n\n最终呈现的效果：\n以上是一个简单的示例\b, 我们在需要使用的地方直接通过this.$confirm().then().catch()就可以把逻辑全部设置好\b, 可以看出this.$confirm是一个Promise\b, 而这个Promise是通过定义组件结构的时候confirm方法返回的。如下所示：\n1234567confirm() &#123;\tlet _this = this;\tthis.show = true;\treturn new Promise(function (resolve,reject)&#123;\t\t_this.promiseStatus = &#123;resolve,reject&#125;;\t&#125;);&#125;\n\n我们在src/plugins/confirm.js中通过了一些方法找到了组件挂载点\b, 组件元素\b, 组件中的方法。\n这个组件不比vuetify自带的v-dialog一开始就是长在文档中的\b, 而是需要我们手动appendChild的方式将元素插入文档中。\n","dateCreated":"2020-07-14T23:50:46+09:00","dateModified":"2020-11-21T20:19:39+09:00","datePublished":"2020-07-14T23:50:46+09:00","description":"Vue+Vuetify打造独自的消息确认组件","headline":"Vue+Vuetify Confirm and Alert Component","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/07/14/VueAlert/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/07/14/VueAlert/","keywords":"Vuex"}</script>
+    <meta name="description" content="Vue+Vuetify打造独自的消息确认组件">
+<meta name="keywords" content="Vuex">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Vue+Vuetify Confirm and Alert Component">
+<meta property="og:url" content="https://kisky3.github.io/2020/07/14/VueAlert/index.html">
+<meta property="og:site_name" content="Xiang Yu&#39;s Blog">
+<meta property="og:description" content="Vue+Vuetify打造独自的消息确认组件">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2020/07/14/VueAlert/1.png">
+<meta property="og:updated_time" content="2020-11-21T11:19:39.224Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue+Vuetify Confirm and Alert Component">
+<meta name="twitter:description" content="Vue+Vuetify打造独自的消息确认组件">
+<meta name="twitter:image" content="https://kisky3.github.io/2020/07/14/VueAlert/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/all.css">
+    <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" href="/assets/css/thumbs.css">
+    <link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Vue+Vuetify Confirm and Alert Component
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-07-14T23:50:46+09:00">
+	
+		    Jul 14, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Vue+Vuetify打造独自的消息确认组件</p>
+<a id="more"></a>
+<p> vue框架自己好像没有弹出框, 而vuetify有弹出框v-dialog, 没有确认框confirm, 虽然确认框本身就是弹出框, 但是弹出框的功能有个特点, 就是确定做一件事情, 而取消了就是做另一件事情, 类似一个Promise要做的事情。</p>
+<p>今天主要就是要自定义一个确认框, 我们利用组件的思维, 先定义组件结构, 然后定义组件如何配合文档document工作, 最后声明和调用。按照这个思路, 我们分如下几步：</p>
+<p>1.写一个confirm的自定义组件<br> src/components/atoms/Confirm.vue</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"dialogwrapper"</span> v-<span class="keyword">if</span>=<span class="string">"show"</span>&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"overlay"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    &lt;v-card <span class="class"><span class="keyword">class</span></span>=<span class="string">"dialog"</span>&gt;</span><br><span class="line">      &lt;v-card-title&gt;&#123;&#123; title &#125;&#125;&lt;<span class="regexp">/v-card-title&gt;</span></span><br><span class="line"><span class="regexp">      &lt;v-card-text&gt; &#123;&#123; message &#125;&#125; &lt;/</span>v-card-text&gt;</span><br><span class="line">      &lt;v-card-actions&gt;</span><br><span class="line">        &lt;v-btn @click=<span class="string">"ok"</span>&gt;確認&lt;<span class="regexp">/v-btn&gt;</span></span><br><span class="line"><span class="regexp">        &lt;v-btn v-if="option === 'confirm'" @click="cancel"&gt;キャンセル&lt;/</span>v-btn&gt;</span><br><span class="line">      &lt;<span class="regexp">/v-card-actions&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>v-card&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      promiseStatus: <span class="literal">null</span>,</span><br><span class="line">      show: <span class="literal">false</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    confirm() &#123;</span><br><span class="line">      <span class="keyword">this</span>.show = <span class="literal">true</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.promiseStatus = &#123; resolve, reject &#125;;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    ok() &#123;</span><br><span class="line">      <span class="keyword">this</span>.show = <span class="literal">false</span>;</span><br><span class="line">      <span class="keyword">this</span>.promiseStatus &amp;&amp; <span class="keyword">this</span>.promiseStatus.resolve();</span><br><span class="line">    &#125;,</span><br><span class="line">    cancel() &#123;</span><br><span class="line">      <span class="keyword">this</span>.show = <span class="literal">false</span>;</span><br><span class="line">      <span class="keyword">this</span>.promiseStatus &amp;&amp; <span class="keyword">this</span>.promiseStatus.reject();</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;style&gt;</span></span><br><span class="line"><span class="regexp">.dialogwrapper &#123;</span></span><br><span class="line"><span class="regexp">  align-items: center;</span></span><br><span class="line"><span class="regexp">  display: flex;</span></span><br><span class="line"><span class="regexp">  height: 100%;</span></span><br><span class="line"><span class="regexp">  justify-content: center;</span></span><br><span class="line"><span class="regexp">  left: 0px;</span></span><br><span class="line"><span class="regexp">  pointer-events: none;</span></span><br><span class="line"><span class="regexp">  position: fixed;</span></span><br><span class="line"><span class="regexp">  top: 0px;</span></span><br><span class="line"><span class="regexp">  width: 100%;</span></span><br><span class="line"><span class="regexp">  z-index: 6;</span></span><br><span class="line"><span class="regexp">  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) 0s, z-index 1ms ease 0s;</span></span><br><span class="line"><span class="regexp">  outline: none;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.dialog &#123;</span></span><br><span class="line"><span class="regexp">  overflow-y: auto;</span></span><br><span class="line"><span class="regexp">  pointer-events: auto;</span></span><br><span class="line"><span class="regexp">  width: 100%;</span></span><br><span class="line"><span class="regexp">  z-index: inherit;</span></span><br><span class="line"><span class="regexp">  box-shadow: rgba(0, 0, 0, 0.2) 0px 11px 15px -7px,</span></span><br><span class="line"><span class="regexp">    rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;</span></span><br><span class="line"><span class="regexp">  border-radius: 4px;</span></span><br><span class="line"><span class="regexp">  margin: 24px;</span></span><br><span class="line"><span class="regexp">  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s;</span></span><br><span class="line"><span class="regexp">  max-width: 290px;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.overlay &#123;</span></span><br><span class="line"><span class="regexp">  align-items: center;</span></span><br><span class="line"><span class="regexp">  border-radius: inherit;</span></span><br><span class="line"><span class="regexp">  display: flex;</span></span><br><span class="line"><span class="regexp">  justify-content: center;</span></span><br><span class="line"><span class="regexp">  position: fixed;</span></span><br><span class="line"><span class="regexp">  top: 0;</span></span><br><span class="line"><span class="regexp">  left: 0;</span></span><br><span class="line"><span class="regexp">  right: 0;</span></span><br><span class="line"><span class="regexp">  bottom: 0;</span></span><br><span class="line"><span class="regexp">  pointer-events: auto;</span></span><br><span class="line"><span class="regexp">  background: #000;</span></span><br><span class="line"><span class="regexp">  opacity: 0.46;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.v-card__actions &#123;</span></span><br><span class="line"><span class="regexp">  justify-content: space-evenly;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2、定义插件src/plugins/confirm.ts<br>src/plugins/confirm.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">"vue"</span>;</span><br><span class="line"><span class="keyword">import</span> Confirm <span class="keyword">from</span> <span class="string">"../../src/components/atoms/Confirm.vue"</span>;</span><br><span class="line"><span class="keyword">const</span> VueComponent = Vue.extend(Confirm);</span><br><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> VueComponent().$mount();</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> init = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> confirm = <span class="function"><span class="keyword">function</span> (<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Object</span>.assign(vm, options, &#123;</span><br><span class="line">    type: <span class="string">"confirm"</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">if</span> (!init) &#123;</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(vm.$el);</span><br><span class="line">    init = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (vm <span class="keyword">as</span> any).confirm();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> confirm;</span><br></pre></td></tr></table></figure>
+
+<p>3、全局声明组件src/main.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App'</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">'./router'</span></span><br><span class="line"><span class="keyword">import</span> vuetify <span class="keyword">from</span> <span class="string">'@/plugins/vuetify'</span></span><br><span class="line"><span class="keyword">import</span> confirm <span class="keyword">from</span> <span class="string">'@/plugins/confirm'</span></span><br><span class="line">Vue.config.productionTip = <span class="literal">false</span></span><br><span class="line">Vue.prototype.$confirm = confirm</span><br><span class="line"><span class="comment">/* eslint-disable no-new */</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#app'</span>,</span><br><span class="line">  router,</span><br><span class="line">  vuetify,</span><br><span class="line">  components: &#123; App &#125;,</span><br><span class="line">  template: <span class="string">'&lt;App/&gt;'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>4.调用src/components/TestPage.vue</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;v-card&gt;</span><br><span class="line">		&lt;v-btn @click=<span class="string">"showConfirm"</span>&gt;open&lt;<span class="regexp">/v-btn&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>v-card&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">	methods: &#123;</span></span><br><span class="line"><span class="regexp">		showConfirm()&#123;</span></span><br><span class="line"><span class="regexp">		  this.$confirm(&#123;</span></span><br><span class="line"><span class="regexp">          title: "このサイトを離れますか？",</span></span><br><span class="line"><span class="regexp">          message: "編集中のものは保存されませんが、よろしいですか",</span></span><br><span class="line"><span class="regexp">          option: "confirm",</span></span><br><span class="line"><span class="regexp">          /</span><span class="regexp">/没有取消按钮的时候用option: "alert"</span></span><br><span class="line"><span class="regexp">        &#125;)</span></span><br><span class="line"><span class="regexp">        .then(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">          next();</span></span><br><span class="line"><span class="regexp">        &#125;)</span></span><br><span class="line"><span class="regexp">        .catch(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">          next(false);</span></span><br><span class="line"><span class="regexp">        &#125;);</span></span><br><span class="line"><span class="regexp">		&#125;</span></span><br><span class="line"><span class="regexp">	&#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>5.在src/shims-tsx.d.ts里定义类型</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type ConfirmOptions = &#123;</span><br><span class="line">  title: string;</span><br><span class="line">  message: string;</span><br><span class="line">  option: string;</span><br><span class="line">&#125;;</span><br><span class="line">declare <span class="built_in">module</span> <span class="string">"vue/types/vue"</span> &#123;</span><br><span class="line">  interface Vue &#123;</span><br><span class="line">    $confirm: <span class="function">(<span class="params">options: ConfirmOptions</span>) =&gt;</span> <span class="built_in">Promise</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终呈现的效果：<br><img src="./1.png" style="width:500px"></p>
+<p>以上是一个简单的示例, 我们在需要使用的地方直接通过this.$confirm().then().catch()就可以把逻辑全部设置好, 可以看出this.$confirm是一个Promise, 而这个Promise是通过定义组件结构的时候confirm方法返回的。如下所示：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">confirm() &#123;</span><br><span class="line">	<span class="keyword">let</span> _this = <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">this</span>.show = <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve,reject</span>)</span>&#123;</span><br><span class="line">		_this.promiseStatus = &#123;resolve,reject&#125;;</span><br><span class="line">	&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在src/plugins/confirm.js中通过了一些方法找到了组件挂载点, 组件元素, 组件中的方法。</p>
+<p>这个组件不比vuetify自带的v-dialog一开始就是长在文档中的, 而是需要我们手动appendChild的方式将元素插入文档中。</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Vuex/">Vuex</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/03/VueRouterAlert/" data-tooltip="Vue Route Redirect on Refresh" aria-label="PREVIOUS: Vue Route Redirect on Refresh">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/07/06/vueeslintsetting/" data-tooltip="Vue Eslint Setting" aria-label="NEXT: Vue Eslint Setting">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/07/14/VueAlert/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv">Pageviews</span>
+        <span class="post-meta-divider">|</span>
+        <span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv">Visitors</span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2021 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/08/03/VueRouterAlert/" data-tooltip="Vue Route Redirect on Refresh" aria-label="PREVIOUS: Vue Route Redirect on Refresh">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/07/06/vueeslintsetting/" data-tooltip="Vue Eslint Setting" aria-label="NEXT: Vue Eslint Setting">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/07/14/VueAlert/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/07/14/VueAlert/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>author.bio</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/jquery.fancybox.js"></script>
+<script src="/assets/js/thumbs.js"></script>
+<script src="/assets/js/tranquilpeak.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>
