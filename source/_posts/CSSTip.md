@@ -269,3 +269,159 @@ box-sizing: border-box;
 box-sizing: content-box;
 ```
 
+***
+{% alert info no-icon %}
+#### 12. select box自定义
+{% endalert %}
+```html
+<div class="select-wrap">
+    <i class="iconfont icon-pulldown" />
+    <select :value="value" v-on="listeners">
+      <slot />
+    </select>
+  </div>
+```
+
+```css
+.select-wrap {
+  margin: 0;
+  position: relative;
+  &:hover {
+    opacity: 0.8;
+  }
+  .iconfont {
+    border-top: 4px solid #878787;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid transparent;
+  }
+  .icon-pulldown {
+    position: absolute;
+    right: 11px;
+    top: 57%;
+    z-index: 2;
+    color: #999;
+    transform: translate(0, -50%);
+  }
+  select {
+    width: 100%;
+    border: solid 1px #d2d2d2;
+    height: 28px;
+    min-width: 208px;
+    padding: 3px 5px;
+    font-size: 13px;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+    &:disabled {
+      background-color: #f5f5f5;
+    }
+    &:focus {
+      border: 1px solid #606060;
+    }
+    &::-ms-expand {
+      display: none;
+    }
+  }
+}
+@media only screen and (max-width: 480px) {
+  .select-wrap {
+    width: 100%;
+    min-width: 170px;
+    select {
+      height: 40px;
+      min-width: 170px;
+      font-size: 16px;
+    }
+  }
+}
+```
+***
+{% alert info no-icon %}
+#### 13. radio自定义
+{% endalert %}
+```html
+<input
+  type="radio"
+  :checked="itemPrice.bring.flg === 'bring_priceless'"
+  :id="'bring_free' + index"
+  value="bring_priceless"
+  :name="'bring_flg' + index"
+  @change="createItemPrices"
+  class="radio-input"
+  :class="{
+    'radio-error':
+    bringBuyActive &&
+    priceErrorObj.priceErrors[index].bring.free_error,
+  }"
+/>
+ <label :for="'bring_free' + index">無料で買取</label>/>
+```
+
+```css
+.radio-input {
+    display: none;
+  }
+  .radio-input + label {
+    padding-left: 20px;
+    position: relative;
+    margin-left: 20px;
+    cursor: pointer;
+    width: auto;
+  }
+  .radio-input + label::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #999;
+    transform: scale(1.5);
+    border-radius: 50%;
+  }
+
+  .radio-input.radio-error + label::before {
+    border: 1px solid red;
+    transform: scale(1.5);
+  }
+
+  .radio-input:checked + label::before {
+    border: 1px solid #0275ff;
+    transform: scale(1.5);
+  }
+
+  .radio-input:checked + label::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 4px;
+    left: 2px;
+    background: #0275ff;
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+    transform: scale(1.5);
+  }
+
+  .radio-input.radio-error + label::before {
+    border: 1px solid red;
+    transform: scale(1.5);
+  }
+
+  .input_error {
+    border: solid 2px red;
+  }
+
+  .input_text_error {
+    margin: 3px 0;
+    color: red;
+    margin-left: 125px;
+  }
+
+  .disabled {
+    background: #d3d3d3 !important;
+  }
+```
+
