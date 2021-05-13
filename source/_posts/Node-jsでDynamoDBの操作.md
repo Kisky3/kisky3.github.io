@@ -1,13 +1,13 @@
 ---
-title: Basic Operations on DynamoDB Tables by js
-date: 2020-09-16 00:04:54
+title: Basic Operations on DynamoDB Tables by node.js
+date: 2021-04-08 00:04:54
 tags:
 - AWS
 - DynamoDB
 - Node.js
 - DocumentClient
 ---
-DynamoDB的基本操作
+用node.js对DynamoDB进行的基本操作
 <!--more-->
 用js对DynamoDB进行数据操作的话有两种方法,
 一种是使用AWS.DynamoDB,另一种是使用AWS.DynamoDB.DocumentClient(docClient)

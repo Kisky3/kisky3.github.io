@@ -8,7 +8,6 @@ clearReading: true
 coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 categories: Front-end Knowledge
-top: true
 ---
 About common js/es tips. Continuously update here.
 <!--more-->

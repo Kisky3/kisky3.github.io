@@ -1,0 +1,544 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
+    <title>New Feature - Vue 3&#39;s Full TypeScript Support - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"Vue3的新特性以及对TypeScript的全支持\n\n以前使用Vue2的时候相信很多朋友都没有特别好的体验。但是尤大发布Vue3之后，据说能够友好地拥抱TypeScript了。今天一边谈谈Vue3大新特性一边总结一下在Vue3里使用TypeScript的方法。\n新特性Composition API这是Vue3追加的最受注目的功能。Props和Content就可以生成全体Component都能使用和参照的参数。有点像React Hooks里记述的可以动态参照的参数。\n原本的Vue2的Component里的话一般都像下面这样：\n1234567891011121314151617181920212223242526272829303132export default &#123;  components: &#123; RepositoriesFilters, RepositoriesSortBy, RepositoriesList &#125;,  props: &#123;    user: &#123;      type: String,      required: true    &#125;  &#125;,  data () &#123;    return &#123;      repositories: [],      filters: &#123; ... &#125;,      searchQuery: ''    &#125;  &#125;,  computed: &#123;    filteredRepositories () &#123; ... &#125;,    repositoriesMatchingSearchQuery () &#123; ... &#125;,  &#125;,  watch: &#123;    user: 'getUserRepositories'  &#125;,  methods: &#123;    getUserRepositories () &#123;      // using `this.user` to fetch user repositories    &#125;,    updateFilters () &#123; ... &#125;,  &#125;,  mounted () &#123;    this.getUserRepositories()  &#125;&#125;\n\n这样会导致Component变得沉重,本来只是想进行一个处理, 但是却分散在不同的地方，影响可读性。像下面这样同样的处理全部总结写在一处比较好。\n例:\n12345678910111213141516171819202122232425262728293031323334353637383940import &#123; fetchUserRepositories &#125; from '@/api/repositories'import &#123; ref, onMounted, watch, toRefs, computed &#125; from 'vue'export default &#123;  props: &#123;    user: &#123;      type: String,      required: true    &#125;  &#125;,  setup (props) &#123;    // using `toRefs` to create a Reactive Reference to the `user` property of props    const &#123; user &#125; = toRefs(props)    const repositories = ref([])    const getUserRepositories = async () =&gt; &#123;      // update `props.user` to `user.value` to access the Reference value      repositories.value = await fetchUserRepositories(user.value)    &#125;    onMounted(getUserRepositories)    // set a watcher on the Reactive Reference to user prop    watch(user, getUserRepositories)    const searchQuery = ref('')    const repositoriesMatchingSearchQuery = computed(() =&gt; &#123;      return repositories.value.filter(        repository =&gt; repository.name.includes(searchQuery.value)      )    &#125;)    return &#123;      repositories,      getUserRepositories,      searchQuery,      repositoriesMatchingSearchQuery    &#125;  &#125;&#125;\n\n\nsetup返回的值可以供全体Component使用。\ntoRefs和ref能够参照动态值,Component里使用hoge.value可以动态参照修改后的值。\n支持生命周期,onMounted里可以指定在mount之后实行的参数。\n使用computed后也可以生成computed value。\n\n\nTeleportVue Component里的dom的一部分, 在渲染的时候可以在指定的dom下进行描画。在body下描画全画面的model的时候可以使用。\n例子:\n123456789101112131415161718192021222324app.component('modal-button', &#123;  template: `    &lt;button @click=\"modalOpen = true\"&gt;        Open full screen modal! (With teleport!)    &lt;/button&gt;    &lt;teleport to=\"body\"&gt;      &lt;div v-if=\"modalOpen\" class=\"modal\"&gt;        &lt;div&gt;          I'm a teleported modal!          (My parent is \"body\")          &lt;button @click=\"modalOpen = false\"&gt;            Close          &lt;/button&gt;        &lt;/div&gt;      &lt;/div&gt;    &lt;/teleport&gt;  `,  data() &#123;    return &#123;      modalOpen: false    &#125;  &#125;&#125;)\n\n\nFragments在route里放置多个dom.\n例: (v2)\n1234567&lt;template&gt;  &lt;div&gt;    &lt;header&gt;...&lt;/header&gt;    &lt;main&gt;...&lt;/main&gt;    &lt;footer&gt;...&lt;/footer&gt;  &lt;/div&gt;&lt;/template&gt;\n\n例: (v3)\n12345&lt;template&gt;  &lt;header&gt;...&lt;/header&gt;  &lt;main v-bind=\"$attrs\"&gt;...&lt;/main&gt;  &lt;footer&gt;...&lt;/footer&gt;&lt;/template&gt;\n\n\nEmits Component Option新追加的option.为了记录Component是怎样运行的, 推荐写在所有emit了的自定义方法里面.\n例:\n123456789101112131415161718192021app.component('custom-form', &#123;  emits: &#123;    // No validation    click: null,    // Validate submit event    submit: (&#123; email, password &#125;) =&gt; &#123;      if (email &amp;&amp; password) &#123;        return true      &#125; else &#123;        console.warn('Invalid submit event payload!')        return false      &#125;    &#125;  &#125;,  methods: &#123;    submitForm() &#123;      this.$emit('submit', &#123; email, password &#125;)    &#125;  &#125;&#125;)\n\n\n也可以使用emit: [&quot;click&quot;, &quot;submit&quot;]这样的数列来进行定义.\n如果使用object来指定参数的话, 将会被作为Validator来运行.\n\n\nCustom Render(createRender)可以自定义你的渲染器。可以使用option来在渲染的时候插入特定的处理.\n例:\n1234567891011121314import &#123; createRenderer &#125; from '@vue/runtime-core'import &#123; nodeOps &#125; from '@vue/runtime-dom'const &#123; render, createApp &#125; = createRenderer(&#123;  ...nodeOps,  insert: () =&gt; &#123;&#125;,&#125;)// `render` is the low-level API// `createApp` returns an app instance with configurable context shared// by the entire app tree.export &#123; render, createApp &#125;export * from '@vue/runtime-core'\n\n\nTypeScript应对下面是重头戏TS的应对.\n定义Component的时候请注意1.script标签里进行ts的声明\n123&lt;script lang=\"ts\"&gt;...&lt;/script&gt;\n\n2.使用defineComponent参数为了在Component里使用正确的类型定义,这里不使用常用的class,使用以下的参数就必须新生成一个Component.\n12345import &#123; defineComponent &#125; from 'vue'const Component = defineComponent(&#123;  // type inference enabled&#125;)\n\n改变的点：Vue3开始对TS进行全力的支持这一点相信大家都有听过,Vue3里对TS部分进行了全部的重新定义,只是Composition API里对逻辑进行了总结, TS因此变得更好用了?\n","dateCreated":"2021-04-09T23:58:23+09:00","dateModified":"2021-04-10T15:14:57+09:00","datePublished":"2021-04-09T23:58:23+09:00","description":"Vue3的新特性以及对TypeScript的全支持","headline":"New Feature - Vue 3's Full TypeScript Support","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/04/09/NewFeaturesinVue3/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/04/09/NewFeaturesinVue3/","keywords":"Vue3, Typescript"}</script>
+    <meta name="description" content="Vue3的新特性以及对TypeScript的全支持">
+<meta name="keywords" content="Vue3,Typescript">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="New Feature - Vue 3&#39;s Full TypeScript Support">
+<meta property="og:url" content="https://kisky3.github.io/2021/04/09/NewFeaturesinVue3/index.html">
+<meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="Vue3的新特性以及对TypeScript的全支持">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-04-10T06:14:57.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="New Feature - Vue 3&#39;s Full TypeScript Support">
+<meta name="twitter:description" content="Vue3的新特性以及对TypeScript的全支持">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">向宇的博客 | Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            New Feature - Vue 3&#39;s Full TypeScript Support
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-04-09T23:58:23+09:00">
+	
+		    Apr 09, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Vue3的新特性以及对TypeScript的全支持</p>
+<a id="more"></a>
+<p>以前使用Vue2的时候相信很多朋友都没有特别好的体验。<br>但是尤大发布Vue3之后，据说能够友好地拥抱TypeScript了。<br>今天一边谈谈Vue3大新特性一边总结一下在Vue3里使用TypeScript的方法。</p>
+<h2 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h2><h3 id="Composition-API"><a href="#Composition-API" class="headerlink" title="Composition API"></a>Composition API</h3><p>这是Vue3追加的最受注目的功能。Props和Content就可以生成全体Component都能使用和参照的参数。有点像React Hooks里记述的可以动态参照的参数。</p>
+<p>原本的Vue2的Component里的话一般都像下面这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">  components: &#123; RepositoriesFilters, RepositoriesSortBy, RepositoriesList &#125;,</span><br><span class="line">  props: &#123;</span><br><span class="line">    user: &#123;</span><br><span class="line">      type: String,</span><br><span class="line">      required: true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      repositories: [],</span><br><span class="line">      filters: &#123; ... &#125;,</span><br><span class="line">      searchQuery: ''</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    filteredRepositories () &#123; ... &#125;,</span><br><span class="line">    repositoriesMatchingSearchQuery () &#123; ... &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  watch: &#123;</span><br><span class="line">    user: 'getUserRepositories'</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    getUserRepositories () &#123;</span><br><span class="line">      // using `this.user` to fetch user repositories</span><br><span class="line">    &#125;,</span><br><span class="line">    updateFilters () &#123; ... &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  mounted () &#123;</span><br><span class="line">    this.getUserRepositories()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样会导致Component变得沉重,本来只是想进行一个处理, 但是却分散在不同的地方，影响可读性。<br>像下面这样同样的处理全部总结写在一处比较好。</p>
+<p>例:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">import &#123; fetchUserRepositories &#125; from '@/api/repositories'</span><br><span class="line">import &#123; ref, onMounted, watch, toRefs, computed &#125; from 'vue'</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  props: &#123;</span><br><span class="line">    user: &#123;</span><br><span class="line">      type: String,</span><br><span class="line">      required: true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  setup (props) &#123;</span><br><span class="line">    // using `toRefs` to create a Reactive Reference to the `user` property of props</span><br><span class="line">    const &#123; user &#125; = toRefs(props)</span><br><span class="line"></span><br><span class="line">    const repositories = ref([])</span><br><span class="line">    const getUserRepositories = async () =&gt; &#123;</span><br><span class="line">      // update `props.user` to `user.value` to access the Reference value</span><br><span class="line">      repositories.value = await fetchUserRepositories(user.value)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    onMounted(getUserRepositories)</span><br><span class="line"></span><br><span class="line">    // set a watcher on the Reactive Reference to user prop</span><br><span class="line">    watch(user, getUserRepositories)</span><br><span class="line"></span><br><span class="line">    const searchQuery = ref('')</span><br><span class="line">    const repositoriesMatchingSearchQuery = computed(() =&gt; &#123;</span><br><span class="line">      return repositories.value.filter(</span><br><span class="line">        repository =&gt; repository.name.includes(searchQuery.value)</span><br><span class="line">      )</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    return &#123;</span><br><span class="line">      repositories,</span><br><span class="line">      getUserRepositories,</span><br><span class="line">      searchQuery,</span><br><span class="line">      repositoriesMatchingSearchQuery</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>setup</code>返回的值可以供全体Component使用。</li>
+<li><code>toRefs</code>和<code>ref</code>能够参照动态值,Component里使用<code>hoge.value</code>可以动态参照修改后的值。</li>
+<li>支持生命周期,<code>onMounted</code>里可以指定在mount之后实行的参数。</li>
+<li>使用<code>computed</code>后也可以生成computed value。</li>
+</ul>
+<hr>
+<h3 id="Teleport"><a href="#Teleport" class="headerlink" title="Teleport"></a>Teleport</h3><p>Vue Component里的dom的一部分, 在渲染的时候可以在指定的dom下进行描画。<br>在body下描画全画面的model的时候可以使用。</p>
+<p>例子:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">app.component('modal-button', &#123;</span><br><span class="line">  template: `</span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"modalOpen = true"</span>&gt;</span></span><br><span class="line">        Open full screen modal! (With teleport!)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">teleport</span> <span class="attr">to</span>=<span class="string">"body"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">"modalOpen"</span> <span class="attr">class</span>=<span class="string">"modal"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">          I'm a teleported modal!</span><br><span class="line">          (My parent is "body")</span><br><span class="line">          <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">"modalOpen = false"</span>&gt;</span></span><br><span class="line">            Close</span><br><span class="line">          <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">teleport</span>&gt;</span></span><br><span class="line">  `,</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      modalOpen: false</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Fragments"><a href="#Fragments" class="headerlink" title="Fragments"></a>Fragments</h3><p>在route里放置多个dom.</p>
+<p>例: (v2)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span>...<span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">main</span>&gt;</span>...<span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">footer</span>&gt;</span>...<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>例: (v3)</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">header</span>&gt;</span>...<span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">main</span> <span class="attr">v-bind</span>=<span class="string">"$attrs"</span>&gt;</span>...<span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">footer</span>&gt;</span>...<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Emits-Component-Option"><a href="#Emits-Component-Option" class="headerlink" title="Emits Component Option"></a>Emits Component Option</h3><p>新追加的option.<br>为了记录Component是怎样运行的, 推荐写在所有emit了的自定义方法里面.</p>
+<p>例:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">app.component('custom-form', &#123;</span><br><span class="line">  emits: &#123;</span><br><span class="line">    // No validation</span><br><span class="line">    click: null,</span><br><span class="line"></span><br><span class="line">    // Validate submit event</span><br><span class="line">    submit: (&#123; email, password &#125;) =&gt; &#123;</span><br><span class="line">      if (email &amp;&amp; password) &#123;</span><br><span class="line">        return true</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        console.warn('Invalid submit event payload!')</span><br><span class="line">        return false</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    submitForm() &#123;</span><br><span class="line">      this.$emit('submit', &#123; email, password &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>也可以使用<code>emit: [&quot;click&quot;, &quot;submit&quot;]</code>这样的数列来进行定义.</li>
+<li>如果使用object来指定参数的话, 将会被作为Validator来运行.</li>
+</ul>
+<hr>
+<h3 id="Custom-Render-createRender"><a href="#Custom-Render-createRender" class="headerlink" title="Custom Render(createRender)"></a>Custom Render(createRender)</h3><p>可以自定义你的渲染器。<br>可以使用option来在渲染的时候插入特定的处理.</p>
+<p>例:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createRenderer &#125; from '@vue/runtime-core'</span><br><span class="line">import &#123; nodeOps &#125; from '@vue/runtime-dom'</span><br><span class="line"></span><br><span class="line">const &#123; render, createApp &#125; = createRenderer(&#123;</span><br><span class="line">  ...nodeOps,</span><br><span class="line">  insert: () =&gt; &#123;&#125;,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// `render` is the low-level API</span><br><span class="line">// `createApp` returns an app instance with configurable context shared</span><br><span class="line">// by the entire app tree.</span><br><span class="line">export &#123; render, createApp &#125;</span><br><span class="line"></span><br><span class="line">export * from '@vue/runtime-core'</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="TypeScript应对"><a href="#TypeScript应对" class="headerlink" title="TypeScript应对"></a>TypeScript应对</h3><p>下面是重头戏TS的应对.</p>
+<p>定义Component的时候请注意<br>1.<code>script</code>标签里进行ts的声明</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">"ts"</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.使用<code>defineComponent</code>参数<br>为了在Component里使用正确的类型定义,这里不使用常用的class,使用以下的参数就必须新生成一个Component.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import &#123; defineComponent &#125; from 'vue'</span><br><span class="line"></span><br><span class="line">const Component = defineComponent(&#123;</span><br><span class="line">  // type inference enabled</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>改变的点：<br>Vue3开始对TS进行全力的支持这一点相信大家都有听过,Vue3里对TS部分进行了全部的重新定义,只是Composition API里对逻辑进行了总结, TS因此变得更好用了?</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/Typescript/">Typescript</a> <a class="tag tag--primary tag--small t-link" href="/tags/Vue3/">Vue3</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/19/SetCookieWihJS-ReadWithCakePHP/" data-tooltip="Set localStorage Wih JS , Read With CakePHP" aria-label="PREVIOUS: Set localStorage Wih JS , Read With CakePHP">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/08/Node-jsでDynamoDBの操作/" data-tooltip="Basic Operations on DynamoDB Tables by node.js" aria-label="NEXT: Basic Operations on DynamoDB Tables by node.js">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/04/09/NewFeaturesinVue3/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2021 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/19/SetCookieWihJS-ReadWithCakePHP/" data-tooltip="Set localStorage Wih JS , Read With CakePHP" aria-label="PREVIOUS: Set localStorage Wih JS , Read With CakePHP">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/08/Node-jsでDynamoDBの操作/" data-tooltip="Basic Operations on DynamoDB Tables by node.js" aria-label="NEXT: Basic Operations on DynamoDB Tables by node.js">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/04/09/NewFeaturesinVue3/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/04/09/NewFeaturesinVue3/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>

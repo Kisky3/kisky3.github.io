@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Xiang Yu&#39;s Blog">
-    <title>AWS CLF Lesson1〜3 Memo - Xiang Yu&#39;s Blog</title>
+    <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
+    <title>Typescript Error「Object is possibly null」 - 向宇的博客 | Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,19 +17,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"AWS 云从业者基础知识 学习笔记1 〜 3\n\nAWSクラウドコンピューティングの６つのメリットは試験に出る内容：1.固定費(設備投資費)が柔軟な変動費へ2.スケールによる大きなコストメリット3.キャパシティ予測が不要に4.速度と俊敏性の向上5.データセンターの運用と捕手への投資が不要に6.わずか数分で世界中にデプロイ\n時間が経てば故障する、ということを認識し、この考えをアーキテクチャに採り入れます。このような考え方をDesign for Failureといいます。\n単一障害点(Single Point Of Failure、SPOF)という考え方があります。\nDesign for Failure = 単一障害点をなくそうマネージドなサービスを利用すよう。AWSのマネージドなサービスは単一障害点にならないように考慮されている。\n\n1つのデータセンターのみ運用しない\n単一のインスタンスのみ構成しない\n\n固定されたリソースでなく、クラウドの利点である弾力性を使って動的的にスケーリングを行う。使い捨て可能なリソースとして、サーバーを考える。\nロードバランサーを組み合わせて、並列処理を行う。スケーリングは弾力性を組み合わせて、高負荷時にはスケールアウト、低負荷時にはスケールインを行う。\n静的コンテンツは外部に出して、エンドユーザーの近くに保管する。動的に処理するデータは、クラウド上のコンピューティングリソースの近くに保管する。\n","dateCreated":"2020-12-01T22:06:40+09:00","dateModified":"2021-03-20T00:50:38+09:00","datePublished":"2020-12-01T22:06:40+09:00","description":"AWS 云从业者基础知识 学习笔记1 〜 3","headline":"AWS CLF Lesson1〜3 Memo","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/12/01/lesson1/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/12/01/lesson1/","keywords":"aws, AWS Certified Cloud Practitioner"}</script>
-    <meta name="description" content="AWS 云从业者基础知识 学习笔记1 〜 3">
-<meta name="keywords" content="aws,AWS Certified Cloud Practitioner">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"typescript 提示 「Object is possibly null」的N种解决方法\n\n\n1document.querySelector('.main-table').setAttribute('height', '300px');\n\n如上，我要设置某元素的高度，但typescript提示 Object is possibly ‘null’，是因为可能不存在选择元素的情况。\n解决方案一最正确的解决方案，就是加null的判断。\n1234const table = document.querySelector('.main-table');if (table) &#123;  table.setAttribute('height', '300px');&#125;\n\n\n解决方案二使用断言方式，当然这是你能保证元素必定存在的情况。\n1(document.querySelector('.main-table') as Element).setAttribute('height', '300px');\n\n\n解决方案三这和解决方案原理一样，要判断null情况，但写法简单点，当然这是关闭eslint的情况下，否则eslint会提示错误。\n1document.querySelector('.main-table')?.setAttribute('height', '300px');\n\n这里使用了 ?. 符号，相当于&amp;&amp;，意思是先判断?前面的对象是否存在，存在情况下再执行后面的方法；使用下面代码也是可以的：\n12const table = document.querySelector('.main-table';table &amp;&amp; table.setAttribute('height', '300px');\n\n","dateCreated":"2021-04-04T00:03:57+09:00","dateModified":"2021-04-04T00:10:35+09:00","datePublished":"2021-04-04T00:03:57+09:00","description":"typescript 提示 「Object is possibly null」的N种解决方法","headline":"Typescript Error「Object is possibly null」","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/04/04/typescriptErrorObjectispossiblynull/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/04/04/typescriptErrorObjectispossiblynull/","keywords":"Vue, Typescript"}</script>
+    <meta name="description" content="typescript 提示 「Object is possibly null」的N种解决方法">
+<meta name="keywords" content="Vue,Typescript">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="AWS CLF Lesson1〜3 Memo">
-<meta property="og:url" content="https://kisky3.github.io/2020/12/01/lesson1/index.html">
-<meta property="og:site_name" content="Xiang Yu&#39;s Blog">
-<meta property="og:description" content="AWS 云从业者基础知识 学习笔记1 〜 3">
+<meta property="og:title" content="Typescript Error「Object is possibly null」">
+<meta property="og:url" content="https://kisky3.github.io/2021/04/04/typescriptErrorObjectispossiblynull/index.html">
+<meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="typescript 提示 「Object is possibly null」的N种解决方法">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-03-19T15:50:38.094Z">
+<meta property="og:updated_time" content="2021-04-03T15:10:35.321Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="AWS CLF Lesson1〜3 Memo">
-<meta name="twitter:description" content="AWS 云从业者基础知识 学习笔记1 〜 3">
+<meta name="twitter:title" content="Typescript Error「Object is possibly null」">
+<meta name="twitter:description" content="typescript 提示 「Object is possibly null」的N种解决方法">
     
     
         
@@ -41,10 +41,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/all.css">
-    <link rel="stylesheet" href="/assets/css/jquery.fancybox.css">
-    <link rel="stylesheet" href="/assets/css/thumbs.css">
-    <link rel="stylesheet" href="/assets/css/tranquilpeak.css">
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
@@ -74,7 +71,7 @@
 <header id="header" data-behavior="3">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
-        <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
+        <a class="header-title-link" href="/ ">向宇的博客 | Xiang Yu&#39;s Blog</a>
     </div>
     
         
@@ -104,7 +101,7 @@
                 </a>
                 <h4 class="sidebar-profile-name">Xiang Yu</h4>
                 
-                    <h5 class="sidebar-profile-bio"><p>author.bio</p>
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
 </h5>
                 
             </div>
@@ -228,24 +225,32 @@
             <div id="main" data-behavior="3"
                  class="
                         hasCoverMetaIn
-                        ">
+                        hasCoverCaption">
                 
 <article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
     
     
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            AWS CLF Lesson1〜3 Memo
+            Typescript Error「Object is possibly null」
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2020-12-01T22:06:40+09:00">
+    <time datetime="2021-04-04T00:03:57+09:00">
 	
-		    Dec 01, 2020
+		    Apr 04, 2021
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
     
 </div>
 
@@ -255,19 +260,26 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>AWS 云从业者基础知识 学习笔记1 〜 3</p>
+            <p>typescript 提示 「Object is possibly null」的N种解决方法</p>
 <a id="more"></a>
-<p>AWSクラウドコンピューティングの６つのメリットは試験に出る内容：<br>1.固定費(設備投資費)が柔軟な変動費へ<br>2.スケールによる大きなコストメリット<br>3.キャパシティ予測が不要に<br>4.速度と俊敏性の向上<br>5.データセンターの運用と捕手への投資が不要に<br>6.わずか数分で世界中にデプロイ</p>
-<p>時間が経てば故障する、ということを認識し、この考えをアーキテクチャに採り入れます。<br>このような考え方を<code>Design for Failure</code>といいます。</p>
-<p>単一障害点(Single Point Of Failure、SPOF)という考え方があります。</p>
-<p>Design for Failure = 単一障害点をなくそう<br>マネージドなサービスを利用すよう。AWSのマネージドなサービスは単一障害点にならないように考慮されている。</p>
-<ul>
-<li>1つのデータセンターのみ運用しない</li>
-<li>単一のインスタンスのみ構成しない</li>
-</ul>
-<p>固定されたリソースでなく、クラウドの利点である弾力性を使って動的的にスケーリングを行う。<br>使い捨て可能なリソースとして、サーバーを考える。</p>
-<p>ロードバランサーを組み合わせて、並列処理を行う。<br>スケーリングは弾力性を組み合わせて、高負荷時にはスケールアウト、低負荷時にはスケールインを行う。</p>
-<p>静的コンテンツは外部に出して、エンドユーザーの近くに保管する。<br>動的に処理するデータは、クラウド上のコンピューティングリソースの近くに保管する。</p>
+<hr>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">'.main-table'</span>).setAttribute(<span class="string">'height'</span>, <span class="string">'300px'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>如上，我要设置某元素的高度，但typescript提示 Object is possibly ‘null’，是因为可能不存在选择元素的情况。</p>
+<h3 id="解决方案一"><a href="#解决方案一" class="headerlink" title="解决方案一"></a>解决方案一</h3><p>最正确的解决方案，就是加null的判断。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> table = <span class="built_in">document</span>.querySelector(<span class="string">'.main-table'</span>);</span><br><span class="line"><span class="keyword">if</span> (table) &#123;</span><br><span class="line">  table.setAttribute(<span class="string">'height'</span>, <span class="string">'300px'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="解决方案二"><a href="#解决方案二" class="headerlink" title="解决方案二"></a>解决方案二</h3><p>使用断言方式，当然这是你能保证元素必定存在的情况。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="built_in">document</span>.querySelector(<span class="string">'.main-table'</span>) <span class="keyword">as</span> Element).setAttribute(<span class="string">'height'</span>, <span class="string">'300px'</span>);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="解决方案三"><a href="#解决方案三" class="headerlink" title="解决方案三"></a>解决方案三</h3><p>这和解决方案原理一样，要判断null情况，但写法简单点，当然这是关闭eslint的情况下，否则eslint会提示错误。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">'.main-table'</span>)?.setAttribute(<span class="string">'height'</span>, <span class="string">'300px'</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这里使用了 ?. 符号，相当于&amp;&amp;，意思是先判断?前面的对象是否存在，存在情况下再执行后面的方法；<br>使用下面代码也是可以的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> table = <span class="built_in">document</span>.querySelector(<span class="string">'.main-table'</span>;</span><br><span class="line">table &amp;&amp; table.setAttribute(<span class="string">'height'</span>, <span class="string">'300px'</span>);</span><br></pre></td></tr></table></figure>
+
 
             
 
@@ -278,7 +290,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/AWS-Certified-Cloud-Practitioner/">AWS Certified Cloud Practitioner</a> <a class="tag tag--primary tag--small t-link" href="/tags/aws/">aws</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/Typescript/">Typescript</a> <a class="tag tag--primary tag--small t-link" href="/tags/Vue/">Vue</a>
 
             </div>
         
@@ -289,7 +301,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/01/08/gitpullerror/" data-tooltip="Git Pull Error【Please commit your changes or stash them before you merge】" aria-label="PREVIOUS: Git Pull Error【Please commit your changes or stash them before you merge】">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/05/VueAndVuex/" data-tooltip="Managing State in Vue with Vuex" aria-label="PREVIOUS: Managing State in Vue with Vuex">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -298,7 +310,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/09/16/Node-jsでDynamoDBの操作/" data-tooltip="Basic Operations on DynamoDB Tables by js" aria-label="NEXT: Basic Operations on DynamoDB Tables by js">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/03/10/ThreejsMemo/" data-tooltip="Three.js Memo" aria-label="NEXT: Three.js Memo">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -324,13 +336,11 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/12/01/lesson1/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/04/04/typescriptErrorObjectispossiblynull/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
-        
-            
         
         <li class="post-action">
             
@@ -345,17 +355,15 @@
 
         
         
-            
-        
     </div>
 </article>
 
 
                 <footer id="footer" class="main-content-wrap">
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-        <span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv">Pageviews</span>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
         <span class="post-meta-divider">|</span>
-        <span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv">Visitors</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
         <br>
     <span class="copyrights">
         Copyrights &copy; 2021 Xiang Yu. All Rights Reserved.
@@ -371,7 +379,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/01/08/gitpullerror/" data-tooltip="Git Pull Error【Please commit your changes or stash them before you merge】" aria-label="PREVIOUS: Git Pull Error【Please commit your changes or stash them before you merge】">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/05/VueAndVuex/" data-tooltip="Managing State in Vue with Vuex" aria-label="PREVIOUS: Managing State in Vue with Vuex">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -380,7 +388,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/09/16/Node-jsでDynamoDBの操作/" data-tooltip="Basic Operations on DynamoDB Tables by js" aria-label="NEXT: Basic Operations on DynamoDB Tables by js">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/03/10/ThreejsMemo/" data-tooltip="Three.js Memo" aria-label="NEXT: Three.js Memo">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -406,13 +414,11 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/12/01/lesson1/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/04/04/typescriptErrorObjectispossiblynull/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
-        
-            
         
         <li class="post-action">
             
@@ -442,7 +448,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/12/01/lesson1/">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/04/04/typescriptErrorObjectispossiblynull/">
                         <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
                     </a>
                 </li>
@@ -470,14 +476,14 @@
         
             <h4 id="about-card-name">Xiang Yu</h4>
         
-            <div id="about-card-bio"><p>author.bio</p>
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
 </div>
         
         
             <div id="about-card-job">
                 <i class="fa fa-briefcase"></i>
                 <br/>
-                <p>author.job</p>
+                <p>Front-end developer</p>
 
             </div>
         
@@ -496,13 +502,8 @@
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
 
         <!--SCRIPTS-->
-<script src="/assets/js/jquery.js"></script>
-<script src="/assets/js/jquery.fancybox.js"></script>
-<script src="/assets/js/thumbs.js"></script>
-<script src="/assets/js/tranquilpeak.js"></script>
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
 <!--SCRIPTS END-->
-
-    
 
 
 

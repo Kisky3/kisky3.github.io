@@ -8,7 +8,6 @@ coverCaption: "Hello World, Hello Programming"
 coverSize: partial
 comments: false
 categories: Front-end Knowledge
-top: true
 ---
 About common css tips. Continuously update here.
 <!--more-->

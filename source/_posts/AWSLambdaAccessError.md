@@ -1,5 +1,5 @@
 ---
-title: AWS Lambda Dynamodb Access Error【AccessDeniedException】
+title: AWS Lambda Dynamodb Access Error AccessDeniedException
 date: 2020-09-15 23:55:41
 tags:
 - AWS
@@ -11,7 +11,7 @@ coverSize: partial
 comments: false
 categories: Front-end Knowledge
 ---
-AWS Lambda和Dynamodb连接时的错误【AccessDeniedException】
+AWS Lambda和Dynamodb连接时的错误 AccessDeniedException
 <!--more-->
 当想在lambda里通过特定条件读取Dynamodb里的数据时，发生了以下的错误
 ```
