@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"docker的基础知识以及常用命令行\n\n1.Docker 简介Docker 两个主要部件：\n\nDocker: 开源的容器虚拟化平台\nDocker Hub: 用于分享、管理 Docker 容器的 Docker SaaS 平台 – Docker Hub\n\n\n2.Docker内部要理解 Docker 内部构建，需要理解以下三种部件：\n\nDocker 镜像 - Docker images\nDocker 仓库 - Docker registeries\nDocker 容器 - Docker containers\n\n\nDocker 镜像Docker 镜像是 Docker 容器运行时的只读模板。每一个镜像由一系列的层 (layers) 组成。如果我们想要在本地运行容器，就必须保证本地存在对应的镜像。所以，第一步，我们需要下载镜像。当我们尝试下载镜像时，Docker 会尝试先从默认的镜像仓库（默认使用 Docker Hub 公共仓库）去下载，当然了，用户也可以自定义配置想要下载的镜像仓库。\n\nDocker 仓库Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。同样的，Docker 仓库也有公有和私有的概念。公有的 Docker 仓库名字是 Docker Hub。Docker Hub 提供了庞大的镜像集合供使用。这些镜像可以是自己创建，或者在别人的镜像基础上创建。Docker 仓库是 Docker 的分发部分。\n\nDocker 容器Docker 容器和文件夹很类似，一个Docker容器包含了所有的某个应用运行所需要的环境。每一个 Docker 容器都是从 Docker 镜像创建的。Docker 容器可以运行、开始、停止、移动和删除。每一个 Docker 容器都是独立和安全的应用平台，Docker 容器是 Docker 的运行部分。\n\nDocker File当获得docker镜像时，还不能就这样使用，大多数情况下我们要根据自身所需要的条件（比如版本号啊，端口号啊之类的）来将docker镜像设置成我们所需要的开发环境。实际上，docker file一般写成下面这样。\n1234FROM centos:7               # ①RUN yum install -y java     # ②ADD files/apache-tomcat-9.0.6.tar.gz /opt/  # ③CMD [ &quot;/opt/apache-tomcat-9.0.6/bin/catalina.sh&quot;, &quot;run&quot; ]  # ④\n\n① FROM是指定你所需要的docker镜像（作为最基层）。比如这里就是将centos:7的docker镜像为基础来执行之后的指令。在执行时哪怕没有事先通过docker pull获取镜像，它也能自动获取相应的镜像供你使用。\n② RUN是指在OS命令行执行时使用。在这里是指下载java，并加上了-y 的选项默认确认安装\n③ ADD是指将 tar.gz文件的容器copy到你的指定的路径内，并同时解压展开tar文件。写成这样：「ADD &lt;copy源文件&gt; &lt;复制到Docker镜像内・并展开这里就是在与docker file同阶层的地方生成一个「file」的路径，并将tomcat放置其中\n④ CMD是指容器启动时所执行的命令行\n我们现在利用做好的Dockerfile来生成Docker镜像。移动到Docker所在的路径，然后使用生成Docker镜像的命令：build\n123456# cd &lt;Dockerfile所在路径&gt;# docker build -t tomcat:1 .　(docker build -t &lt;Docker镜像名&gt; &lt;Dockerfile所在路径&gt;)# docker imagesREPOSITORY   TAG   IMAGE ID       CREATED         SIZEtomcat       1     10af894cf09a   1 minutes ago   456MB\n\n通过这样我们就生成了自己的Docker镜像。然后我们使用Docker镜像来启动docker容器。\n1# docker run -it -d --name tomcat-1 -p 8081:8080 tomcat:1\n\n然后打开「http://&lt;IP地址&gt;:8081/」就能看到启动成功的画面了。\n可以使用下面的命令来查看log\n1# docker logs -f tomcat-1\n\n\nDocker Compose就是对于有好几个容器构成的服务来说，可以使用Docker Compose来控制多个Docker镜像的生成（build）和多个容器的启动和停止\n上面几个概念的整体关系如图所示：\n\nDocker基础用法Docker Hub: Docker镜像首页，包括官方镜像和其它公开镜像\n镜像搜索\n1sudo docker search ubuntu # 搜索ubuntu官方镜像\n\n获取镜像\n12$ sudo docker pull ubuntu # 获取ubuntu官方镜像$ sudo docker images # 查看当前镜像列表\n\n删除镜像\n1docker rmi IMAGE [IMAGE...]\n\n运行容器・docker run - 运行一个容器・-t - 分配一个（伪）tty (link is external)・-i - 交互模式 (so we can interact with it)・ubuntu:14.04 - 使用 ubuntu 基础镜像 14.04・/bin/bash - 运行命令 bash shell\n1sudo docker run -i -t ubuntu:14.04 /bin/bash\n\n查看当前所有容器\n123$ sudo docker ps # 查看当前运行的容器, ps -a 列出当前系统所有的容器CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES6c9129e9df10        ubuntu:14.04        /bin/bash           6 minutes ago       Up 6 minutes                            cranky_babbage\n\n进入指定容器（运行中）\n12docker attach CONTAINERdocker exec -it CONTAINER /bin/bash\n\n删除所有容器\n1docker rm $(docker ps -aq)\n\n\nDocker-compose启动所有的容器\n1docker-compose up -d\n\n进入启动中的某个容器内\n1docker-compose + exec ( or run )  + サービス名 + 実行したいコマンド\n\n停止全部容器或某个容器的运行\n12docker-compose stopdocker-compose stop nginx\n\n","dateCreated":"2019-11-07T00:10:07+09:00","dateModified":"2019-11-11T23:56:22+09:00","datePublished":"2019-11-07T00:10:07+09:00","description":"docker的基础知识以及常用命令行","headline":"Docker Basic and Commands","image":["20191107.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/11/07/dockercommand/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/11/07/dockercommand/","keywords":"Docker, Command","thumbnailUrl":"20191107.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"docker的基础知识以及常用命令行\n\n1.Docker 简介Docker 两个主要部件：\n\nDocker: 开源的容器虚拟化平台\nDocker Hub: 用于分享、管理 Docker 容器的 Docker SaaS 平台 – Docker Hub\n\n\n2.Docker内部要理解 Docker 内部构建，需要理解以下三种部件：\n\nDocker 镜像 - Docker images\nDocker 仓库 - Docker registeries\nDocker 容器 - Docker containers\n\n\nDocker 镜像Docker 镜像是 Docker 容器运行时的只读模板。每一个镜像由一系列的层 (layers) 组成。如果我们想要在本地运行容器，就必须保证本地存在对应的镜像。所以，第一步，我们需要下载镜像。当我们尝试下载镜像时，Docker 会尝试先从默认的镜像仓库（默认使用 Docker Hub 公共仓库）去下载，当然了，用户也可以自定义配置想要下载的镜像仓库。\n\nDocker 仓库Docker 仓库用来保存镜像，可以理解为代码控制中的代码仓库。同样的，Docker 仓库也有公有和私有的概念。公有的 Docker 仓库名字是 Docker Hub。Docker Hub 提供了庞大的镜像集合供使用。这些镜像可以是自己创建，或者在别人的镜像基础上创建。Docker 仓库是 Docker 的分发部分。\n\nDocker 容器Docker 容器和文件夹很类似，一个Docker容器包含了所有的某个应用运行所需要的环境。每一个 Docker 容器都是从 Docker 镜像创建的。Docker 容器可以运行、开始、停止、移动和删除。每一个 Docker 容器都是独立和安全的应用平台，Docker 容器是 Docker 的运行部分。\n\nDocker File当获得docker镜像时，还不能就这样使用，大多数情况下我们要根据自身所需要的条件（比如版本号啊，端口号啊之类的）来将docker镜像设置成我们所需要的开发环境。实际上，docker file一般写成下面这样。\n1234FROM centos:7               # ①RUN yum install -y java     # ②ADD files/apache-tomcat-9.0.6.tar.gz /opt/  # ③CMD [ &quot;/opt/apache-tomcat-9.0.6/bin/catalina.sh&quot;, &quot;run&quot; ]  # ④\n\n① FROM是指定你所需要的docker镜像（作为最基层）。比如这里就是将centos:7的docker镜像为基础来执行之后的指令。在执行时哪怕没有事先通过docker pull获取镜像，它也能自动获取相应的镜像供你使用。\n② RUN是指在OS命令行执行时使用。在这里是指下载java，并加上了-y 的选项默认确认安装\n③ ADD是指将 tar.gz文件的容器copy到你的指定的路径内，并同时解压展开tar文件。写成这样：「ADD &lt;copy源文件&gt; &lt;复制到Docker镜像内・并展开这里就是在与docker file同阶层的地方生成一个「file」的路径，并将tomcat放置其中\n④ CMD是指容器启动时所执行的命令行\n我们现在利用做好的Dockerfile来生成Docker镜像。移动到Docker所在的路径，然后使用生成Docker镜像的命令：build\n123456# cd &lt;Dockerfile所在路径&gt;# docker build -t tomcat:1 .　(docker build -t &lt;Docker镜像名&gt; &lt;Dockerfile所在路径&gt;)# docker imagesREPOSITORY   TAG   IMAGE ID       CREATED         SIZEtomcat       1     10af894cf09a   1 minutes ago   456MB\n\n通过这样我们就生成了自己的Docker镜像。然后我们使用Docker镜像来启动docker容器。\n1# docker run -it -d --name tomcat-1 -p 8081:8080 tomcat:1\n\n然后打开「http://&lt;IP地址&gt;:8081/」就能看到启动成功的画面了。\n可以使用下面的命令来查看log\n1# docker logs -f tomcat-1\n\n\nDocker Compose就是对于有好几个容器构成的服务来说，可以使用Docker Compose来控制多个Docker镜像的生成（build）和多个容器的启动和停止\n上面几个概念的整体关系如图所示：\n\nDocker基础用法Docker Hub: Docker镜像首页，包括官方镜像和其它公开镜像\n镜像搜索\n1sudo docker search ubuntu # 搜索ubuntu官方镜像\n\n获取镜像\n12$ sudo docker pull ubuntu # 获取ubuntu官方镜像$ sudo docker images # 查看当前镜像列表\n\n删除镜像\n1docker rmi IMAGE [IMAGE...]\n\n运行容器・docker run - 运行一个容器・-t - 分配一个（伪）tty (link is external)・-i - 交互模式 (so we can interact with it)・ubuntu:14.04 - 使用 ubuntu 基础镜像 14.04・/bin/bash - 运行命令 bash shell\n1sudo docker run -i -t ubuntu:14.04 /bin/bash\n\n查看当前所有容器\n123$ sudo docker ps # 查看当前运行的容器, ps -a 列出当前系统所有的容器CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES6c9129e9df10        ubuntu:14.04        /bin/bash           6 minutes ago       Up 6 minutes                            cranky_babbage\n\n进入指定容器（运行中）\n12docker attach CONTAINERdocker exec -it CONTAINER /bin/bash\n\n删除所有容器\n1docker rm $(docker ps -aq)\n\n\nDocker-compose启动所有的容器\n1docker-compose up -d\n\n进入启动中的某个容器内\n1docker-compose + exec ( or run )  + サービス名 + 実行したいコマンド\n\n停止全部容器或某个容器的运行\n12docker-compose stopdocker-compose stop nginx\n\n","dateCreated":"2019-11-07T00:10:07+09:00","dateModified":"2019-11-11T23:56:22+09:00","datePublished":"2019-11-07T00:10:07+09:00","description":"docker的基础知识以及常用命令行","headline":"Docker Basic and Commands","image":["20191107.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/11/07/dockercommand/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/11/07/dockercommand/","keywords":"Docker, Command","thumbnailUrl":"20191107.png"}</script>
     <meta name="description" content="docker的基础知识以及常用命令行">
 <meta name="keywords" content="Docker,Command">
 <meta property="og:type" content="blog">
@@ -49,7 +49,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-aqwvotonicu5af28lj56vkoqakz31g9nzwiwpfr0pdfrowjqfuaht64ljvh5.min.css">
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
@@ -65,9 +65,7 @@
     
 </head>
 
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <body style="margin: 0; height:100%">
-        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
         <div id="blog">
             <!-- Define author's picture -->
 
@@ -78,7 +76,7 @@
         
     
 
-<header id="header" data-behavior="5">
+<header id="header" data-behavior="3">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
@@ -102,7 +100,7 @@
         
     
 
-<nav id="sidebar" data-behavior="5">
+<nav id="sidebar" data-behavior="3">
     <div class="sidebar-container">
         
             <div class="sidebar-profile">
@@ -111,7 +109,7 @@
                 </a>
                 <h4 class="sidebar-profile-name">Xiang Yu</h4>
                 
-                    <h5 class="sidebar-profile-bio"><p>Hello World, Hello Programming</p>
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
 </h5>
                 
             </div>
@@ -186,15 +184,6 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
-                    
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
                         <a  class="sidebar-button-link "
                              href="/categories/About-Me"
                             
@@ -245,7 +234,7 @@
                     text-left
                     post-header-cover--partial"
              style="background-image:url('/2019/11/07/dockercommand/cover.jpg');"
-             data-behavior="5">
+             data-behavior="3">
             
                 <div class="post-header main-content-wrap text-left">
     
@@ -275,7 +264,7 @@
             
         </div>
 
-            <div id="main" data-behavior="5"
+            <div id="main" data-behavior="3"
                  class="hasCover
                         hasCoverMetaIn
                         hasCoverCaption">
@@ -440,24 +429,20 @@
 </article>
 
 
-
-                <footer id="footer">
-    <i class="fas fa-paw"></i>
-    <span id="busuanzi_container_site_pv">
-      <span id="busuanzi_value_site_pv" style="color: CadetBlue; font-size: 20px"></span> visitors 
-    </span>
-    <br>
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
     <span class="copyrights">
-        Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
+        Copyrights &copy; 2021 Xiang Yu. All Rights Reserved.
     </span>
 </footer>
-<script>
-  var bszCaller,bszTag;!function(){var c,d,e,a=!1,b=[];ready=function(c){return a||"interactive"===document.readyState||"complete"===document.readyState?c.call(document):b.push(function(){return c.call(this)}),this},d=function(){for(var a=0,c=b.length;c>a;a++)b[a].apply(document);b=[]},e=function(){a||(a=!0,d.call(window),document.removeEventListener?document.removeEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.detachEvent("onreadystatechange",e),window==window.top&&(clearInterval(c),c=null)))},document.addEventListener?document.addEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.attachEvent("onreadystatechange",function(){/loaded|complete/.test(document.readyState)&&e()}),window==window.top&&(c=setInterval(function(){try{a||document.documentElement.doScroll("left")}catch(b){return}e()},5)))}(),bszCaller={fetch:function(a,b){var c="BusuanziCallback_"+Math.floor(1099511627776*Math.random());window[c]=this.evalCall(b),a=a.replace("=BusuanziCallback","="+c),scriptTag=document.createElement("SCRIPT"),scriptTag.type="text/javascript",scriptTag.defer=!0,scriptTag.src=a,document.getElementsByTagName("HEAD")[0].appendChild(scriptTag)},evalCall:function(a){return function(b){ready(function(){try{a(b),scriptTag.parentElement.removeChild(scriptTag)}catch(c){bszTag.hides()}})}}},bszCaller.fetch("//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback",function(a){bszTag.texts(a),bszTag.shows()}),bszTag={bszs:["site_pv","page_pv","site_uv"],texts:function(a){this.bszs.map(function(b){var c=document.getElementById("busuanzi_value_"+b);c&&(c.innerHTML=a[b])})},hides:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="none")})},shows:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="inline")})}};
-</script>
 
             </div>
             
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
                     <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
@@ -518,7 +503,7 @@
 
                 </div>
                 
-    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
         <i id="btn-close-shareoptions" class="fa fa-times"></i>
         <ul class="share-options">
             
@@ -561,14 +546,14 @@
         
             <h4 id="about-card-name">Xiang Yu</h4>
         
-            <div id="about-card-bio"><p>Hello World, Hello Programming</p>
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
 </div>
         
         
             <div id="about-card-job">
                 <i class="fa fa-briefcase"></i>
                 <br/>
-                <p>Front-end Enginner</p>
+                <p>Front-end developer</p>
 
             </div>
         
@@ -585,56 +570,9 @@
         
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
-<script>
-  document.addEventListener('touchmove', function (e) {
-      e.preventDefault()
-  })
-  var c = document.getElementsByTagName('canvas')[0],
-      x = c.getContext('2d'),
-      pr = window.devicePixelRatio || 1,
-      w = window.innerWidth,
-      h = window.innerHeight,
-      f = 90,
-      q,
-      m = Math,
-      r = 0,
-      u = m.PI*2,
-      v = m.cos,
-      z = m.random
-  c.width = w*pr
-  c.height = h*pr
-  x.scale(pr, pr)
-  x.globalAlpha = 0.6
-  function i(){
-      x.clearRect(0,0,w,h)
-      q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-      while(q[1].x<w+f) d(q[0], q[1])
-    }
-    function d(i,j){   
-        x.beginPath()
-        x.moveTo(i.x, i.y)
-        x.lineTo(j.x, j.y)
-        var k = j.x + (z()*2-0.25)*f,
-            n = y(j.y)
-        x.lineTo(k, n)
-        x.closePath()
-        r-=u/-50
-        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-        x.fill()
-        q[0] = q[1]
-        q[1] = {x:k,y:n}
-    }
-    function y(p){
-        var t = p + (z()*2-1.1)*f
-        return (t>h||t<0) ? y(p) : t
-    }
-    document.onclick = i
-    document.ontouchstart = i
-    i()
-</script>
 
         <!--SCRIPTS-->
-<script src="/assets/js/script-3aqcegpda1qmips6yoo6eaovp7rgkcwkwkzahnh8l81r35gsi8r4c2apcos7.min.js"></script>
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
 <!--SCRIPTS END-->
 
 

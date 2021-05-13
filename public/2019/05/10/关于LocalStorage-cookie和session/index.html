@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于LocalStorage,Cookie和Session \n\n\nCookie网页的application下的Storage里的Cookie里可以看到Cookie的信息。网站只要设计登陆功能就一定会用到Cookie。\nCookie可以把一些需要存储的信息存储在当前的页面下。\n\n\n包括Name和Value等。Domain表示在哪个域下是生效的。Path表示是否有下级的Path。Expries表示生效时间。设置Cookie时会设置生效时间，过了该时间之后则会失效。\n当输入URL时，服务器会发送响应头，里面包含Set-Cookie，便可以设定Cookie。\n\n\n当Cookie被保存在浏览器之后，再次刷新网页时，因为Cookie已经存在，所以响应头上就不会再带有同样的Set-Cookie了。\n当浏览器被种下Cookie时，之后浏览器向该域名发送请求，比如请求图片等时，请求头都会带上Cookie。\n\n\n关于Cookie，综上：\n\n\n\nSession当一个用户打开淘宝登陆后，刷新浏览器仍然显示登陆状态。服务器如何分辨这次发起请求的用户是刚才登陆过的用户呢。用户没有登陆时，在地址栏输入URL向服务器发送请求时，服务器看到该URL发送的请求头并没有带上Cookie，便可以知道用户没有登陆，于是便在自己服务器里创建了一个对象（一串数据），这个对象里有一个随机id，这个对象就是session。在服务器向浏览器发送响应头的时候，加上了Set-Cookie，把id给set上，当用户再次打开该网站的时候，就有了这个Cookie。当用户再次刷新页面的时候，请求头带上了这个Coolie，服务器通过接收到的id和当时存在的对象进行对比，得出是该用户再次访问了该页面。可以认为session是结合Cookie实行的一种机制，用于识别用户的身份。session对象可以存在服务器内存中，也可以保存在数据库中。\n\n\n\nLocalStoragelocalStorage就是一个存数据的地方，将数据存到浏览器里。特点是存储数据量大，并且不会失效。\n\n\nLocalStorage对应一个key和value，可以存储很多的内容，并且没有过期的时效。\n\n","dateCreated":"2019-05-10T21:30:55+09:00","dateModified":"2019-08-17T16:40:08+09:00","datePublished":"2019-05-10T21:30:55+09:00","description":"关于LocalStorage,Cookie和Session ","headline":"About LocalStorage,Cookie And Session","image":["20190510.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/","keywords":"Session, LocalStorage, Cookie","thumbnailUrl":"20190510.png"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于LocalStorage,Cookie和Session \n\n\nCookie网页的application下的Storage里的Cookie里可以看到Cookie的信息。网站只要设计登陆功能就一定会用到Cookie。\nCookie可以把一些需要存储的信息存储在当前的页面下。\n\n\n包括Name和Value等。Domain表示在哪个域下是生效的。Path表示是否有下级的Path。Expries表示生效时间。设置Cookie时会设置生效时间，过了该时间之后则会失效。\n当输入URL时，服务器会发送响应头，里面包含Set-Cookie，便可以设定Cookie。\n\n\n当Cookie被保存在浏览器之后，再次刷新网页时，因为Cookie已经存在，所以响应头上就不会再带有同样的Set-Cookie了。\n当浏览器被种下Cookie时，之后浏览器向该域名发送请求，比如请求图片等时，请求头都会带上Cookie。\n\n\n关于Cookie，综上：\n\n\n\nSession当一个用户打开淘宝登陆后，刷新浏览器仍然显示登陆状态。服务器如何分辨这次发起请求的用户是刚才登陆过的用户呢。用户没有登陆时，在地址栏输入URL向服务器发送请求时，服务器看到该URL发送的请求头并没有带上Cookie，便可以知道用户没有登陆，于是便在自己服务器里创建了一个对象（一串数据），这个对象里有一个随机id，这个对象就是session。在服务器向浏览器发送响应头的时候，加上了Set-Cookie，把id给set上，当用户再次打开该网站的时候，就有了这个Cookie。当用户再次刷新页面的时候，请求头带上了这个Coolie，服务器通过接收到的id和当时存在的对象进行对比，得出是该用户再次访问了该页面。可以认为session是结合Cookie实行的一种机制，用于识别用户的身份。session对象可以存在服务器内存中，也可以保存在数据库中。\n\n\n\nLocalStoragelocalStorage就是一个存数据的地方，将数据存到浏览器里。特点是存储数据量大，并且不会失效。\n\n\nLocalStorage对应一个key和value，可以存储很多的内容，并且没有过期的时效。\n\n","dateCreated":"2019-05-10T21:30:55+09:00","dateModified":"2019-08-17T16:40:08+09:00","datePublished":"2019-05-10T21:30:55+09:00","description":"关于LocalStorage,Cookie和Session ","headline":"About LocalStorage,Cookie And Session","image":["20190510.png","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/05/10/关于LocalStorage-cookie和session/","keywords":"Session, LocalStorage, Cookie","thumbnailUrl":"20190510.png"}</script>
     <meta name="description" content="关于LocalStorage,Cookie和Session">
 <meta name="keywords" content="Session,LocalStorage,Cookie">
 <meta property="og:type" content="blog">
@@ -55,7 +55,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-aqwvotonicu5af28lj56vkoqakz31g9nzwiwpfr0pdfrowjqfuaht64ljvh5.min.css">
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
@@ -71,9 +71,7 @@
     
 </head>
 
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <body style="margin: 0; height:100%">
-        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
         <div id="blog">
             <!-- Define author's picture -->
 
@@ -84,7 +82,7 @@
         
     
 
-<header id="header" data-behavior="5">
+<header id="header" data-behavior="3">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
@@ -108,7 +106,7 @@
         
     
 
-<nav id="sidebar" data-behavior="5">
+<nav id="sidebar" data-behavior="3">
     <div class="sidebar-container">
         
             <div class="sidebar-profile">
@@ -117,7 +115,7 @@
                 </a>
                 <h4 class="sidebar-profile-name">Xiang Yu</h4>
                 
-                    <h5 class="sidebar-profile-bio"><p>Hello World, Hello Programming</p>
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
 </h5>
                 
             </div>
@@ -192,15 +190,6 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
-                    
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
                         <a  class="sidebar-button-link "
                              href="/categories/About-Me"
                             
@@ -251,7 +240,7 @@
                     text-left
                     post-header-cover--partial"
              style="background-image:url('/2019/05/10/关于LocalStorage-cookie和session/cover.jpg');"
-             data-behavior="5">
+             data-behavior="3">
             
                 <div class="post-header main-content-wrap text-left">
     
@@ -281,7 +270,7 @@
             
         </div>
 
-            <div id="main" data-behavior="5"
+            <div id="main" data-behavior="3"
                  class="hasCover
                         hasCoverMetaIn
                         hasCoverCaption">
@@ -400,24 +389,20 @@
 </article>
 
 
-
-                <footer id="footer">
-    <i class="fas fa-paw"></i>
-    <span id="busuanzi_container_site_pv">
-      <span id="busuanzi_value_site_pv" style="color: CadetBlue; font-size: 20px"></span> visitors 
-    </span>
-    <br>
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
     <span class="copyrights">
-        Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
+        Copyrights &copy; 2021 Xiang Yu. All Rights Reserved.
     </span>
 </footer>
-<script>
-  var bszCaller,bszTag;!function(){var c,d,e,a=!1,b=[];ready=function(c){return a||"interactive"===document.readyState||"complete"===document.readyState?c.call(document):b.push(function(){return c.call(this)}),this},d=function(){for(var a=0,c=b.length;c>a;a++)b[a].apply(document);b=[]},e=function(){a||(a=!0,d.call(window),document.removeEventListener?document.removeEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.detachEvent("onreadystatechange",e),window==window.top&&(clearInterval(c),c=null)))},document.addEventListener?document.addEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.attachEvent("onreadystatechange",function(){/loaded|complete/.test(document.readyState)&&e()}),window==window.top&&(c=setInterval(function(){try{a||document.documentElement.doScroll("left")}catch(b){return}e()},5)))}(),bszCaller={fetch:function(a,b){var c="BusuanziCallback_"+Math.floor(1099511627776*Math.random());window[c]=this.evalCall(b),a=a.replace("=BusuanziCallback","="+c),scriptTag=document.createElement("SCRIPT"),scriptTag.type="text/javascript",scriptTag.defer=!0,scriptTag.src=a,document.getElementsByTagName("HEAD")[0].appendChild(scriptTag)},evalCall:function(a){return function(b){ready(function(){try{a(b),scriptTag.parentElement.removeChild(scriptTag)}catch(c){bszTag.hides()}})}}},bszCaller.fetch("//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback",function(a){bszTag.texts(a),bszTag.shows()}),bszTag={bszs:["site_pv","page_pv","site_uv"],texts:function(a){this.bszs.map(function(b){var c=document.getElementById("busuanzi_value_"+b);c&&(c.innerHTML=a[b])})},hides:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="none")})},shows:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="inline")})}};
-</script>
 
             </div>
             
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
                     <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
@@ -478,7 +463,7 @@
 
                 </div>
                 
-    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
         <i id="btn-close-shareoptions" class="fa fa-times"></i>
         <ul class="share-options">
             
@@ -521,14 +506,14 @@
         
             <h4 id="about-card-name">Xiang Yu</h4>
         
-            <div id="about-card-bio"><p>Hello World, Hello Programming</p>
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
 </div>
         
         
             <div id="about-card-job">
                 <i class="fa fa-briefcase"></i>
                 <br/>
-                <p>Front-end Enginner</p>
+                <p>Front-end developer</p>
 
             </div>
         
@@ -545,56 +530,9 @@
         
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
-<script>
-  document.addEventListener('touchmove', function (e) {
-      e.preventDefault()
-  })
-  var c = document.getElementsByTagName('canvas')[0],
-      x = c.getContext('2d'),
-      pr = window.devicePixelRatio || 1,
-      w = window.innerWidth,
-      h = window.innerHeight,
-      f = 90,
-      q,
-      m = Math,
-      r = 0,
-      u = m.PI*2,
-      v = m.cos,
-      z = m.random
-  c.width = w*pr
-  c.height = h*pr
-  x.scale(pr, pr)
-  x.globalAlpha = 0.6
-  function i(){
-      x.clearRect(0,0,w,h)
-      q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-      while(q[1].x<w+f) d(q[0], q[1])
-    }
-    function d(i,j){   
-        x.beginPath()
-        x.moveTo(i.x, i.y)
-        x.lineTo(j.x, j.y)
-        var k = j.x + (z()*2-0.25)*f,
-            n = y(j.y)
-        x.lineTo(k, n)
-        x.closePath()
-        r-=u/-50
-        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-        x.fill()
-        q[0] = q[1]
-        q[1] = {x:k,y:n}
-    }
-    function y(p){
-        var t = p + (z()*2-1.1)*f
-        return (t>h||t<0) ? y(p) : t
-    }
-    document.onclick = i
-    document.ontouchstart = i
-    i()
-</script>
 
         <!--SCRIPTS-->
-<script src="/assets/js/script-3aqcegpda1qmips6yoo6eaovp7rgkcwkwkzahnh8l81r35gsi8r4c2apcos7.min.js"></script>
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
 <!--SCRIPTS END-->
 
 

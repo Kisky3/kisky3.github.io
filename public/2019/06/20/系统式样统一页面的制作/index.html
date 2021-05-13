@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"はじめに\nみなさん、こんにちは！!\nフロントエンドエンジニアの向宇(こう　う)と申します。 開発経験はまだ浅いですが、毎日楽しんで開発をチャレンジしています。\n今回はSPACE CLOUDのスタイルガイドの開発について、お話しさせていただきますね。\n開発目的私気づいた問題点は、フロントの書き方と全体スタイルの統一性はよくないと感じました。\n例えば、入力ボックスを実装する時に、 Reactを利用してComponentを作る人もいるし、 CakePHPのテンプレートで直接実装する人もいます。\n書き方を統一して、コピペだけですぐ実装できるスタイルガイドがあると統一感を持たせることができると考え、 SPACE CLOUD専用のスタイルガイドを作成始めました。\n開発流れスタイルガイドのトップページについてまずはHTMLとCSSを利用して、トップページをオシャレにしました〜\n出来上がったものはこんな感じです！ ちょっとだけアニメーションも追加しました。\n\n\n\nスタイルガイドの各ページについてまずReactを利用して、各ページの枠を作ります。 ソース構造と主なフォルダー説明は下記でございます〜\nAtomic: SPACE CLOUD専用のReactコンポーネントのベースです\n\n\nComponent: スタイルガイドの各ページ用のコンポーネントです\n\n\nComponent/Pages: 最後各コンポーネントをまとめて表示するためのコンポーネント\n\n\n\n\n\n\nアップロードのForm部品の例Formの画像アップロードを例として説明しますね〜 \n下記はForm ImgUploadのReactコンポーネントの一部です。利用しているのはReactのライブラリreact-dropzoneです。\n123456789101112131415&lt;div  onMouseEnter=&#123;() =&gt; this.onMouseEnter(this.state.uploadStatus)&#125;  onMouseLeave=&#123;() =&gt; this.onMouseLeave(this.state.uploadStatus)&#125;&gt;  &lt;Dropzone    type=&#123;\"field\"&#125;    accept=&#123;\"image/jpeg,image/png,image/jpg\"&#125;    onDrop=&#123;this.onDrop&#125;    multiple=&#123;false&#125; // 個別アップロード    style=&#123;&#123; border: 0 &#125;&#125;  &gt;    &lt;div&gt;&#123;this.getContent()&#125;&lt;/div&gt;  &lt;/Dropzone&gt;  &lt;div&gt;&#123;this.getModifyModal()&#125;&lt;/div&gt;&lt;/div&gt;\n\nマウスホバーする時に画像変更と削除処理ができるように、onMouseEnterとonMouseLeaveを作りました。 プラス画像アップロードの進捗を表示するために下記の処理も追加しました。\n1234// ファイルの読み込み進捗を取得reader.onprogress = files =&gt; &#123;  this.setState(&#123; loadPercentage: files.loaded / files.total * 100 &#125;);&#125;;\n\nプレビュー状態を表示する時に、ProgressBarコンポーネントに渡します。\n12345678910111213141516171819// プレビュー状態を表示if (  this.state &amp;&amp;  this.state.file &amp;&amp;  this.state.file.image.preview !== \"\" &amp;&amp;  this.state.file.image.dataURL !== \"\" &amp;&amp;  this.state.error === \"\") &#123;  return (    &lt;div      className=&#123;imageWrapper + imageActive&#125;      style=&#123;&#123; backgroundImage: `url($&#123;this.state.file.image.dataURL&#125;)` &#125;&#125;    &gt;      &lt;ProgressBar percentage=&#123;this.state.loadPercentage&#125;&gt;        アップロード中・・・      &lt;/ProgressBar&gt;    &lt;/div&gt;  );&#125;\n\n最後はImgUploadDefaultの中でImgUploadコンポーネントを呼び出します。 実用性を考え、コピー機能のコンポーネントも作りました〜\n12345678910111213141516&lt;div className=&#123;\"c-item__container\"&#125;&gt;&lt;h2&gt;Image Upload 【画像アップロード】&lt;/h2&gt;&lt;div  className=&#123;\"c-click-box\"&#125;  role=\"button\"  onClick=&#123;() =&gt; this.onChangeState(FormText.ImgUploadText)&#125;&gt;&lt;div className=&#123;\"c-item-line\"&#125;&gt;    &lt;ImgUpload showUploadImage=&#123;true&#125; /&gt;  &lt;/div&gt;&lt;/div&gt;&lt;div id=\"button-item-text\" className=&#123;\"c-button-item-text\"&#125;&gt;  &lt;CopyButton text=&#123;this.state.text&#125; /&gt;  &lt;pre&gt;&#123;this.state.text&#125;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;\n\n出来上がったものはこんな感じです。\n\nその他のコンポーネント他の要素とページも上記と同じ感じで実装しました。 最後、一部のイメージ図を載せておきますね〜\n\nボタン\n\n\n\n\n\nフォーム\n\n\n\n\n\nカラー\n\n\n\n\n終わりにSPACE CLOUDは多くのコンポーネントが必要で、統一感のある実装が困難な状況でしたが、 スタイルガイドによって今後は統一することができるようになったと思います。\nスタイルガイドの実装を通じて、本当に色々勉強になりました〜 やっとReactコンポーネントの基本とライブラリの使い方とかの基礎知識が分かってきましたと気がします。\n今後の開発によって、スタイルガイドを変更したり、追加したりする可能性もありますが、 その時にまた記事を更新しますね〜\n最後まで読んでいただきまして、誠にありがとうございました！！\n","dateCreated":"2019-06-20T10:18:50+09:00","dateModified":"2019-08-19T00:09:11+09:00","datePublished":"2019-06-20T10:18:50+09:00","description":"はじめに","headline":"Created A StyleGuide For SPACE CLOUD Servive","image":["20190620.jpg","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","https://www.facebook.com/xiang.yu.39794","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/","keywords":"JS, React, Redux","thumbnailUrl":"20190620.jpg"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"はじめに\nみなさん、こんにちは！!\nフロントエンドエンジニアの向宇(こう　う)と申します。 開発経験はまだ浅いですが、毎日楽しんで開発をチャレンジしています。\n今回はSPACE CLOUDのスタイルガイドの開発について、お話しさせていただきますね。\n開発目的私気づいた問題点は、フロントの書き方と全体スタイルの統一性はよくないと感じました。\n例えば、入力ボックスを実装する時に、 Reactを利用してComponentを作る人もいるし、 CakePHPのテンプレートで直接実装する人もいます。\n書き方を統一して、コピペだけですぐ実装できるスタイルガイドがあると統一感を持たせることができると考え、 SPACE CLOUD専用のスタイルガイドを作成始めました。\n開発流れスタイルガイドのトップページについてまずはHTMLとCSSを利用して、トップページをオシャレにしました〜\n出来上がったものはこんな感じです！ ちょっとだけアニメーションも追加しました。\n\n\n\nスタイルガイドの各ページについてまずReactを利用して、各ページの枠を作ります。 ソース構造と主なフォルダー説明は下記でございます〜\nAtomic: SPACE CLOUD専用のReactコンポーネントのベースです\n\n\nComponent: スタイルガイドの各ページ用のコンポーネントです\n\n\nComponent/Pages: 最後各コンポーネントをまとめて表示するためのコンポーネント\n\n\n\n\n\n\nアップロードのForm部品の例Formの画像アップロードを例として説明しますね〜 \n下記はForm ImgUploadのReactコンポーネントの一部です。利用しているのはReactのライブラリreact-dropzoneです。\n123456789101112131415&lt;div  onMouseEnter=&#123;() =&gt; this.onMouseEnter(this.state.uploadStatus)&#125;  onMouseLeave=&#123;() =&gt; this.onMouseLeave(this.state.uploadStatus)&#125;&gt;  &lt;Dropzone    type=&#123;\"field\"&#125;    accept=&#123;\"image/jpeg,image/png,image/jpg\"&#125;    onDrop=&#123;this.onDrop&#125;    multiple=&#123;false&#125; // 個別アップロード    style=&#123;&#123; border: 0 &#125;&#125;  &gt;    &lt;div&gt;&#123;this.getContent()&#125;&lt;/div&gt;  &lt;/Dropzone&gt;  &lt;div&gt;&#123;this.getModifyModal()&#125;&lt;/div&gt;&lt;/div&gt;\n\nマウスホバーする時に画像変更と削除処理ができるように、onMouseEnterとonMouseLeaveを作りました。 プラス画像アップロードの進捗を表示するために下記の処理も追加しました。\n1234// ファイルの読み込み進捗を取得reader.onprogress = files =&gt; &#123;  this.setState(&#123; loadPercentage: files.loaded / files.total * 100 &#125;);&#125;;\n\nプレビュー状態を表示する時に、ProgressBarコンポーネントに渡します。\n12345678910111213141516171819// プレビュー状態を表示if (  this.state &amp;&amp;  this.state.file &amp;&amp;  this.state.file.image.preview !== \"\" &amp;&amp;  this.state.file.image.dataURL !== \"\" &amp;&amp;  this.state.error === \"\") &#123;  return (    &lt;div      className=&#123;imageWrapper + imageActive&#125;      style=&#123;&#123; backgroundImage: `url($&#123;this.state.file.image.dataURL&#125;)` &#125;&#125;    &gt;      &lt;ProgressBar percentage=&#123;this.state.loadPercentage&#125;&gt;        アップロード中・・・      &lt;/ProgressBar&gt;    &lt;/div&gt;  );&#125;\n\n最後はImgUploadDefaultの中でImgUploadコンポーネントを呼び出します。 実用性を考え、コピー機能のコンポーネントも作りました〜\n12345678910111213141516&lt;div className=&#123;\"c-item__container\"&#125;&gt;&lt;h2&gt;Image Upload 【画像アップロード】&lt;/h2&gt;&lt;div  className=&#123;\"c-click-box\"&#125;  role=\"button\"  onClick=&#123;() =&gt; this.onChangeState(FormText.ImgUploadText)&#125;&gt;&lt;div className=&#123;\"c-item-line\"&#125;&gt;    &lt;ImgUpload showUploadImage=&#123;true&#125; /&gt;  &lt;/div&gt;&lt;/div&gt;&lt;div id=\"button-item-text\" className=&#123;\"c-button-item-text\"&#125;&gt;  &lt;CopyButton text=&#123;this.state.text&#125; /&gt;  &lt;pre&gt;&#123;this.state.text&#125;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;\n\n出来上がったものはこんな感じです。\n\nその他のコンポーネント他の要素とページも上記と同じ感じで実装しました。 最後、一部のイメージ図を載せておきますね〜\n\nボタン\n\n\n\n\n\nフォーム\n\n\n\n\n\nカラー\n\n\n\n\n終わりにSPACE CLOUDは多くのコンポーネントが必要で、統一感のある実装が困難な状況でしたが、 スタイルガイドによって今後は統一することができるようになったと思います。\nスタイルガイドの実装を通じて、本当に色々勉強になりました〜 やっとReactコンポーネントの基本とライブラリの使い方とかの基礎知識が分かってきましたと気がします。\n今後の開発によって、スタイルガイドを変更したり、追加したりする可能性もありますが、 その時にまた記事を更新しますね〜\n最後まで読んでいただきまして、誠にありがとうございました！！\n","dateCreated":"2019-06-20T10:18:50+09:00","dateModified":"2019-08-19T00:09:11+09:00","datePublished":"2019-06-20T10:18:50+09:00","description":"はじめに","headline":"Created A StyleGuide For SPACE CLOUD Servive","image":["20190620.jpg","cover.jpg"],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/06/20/系统式样统一页面的制作/","keywords":"JS, React, Redux","thumbnailUrl":"20190620.jpg"}</script>
     <meta name="description" content="はじめに">
 <meta name="keywords" content="JS,React,Redux">
 <meta property="og:type" content="blog">
@@ -54,7 +54,7 @@
     
     
     <!--STYLES-->
-    <link rel="stylesheet" href="/assets/css/style-aqwvotonicu5af28lj56vkoqakz31g9nzwiwpfr0pdfrowjqfuaht64ljvh5.min.css">
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
     <!--STYLES END-->
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
@@ -70,9 +70,7 @@
     
 </head>
 
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <body style="margin: 0; height:100%">
-        <canvas id="canvas" style="width:100%; height:100%; display: block; position: fixed"></canvas>
         <div id="blog">
             <!-- Define author's picture -->
 
@@ -83,7 +81,7 @@
         
     
 
-<header id="header" data-behavior="5">
+<header id="header" data-behavior="3">
     <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
     <div class="header-title">
         <a class="header-title-link" href="/ ">Xiang Yu&#39;s Blog</a>
@@ -107,7 +105,7 @@
         
     
 
-<nav id="sidebar" data-behavior="5">
+<nav id="sidebar" data-behavior="3">
     <div class="sidebar-container">
         
             <div class="sidebar-profile">
@@ -116,7 +114,7 @@
                 </a>
                 <h4 class="sidebar-profile-name">Xiang Yu</h4>
                 
-                    <h5 class="sidebar-profile-bio"><p>Hello World, Hello Programming</p>
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
 </h5>
                 
             </div>
@@ -191,15 +189,6 @@
             
                 <li class="sidebar-button">
                     
-                        <a  class="sidebar-button-link " href="https://www.facebook.com/xiang.yu.39794" target="_blank" rel="noopener" title="Facebook">
-                    
-                        <i class="sidebar-button-icon fab fa-facebook" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Facebook</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
                         <a  class="sidebar-button-link "
                              href="/categories/About-Me"
                             
@@ -250,7 +239,7 @@
                     text-left
                     post-header-cover--partial"
              style="background-image:url('/2019/06/20/系统式样统一页面的制作/cover.jpg');"
-             data-behavior="5">
+             data-behavior="3">
             
                 <div class="post-header main-content-wrap text-left">
     
@@ -280,7 +269,7 @@
             
         </div>
 
-            <div id="main" data-behavior="5"
+            <div id="main" data-behavior="3"
                  class="hasCover
                         hasCoverMetaIn
                         hasCoverCaption">
@@ -435,24 +424,20 @@
 </article>
 
 
-
-                <footer id="footer">
-    <i class="fas fa-paw"></i>
-    <span id="busuanzi_container_site_pv">
-      <span id="busuanzi_value_site_pv" style="color: CadetBlue; font-size: 20px"></span> visitors 
-    </span>
-    <br>
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
     <span class="copyrights">
-        Copyrights &copy; 2019 Xiang Yu. All Rights Reserved.
+        Copyrights &copy; 2021 Xiang Yu. All Rights Reserved.
     </span>
 </footer>
-<script>
-  var bszCaller,bszTag;!function(){var c,d,e,a=!1,b=[];ready=function(c){return a||"interactive"===document.readyState||"complete"===document.readyState?c.call(document):b.push(function(){return c.call(this)}),this},d=function(){for(var a=0,c=b.length;c>a;a++)b[a].apply(document);b=[]},e=function(){a||(a=!0,d.call(window),document.removeEventListener?document.removeEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.detachEvent("onreadystatechange",e),window==window.top&&(clearInterval(c),c=null)))},document.addEventListener?document.addEventListener("DOMContentLoaded",e,!1):document.attachEvent&&(document.attachEvent("onreadystatechange",function(){/loaded|complete/.test(document.readyState)&&e()}),window==window.top&&(c=setInterval(function(){try{a||document.documentElement.doScroll("left")}catch(b){return}e()},5)))}(),bszCaller={fetch:function(a,b){var c="BusuanziCallback_"+Math.floor(1099511627776*Math.random());window[c]=this.evalCall(b),a=a.replace("=BusuanziCallback","="+c),scriptTag=document.createElement("SCRIPT"),scriptTag.type="text/javascript",scriptTag.defer=!0,scriptTag.src=a,document.getElementsByTagName("HEAD")[0].appendChild(scriptTag)},evalCall:function(a){return function(b){ready(function(){try{a(b),scriptTag.parentElement.removeChild(scriptTag)}catch(c){bszTag.hides()}})}}},bszCaller.fetch("//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback",function(a){bszTag.texts(a),bszTag.shows()}),bszTag={bszs:["site_pv","page_pv","site_uv"],texts:function(a){this.bszs.map(function(b){var c=document.getElementById("busuanzi_value_"+b);c&&(c.innerHTML=a[b])})},hides:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="none")})},shows:function(){this.bszs.map(function(a){var b=document.getElementById("busuanzi_container_"+a);b&&(b.style.display="inline")})}};
-</script>
 
             </div>
             
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
                     <div class="post-actions-wrap">
     <nav>
         <ul class="post-actions post-action-nav">
@@ -513,7 +498,7 @@
 
                 </div>
                 
-    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
         <i id="btn-close-shareoptions" class="fa fa-times"></i>
         <ul class="share-options">
             
@@ -556,14 +541,14 @@
         
             <h4 id="about-card-name">Xiang Yu</h4>
         
-            <div id="about-card-bio"><p>Hello World, Hello Programming</p>
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
 </div>
         
         
             <div id="about-card-job">
                 <i class="fa fa-briefcase"></i>
                 <br/>
-                <p>Front-end Enginner</p>
+                <p>Front-end developer</p>
 
             </div>
         
@@ -580,56 +565,9 @@
         
         
 <div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
-<script>
-  document.addEventListener('touchmove', function (e) {
-      e.preventDefault()
-  })
-  var c = document.getElementsByTagName('canvas')[0],
-      x = c.getContext('2d'),
-      pr = window.devicePixelRatio || 1,
-      w = window.innerWidth,
-      h = window.innerHeight,
-      f = 90,
-      q,
-      m = Math,
-      r = 0,
-      u = m.PI*2,
-      v = m.cos,
-      z = m.random
-  c.width = w*pr
-  c.height = h*pr
-  x.scale(pr, pr)
-  x.globalAlpha = 0.6
-  function i(){
-      x.clearRect(0,0,w,h)
-      q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-      while(q[1].x<w+f) d(q[0], q[1])
-    }
-    function d(i,j){   
-        x.beginPath()
-        x.moveTo(i.x, i.y)
-        x.lineTo(j.x, j.y)
-        var k = j.x + (z()*2-0.25)*f,
-            n = y(j.y)
-        x.lineTo(k, n)
-        x.closePath()
-        r-=u/-50
-        x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-        x.fill()
-        q[0] = q[1]
-        q[1] = {x:k,y:n}
-    }
-    function y(p){
-        var t = p + (z()*2-1.1)*f
-        return (t>h||t<0) ? y(p) : t
-    }
-    document.onclick = i
-    document.ontouchstart = i
-    i()
-</script>
 
         <!--SCRIPTS-->
-<script src="/assets/js/script-3aqcegpda1qmips6yoo6eaovp7rgkcwkwkzahnh8l81r35gsi8r4c2apcos7.min.js"></script>
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
 <!--SCRIPTS END-->
 
 
