@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
+    <title>About AWS SQS and SNS - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"AWS的SQS和SNS详解\n\nSQS (Simple Queue Service)Amazon Simple Queue Service (SQS)是一种完全托管的消息队列服务，可以让你分离和扩展微服务、分布式系统和无服务应用程序。\n在讲解SQS之前，首先让我们了解一下什么是消息队列。\n消息队列：消息队列还是举一个电商的例子，一个用户在电商网站下单后付款后，应用服务器马上查询/更新数据库，连接支付网关并查询支付状态，通知短信/邮件网关发送相关短信/邮件，更新库存系统，更新物流系统……最后返回信息给用户，“您的下单已成功”。\n但是如果网站的访问数很大，或者正值促销活动（比如淘宝双11，京东618）呢？\n这个时候每一个流程都是一个瓶颈，一旦某一个地方达到了瓶颈或者出现故障，又或者用户下单的时间比程序处理订单的时间还要久的情况下，都会让用户得不到成功下单的结果，或者得到结果的时间非常长，导致用户体验不好。\n这个时候，我们就要考虑到应用程序的解耦（decouple）。\n我们可以引入消息队列，让不同的应用程序之间打断强连接的关系，互不干扰。\n应用服务器在接收到用户付款的订单之后，就把相关的信息丢到消息队列，并且返回用户“您的下单已成功，请稍后查看详细订单状态”。\n而支付网关、短信/邮件网关、库存系统、物流系统等等可以到消息队列里面拉取信息，并且进行相关的数据更新和操作。\n这些操作可能不需要是实时的，但是至少能保证这些队列里的信息最终都会被执行。比如下单后我不一定马上能收到短信/邮件的通知，我可能5分钟/10分钟之后才收到这些信息通知，但这个并不影响正常的业务。\n这样子，消息队列就起到了连接上层业务和下层业务的作用。\nAmazon SQS相当于提供了一个分布式、高可用、高性能的消息队列服务。\nSQS特点SQS有两种不同类型的队列，它们分别是：\n\n标准队列（Standard Queue）\nFIFO队列（先进先出队列）\n\n标准队列标准队列拥有无限的吞吐量，所有消息都会至少传递一次，并且它会尽最大努力进行排序。\n标准队列是默认的队列类型。\n\n\nFIFO队列FIFO (First-in-first-out)队列在不使用批处理的情况下，最多支持300TPS（每秒300个发送、接受或删除操作）。\n在队列中的消息都只会不多不少地被处理一次。\nFIFO队列严格保持消息的发送和接收顺序。\n\n\nSQS的其他特点\nSQS是靠应用程序去拉取的，而不能主动推送给应用程序，推送服务我们使用SNS（Simple - Notification Service）\n消息会以256 KB的大小存放\n消息会在队列中保存1分钟~14天，默认时间是4天\n可见性超时（Visibility Timeout）\n即当SQS队列收到新的消息并且被拉取走进行处理时，会触发Visibility Timeout的时间。这个消息不会被删除，而是会被设置为不可见，用来防止该消息在处理的过程中再一次被拉取\n当这个消息被处理完成后，这个消息会在SQS中被删除，表示这个任务已经处理完毕\n如果这个消息在Visibility Timeout时间结束之后还没有被处理完，则这个消息会设置为可见状态，等待另一个程序来进行处理,因此同一个消息可能会被处理两次（或以上）\n这个超时时间最大可以设置为12小时\n\n\n标准SQS队列保证了每一个在队列内的消息都至少会被处理一次\n长轮询（Long Polling）\n默认情况下，Amazon SQS使用短轮询（Short Polling），即应用程序每次去查询SQS队列，SQS都会做回应（哪怕队列一直是空的）\n使用了长轮训，应用程序每次去查询SQS队列，SQS队列不会马上做回应。而是等到队列里有消息可处理时，或者等到设定的超时时间再做出回应。\n长轮询可以一定程度减少SQS的花销\n\n\n\n\nSNS (Simple Notification Service)SNS (Simple Notification Service) 是一种完全托管的发布/订阅消息收发和移动通知服务，用于协调向订阅终端节点和客户端的消息分发。\n和SQS (Simple Queue Service)一样，SNS也可以轻松分离和扩展微服务，分布式系统和无服务应用程序，对程序进行解耦。\n我们可以使用SNS将消息推送到SQS消息队列中、AWS Lambda函数或者HTTP终端节点上。\nSNS通知还可以发送推送通知到IOS，安卓，Windows和基于百度的设备，也可以通过电子邮箱或者SMS短信的形式发送到各种不同类型的设备上。\n\n\nSNS的一些特点\nSNS是实时的推送服务（Push），有别于SQS的拉取服务（Pull/Poll）\n拥有简单的API，可以和其他应用程序兼容\n可以通过多种不同的传输协议进行集成\n便宜、用多少付费多少的服务模型\n在AWS管理控制台上就可以进行简单的操作\n\nSNS能推送的目标\nHTTP\nHTTPS\nEmail\nEmail-JSON\nSQS\nApplication\nLambda\n\n","dateCreated":"2021-03-11T00:50:23+09:00","dateModified":"2021-05-14T00:27:37+09:00","datePublished":"2021-03-11T00:50:23+09:00","description":"AWS的SQS和SNS详解","headline":"About AWS SQS and SNS","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/","keywords":"AWS, SNS, SQS"}</script>
+    <meta name="description" content="AWS的SQS和SNS详解">
+<meta name="keywords" content="AWS,SNS,SQS">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="About AWS SQS and SNS">
+<meta property="og:url" content="https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/index.html">
+<meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="AWS的SQS和SNS详解">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/3.png">
+<meta property="og:updated_time" content="2021-05-13T15:27:37.588Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="About AWS SQS and SNS">
+<meta name="twitter:description" content="AWS的SQS和SNS详解">
+<meta name="twitter:image" content="https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">向宇的博客 | Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            About AWS SQS and SNS
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-03-11T00:50:23+09:00">
+	
+		    Mar 11, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Back-end-Knowledge/">Back-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>AWS的SQS和SNS详解</p>
+<a id="more"></a>
+<h2 id="SQS-Simple-Queue-Service"><a href="#SQS-Simple-Queue-Service" class="headerlink" title="SQS (Simple Queue Service)"></a>SQS (Simple Queue Service)</h2><p><code>Amazon Simple Queue Service (SQS)是一种完全托管的消息队列服务</code>，可以让你分离和扩展微服务、分布式系统和无服务应用程序。</p>
+<p>在讲解SQS之前，首先让我们了解一下什么是消息队列。</p>
+<h4 id="消息队列："><a href="#消息队列：" class="headerlink" title="消息队列："></a>消息队列：</h4><p>消息队列<br>还是举一个电商的例子，一个用户在电商网站下单后付款后，应用服务器马上查询/更新数据库，连接支付网关并查询支付状态，通知短信/邮件网关发送相关短信/邮件，更新库存系统，更新物流系统……最后返回信息给用户，“您的下单已成功”。</p>
+<p>但是如果网站的访问数很大，或者正值促销活动（比如淘宝双11，京东618）呢？</p>
+<p>这个时候每一个流程都是一个瓶颈，一旦某一个地方达到了瓶颈或者出现故障，又或者用户下单的时间比程序处理订单的时间还要久的情况下，都会让用户得不到成功下单的结果，或者得到结果的时间非常长，导致用户体验不好。</p>
+<p>这个时候，我们就要考虑到应用程序的解耦（decouple）。</p>
+<p>我们可以引入消息队列，让不同的应用程序之间打断强连接的关系，互不干扰。</p>
+<p>应用服务器在接收到用户付款的订单之后，就把相关的信息丢到消息队列，并且返回用户“您的下单已成功，请稍后查看详细订单状态”。</p>
+<p>而支付网关、短信/邮件网关、库存系统、物流系统等等可以到消息队列里面拉取信息，并且进行相关的数据更新和操作。</p>
+<p>这些操作可能不需要是实时的，但是至少能保证这些队列里的信息最终都会被执行。比如下单后我不一定马上能收到短信/邮件的通知，我可能5分钟/10分钟之后才收到这些信息通知，但这个并不影响正常的业务。</p>
+<p>这样子，<code>消息队列就起到了连接上层业务和下层业务的作用</code>。</p>
+<p><code>Amazon SQS相当于提供了一个分布式、高可用、高性能的消息队列服务</code>。</p>
+<h4 id="SQS特点"><a href="#SQS特点" class="headerlink" title="SQS特点"></a>SQS特点</h4><p>SQS有两种不同类型的队列，它们分别是：</p>
+<ul>
+<li>标准队列（Standard Queue）</li>
+<li>FIFO队列（先进先出队列）</li>
+</ul>
+<h5 id="标准队列"><a href="#标准队列" class="headerlink" title="标准队列"></a>标准队列</h5><p>标准队列拥有无限的吞吐量，所有消息都会至少传递一次，并且它会尽最大努力进行排序。</p>
+<p>标准队列是默认的队列类型。</p>
+<img src="./1.png" style="width: 300px">
+
+<h5 id="FIFO队列"><a href="#FIFO队列" class="headerlink" title="FIFO队列"></a>FIFO队列</h5><p>FIFO (First-in-first-out)队列在不使用批处理的情况下，最多支持300TPS（每秒300个发送、接受或删除操作）。</p>
+<p>在队列中的消息都只会不多不少地被处理一次。</p>
+<p>FIFO队列严格保持消息的发送和接收顺序。</p>
+<img src="./2.png" style="width: 300px">
+
+<h3 id="SQS的其他特点"><a href="#SQS的其他特点" class="headerlink" title="SQS的其他特点"></a>SQS的其他特点</h3><ul>
+<li>SQS是靠应用程序去拉取的，而不能主动推送给应用程序，推送服务我们使用SNS（Simple - Notification Service）</li>
+<li>消息会以256 KB的大小存放</li>
+<li>消息会在队列中保存1分钟~14天，默认时间是4天</li>
+<li>可见性超时（Visibility Timeout）<ul>
+<li>即当SQS队列收到新的消息并且被拉取走进行处理时，会触发Visibility Timeout的时间。这个消息不会被删除，而是会被设置为不可见，用来防止该消息在处理的过程中再一次被拉取</li>
+<li>当这个消息被处理完成后，这个消息会在SQS中被删除，表示这个任务已经处理完毕</li>
+<li>如果这个消息在Visibility Timeout时间结束之后还没有被处理完，则这个消息会设置为可见状态，等待另一个程序来进行处理,因此同一个消息可能会被处理两次（或以上）</li>
+<li>这个超时时间最大可以设置为12小时</li>
+</ul>
+</li>
+<li>标准SQS队列保证了每一个在队列内的消息都至少会被处理一次</li>
+<li>长轮询（Long Polling）<ul>
+<li>默认情况下，Amazon SQS使用短轮询（Short Polling），即应用程序每次去查询SQS队列，SQS都会做回应（哪怕队列一直是空的）</li>
+<li>使用了长轮训，应用程序每次去查询SQS队列，SQS队列不会马上做回应。而是等到队列里有消息可处理时，或者等到设定的超时时间再做出回应。</li>
+<li>长轮询可以一定程度减少SQS的花销</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="SNS-Simple-Notification-Service"><a href="#SNS-Simple-Notification-Service" class="headerlink" title="SNS (Simple Notification Service)"></a>SNS (Simple Notification Service)</h3><p><code>SNS (Simple Notification Service) 是一种完全托管的发布/订阅消息收发和移动通知服务，用于协调向订阅终端节点和客户端的消息分发</code>。</p>
+<p>和SQS (Simple Queue Service)一样，SNS也可以轻松分离和扩展微服务，分布式系统和无服务应用程序，对程序进行解耦。</p>
+<p>我们可以使用SNS将消息推送到SQS消息队列中、AWS Lambda函数或者HTTP终端节点上。</p>
+<p>SNS通知还可以发送推送通知到IOS，安卓，Windows和基于百度的设备，也可以通过电子邮箱或者SMS短信的形式发送到各种不同类型的设备上。</p>
+<img src="./3.png" style="width: 500px">
+
+<h4 id="SNS的一些特点"><a href="#SNS的一些特点" class="headerlink" title="SNS的一些特点"></a>SNS的一些特点</h4><ul>
+<li>SNS是实时的推送服务（Push），有别于SQS的拉取服务（Pull/Poll）</li>
+<li>拥有简单的API，可以和其他应用程序兼容</li>
+<li>可以通过多种不同的传输协议进行集成</li>
+<li>便宜、用多少付费多少的服务模型</li>
+<li>在AWS管理控制台上就可以进行简单的操作</li>
+</ul>
+<h4 id="SNS能推送的目标"><a href="#SNS能推送的目标" class="headerlink" title="SNS能推送的目标"></a>SNS能推送的目标</h4><ul>
+<li>HTTP</li>
+<li>HTTPS</li>
+<li>Email</li>
+<li>Email-JSON</li>
+<li>SQS</li>
+<li>Application</li>
+<li>Lambda</li>
+</ul>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/AWS/">AWS</a> <a class="tag tag--primary tag--small t-link" href="/tags/SNS/">SNS</a> <a class="tag tag--primary tag--small t-link" href="/tags/SQS/">SQS</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/09/NewFeaturesinVue3/" data-tooltip="New Feature - Vue 3&#39;s Full TypeScript Support" aria-label="PREVIOUS: New Feature - Vue 3&#39;s Full TypeScript Support">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/03/10/ThreejsMemo/" data-tooltip="Three.js Memo" aria-label="NEXT: Three.js Memo">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2021 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/09/NewFeaturesinVue3/" data-tooltip="New Feature - Vue 3&#39;s Full TypeScript Support" aria-label="PREVIOUS: New Feature - Vue 3&#39;s Full TypeScript Support">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/03/10/ThreejsMemo/" data-tooltip="Three.js Memo" aria-label="NEXT: Three.js Memo">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/03/11/AboutAWSSQSandSNS/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>

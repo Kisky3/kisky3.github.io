@@ -1,6 +1,6 @@
 ---
 title: CentOS6 Error:All mirror URLs are not using ftp, http[s] or file.
-date: 2021-04-23 01:20:34
+date: 2021-02-23 01:20:34
 tags:
 - CentOS6
 clearReading: true

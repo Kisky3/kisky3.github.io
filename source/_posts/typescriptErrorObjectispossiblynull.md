@@ -1,6 +1,6 @@
 ---
 title: Typescript Error「Object is possibly null」
-date: 2021-04-04 00:03:57
+date: 2021-01-04 00:03:57
 tags:
  - Vue
  - Typescript

@@ -1,6 +1,6 @@
 ---
 title: Managing State in Vue with Vuex
-date: 2021-04-05 21:24:50
+date: 2021-01-05 21:24:50
 tags:
  - Vue
  - Vuex

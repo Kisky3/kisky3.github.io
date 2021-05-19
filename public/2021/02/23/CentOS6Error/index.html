@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
-    <title>How To Design Your Github Page - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <title>CentOS6 Error:All mirror URLs are not using ftp, http[s] or file. - 向宇的博客 | Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,22 +17,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"如何美化设计你的Github主页\n\n起因看见别人的 Github 和平常不太一样，通过搜索才知道可以通过建立和用户名相同的仓库展示到主页，丰富主页。\n开始动手\n创建与 GitHub 账户同名的仓库，并勾选 README\n\n\n\n从上图可以看到提示：\n\nYou found a secret! Kisky3/Kisky3 is a ✨special ✨ repository that you can use to add a README.md to your GitHub profile. Make sure it’s public and initialize it with a README to get started.\n\n创建成功后返回主页查看效果,到此你会不会好奇这是怎样实现的，不妨我们查看下此仓库中唯一的README.md文件。\n细心的你可以发现主页展示的内容就是此文件中的内容，并且 Github 官方也调皮的为你隐藏了提示。\n美化主页美化的思路就是通过改变与 GitHub 账户同名的仓库中的README.md文件，在主页展示不同的效果。\n\n引入GitHub 统计卡片\n\n项目地址：https://github.com/anuraghazra/readme 文件中已有详细的使用说明\n更多效果，这就和编写网页一样，后面请尽情发挥。。。\n最终效果如下：\n","dateCreated":"2021-04-06T19:37:26+09:00","dateModified":"2021-04-06T19:52:01+09:00","datePublished":"2021-04-06T19:37:26+09:00","description":"如何美化设计你的Github主页","headline":"How To Design Your Github Page","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/04/06/HowToDesignYourGithubPage/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/04/06/HowToDesignYourGithubPage/","keywords":"Github, Theme"}</script>
-    <meta name="description" content="如何美化设计你的Github主页">
-<meta name="keywords" content="Github,Theme">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"CentOS6 Error: All mirror URLs are not using ftp, http[s] or file.\n\n2020-11-30开始CentOS 6已经不支持了！\n如果yum install和yum update的时候出现以下的错误的话要考虑看是不是CentOS6版本不支持了的缘故.\nerror:\n123456Loaded plugins: fastestmirror, ovlSetting up Install ProcessError: Cannot retrieve repository metadata (repomd.xml) for repository: base. Please verify its path and try againYumRepo Error: All mirror URLs are not using ftp, http[s] or file.Eg. Invalid release/repo/arch combination/removing mirrorlist with no valid mirrors: /var/cache/yum/x86_64/6/base/mirrorlist.txt\n\n自己是因为docker的关系一直用着旧的image和container,所以一直没有发觉. 一旦清空重新docker compose up的时候就因为CentOS6的关系当掉了.\n解决方法是搜索最新所支持的包的url并替换掉…或者将docker file里的CentOS版本更新.\n","dateCreated":"2021-02-23T01:20:34+09:00","dateModified":"2021-05-13T23:59:41+09:00","datePublished":"2021-02-23T01:20:34+09:00","description":"CentOS6 Error: All mirror URLs are not using ftp, http[s] or file.","headline":"CentOS6 Error:All mirror URLs are not using ftp, http[s] or file.","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/02/23/CentOS6Error/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/02/23/CentOS6Error/","keywords":"CentOS6"}</script>
+    <meta name="description" content="CentOS6 Error: All mirror URLs are not using ftp, http[s] or file.">
+<meta name="keywords" content="CentOS6">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="How To Design Your Github Page">
-<meta property="og:url" content="https://kisky3.github.io/2021/04/06/HowToDesignYourGithubPage/index.html">
+<meta property="og:title" content="CentOS6 Error:All mirror URLs are not using ftp, http[s] or file.">
+<meta property="og:url" content="https://kisky3.github.io/2021/02/23/CentOS6Error/index.html">
 <meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
-<meta property="og:description" content="如何美化设计你的Github主页">
+<meta property="og:description" content="CentOS6 Error: All mirror URLs are not using ftp, http[s] or file.">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://kisky3.github.io/2021/04/06/HowToDesignYourGithubPage/1.png">
-<meta property="og:image" content="https://kisky3.github.io/2021/04/06/HowToDesignYourGithubPage/2.png">
-<meta property="og:updated_time" content="2021-04-06T10:52:01.240Z">
+<meta property="og:updated_time" content="2021-05-13T14:59:41.392Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="How To Design Your Github Page">
-<meta name="twitter:description" content="如何美化设计你的Github主页">
-<meta name="twitter:image" content="https://kisky3.github.io/2021/04/06/HowToDesignYourGithubPage/1.png">
+<meta name="twitter:title" content="CentOS6 Error:All mirror URLs are not using ftp, http[s] or file.">
+<meta name="twitter:description" content="CentOS6 Error: All mirror URLs are not using ftp, http[s] or file.">
     
     
         
@@ -238,20 +235,20 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            How To Design Your Github Page
+            CentOS6 Error:All mirror URLs are not using ftp, http[s] or file.
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2021-04-06T19:37:26+09:00">
+    <time datetime="2021-02-23T01:20:34+09:00">
 	
-		    Apr 06, 2021
+		    Feb 23, 2021
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+    <a class="category-link" href="/categories/Back-end-Knowledge/">Back-end Knowledge</a>
 
 
     
@@ -263,27 +260,15 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>如何美化设计你的Github主页</p>
+            <p>CentOS6 Error: All mirror URLs are not using ftp, http[s] or file.</p>
 <a id="more"></a>
-<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>看见别人的 Github 和平常不太一样，通过搜索才知道可以通过建立和用户名相同的仓库展示到主页，丰富主页。</p>
-<h3 id="开始动手"><a href="#开始动手" class="headerlink" title="开始动手"></a>开始动手</h3><ol>
-<li>创建与 GitHub 账户同名的仓库，并勾选 README<img src="./1.png" style="width: 500px">
+<p>2020-11-30开始CentOS 6已经不支持了！</p>
+<p>如果<code>yum install</code>和<code>yum update</code>的时候出现以下的错误的话要考虑看是不是CentOS6版本不支持了的缘故.</p>
+<p>error:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">Loaded</span> <span class="selector-tag">plugins</span>: <span class="selector-tag">fastestmirror</span>, <span class="selector-tag">ovl</span></span><br><span class="line"><span class="selector-tag">Setting</span> <span class="selector-tag">up</span> <span class="selector-tag">Install</span> <span class="selector-tag">Process</span></span><br><span class="line"><span class="selector-tag">Error</span>: <span class="selector-tag">Cannot</span> <span class="selector-tag">retrieve</span> <span class="selector-tag">repository</span> <span class="selector-tag">metadata</span> (<span class="selector-tag">repomd</span><span class="selector-class">.xml</span>) <span class="selector-tag">for</span> <span class="selector-tag">repository</span>: <span class="selector-tag">base</span>. <span class="selector-tag">Please</span> <span class="selector-tag">verify</span> <span class="selector-tag">its</span> <span class="selector-tag">path</span> <span class="selector-tag">and</span> <span class="selector-tag">try</span> <span class="selector-tag">again</span></span><br><span class="line"><span class="selector-tag">YumRepo</span> <span class="selector-tag">Error</span>: <span class="selector-tag">All</span> <span class="selector-tag">mirror</span> <span class="selector-tag">URLs</span> <span class="selector-tag">are</span> <span class="selector-tag">not</span> <span class="selector-tag">using</span> <span class="selector-tag">ftp</span>, <span class="selector-tag">http</span><span class="selector-attr">[s]</span> <span class="selector-tag">or</span> <span class="selector-tag">file</span>.</span><br><span class="line">Eg. Invalid release/repo/arch combination/</span><br><span class="line">removing mirrorlist with no valid mirrors: /var/cache/yum/x86_64/6/base/mirrorlist.txt</span><br></pre></td></tr></table></figure>
 
-</li>
-</ol>
-<p>从上图可以看到提示：</p>
-<blockquote>
-<p>You found a secret! Kisky3/Kisky3 is a ✨special ✨ repository that you can use to add a README.md to your GitHub profile. Make sure it’s public and initialize it with a README to get started.</p>
-</blockquote>
-<p>创建成功后返回主页查看效果,到此你会不会好奇这是怎样实现的，不妨我们查看下此仓库中唯一的README.md文件。</p>
-<p>细心的你可以发现主页展示的内容就是此文件中的内容，并且 Github 官方也调皮的为你隐藏了提示。</p>
-<h3 id="美化主页"><a href="#美化主页" class="headerlink" title="美化主页"></a>美化主页</h3><p>美化的思路就是通过改变与 GitHub 账户同名的仓库中的README.md文件，在主页展示不同的效果。</p>
-<ol>
-<li>引入GitHub 统计卡片</li>
-</ol>
-<p>项目地址：<a href="https://github.com/anuraghazra/" target="_blank" rel="noopener">https://github.com/anuraghazra/</a><br>readme 文件中已有详细的使用说明</p>
-<p>更多效果，这就和编写网页一样，后面请尽情发挥。。。</p>
-<p>最终效果如下：<br><img src="./2.png" style="width: 500px"></p>
+<p>自己是因为docker的关系一直用着旧的image和container,所以一直没有发觉. 一旦清空重新<code>docker compose up</code>的时候就因为CentOS6的关系当掉了.</p>
+<p>解决方法是搜索最新所支持的包的url并替换掉…<br>或者将docker file里的CentOS版本更新.</p>
 
             
 
@@ -294,7 +279,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/Github/">Github</a> <a class="tag tag--primary tag--small t-link" href="/tags/Theme/">Theme</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/CentOS6/">CentOS6</a>
 
             </div>
         
@@ -305,7 +290,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/08/Node-jsでDynamoDBの操作/" data-tooltip="Basic Operations on DynamoDB Tables by node.js" aria-label="PREVIOUS: Basic Operations on DynamoDB Tables by node.js">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/03/10/ThreejsMemo/" data-tooltip="Three.js Memo" aria-label="PREVIOUS: Three.js Memo">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -314,7 +299,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/05/lesson1/" data-tooltip="AWS CLF Lesson1〜3 Memo" aria-label="NEXT: AWS CLF Lesson1〜3 Memo">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/02/08/Node-jsでDynamoDBの操作/" data-tooltip="Basic Operations on DynamoDB Tables by node.js" aria-label="NEXT: Basic Operations on DynamoDB Tables by node.js">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -340,7 +325,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/04/06/HowToDesignYourGithubPage/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/02/23/CentOS6Error/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
@@ -383,7 +368,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/08/Node-jsでDynamoDBの操作/" data-tooltip="Basic Operations on DynamoDB Tables by node.js" aria-label="PREVIOUS: Basic Operations on DynamoDB Tables by node.js">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/03/10/ThreejsMemo/" data-tooltip="Three.js Memo" aria-label="PREVIOUS: Three.js Memo">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -392,7 +377,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/04/05/lesson1/" data-tooltip="AWS CLF Lesson1〜3 Memo" aria-label="NEXT: AWS CLF Lesson1〜3 Memo">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/02/08/Node-jsでDynamoDBの操作/" data-tooltip="Basic Operations on DynamoDB Tables by node.js" aria-label="NEXT: Basic Operations on DynamoDB Tables by node.js">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -418,7 +403,7 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/04/06/HowToDesignYourGithubPage/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/02/23/CentOS6Error/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
@@ -452,7 +437,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/04/06/HowToDesignYourGithubPage/">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/02/23/CentOS6Error/">
                         <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
                     </a>
                 </li>

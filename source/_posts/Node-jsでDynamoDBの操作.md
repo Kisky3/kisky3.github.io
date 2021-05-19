@@ -1,6 +1,6 @@
 ---
 title: Basic Operations on DynamoDB Tables by node.js
-date: 2021-04-08 00:04:54
+date: 2021-02-08 00:04:54
 tags:
 - AWS
 - DynamoDB
