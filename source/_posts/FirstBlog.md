@@ -8,20 +8,15 @@ comments: false
 categories: About Me
 top: true
 ---
-Hey, I am Xiang Yu! :D Welcome to my blog!
+Hey, I am Xiang Yu! Welcome to my blog! (* 'ᵕ' )ｲ
 
-I want to be a good front-end developer who can speak two foreign languages
-(English and Japanese) in the furture。
+{% hl_text danger %}I want to be a good front end developer who can speak three languages fluently {% endhl_text %}
+( Mandarin, English and Japanese).
 
-<!--more-->
+I love the indoors, outdoors, cats and doing things that challenge me in new ways.
 
-Indoor-outdoor, cat lover, like chanllenging something new in my way。
+My hobbies include learning languages, programming, the keyboard, painting and in general just finding fun things to do. XD
 
-Learning foreign languages, programming, keyboard, painting etc by myself just for fun XD。
-All are half-baked tho。
+I will continuously update this blog to record what I have learned and experienced.
 
-I will Continuously update this blog to record what I learned and experienced。
-
-Thank you for taking the time to read it. Any helpful suggestions would be welcome！
-
-(* 'ᵕ' )ｲ
+Thank you for taking the time to read it. Helpful suggestions are welcome!
