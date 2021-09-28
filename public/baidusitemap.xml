@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://kisky3.github.io/2021/08/16/NginxReverseProxyServer/</loc>
+    <lastmod>2021-09-28</lastmod>
+  </url>  <url>
     <loc>https://kisky3.github.io/2021/09/25/NuxtMemo/</loc>
     <lastmod>2021-09-24</lastmod>
   </url>  <url>
@@ -218,9 +221,6 @@
     <lastmod>2021-09-18</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2021/02/08/Node-js%E3%81%A7DynamoDB%E3%81%AE%E6%93%8D%E4%BD%9C/</loc>
-    <lastmod>2021-09-18</lastmod>
-  </url>  <url>
-    <loc>https://kisky3.github.io/2021/08/16/NginxReverseProxyServer/</loc>
     <lastmod>2021-09-18</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2021/04/09/NewFeaturesinVue3/</loc>
