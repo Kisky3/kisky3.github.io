@@ -89,3 +89,67 @@ services:
     ports:
       - 80:80
 ```
+
+---
+
+### Index Page (喵星人网页和汪星人网页)
+
+dog-server/index.html
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>汪星人的页面</title>
+  </head>
+  <body>
+    <h1>汪星人的页面</h1>
+  </body>
+</html>
+```
+
+cat-server/index.html
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>喵星人的页面</title>
+  </head>
+  <body>
+    <h1>喵星人的页面</h1>
+  </body>
+</html>
+```
+
+就是两个非常非常简单的网页。
+
+---
+
+### 反向代理用的设定文件
+
+reverse-proxy/nginx.conf
+
+```json
+events {
+    worker_connections  16;
+}
+http {
+    server {
+        listen 80;
+        server_name localhost;
+        location /dog {
+            proxy_pass http://host.docker.internal:7000/;
+            proxy_redirect off;
+        }
+        location /cat {
+            proxy_pass http://host.docker.internal:7001/;
+            proxy_redirect off;
+        }
+    }
+}
+```
