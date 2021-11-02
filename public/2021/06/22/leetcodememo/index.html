@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"LeetCode笔记\n\n\n刷LeetCode啊！！！\n1. 二分法二分法最常见的是取到中位数。并且不断地根据中位数更新起点和终点，缩小范围到取得理想值。\n一般来说首先设置start为1，end为数组最大位\n1const start = 0, const end = array.length - 1(or something else)\n\n然后取中点：\n1const mid = Math.floor(start + (end - start) / 2)\n\n通过while进行start和end的比较，直到start = end 然后结束处理。进行中位数相关的条件判断, 将start或end重新代入。最后在while结束循环的时候返回start。\n123456789while (start &lt; end) &#123;      const mid = Math.floor(start + (end - start) / 2)      if (进行中位数相关的条件判断) &#123;        start = mid + 1      &#125; else &#123;        end = mid      &#125;    &#125;    return start\n\n2.冒泡法进行乱数数组排列的时候可以用冒泡法。(背下来～！)\n1234arr = arr.sort((a, b) =&gt; &#123;\treturn a - b&#125;);console.log(arr);\n\n3.取数列中的最大值1234let piles = [2,5,4,8,6,2,4];let max = Math.max(...piles);console.log(max)// 8\n\n","dateCreated":"2021-06-22T22:19:00+09:00","dateModified":"2021-09-19T00:02:08+09:00","datePublished":"2021-06-22T22:19:00+09:00","description":"LeetCode笔记","headline":"LeetCode Memo","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/06/22/leetcodememo/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/06/22/leetcodememo/","keywords":"LeetCode"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"LeetCode笔记\n\n\n刷LeetCode啊！！！\n","dateCreated":"2021-06-22T22:19:00+09:00","dateModified":"2021-10-31T16:39:27+09:00","datePublished":"2021-06-22T22:19:00+09:00","description":"LeetCode笔记","headline":"LeetCode Memo","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/06/22/leetcodememo/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/06/22/leetcodememo/","keywords":"LeetCode"}</script>
     <meta name="description" content="LeetCode笔记">
 <meta name="keywords" content="LeetCode">
 <meta property="og:type" content="blog">
@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
 <meta property="og:description" content="LeetCode笔记">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-09-18T15:02:08.473Z">
+<meta property="og:updated_time" content="2021-10-31T07:39:27.418Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode Memo">
 <meta name="twitter:description" content="LeetCode笔记">
@@ -256,21 +256,6 @@
 <a id="more"></a>
 
 <p>刷LeetCode啊！！！</p>
-<h3 id="1-二分法"><a href="#1-二分法" class="headerlink" title="1. 二分法"></a>1. 二分法</h3><p>二分法最常见的是取到中位数。并且不断地根据中位数更新起点和终点，缩小范围到取得理想值。</p>
-<p>一般来说首先设置start为1，end为数组最大位</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> start = <span class="number">0</span>, <span class="keyword">const</span> end = array.length - <span class="number">1</span>(or something <span class="keyword">else</span>)</span><br></pre></td></tr></table></figure>
-
-<p>然后取中点：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mid = <span class="built_in">Math</span>.floor(start + (end - start) / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>通过while进行start和end的比较，直到start = end 然后结束处理。<br>进行中位数相关的条件判断, 将start或end重新代入。<br>最后在while结束循环的时候返回start。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (start &lt; end) &#123;</span><br><span class="line">      <span class="keyword">const</span> mid = <span class="built_in">Math</span>.floor(start + (end - start) / <span class="number">2</span>)</span><br><span class="line">      <span class="keyword">if</span> (进行中位数相关的条件判断) &#123;</span><br><span class="line">        start = mid + <span class="number">1</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        end = mid</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> start</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-冒泡法"><a href="#2-冒泡法" class="headerlink" title="2.冒泡法"></a>2.冒泡法</h3><p>进行乱数数组排列的时候可以用冒泡法。(背下来～！)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">arr = arr.sort(<span class="function">(<span class="params">a, b</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> a - b</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(arr);</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-取数列中的最大值"><a href="#3-取数列中的最大值" class="headerlink" title="3.取数列中的最大值"></a>3.取数列中的最大值</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> piles = [<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">8</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">4</span>];</span><br><span class="line"><span class="keyword">let</span> max = <span class="built_in">Math</span>.max(...piles);</span><br><span class="line"><span class="built_in">console</span>.log(max)</span><br><span class="line"><span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
-
 
             
 
