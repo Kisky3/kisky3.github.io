@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2021-11-11T10:26:19.160Z</updated>
+  <updated>2021-11-09T10:59:37.081Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,20 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>vuelifecycle</title>
-    <link href="https://kisky3.github.io/2021/11/11/vuelifecycle/"/>
-    <id>https://kisky3.github.io/2021/11/11/vuelifecycle/</id>
-    <published>2021-11-11T10:26:19.000Z</published>
-    <updated>2021-11-11T10:26:19.160Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>Cakephp Validation Tips</title>
@@ -173,6 +159,30 @@
       <category term="Nginx" scheme="https://kisky3.github.io/tags/Nginx/"/>
     
       <category term="Reverse Proxy Server" scheme="https://kisky3.github.io/tags/Reverse-Proxy-Server/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>About Vue Lifecycle</title>
+    <link href="https://kisky3.github.io/2021/08/11/vuelifecycle/"/>
+    <id>https://kisky3.github.io/2021/08/11/vuelifecycle/</id>
+    <published>2021-08-11T10:26:19.000Z</published>
+    <updated>2021-11-11T10:36:11.683Z</updated>
+    
+    <content type="html"><![CDATA[<p>关于Vue的生命周期</p><a id="more"></a><h2 id="什么是Vue的生命周期"><a href="#什么是Vue的生命周期" class="headerlink" title="什么是Vue的生命周期"></a>什么是Vue的生命周期</h2><p>在Vue中实例从创建到销毁的过程就是生命周期，即指从创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;关于Vue的生命周期&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="Vue" scheme="https://kisky3.github.io/tags/Vue/"/>
+    
+      <category term="Lifecycle" scheme="https://kisky3.github.io/tags/Lifecycle/"/>
     
   </entry>
   
