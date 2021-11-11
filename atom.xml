@@ -167,9 +167,9 @@
     <link href="https://kisky3.github.io/2021/08/11/vuelifecycle/"/>
     <id>https://kisky3.github.io/2021/08/11/vuelifecycle/</id>
     <published>2021-08-11T10:26:19.000Z</published>
-    <updated>2021-11-11T10:36:11.683Z</updated>
+    <updated>2021-11-11T10:38:11.988Z</updated>
     
-    <content type="html"><![CDATA[<p>关于Vue的生命周期</p><a id="more"></a><h2 id="什么是Vue的生命周期"><a href="#什么是Vue的生命周期" class="headerlink" title="什么是Vue的生命周期"></a>什么是Vue的生命周期</h2><p>在Vue中实例从创建到销毁的过程就是生命周期，即指从创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程。</p>]]></content>
+    <content type="html"><![CDATA[<p>关于Vue的生命周期</p><a id="more"></a><h2 id="什么是Vue的生命周期"><a href="#什么是Vue的生命周期" class="headerlink" title="什么是Vue的生命周期"></a>什么是Vue的生命周期</h2><p>在Vue中实例从创建到销毁的过程就是生命周期，即指从创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程。</p><h2 id="Vue页面组件加载会执行哪些生命周期"><a href="#Vue页面组件加载会执行哪些生命周期" class="headerlink" title="Vue页面组件加载会执行哪些生命周期"></a>Vue页面组件加载会执行哪些生命周期</h2><p>Vue提供了一些生命周期的钩子，平时最主要用的是下面几个：</p><ul><li>beforecreate</li><li>created</li><li>beforemounted</li><li>mounted</li></ul>]]></content>
     
     <summary type="html">
     
