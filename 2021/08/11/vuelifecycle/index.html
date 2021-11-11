@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
-    <title>About Vue Lifecycle - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <title>Basic Features Of Vue.js - 向宇的博客 | Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,19 +17,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于Vue的生命周期\n\n什么是Vue的生命周期在Vue中实例从创建到销毁的过程就是生命周期，即指从创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程。\nVue一共有8个生命周期：|  生命周期名  |  描述  || —- | —- ||  beforeCreate  |  组件实例被创建之初  ||  created  |  组件实例已经完全创建  ||  beforeMount  |  组件挂载之前  ||  mounted  |  组件挂载到实例上去之后  ||  beforeUpdate  |  组件数据发生变化，更新之前  ||  updated  |  数据数据更新之后  ||  beforeDestroy  |  组件实例销毁之前  ||  destroyed  |  组件实例销毁之后  |\nVue页面组件加载会执行哪些生命周期Vue提供了一些生命周期的钩子，平时最主要用的是下面几个,这几个是页面进行加载的时候会被执行的生命周期。\n\nbeforecreate\ncreated\nbeforemounte\nmounted\n\nbeforecreate是属于第一个被加载的部分,没有节点也没有数据。\ncreated在beforecreate之后执行,这个时候已经取得了数据但是还没有生成节点。\nbeforemounte的时候也是取得了数据但是还没有生成节点。\nmounted的时候是既取得了数据,这个时候页面上也已经生成了节点。\n生命周期的使用方法created =&gt; 发送请求取得数据mounted =&gt; 使用插件(dom相关的逻辑处理)\n一般来说会在create的里面进行发送请求的处理。因为此时已经生成了数据($data),但是还没生成节点($el),所以在dom节点生成之前从发送的请求里获取数据是比较合理的顺序。\n而如果我们在mounted里进行发送请求的处理的话,会导致一个加载顺序的混乱。(虽然它也是可以跑的)。这就变成了先生成数据和空节点,再返回去取得数据再反应到节点的顺序。\n有可能会造成一个页面卡顿的状态。\n那我们一般在什么情况下使用mounted呢。比如说我们需要使用插件,并且要对dom节点进行一些操作的时候。\n比如我们要使用swiper插件来生成一个轮播图,这个时候就应该在mounted里进行new swiper()的处理。\n","dateCreated":"2021-08-11T19:26:19+09:00","dateModified":"2021-11-11T20:03:29+09:00","datePublished":"2021-08-11T19:26:19+09:00","description":"关于Vue的生命周期","headline":"About Vue Lifecycle","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/08/11/vuelifecycle/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/08/11/vuelifecycle/","keywords":"Vue, Lifecycle"}</script>
-    <meta name="description" content="关于Vue的生命周期">
-<meta name="keywords" content="Vue,Lifecycle">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"关于Vue的基础概念总结\n\nVue的生命周期什么是Vue的生命周期在Vue中实例从创建到销毁的过程就是生命周期，即指从创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程。\nVue一共有8个生命周期：|  生命周期名  |  描述  || —- | —- ||  beforeCreate  |  组件实例被创建之初  ||  created  |  组件实例已经完全创建  ||  beforeMount  |  组件挂载之前  ||  mounted  |  组件挂载到实例上去之后  ||  beforeUpdate  |  组件数据发生变化，更新之前  ||  updated  |  数据数据更新之后  ||  beforeDestroy  |  组件实例销毁之前  ||  destroyed  |  组件实例销毁之后  |\nVue页面组件加载会执行哪些生命周期Vue提供了一些生命周期的钩子，平时最主要用的是下面几个,这几个是页面进行加载的时候会被执行的生命周期。\n\nbeforecreate\ncreated\nbeforemounte\nmounted\n\nbeforecreate是属于第一个被加载的部分,没有节点也没有数据。\ncreated在beforecreate之后执行,这个时候已经取得了数据但是还没有生成节点。\nbeforemounte的时候也是取得了数据但是还没有生成节点。\nmounted的时候是既取得了数据,这个时候页面上也已经生成了节点。\n生命周期的使用方法created =&gt; 发送请求取得数据mounted =&gt; 使用插件(dom相关的逻辑处理)\n一般来说会在create的里面进行发送请求的处理。因为此时已经生成了数据($data),但是还没生成节点($el),所以在dom节点生成之前从发送的请求里获取数据是比较合理的顺序。\n而如果我们在mounted里进行发送请求的处理的话,会导致一个加载顺序的混乱。(虽然它也是可以跑的)。这就变成了先生成数据和空节点,再返回去取得数据再反应到节点的顺序。\n有可能会造成一个页面卡顿的状态。\n那我们一般在什么情况下使用mounted呢。比如说我们需要使用插件,并且要对dom节点进行一些操作的时候。\n比如我们要使用swiper插件来生成一个轮播图,这个时候就应该在mounted里进行new swiper()的处理。\nVue路由12345678const router = new VueRouter(&#123;  routes // `routes: routes` 缩略&#125;)// 4. 生成root的对象并且为了让vue全体能够使用路由你需要在根目录进行router的注入const app = new Vue(&#123;  router&#125;).$mount('#app')\n\n显示路由： query隐形路由： params(需要注明路由的Name)\n显示路由：\n123456this.$router.push(&#123;    path: '/about',    query: &#123;        key: \"test-ket\"    &#125;&#125;)\n\n隐形路由：\n12345678this.$router.push(&#123;    path: '/about',    // 路由的名字    name: 'About',    params: &#123;        key: \"test-ket\"    &#125;&#125;)\n\n","dateCreated":"2021-08-11T19:26:19+09:00","dateModified":"2021-11-11T20:21:19+09:00","datePublished":"2021-08-11T19:26:19+09:00","description":"关于Vue的基础概念总结","headline":"Basic Features Of Vue.js","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/08/11/vuelifecycle/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/08/11/vuelifecycle/","keywords":"Vue"}</script>
+    <meta name="description" content="关于Vue的基础概念总结">
+<meta name="keywords" content="Vue">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="About Vue Lifecycle">
+<meta property="og:title" content="Basic Features Of Vue.js">
 <meta property="og:url" content="https://kisky3.github.io/2021/08/11/vuelifecycle/index.html">
 <meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
-<meta property="og:description" content="关于Vue的生命周期">
+<meta property="og:description" content="关于Vue的基础概念总结">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2021-11-11T11:03:29.339Z">
+<meta property="og:updated_time" content="2021-11-11T11:21:19.702Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About Vue Lifecycle">
-<meta name="twitter:description" content="关于Vue的生命周期">
+<meta name="twitter:title" content="Basic Features Of Vue.js">
+<meta name="twitter:description" content="关于Vue的基础概念总结">
     
     
         
@@ -235,7 +235,7 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            About Vue Lifecycle
+            Basic Features Of Vue.js
         </h1>
     
     
@@ -260,9 +260,9 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>关于Vue的生命周期</p>
+            <p>关于Vue的基础概念总结</p>
 <a id="more"></a>
-<h2 id="什么是Vue的生命周期"><a href="#什么是Vue的生命周期" class="headerlink" title="什么是Vue的生命周期"></a>什么是Vue的生命周期</h2><p>在Vue中实例从创建到销毁的过程就是生命周期，即指从创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程。</p>
+<h1 id="Vue的生命周期"><a href="#Vue的生命周期" class="headerlink" title="Vue的生命周期"></a>Vue的生命周期</h1><h2 id="什么是Vue的生命周期"><a href="#什么是Vue的生命周期" class="headerlink" title="什么是Vue的生命周期"></a>什么是Vue的生命周期</h2><p>在Vue中实例从创建到销毁的过程就是生命周期，即指从创建、初始化数据、编译模板、挂载Dom→渲染、更新→渲染、卸载等一系列过程。</p>
 <p>Vue一共有8个生命周期：<br>|  生命周期名  |  描述  |<br>| —- | —- |<br>|  beforeCreate  |  组件实例被创建之初  |<br>|  created  |  组件实例已经完全创建  |<br>|  beforeMount  |  组件挂载之前  |<br>|  mounted  |  组件挂载到实例上去之后  |<br>|  beforeUpdate  |  组件数据发生变化，更新之前  |<br>|  updated  |  数据数据更新之后  |<br>|  beforeDestroy  |  组件实例销毁之前  |<br>|  destroyed  |  组件实例销毁之后  |</p>
 <h2 id="Vue页面组件加载会执行哪些生命周期"><a href="#Vue页面组件加载会执行哪些生命周期" class="headerlink" title="Vue页面组件加载会执行哪些生命周期"></a>Vue页面组件加载会执行哪些生命周期</h2><p>Vue提供了一些生命周期的钩子，平时最主要用的是下面几个,这几个是页面进行加载的时候会被执行的生命周期。</p>
 <ul>
@@ -281,6 +281,15 @@
 <p>有可能会造成一个页面卡顿的状态。</p>
 <p>那我们一般在什么情况下使用mounted呢。比如说我们需要使用插件,并且要对dom节点进行一些操作的时候。</p>
 <p>比如我们要使用swiper插件来生成一个轮播图,这个时候就应该在mounted里进行new swiper()的处理。</p>
+<h1 id="Vue路由"><a href="#Vue路由" class="headerlink" title="Vue路由"></a>Vue路由</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">  routes <span class="comment">// `routes: routes` 缩略</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 生成root的对象并且为了让vue全体能够使用路由你需要在根目录进行router的注入</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  router</span><br><span class="line">&#125;).$mount(<span class="string">'#app'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>显示路由： query<br>隐形路由： params(需要注明路由的Name)</p>
+<p>显示路由：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$router.push(&#123;</span><br><span class="line">    path: <span class="string">'/about'</span>,</span><br><span class="line">    query: &#123;</span><br><span class="line">        key: <span class="string">"test-ket"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>隐形路由：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.$router.push(&#123;</span><br><span class="line">    path: <span class="string">'/about'</span>,</span><br><span class="line">    <span class="comment">// 路由的名字</span></span><br><span class="line">    name: <span class="string">'About'</span>,</span><br><span class="line">    params: &#123;</span><br><span class="line">        key: <span class="string">"test-ket"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
 
             
 
@@ -291,7 +300,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/Lifecycle/">Lifecycle</a> <a class="tag tag--primary tag--small t-link" href="/tags/Vue/">Vue</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/Vue/">Vue</a>
 
             </div>
         
