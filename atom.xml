@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2021-11-17T11:03:20.695Z</updated>
+  <updated>2021-11-09T10:59:37.081Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,20 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>VueBasic</title>
-    <link href="https://kisky3.github.io/2021/11/17/VueBasic/"/>
-    <id>https://kisky3.github.io/2021/11/17/VueBasic/</id>
-    <published>2021-11-17T11:03:20.000Z</published>
-    <updated>2021-11-17T11:03:20.695Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>Cakephp Validation Tips</title>
@@ -97,6 +83,28 @@
     
     
       <category term="jira" scheme="https://kisky3.github.io/tags/jira/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Basic of Vue</title>
+    <link href="https://kisky3.github.io/2021/09/17/VueBasic/"/>
+    <id>https://kisky3.github.io/2021/09/17/VueBasic/</id>
+    <published>2021-09-17T11:03:20.000Z</published>
+    <updated>2021-11-17T11:13:56.328Z</updated>
+    
+    <content type="html"><![CDATA[<p>Vue的基本知识</p><a id="more"></a>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Vue的基本知识&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="Vue" scheme="https://kisky3.github.io/tags/Vue/"/>
     
   </entry>
   
