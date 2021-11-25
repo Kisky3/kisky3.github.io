@@ -277,26 +277,6 @@
   </entry>
   
   <entry>
-    <title>LeetCode Memo</title>
-    <link href="https://kisky3.github.io/2021/06/22/leetcodememo/"/>
-    <id>https://kisky3.github.io/2021/06/22/leetcodememo/</id>
-    <published>2021-06-22T13:19:00.000Z</published>
-    <updated>2021-11-02T13:07:40.381Z</updated>
-    
-    <content type="html"><![CDATA[<p>LeetCode笔记</p><a id="more"></a><p>刷LeetCode啊！！！</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;LeetCode笔记&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="LeetCode" scheme="https://kisky3.github.io/tags/LeetCode/"/>
-    
-  </entry>
-  
-  <entry>
     <title>iOS Input Zoom Issue</title>
     <link href="https://kisky3.github.io/2021/06/14/iosFormInputZoomIn/"/>
     <id>https://kisky3.github.io/2021/06/14/iosFormInputZoomIn/</id>
@@ -485,6 +465,30 @@
       <category term="SNS" scheme="https://kisky3.github.io/tags/SNS/"/>
     
       <category term="SQS" scheme="https://kisky3.github.io/tags/SQS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Three.js Memo</title>
+    <link href="https://kisky3.github.io/2021/03/10/ThreejsMemo/"/>
+    <id>https://kisky3.github.io/2021/03/10/ThreejsMemo/</id>
+    <published>2021-03-10T06:22:42.000Z</published>
+    <updated>2021-11-02T13:07:40.227Z</updated>
+    
+    <content type="html"><![CDATA[<p>Three.js学习笔记</p><a id="more"></a><h3 id="1-什么是WebGL"><a href="#1-什么是WebGL" class="headerlink" title="1. 什么是WebGL"></a>1. 什么是WebGL</h3><p>你可以把WebGL简单地认为是一种网络标准，定义了一些较底层的图形接口。在这些标准被定义之后，Chrome、Firefox之类的浏览器实现了这些标准。然后，程序员就能通过JavaScript代码，在网页上实现三维图形的渲染了。</p><h3 id="2-什么是Three-js"><a href="#2-什么是Three-js" class="headerlink" title="2. 什么是Three.js"></a>2. 什么是Three.js</h3><blockquote><p>Three.js是一个3D JavaScript库。</p></blockquote><h3 id="3-Three-js能用来干什么"><a href="#3-Three-js能用来干什么" class="headerlink" title="3. Three.js能用来干什么"></a>3. Three.js能用来干什么</h3><p>Three.js封装了底层的图形接口，使得程序员能够在无需掌握繁冗的图形学知识的情况下，也能用简单的代码实现三维场景的渲染。我们都知道，更高的封装程度往往意味着灵活性的牺牲，但是Three.js在这方面做得很好。几乎不会有WebGL支持而Three.js实现不了的情况，而且就算真的遇到这种情况，你还是能同时使用WebGL去实现，而不会有冲突。</p><h3 id="4-WebGL-vs-Three-js"><a href="#4-WebGL-vs-Three-js" class="headerlink" title="4. WebGL vs. Three.js"></a>4. WebGL vs. Three.js</h3><p>对于一个简单的功能:渲染黑色背景下的白色正方形和三角形,使用原生WebGL接口实现同样功能需要5倍多的代码量，而且很多代码对于没有图形学基础的程序员是很难看懂的。由这个例子我们可以看出，使用Three.js开发要比WebGL更快更高效。尤其对图形学知识不熟悉的程序员而言，使用Three.js能够降低学习成本，提高三维图形程序开发的效率。</p><h3 id="5-开发环境"><a href="#5-开发环境" class="headerlink" title="5. 开发环境"></a>5. 开发环境</h3><p>Three.js是一个JavaScript库，所以，你可以使用平时开发JavaScript应用的环境开发Three.js应用。<br>推荐：Chrome<br>repo：<a href="https://github.com/mrdoob/three.js/tree/master/build" target="_blank" rel="noopener">https://github.com/mrdoob/three.js/tree/master/build</a></p><p>引用：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;three.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>然后就能通过全局变量THREE访问到所有属性和方法了。</p><h3 id="6-练习1-Hello-world"><a href="#6-练习1-Hello-world" class="headerlink" title="6. 练习1: Hello, world!"></a>6. 练习1: Hello, world!</h3><p>详细coding请参照我的GitHub repo.</p><p>首先，在HTML的<head><meta name="generator" content="Hexo 3.9.0">部分，需要声明外部文件three.js。</head></p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/three.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure><p>WebGL的渲染是需要HTML5 Canvas元素的，你可以手动在HTML的<body>部分中定义Canvas元素，或者让Three.js帮你生成。这两种选择一般没有多大差别，我们在此手动在HTML中定义：<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body></p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span> <span class="attr">onload</span>=<span class="string">"init()"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">"mainCanvas"</span> <span class="attr">width</span>=<span class="string">"400px"</span> <span class="attr">height</span>=<span class="string">"300px"</span> &gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure><p>在JavaScript代码中定义一个init函数，在HTML加载完后执行：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function init() &#123;</span><br><span class="line">    // ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>一个典型的Three.js程序至少要包括渲染器（Renderer）、场景（Scene）、照相机（Camera），以及你在场景中创建的物体。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Three.js学习笔记&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="three.js" scheme="https://kisky3.github.io/tags/three-js/"/>
+    
+      <category term="WebGL" scheme="https://kisky3.github.io/tags/WebGL/"/>
     
   </entry>
   
