@@ -109,30 +109,6 @@
   </entry>
   
   <entry>
-    <title>A Sample of Vue Unit Test</title>
-    <link href="https://kisky3.github.io/2021/09/16/VueTest/"/>
-    <id>https://kisky3.github.io/2021/09/16/VueTest/</id>
-    <published>2021-09-16T14:25:34.000Z</published>
-    <updated>2021-11-02T13:07:40.259Z</updated>
-    
-    <content type="html"><![CDATA[<p>一个关于 Vue 单体测试的小栗子</p><a id="more"></a><p>我们用 Vue 来写组件的时候其实可以顺带把单体 Unit 测试也给写了。<br>这篇文章就来介绍一下 Vue 的 Unit 测试的写法。</p><p>当然关于要不要花时间写 Unit 测试的话其实取决于你需求变化多不多。<br>如果你需要花和 coding 同等的时间来写 Unit Coding 但是需求很快就变的话其实也不强求。针对需求变化不大的核心需求来写就好。比如表单的验证, 登陆功能的验证等。</p><p>github open source</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一个关于 Vue 单体测试的小栗子&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
-    
-    
-      <category term="Vue" scheme="https://kisky3.github.io/tags/Vue/"/>
-    
-      <category term="UnitTest" scheme="https://kisky3.github.io/tags/UnitTest/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Foward Proxy and Reverse Proxy</title>
     <link href="https://kisky3.github.io/2021/09/15/fowardproxyandreverseproxy/"/>
     <id>https://kisky3.github.io/2021/09/15/fowardproxyandreverseproxy/</id>
@@ -273,6 +249,30 @@
       <category term="aws" scheme="https://kisky3.github.io/tags/aws/"/>
     
       <category term="AWS Certified Cloud Practitioner" scheme="https://kisky3.github.io/tags/AWS-Certified-Cloud-Practitioner/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>A Sample of Vue Unit Test</title>
+    <link href="https://kisky3.github.io/2021/06/16/VueTest/"/>
+    <id>https://kisky3.github.io/2021/06/16/VueTest/</id>
+    <published>2021-06-16T14:25:34.000Z</published>
+    <updated>2021-12-01T15:07:05.732Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个关于 Vue 单体测试的小栗子</p><a id="more"></a><p>我们用 Vue 来写组件的时候其实可以顺带把单体 Unit 测试也给写了。<br>这篇文章就来介绍一下 Vue 的 Unit 测试的写法。</p><p>当然关于要不要花时间写 Unit 测试的话其实取决于你需求变化多不多。<br>如果你需要花和 coding 同等的时间来写 Unit Coding 但是需求很快就变的话其实也不强求。针对需求变化不大的核心需求来写就好。比如表单的验证, 登陆功能的验证等。</p><p>github open source</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一个关于 Vue 单体测试的小栗子&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
+    
+    
+      <category term="Vue" scheme="https://kisky3.github.io/tags/Vue/"/>
+    
+      <category term="UnitTest" scheme="https://kisky3.github.io/tags/UnitTest/"/>
     
   </entry>
   
