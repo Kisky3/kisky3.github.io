@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
+    <title>SSR VS CSR - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"SSR和CSR\n\n本文分别从两者的概念，主要的不同，优劣势列举等等去分析CSR和SSR。\nSSR和CSR的概念\nSSR(Server Side Rendering) ：传统的渲染方式，由服务端把渲染的完整的页面吐给客户端。这样减少了一次客户端到服务端的一次http请求，加快相应速度，一般用于首屏的性能优化。\n\nCSR(Client Side Rendering)：是一种目前流行的渲染方式，它依赖的是运行在客户端的JS，用户首次发送请求只能得到小部分的指引性HTML代码。第二次请求将会请求更多包含HTML字符串的JS文件。\n\n\n\n两者有何不同服务器端渲染的优势在于首屏渲染速度块，简单来讲它不需要来回多次往返于客户端和服务端。但是其性能等众多因素会影响用户体验，比如说：网速，在线活跃人数，服务器的物理位置等等。而客户端渲染则和服务端渲染相反，因为多次和服务器的交互导致首屏加载速度慢。但一旦这些请求完成之后，用户和页面之间的交互时用户体验就会好很多。\n用一个现实生活的例子来看：假如从超市买东西吃，以SSR的角度来看，你每次在超市买完随即吃完再走，每次饿了都需要出发去超市。而从CSR的角度来看，就是你从超市购买许多原材料再拿回家去自己煮，多了能放冰箱，这样每次肚子饿了就不需要每次都往超市跑，唯一麻烦一点在于你得花时间挑选食材。\n简而言之，SSR强在首屏渲染。而CSR强在用户和页面多交互的场景。\n\n\n服务端渲染如何工作服务器渲染简单说来就是将一个完整的HTML发送给客户端，客户端只负责HTML的解析。不过由于网速等影响有可能造成用户体验不佳的情况。如果面临客户端和服务器多次交互的情况就更为明显了。因为即使是在页面只有稍加改动的地方都需要重新请求服务器发送一个完整页面给浏览器，然后浏览器再次进行重新渲染。这对服务器的消耗是非常大的。\n实例：假如你需要访问的域名叫： example.testsite.com 1234567891011 &lt;html&gt;  &lt;head&gt;    &lt;meta charset=\"utf-8\"&gt;    &lt;title&gt;Example Website&lt;/title&gt;  &lt;/head&gt;  &lt;body&gt;    &lt;h1&gt;My Website&lt;/h1&gt;    &lt;p&gt;This is an example of my new website&lt;/p&gt;    &lt;a href=\"http://example.testsite.com/other.html.\"&gt;Link&lt;/a&gt;  &lt;/body&gt;&lt;/html&gt;\n 当我们点击Link的时候，就会跳转到下面这个页面: 123456789101112 &lt;!DOCTYPE html&gt;&lt;html&gt;  &lt;head&gt;    &lt;meta charset=\"utf-8\"&gt;    &lt;title&gt;Example Website&lt;/title&gt;  &lt;/head&gt;  &lt;body&gt;    &lt;h1&gt;My Website&lt;/h1&gt;    &lt;p&gt;This is an example of my new website&lt;/p&gt;    &lt;p&gt;This is some more content from the other.html&lt;/p&gt;  &lt;/body&gt;&lt;/html&gt;\n 效果是当你点击Link的时候， 可以看出来这两个页面的差异非常小，但是渲染的时候要将整个页面进行重新渲染，而不是只渲染不同的那一行。 如果复杂的页面代码量大的情况下，这是不合适的。\n 从上面的页面特征来看，使用服务器端渲染的返回的页面是完整的HTML页面。\n\n\n客户端是如何工作的 客户端代表渲染内容部分转嫁到JS身上。客户端只是从服务器得到相对简单的HTML文档，然后使用JS文件对页面的显示内容进行控制。就像Vue.js 用的就是这种方式，还是用刚才那个例子，看看用客户端渲染是怎么做的。\n 假设你想要访问的域名还是http://example.testsite.com 123456789101112131415 &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;  &lt;meta charset=\"utf-8\"&gt;  &lt;title&gt;Example Website&lt;/title&gt;&lt;/head&gt;&lt;body&gt;  &lt;div id=\"root\"&gt;    &lt;app&gt;&lt;/app&gt;  &lt;/div&gt;    &lt;!--下面两个js文件控制HTML的显示内容 --&gt;  &lt;script src=\"https://vuejs.org\"type=\"text/javascript\"&gt;&lt;/script&gt;  &lt;script src=\"location/of/app.js\"type=\"text/javascript\"&gt;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;\n 可以通过上面的html页面看到，你只能识别到自定义组件名id为root的div的标签。 而所有的逻辑处理你看不到，全部被写在了app.js里面。如果需要看到完整的页面的模样，就必须要下载app.js到本地才能运作，否则直接访问你是什么都看不到的。\nOK，假如现在你把app.js下载到本地了，那我们来看看app.js的内容: \n1234567891011121314151617181920212223242526272829// this is app.jsvar data = &#123;        title:\"My Website\",        message:\"This is an example of my new website\"      &#125;  Vue.component('app', &#123;    template:    `    &lt;div&gt;    &lt;h1&gt;&#123;&#123;title&#125;&#125;&lt;/h1&gt;    &lt;p id=\"moreContent\"&gt;&#123;&#123;message&#125;&#125;&lt;/p&gt;    &lt;a v-on:click='newContent'&gt;Link&lt;/a&gt;    &lt;/div&gt;    `,    data: function() &#123;      return data;    &#125;,    methods:&#123;      newContent: function()&#123;        var node = document.createElement('p');        var textNode = document.createTextNode('This is some more content from the other.html');        node.appendChild(textNode);        document.getElementById('moreContent').appendChild(node);      &#125;    &#125;  &#125;)  new Vue(&#123;    el: '#root',  &#125;);\n\n在这里，当你点击了Link的时候，Vue的js起了效果，通过操作DOM给p添加了需要展示的那一行内容。这里不需要页面和服务器的交互，只是对所需要添加的内容进行了修改，而不是像SSR一样做了整个页面的重新渲染。\n当然这里也暴露了一个问题:就是控制页面的所有js文件如果没有完全加载的话，真个页面是渲染不出来的。这是导致了客户端渲染弱于服务端渲染的原因。\n从这个例子来看，可以看出客户端渲染的页面特征是包含有js链接的script标签。\n\n总结SSR和CSR的优劣势\n\n\n\n优势\n劣势\n\n\n\nSSR\n1.搜索引擎可以抓取网站以获得更好的SEO  2.初始页面加载速度更快  3.非常适合静态网站\n1.频繁的服务器请求  2.真题缓慢的页面渲染  3.整个页面重新加载  4.不擅长于网站交互\n\n\nCSR\n1.擅于网站交互  2.初始加载后网站的渲染速度很快  3.非常适合Web应用程序 4.可以运用强大的JavaScript处理和选择\n1.不利于SEO  2.初始加载可能需要花费更多时间\n\n\n\n参考\nClient-side vs. server-side rendering: why it’s not all black and white\n\nJavaScript SEO: Server Side Rendering vs. Client Side Rendering\n\n\n","dateCreated":"2019-12-09T10:59:42+09:00","dateModified":"2021-09-19T00:02:08+09:00","datePublished":"2019-12-09T10:59:42+09:00","description":"SSR和CSR","headline":"SSR VS CSR","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/09/SSRAndCSR/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/09/SSRAndCSR/","keywords":"SSR, CSR"}</script>
+    <meta name="description" content="SSR和CSR">
+<meta name="keywords" content="SSR,CSR">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="SSR VS CSR">
+<meta property="og:url" content="https://kisky3.github.io/2019/12/09/SSRAndCSR/index.html">
+<meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="SSR和CSR">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2019/12/09/SSRAndCSR/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2019/12/09/SSRAndCSR/2.png">
+<meta property="og:updated_time" content="2021-09-18T15:02:08.154Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSR VS CSR">
+<meta name="twitter:description" content="SSR和CSR">
+<meta name="twitter:image" content="https://kisky3.github.io/2019/12/09/SSRAndCSR/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">向宇的博客 | Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            SSR VS CSR
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-12-09T10:59:42+09:00">
+	
+		    Dec 09, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>SSR和CSR</p>
+<a id="more"></a>
+<p>本文分别从两者的概念，主要的不同，优劣势列举等等去分析CSR和SSR。</p>
+<h3 id="SSR和CSR的概念"><a href="#SSR和CSR的概念" class="headerlink" title="SSR和CSR的概念"></a>SSR和CSR的概念</h3><ul>
+<li>SSR(Server Side Rendering) ：<br>传统的渲染方式，由服务端把渲染的完整的页面吐给客户端。这样减少了一次客户端到服务端的一次http请求，加快相应速度，一般用于首屏的性能优化。<img src="./1.png" style="width: 500px">
+<br></li>
+<li>CSR(Client Side Rendering)：<br>是一种目前流行的渲染方式，它依赖的是运行在客户端的JS，用户首次发送请求只能得到小部分的指引性HTML代码。第二次请求将会请求更多包含HTML字符串的JS文件。<img src="./2.png" style="width: 500px">
+</li>
+</ul>
+<hr>
+<h3 id="两者有何不同"><a href="#两者有何不同" class="headerlink" title="两者有何不同"></a>两者有何不同</h3><p>服务器端渲染的优势在于首屏渲染速度块，简单来讲它不需要来回多次往返于客户端和服务端。但是其性能等众多因素会影响用户体验，比如说：网速，在线活跃人数，服务器的物理位置等等。而客户端渲染则和服务端渲染相反，因为多次和服务器的交互导致首屏加载速度慢。但一旦这些请求完成之后，用户和页面之间的交互时用户体验就会好很多。</p>
+<p>用一个现实生活的例子来看：假如从超市买东西吃，以SSR的角度来看，你每次在超市买完随即吃完再走，每次饿了都需要出发去超市。而从CSR的角度来看，就是你从超市购买许多原材料再拿回家去自己煮，多了能放冰箱，这样每次肚子饿了就不需要每次都往超市跑，唯一麻烦一点在于你得花时间挑选食材。</p>
+<p style="font-weight:bold;background:rgb(255, 0, 0,0.1);padding:5px">简而言之，SSR强在首屏渲染。而CSR强在用户和页面多交互的场景。</p>
+
+<hr>
+<h3 id="服务端渲染如何工作"><a href="#服务端渲染如何工作" class="headerlink" title="服务端渲染如何工作"></a>服务端渲染如何工作</h3><p>服务器渲染简单说来就是将一个完整的HTML发送给客户端，客户端只负责HTML的解析。<br>不过由于网速等影响有可能造成用户体验不佳的情况。<br>如果面临客户端和服务器多次交互的情况就更为明显了。因为即使是在页面只有稍加改动的地方都需要重新请求服务器发送一个完整页面给浏览器，然后浏览器再次进行重新渲染。<br>这对服务器的消耗是非常大的。</p>
+<p>实例：<br>假如你需要访问的域名叫： example.testsite.com<br> <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Example Website<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>My Website<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>This is an example of my new website<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://example.testsite.com/other.html."</span>&gt;</span>Link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p> 当我们点击Link的时候，就会跳转到下面这个页面:<br> <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Example Website<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>My Website<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>This is an example of my new website<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>This is some more content from the other.html<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p> 效果是当你点击Link的时候，<br> 可以看出来这两个页面的差异非常小，但是渲染的时候要将整个页面进行重新渲染，而不是只渲染不同的那一行。<br> 如果复杂的页面代码量大的情况下，这是不合适的。</p>
+ <p style="font-weight:bold;background:rgb(255, 0, 0,0.1);padding:5px">从上面的页面特征来看，使用服务器端渲染的返回的页面是完整的HTML页面。</p>
+
+<hr>
+<h3 id="客户端是如何工作的"><a href="#客户端是如何工作的" class="headerlink" title="客户端是如何工作的"></a>客户端是如何工作的</h3><p> 客户端代表渲染内容部分转嫁到JS身上。客户端只是从服务器得到相对简单的HTML文档，然后使用JS文件对页面的显示内容进行控制。就像Vue.js 用的就是这种方式，还是用刚才那个例子，看看用客户端渲染是怎么做的。</p>
+<p> 假设你想要访问的域名还是<a href="http://example.testsite.com" target="_blank" rel="noopener">http://example.testsite.com</a><br> <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Example Website<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">app</span>&gt;</span><span class="tag">&lt;/<span class="name">app</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--下面两个js文件控制HTML的显示内容 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://vuejs.org"</span><span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"location/of/app.js"</span><span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p> 可以通过上面的html页面看到，你只能识别到自定义组件名id为root的div的标签。<br> 而所有的逻辑处理你看不到，全部被写在了app.js里面。<br>如果需要看到完整的页面的模样，就必须要下载app.js到本地才能运作，否则直接访问你是什么都看不到的。</p>
+<p>OK，假如现在你把app.js下载到本地了，那我们来看看app.js的内容: </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">// this is app.js</span><br><span class="line">var data = &#123;</span><br><span class="line">        title:"My Website",</span><br><span class="line">        message:"This is an example of my new website"</span><br><span class="line">      &#125;</span><br><span class="line">  Vue.component('app', &#123;</span><br><span class="line">    template:</span><br><span class="line">    `</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;title&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"moreContent"</span>&gt;</span>&#123;&#123;message&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click</span>=<span class="string">'newContent'</span>&gt;</span>Link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    `,</span><br><span class="line">    data: function() &#123;</span><br><span class="line">      return data;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">      newContent: function()&#123;</span><br><span class="line">        var node = document.createElement('p');</span><br><span class="line">        var textNode = document.createTextNode('This is some more content from the other.html');</span><br><span class="line">        node.appendChild(textNode);</span><br><span class="line">        document.getElementById('moreContent').appendChild(node);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  new Vue(&#123;</span><br><span class="line">    el: '#root',</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在这里，当你点击了Link的时候，Vue的js起了效果，通过操作DOM给p添加了需要展示的那一行内容。<br>这里不需要页面和服务器的交互，只是对所需要添加的内容进行了修改，而不是像SSR一样做了整个页面的重新渲染。</p>
+<p>当然这里也暴露了一个问题:<br>就是控制页面的所有js文件如果没有完全加载的话，真个页面是渲染不出来的。<br>这是导致了客户端渲染弱于服务端渲染的原因。</p>
+<p style="font-weight:bold;background:rgb(255, 0, 0,0.1);padding:5px">从这个例子来看，可以看出客户端渲染的页面特征是包含有js链接的script标签。</p>
+
+<h3 id="总结SSR和CSR的优劣势"><a href="#总结SSR和CSR的优劣势" class="headerlink" title="总结SSR和CSR的优劣势"></a>总结SSR和CSR的优劣势</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>优势</th>
+<th>劣势</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SSR</td>
+<td>1.搜索引擎可以抓取网站以获得更好的SEO <br> 2.初始页面加载速度更快 <br> 3.非常适合静态网站</td>
+<td>1.频繁的服务器请求 <br> 2.真题缓慢的页面渲染 <br> 3.整个页面重新加载 <br> 4.不擅长于网站交互</td>
+</tr>
+<tr>
+<td>CSR</td>
+<td>1.擅于网站交互 <br> 2.初始加载后网站的渲染速度很快 <br> 3.非常适合Web应用程序 <br>4.可以运用强大的JavaScript处理和选择</td>
+<td>1.不利于SEO <br> 2.初始加载可能需要花费更多时间</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><p><a href="https://www.freecodecamp.org/news/what-exactly-is-client-side-rendering-and-hows-it-different-from-server-side-rendering-bd5c786b340d/" target="_blank" rel="noopener">Client-side vs. server-side rendering: why it’s not all black and white</a></p>
+</li>
+<li><p><a href="https://link.zhihu.com/?target=https%3A//medium.com/%40benjburkholder/javascript-seo-server-side-rendering-vs-client-side-rendering-bc06b8ca2383" target="_blank" rel="noopener">JavaScript SEO: Server Side Rendering vs. Client Side Rendering</a></p>
+</li>
+</ul>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/CSR/">CSR</a> <a class="tag tag--primary tag--small t-link" href="/tags/SSR/">SSR</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/14/XiangyuBenJi/" data-tooltip="The Basic Annals of Xiang Yu" aria-label="PREVIOUS: The Basic Annals of Xiang Yu">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/gulp/" data-tooltip="About Gulp" aria-label="NEXT: About Gulp">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/09/SSRAndCSR/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2022 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/14/XiangyuBenJi/" data-tooltip="The Basic Annals of Xiang Yu" aria-label="PREVIOUS: The Basic Annals of Xiang Yu">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/gulp/" data-tooltip="About Gulp" aria-label="NEXT: About Gulp">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/09/SSRAndCSR/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/09/SSRAndCSR/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>

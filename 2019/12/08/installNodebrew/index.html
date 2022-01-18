@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
+    <title>Install nodebrew - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"安装nodebrew\n\n什么是nodebrewnodebrew是Node.js版本管理工具。可以安装指定版本的Node.js，并进行版本间切换。\n\nnodebrew安装1.如果安装来Homebrew则可以用homebrew来安装。首先安装Homebrew。\n1/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;\n\n确认Homebrew安装成功。\n1brew help\n\n2.安装nodebrew\n12345678910111213141516171819202122232425262728$ brew install nodebrewUpdating Homebrew...==&gt; Auto-updated Homebrew!Updated 1 tap (homebrew/core).==&gt; Updated Formulaepulledpork==&gt; Downloading https://github.com/hokaccha/nodebrew/archive/v1.0.1.tar.gz==&gt; Downloading from https://codeload.github.com/hokaccha/nodebrew/tar.gz/v1.0.1######################################################################## 100.0%==&gt; CaveatsYou need to manually run setup_dirs to create directories required by nodebrew:  /usr/local/opt/nodebrew/bin/nodebrew setup_dirsAdd path:  export PATH=$HOME/.nodebrew/current/bin:$PATHTo use Homebrew&apos;s directories rather than ~/.nodebrew add to your profile:  export NODEBREW_ROOT=/usr/local/var/nodebrewBash completion has been installed to:  /usr/local/etc/bash_completion.dzsh completions have been installed to:  /usr/local/share/zsh/site-functions==&gt; Summary  /usr/local/Cellar/nodebrew/1.0.1: 8 files, 38.6KB, built in 5 seconds$\n\n3.设置环境path\n12$ echo &apos;export PATH=$HOME/.nodebrew/current/bin:$PATH&apos; &gt;&gt; ~/.bash_profile$ source ~/.bash_profile\n\n4.确认nodebrew是否安装成功\n12345678910111213141516171819202122232425262728$ nodebrew -vnodebrew 1.0.1Usage:    nodebrew help                         Show this message    nodebrew install &lt;version&gt;            Download and install &lt;version&gt; (from binary)    nodebrew compile &lt;version&gt;            Download and install &lt;version&gt; (from source)    nodebrew install-binary &lt;version&gt;     Alias of `install` (For backword compatibility)    nodebrew uninstall &lt;version&gt;          Uninstall &lt;version&gt;    nodebrew use &lt;version&gt;                Use &lt;version&gt;    nodebrew list                         List installed versions    nodebrew ls                           Alias for `list`    nodebrew ls-remote                    List remote versions    nodebrew ls-all                       List remote and installed versions    nodebrew alias &lt;key&gt; &lt;value&gt;          Set alias    nodebrew unalias &lt;key&gt;                Remove alias    nodebrew clean &lt;version&gt; | all        Remove source file    nodebrew selfupdate                   Update nodebrew    nodebrew migrate-package &lt;version&gt;    Install global NPM packages contained in &lt;version&gt; to current version    nodebrew exec &lt;version&gt; -- &lt;command&gt;  Execute &lt;command&gt; using specified &lt;version&gt;Example:    # install    nodebrew install v8.9.4    # use a specific version number    nodebrew use v8.9.4$\n\n\n安装Node.js接下来可以用nodebrew来安装Node.js了。1.首先确认可以安装的版本号。\n1234567891011121314151617181920212223242526$ nodebrew ls-remotev0.0.1    v0.0.2    v0.0.3    v0.0.4    v0.0.5    v0.0.6    v0.1.0    v0.1.1    v0.1.2    v0.1.3    v0.1.4    v0.1.5    v0.1.6    v0.1.7v0.1.8    v0.1.9    v0.1.10   v0.1.11   v0.1.12   v0.1.13   v0.1.14   v0.1.15v0.1.16   v0.1.17   v0.1.18   v0.1.19   v0.1.20   v0.1.21   v0.1.22   v0.1.23v0.1.24   v0.1.25   v0.1.26   v0.1.27   v0.1.28   v0.1.29   v0.1.30   v0.1.31v0.1.32   v0.1.33   v0.1.90   v0.1.91   v0.1.92   v0.1.93   v0.1.94   v0.1.95v0.1.96   v0.1.97   v0.1.98   v0.1.99   v0.1.100  v0.1.101  v0.1.102  v0.1.103v0.1.104  ︙︙v11.0.0   v11.1.0   v11.2.0   v11.3.0   v11.4.0   v11.5.0   v11.6.0   v11.7.0v11.8.0   v11.9.0   v11.10.0  v11.10.1  v11.11.0  v11.12.0  io@v1.0.0 io@v1.0.1 io@v1.0.2 io@v1.0.3 io@v1.0.4 io@v1.1.0 io@v1.2.0 io@v1.3.0io@v1.4.1 io@v1.4.2 io@v1.4.3 io@v1.5.0 io@v1.5.1 io@v1.6.0 io@v1.6.1 io@v1.6.2io@v1.6.3 io@v1.6.4 io@v1.7.1 io@v1.8.1 io@v1.8.2 io@v1.8.3 io@v1.8.4 io@v2.0.0 io@v2.0.1 io@v2.0.2 io@v2.1.0 io@v2.2.0 io@v2.2.1 io@v2.3.0 io@v2.3.1io@v2.3.2 io@v2.3.3 io@v2.3.4 io@v2.4.0 io@v2.5.0 io@v3.0.0 io@v3.1.0 io@v3.2.0 io@v3.3.0 io@v3.3.1 $\n\n2.指定版本号的安装\n12$ nodebrew install-binary &#123;version&#125; //指定版本号$ nodebrew install-binary latest    //安装最新版本\n\n如果出现错误的话就新建以下路径错误：\n12345678$ nodebrew install-binary latestFetching: https://nodejs.org/dist/v11.12.0/node-v11.12.0-darwin-x64.tar.gzWarning: Failed to create the file Warning: /Users/fukatsu/.nodebrew/src/v11.12.0/node-v11.12.0-darwin-x64.tar.gz:Warning:  No such file or directory                                                                           0.0%curl: (23) Failed writing body (0 != 1057)download failed: https://nodejs.org/dist/v11.12.0/node-v11.12.0-darwin-x64.tar.gz\n\n解决方法：\n12345$ mkdir -p ~/.nodebrew/src$ nodebrew install-binary latestFetching: https://nodejs.org/dist/v11.12.0/node-v11.12.0-darwin-x64.tar.gz######################################################################## 100.0%Installed successfully\n\n3.确认安装的Node.js版本\n1234$ nodebrew lsv11.12.0current: none\n\n4.使用安装好的Node.js版本,\n12$ nodebrew use v11.12.0use v11.12.0\n\n5.再次确认\n1234$ nodebrew lsv11.12.0current: v11.12.0\n\n或者用Node.js版本确认命令\n12$ node -vv11.12.0\n\n确认完毕！ 安装成功！\n","dateCreated":"2019-12-08T00:24:44+09:00","dateModified":"2021-09-19T00:02:08+09:00","datePublished":"2019-12-08T00:24:44+09:00","description":"安装nodebrew","headline":"Install nodebrew","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2019/12/08/installNodebrew/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2019/12/08/installNodebrew/","keywords":"node.js, nodebrew"}</script>
+    <meta name="description" content="安装nodebrew">
+<meta name="keywords" content="node.js,nodebrew">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Install nodebrew">
+<meta property="og:url" content="https://kisky3.github.io/2019/12/08/installNodebrew/index.html">
+<meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="安装nodebrew">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-09-18T15:02:08.454Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Install nodebrew">
+<meta name="twitter:description" content="安装nodebrew">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">向宇的博客 | Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Install nodebrew
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2019-12-08T00:24:44+09:00">
+	
+		    Dec 08, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/System-Setting/">System Setting</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>安装nodebrew</p>
+<a id="more"></a>
+<h3 id="什么是nodebrew"><a href="#什么是nodebrew" class="headerlink" title="什么是nodebrew"></a>什么是nodebrew</h3><p>nodebrew是Node.js版本管理工具。<br>可以安装指定版本的Node.js，并进行版本间切换。</p>
+<hr>
+<h3 id="nodebrew安装"><a href="#nodebrew安装" class="headerlink" title="nodebrew安装"></a>nodebrew安装</h3><p>1.如果安装来Homebrew则可以用homebrew来安装。<br>首先安装Homebrew。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>确认Homebrew安装成功。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew help</span><br></pre></td></tr></table></figure>
+
+<p>2.安装nodebrew</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ brew install nodebrew</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Auto-updated Homebrew!</span><br><span class="line">Updated 1 tap (homebrew/core).</span><br><span class="line">==&gt; Updated Formulae</span><br><span class="line">pulledpork</span><br><span class="line"></span><br><span class="line">==&gt; Downloading https://github.com/hokaccha/nodebrew/archive/v1.0.1.tar.gz</span><br><span class="line">==&gt; Downloading from https://codeload.github.com/hokaccha/nodebrew/tar.gz/v1.0.1</span><br><span class="line">######################################################################## 100.0%</span><br><span class="line">==&gt; Caveats</span><br><span class="line">You need to manually run setup_dirs to create directories required by nodebrew:</span><br><span class="line">  /usr/local/opt/nodebrew/bin/nodebrew setup_dirs</span><br><span class="line"></span><br><span class="line">Add path:</span><br><span class="line">  export PATH=$HOME/.nodebrew/current/bin:$PATH</span><br><span class="line"></span><br><span class="line">To use Homebrew&apos;s directories rather than ~/.nodebrew add to your profile:</span><br><span class="line">  export NODEBREW_ROOT=/usr/local/var/nodebrew</span><br><span class="line"></span><br><span class="line">Bash completion has been installed to:</span><br><span class="line">  /usr/local/etc/bash_completion.d</span><br><span class="line"></span><br><span class="line">zsh completions have been installed to:</span><br><span class="line">  /usr/local/share/zsh/site-functions</span><br><span class="line">==&gt; Summary</span><br><span class="line">  /usr/local/Cellar/nodebrew/1.0.1: 8 files, 38.6KB, built in 5 seconds</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+
+<p>3.设置环境path</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo &apos;export PATH=$HOME/.nodebrew/current/bin:$PATH&apos; &gt;&gt; ~/.bash_profile</span><br><span class="line">$ source ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<p>4.确认nodebrew是否安装成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ nodebrew -v</span><br><span class="line">nodebrew 1.0.1</span><br><span class="line"></span><br><span class="line">Usage:</span><br><span class="line">    nodebrew help                         Show this message</span><br><span class="line">    nodebrew install &lt;version&gt;            Download and install &lt;version&gt; (from binary)</span><br><span class="line">    nodebrew compile &lt;version&gt;            Download and install &lt;version&gt; (from source)</span><br><span class="line">    nodebrew install-binary &lt;version&gt;     Alias of `install` (For backword compatibility)</span><br><span class="line">    nodebrew uninstall &lt;version&gt;          Uninstall &lt;version&gt;</span><br><span class="line">    nodebrew use &lt;version&gt;                Use &lt;version&gt;</span><br><span class="line">    nodebrew list                         List installed versions</span><br><span class="line">    nodebrew ls                           Alias for `list`</span><br><span class="line">    nodebrew ls-remote                    List remote versions</span><br><span class="line">    nodebrew ls-all                       List remote and installed versions</span><br><span class="line">    nodebrew alias &lt;key&gt; &lt;value&gt;          Set alias</span><br><span class="line">    nodebrew unalias &lt;key&gt;                Remove alias</span><br><span class="line">    nodebrew clean &lt;version&gt; | all        Remove source file</span><br><span class="line">    nodebrew selfupdate                   Update nodebrew</span><br><span class="line">    nodebrew migrate-package &lt;version&gt;    Install global NPM packages contained in &lt;version&gt; to current version</span><br><span class="line">    nodebrew exec &lt;version&gt; -- &lt;command&gt;  Execute &lt;command&gt; using specified &lt;version&gt;</span><br><span class="line"></span><br><span class="line">Example:</span><br><span class="line">    # install</span><br><span class="line">    nodebrew install v8.9.4</span><br><span class="line"></span><br><span class="line">    # use a specific version number</span><br><span class="line">    nodebrew use v8.9.4</span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><p>接下来可以用nodebrew来安装Node.js了。<br>1.首先确认可以安装的版本号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ nodebrew ls-remote</span><br><span class="line">v0.0.1    v0.0.2    v0.0.3    v0.0.4    v0.0.5    v0.0.6    </span><br><span class="line"></span><br><span class="line">v0.1.0    v0.1.1    v0.1.2    v0.1.3    v0.1.4    v0.1.5    v0.1.6    v0.1.7</span><br><span class="line">v0.1.8    v0.1.9    v0.1.10   v0.1.11   v0.1.12   v0.1.13   v0.1.14   v0.1.15</span><br><span class="line">v0.1.16   v0.1.17   v0.1.18   v0.1.19   v0.1.20   v0.1.21   v0.1.22   v0.1.23</span><br><span class="line">v0.1.24   v0.1.25   v0.1.26   v0.1.27   v0.1.28   v0.1.29   v0.1.30   v0.1.31</span><br><span class="line">v0.1.32   v0.1.33   v0.1.90   v0.1.91   v0.1.92   v0.1.93   v0.1.94   v0.1.95</span><br><span class="line">v0.1.96   v0.1.97   v0.1.98   v0.1.99   v0.1.100  v0.1.101  v0.1.102  v0.1.103</span><br><span class="line">v0.1.104  </span><br><span class="line"></span><br><span class="line">︙</span><br><span class="line">︙</span><br><span class="line"></span><br><span class="line">v11.0.0   v11.1.0   v11.2.0   v11.3.0   v11.4.0   v11.5.0   v11.6.0   v11.7.0</span><br><span class="line">v11.8.0   v11.9.0   v11.10.0  v11.10.1  v11.11.0  v11.12.0  </span><br><span class="line"></span><br><span class="line">io@v1.0.0 io@v1.0.1 io@v1.0.2 io@v1.0.3 io@v1.0.4 io@v1.1.0 io@v1.2.0 io@v1.3.0</span><br><span class="line">io@v1.4.1 io@v1.4.2 io@v1.4.3 io@v1.5.0 io@v1.5.1 io@v1.6.0 io@v1.6.1 io@v1.6.2</span><br><span class="line">io@v1.6.3 io@v1.6.4 io@v1.7.1 io@v1.8.1 io@v1.8.2 io@v1.8.3 io@v1.8.4 </span><br><span class="line"></span><br><span class="line">io@v2.0.0 io@v2.0.1 io@v2.0.2 io@v2.1.0 io@v2.2.0 io@v2.2.1 io@v2.3.0 io@v2.3.1</span><br><span class="line">io@v2.3.2 io@v2.3.3 io@v2.3.4 io@v2.4.0 io@v2.5.0 </span><br><span class="line"></span><br><span class="line">io@v3.0.0 io@v3.1.0 io@v3.2.0 io@v3.3.0 io@v3.3.1 </span><br><span class="line">$</span><br></pre></td></tr></table></figure>
+
+<p>2.指定版本号的安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nodebrew install-binary &#123;version&#125; //指定版本号</span><br><span class="line">$ nodebrew install-binary latest    //安装最新版本</span><br></pre></td></tr></table></figure>
+
+<p>如果出现错误的话就新建以下路径<br>错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ nodebrew install-binary latest</span><br><span class="line">Fetching: https://nodejs.org/dist/v11.12.0/node-v11.12.0-darwin-x64.tar.gz</span><br><span class="line">Warning: Failed to create the file </span><br><span class="line">Warning: /Users/fukatsu/.nodebrew/src/v11.12.0/node-v11.12.0-darwin-x64.tar.gz:</span><br><span class="line">Warning:  No such file or directory</span><br><span class="line">                                                                           0.0%</span><br><span class="line">curl: (23) Failed writing body (0 != 1057)</span><br><span class="line">download failed: https://nodejs.org/dist/v11.12.0/node-v11.12.0-darwin-x64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>解决方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p ~/.nodebrew/src</span><br><span class="line">$ nodebrew install-binary latest</span><br><span class="line">Fetching: https://nodejs.org/dist/v11.12.0/node-v11.12.0-darwin-x64.tar.gz</span><br><span class="line">######################################################################## 100.0%</span><br><span class="line">Installed successfully</span><br></pre></td></tr></table></figure>
+
+<p>3.确认安装的Node.js版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ nodebrew ls</span><br><span class="line">v11.12.0</span><br><span class="line"></span><br><span class="line">current: none</span><br></pre></td></tr></table></figure>
+
+<p>4.使用安装好的Node.js版本,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ nodebrew use v11.12.0</span><br><span class="line">use v11.12.0</span><br></pre></td></tr></table></figure>
+
+<p>5.再次确认</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ nodebrew ls</span><br><span class="line">v11.12.0</span><br><span class="line"></span><br><span class="line">current: v11.12.0</span><br></pre></td></tr></table></figure>
+
+<p>或者用Node.js版本确认命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br><span class="line">v11.12.0</span><br></pre></td></tr></table></figure>
+
+<p>确认完毕！ 安装成功！</p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/node-js/">node.js</a> <a class="tag tag--primary tag--small t-link" href="/tags/nodebrew/">nodebrew</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/ConnectMysql8-0-14ContainerToSequel/" data-tooltip="Connect Mysql8.0.14 Container To Sequel" aria-label="PREVIOUS: Connect Mysql8.0.14 Container To Sequel">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/03/创建NuxtDemo/" data-tooltip="Create Vue.js + SSR demo with Nuxt" aria-label="NEXT: Create Vue.js + SSR demo with Nuxt">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/installNodebrew/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2022 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/08/ConnectMysql8-0-14ContainerToSequel/" data-tooltip="Connect Mysql8.0.14 Container To Sequel" aria-label="PREVIOUS: Connect Mysql8.0.14 Container To Sequel">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/03/创建NuxtDemo/" data-tooltip="Create Vue.js + SSR demo with Nuxt" aria-label="NEXT: Create Vue.js + SSR demo with Nuxt">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/installNodebrew/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2019/12/08/installNodebrew/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>

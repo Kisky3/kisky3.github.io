@@ -1,0 +1,698 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
+    <title>AWS Memo - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"AWS 云从业者基础知识 学习笔记汇总\n\n\nセキュリティIAM (Identity and Access Management)⇒ユーザーのAWSリソースへのアクセス管理サービス（権限設定）・IAMユーザを作っての運用が推奨\nセキュリティグループ⇒インスタンスに対して設定する(トラフィックを制御する)仮想ファイアウォール・オンプレ(1LANに1ファイアウォール)とは違い、各インスタンスごとに設定できる・許可するインバウンドのポートと送信元を設定するホワイトリスト・送信元には、CIDRか他のセキュリティグループを指定\n★CIDR (Classless Inter-Domain Routing)⇒IPアドレスの範囲を定義する（10.0.0.0/16など）\nネットワークACL (Access Control List)⇒サブネットに対して設定する仮想ファイアウォール・拒否するインバウンドのポートと送信元を設定するブラックリスト・必要がなければ設定しない追加のセキュリティレイヤー\nAWS Shield⇒DDoS攻撃に対する保護サービス・StandardプランとAdvancedプラン(AWS WAFが無償で無制限に利用可能)がある・エッジロケーションで使用\n★DDoS攻撃 (Distributed Denial of Service attack)⇒通信量を増大させて、通信処理に負荷をかけ、サービスを利用困難・ダウンさせる攻撃\nAWS WAF (Web Application Firewall)⇒Webアプリケーションのファイアウォール・可用性低下、セキュリティ侵害、リソースの過剰消費など一般的なWebの脆弱性からアプリを保護する・基本量は無料だが、セキュリティルールに基づいて課金・セキュリティルールの設定が必要・適用先は、CloudFront/Application Load Balancer/API Gatewayから選択\nInspector⇒EC2上のアプリのセキュリティ・コンプライアンス向上のための脆弱性診断サービス・自動でアプリを診断し、問題をリスト化\nコンピューティングEC2 (Elastic Compute Cloud)⇒仮想コンピュータ・必要なときに必要なだけ使用 → 使用した分だけ課金・変更可能なインスタンスタイプから性能を選択 → 運用開始後に変更可能・数分でサーバー調達して起動 → 経営の俊敏性向上・世界中のリージョンから起動場所を選択 → 世界中にデプロイ・AMIからいくつも同じ構成のサーバーを作成できる・セキュリティグループでトラフィック制御・OSを管理者権限で操作 → キーペアで安全にログインできる・ユースケースに応じた料金オプションがある → コスト効率の向上\nELB (Elastic Load Balancing)→EC2インスタンスを複数のAZに配置した際に、ユーザーからのアクセスを一本化するためのもの→EC2を複数AZに配置すると、障害が起きてもシステムは停止しにくい→可用性、対障害性の向上のために使うサービス・ロードバランサータイプは3つ → HTTP/HTTPではApplication Load Balancer・ヘルスチェック → 正常なインスタンスのみにトラフィックを送るため・インターネット向け/内部向け両方に対応 → 内部向けにもELBを挟むことで可溶性をさらに向上・高可用性のマネージドサービス → 自動・水平にノードが増えるので、単一障害点とならない・クロスゾーン負荷分散 → AZを超えて負荷分散をする設定 → リソースの負荷が均等に\n★AMI (Amazon Machine Image)⇒EC2インスタンスのテンプレート（サーバ構成)\nAuto Scaling⇒EC2インスタンスを必要に応じて自動増減してくれるサービス→高可用性、耐障害性、コスト効率化になる・垂直スケーリング → インスタンスの性能変更 → システムの設計変更が発生するため面倒・水平スケーリング → インスタンスの数を変更 → スケーラビリティを確保しやすい・起動設定、Auto Scalingグループ、スケーリングポリシーを設定（何をスケールするか）、（どのAZでスケールするか）、（どのタイミングでスケールするか）・アプリデプロイを自動化\n★ステートレス⇒EC2に情報やステータスを持たせない（スケールイン時に削除されてしまうので）\n★ブートストラップ⇒ユーザーデータとメタデータを使って、アプリのデプロイをより簡易化するための設計パターン（ここで言うデプロイはアプリ改修の場合）\n★ユーザーデータ⇒インスタンス起動時に行う処理を設定しておくもの\n★メタデータ⇒EC2の情報（パブリックIP、インスタンスIDなど）→EC2を起動する前に、情報をメタデータから取得できる\nLambda⇒ソースコードさえあればプログラムを実行できるサービス→環境構築しなくていい・サーバーの構築、管理不要・一般的な言語のサポート → Rubyなどの言語が使えるので、新しく何かを学ぶ必要がない・並行処理／スケーリング → リクエストに応じて自動で水平スケーリングし並行処理＝スケーラビリティ確保・柔軟なリソースを設定 → メモリを設定する（課金対象ここ）。CPUなどはメモリに応じる・ミリ秒単位の無駄のない課金 → 実行されている時間に課金・他のAWSサービスとの連携 ⇒ サービス間の動作をつなぐマクロみたいな役割できる\nその他のコンピューティングサービス★ECS (Elastic Container Service)⇒コンテナ管理を行うマネージドサービス\n★Lightsail⇒仮想プライベートサーバー\n★Batch⇒フルマネージド型のバッチ処理実行環境サービス\nストレージEBS (Elastic Block Store)⇒EC2インスタンスにアタッチして使うブロックストレージボリューム・EC2のルートボリュームor追加ボリュームとして使用（外付けHDDみたい）    →不要になれば削除できる・AZ内で自動でレプリケート（複製）される → ハードに障害起きてもデータがなくならない・ボリュームタイプの変更が可能・容量の変更が可能 → 確保している容量に対して課金・高い耐久性のスナップショット → S3に保存\n★スナップショット⇒ ある瞬間における対象の全体像を丸ごと写し取ったもの。ここから復元できる\n★S3に保存⇒複数のAZで冗長化されており、耐久性がイレブンナイン→EBSのスナップショットもイレブンナイン（99.999999999%）※EBS自体はEC2にアタッチしているので、そのAZが死＝EBS死という状況を避けるため\n・ボリュームタイプの変更が可能\n★汎用SSD → 16,000IOPS★プロビジョンドIOPS SSD → 16,000〜64,000IOPS★スループット最適化HDD → SSDほど性能要らないとき　※ルートボリュームとしてはNG★Cloud HDD → SSDほど性能が要らず、アクセス頻度が低いとき ※ルートボリュームとしてはNG★IOPS⇒1秒あたりのディスクが処理できるI/Oアクセスの数→SSDの性能\n・ボリュームの暗号化 → スナップショットも暗号化。自動なので操作不要・永続的ストレージ → インスタンスを再起動してもデータは残る\n★インスタンスストア⇒EBSの対比で、ホストのローカルのストレージを使うこと→インスタンスの状態に依存する（データは一時的利用）\nAWS マーケットプレイスAWS上で利用可能なソフトウェアやサービスを見つけ、購入することができるオンラインストアです。ここでAWS用のサードパーティのソフトウェアソリューションとサービスの検索することができます。\nS3 (Simple Storage Service)⇒マネージド型のオブジェクトストレージ・無制限のストレージ容量 → 容量の確保は必要なく、バケットさえ作ればOK・高い耐久性 → 複数のAZ内で冗長化（イレブンナイン）・ネット経由でアクセス → 世界のどこからでもアクセスできる\n・バケット、オブジェクトはデフォルトでプライベート・ACL（アクセスコントロールリスト）で簡単にアクセス権を設定できる・バケットポリシーでより詳細にアクセス権を設定できる・EC2などに、S3へのアクセスけんを設定する際はIAMロールを使用する・HTTPSでアクセス可能。何もせずとも・保存データの暗号化は複数の方法で可能 → S3キーでのサーバー、KMS、独自キーでのサーバーorクライアント\nAWS Global Acceleratorローカルまたは世界中のユーザーに提供するアプリケーションの可用性とパフォーマンスを改善します。AWS グローバルネットワークを使用してユーザーからアプリケーションへのパスを最適化し、TCP および UDP トラフィックのパフォーマンスを改善します。アプリケーションエンドポイントの状態を継続的に監視し、異常なエンドポイントを検出し、1 分以内に正常なエンドポイントにトラフィックをリダイレクトします。\nAWS Storage GatewayオンプレミスアプリケーションがAWSクラウドストレージをシームレスに接続することができるハイブリッドストレージサービスです。 このサービスはバックアップ、アーカイブ、災害復旧、クラウドデータ処理、および移行に使用できます。\nストレージクラス★標準 → デフォ\n★低頻度アクセスストレージ（標準IA）→ リクエスト料金↑、ストレージ料金↓　⇒バックアップデータに最適\n★1ゾーン定頻度アクセスストレージ（1ゾーンIA）→複数のAZで冗長化されない。別リージョンでのバックアップ\n★Amazon Glacier → 取り出しに3-5Hかかる。法的保存期間の定めがあるものなど・ストレージ料金は、最適なストレージクラス選択によってコスト効率を高められる・ライフサイクルポリシーによってストレージクラスの変更を自動化できる・リージョン外へのアウト通信にのみ転送料金がかかる\nその他のストレージサービスEFS (Amazon Elastic File System)⇒複数のEC2インスタンスでマウントして共有利用できるファイルストレージサービス\nStorage Gateway⇒オンプレアプリとAWSのストレージをシームレスに接続利用するためのゲートウェイ\nSnowball⇒物理デバイスを利用してペタ級の大容量データ転送を行うサービス\nネットワークVPC (Virtual Private Cloud)⇒AWS内に構築できるプライベートなネットワーク環境→AWSの敷地の中で、「自分の領域はここ！」・リージョンを選択して作成（AZをまたぐことはできる）・CIDR (Classless Inter-Domain Routing) → プライベートIPの範囲を定義する\n★サブネット⇒AZとIPアドレス範囲を定義するネットワークグループ→役割別に作成する（外部接続係、内部接続係）\n★インターネットゲートウェイ★インターネットゲートウェイ⇒VPCとパブリックインターネットを接続するためのGateway→インターネット（外部との通信）の入り口※入り口はVPCにつき一つ※水平スケーリングによる冗長性を持っているので、単一障害点にはならない\n★ルートテーブル⇒サブネットの経路を設定。サブネットと関連づける→通信に関するルールブック\n★セキュリティグループ⇒仮想ファイアウォール→セキュリティに関するルールブック※送信元を、CIDRでIPアドレス範囲で指定※送信元を、他のセキュリティグループのIDで指定　→IPアドレスに依存せず、柔軟かつ最低限の送信元だけを許可するセキュアな設定※VPCを指定して作成→トラフィックのホワイトリスト化\n★ネットワークACL(Access Control List)⇒サブネットに対して設定する仮想ファイアウォール・拒否するインバウンドのポートと送信元を設定するブラックリスト・必要がなければ設定しない追加のセキュリティレイヤー\n★外部からEC2インスタンスにアクセスするための重要ポイント・インターネットゲートウェイをVPCにアタッチ・インターネットゲートウェイへの経路を持つルートテーブルをサブネットに関連づける・EC2インスタンスをそのサブネット内で起動・EC2インスタンスにパブリックIPアドレスを有効にする（orEC2のパブリックIPを固定するElastic IPをアタッチする）\n★ハイブリッド環境構成・VPCに、既存のオンプレからVPN or 専用回線で接続→オンプレ環境の拡張先としてAWS使える⇒オンプレ＆クラウド＝ハイブリッド\nCloudFront⇒コンテンツ配信ネットワークサービス(CDN = Contents Delivery Network)・最も低いレイテンシーで配信できる・キャッシュによる低レイテンシー配信 → エッジロケーションにキャッシュ持たせてる・ユーザの近くからの低レイテンシー配信 → ユーザへは最もレイテンシーの低いエッジロケーションから配信・安全性の高いセキュリティ → ドメイン証明書を設定できる＝HTTPS化\nRoute 53⇒DNS(Domain Name System)サービス→例えばドメイン(teshita.com)とElastic IP(51.1.1.1)を紐付ける・エッジロケーションで使用される・複数のDNSレコードを設定し、用途に応じて様々なルーティング機能を選択・高可用性実現するヘルスチェックとフェイルオーバー → 複数のDNSレコードにより実現・ルートドメイン(Zone Apex)のエイリアスレコード\nデータベースAWS OpsWorksChef や Puppet のマネージド型インスタンスを利用した構成管理サービスです。Chef や Puppet は、コードを使用してサーバーの構成を自動化するためのオートメーションプラットフォームです。Puppetを使用してEC2インスタンスの構成方法を自動化することができます。\nRDS (Relational Database Service)⇒オンプレで使用されているデータベースエンジンをそのまま使えるDBサービス・通常のデータベースタスクの時間を節約して、ユーザーに必要な高速パフォーマンスと高可用性を提供する\n★EC2にMySQLなどをインストールして使うのと違うのは・メンテナンス(OS、DBエンジンのアプデ)不要・バックアップ不要 → 自動で行ってくれる(max35日間) →それを超えるときは手動のスナップショット※ポイントタイムリカバリー → 自動バックアップ期間内なら、秒単位での指定復元可能・高可用性の担保 → マルチAZ　→MasterとStandby間でレプリケーション（異なるデータセンター間を低レイテンシーで実現）※クロスリージョンリードレプリカ　→リードレプリカを他リージョンに作成することで、マスターデータベースから読み込みの負荷を軽減できる\n★Amazon Aurora⇒クラウドに最適化して再設計されたリレーショナルデータベースエンジン→MySQL、PostgreSQL互換・メリットある\nAmazon Neptune高速かつ信頼性の高いフルマネージドグラフデータベースサービスです。このサービスでは、高度に接続されたデータセットと連携するアプリケーションを簡単に構築および実行できます。Amazon Neptuneを利用することで、洗練されたインタラクティブなグラフアプリケーションを作成することができます。\n★DMS (Databese Migration Service)⇒DBの移行サービス・オンプレからAWSへの継続的なデータ移行 → システムのダウンタイムを最小限にできる\nDynamoDB⇒NoSQL型のフルマネージドDB→非リレーショナル・テーブル名とプライマリーキーを決めるのみで、リージョン選択するだけで使える（AZ気にしない）・RDSよりさらに管理範囲が少ない\n★RDSとの違い①スケーリング・RDS → 垂直スケーリング → 性能の向上（数は一つ） →大量のアクセス🙅‍♂️(高速パフォーマンスと高可用性🙆‍♂️)・DynamoDB → 水平スケーリング → 数の増加 → 大量のアクセス🙆‍♂️(厳密なトランザクション、複雑なクエリ🙅‍♂️)\n②テーブルの型・RDS → SQL型（Excelみたい）・DynamoDB → NoSQL型（アイテム＝ハッシュ？）→不定型の入れ物に自由に情報を格納 → キーを検索のインデックスとして扱う\nその他のデータベースサービス★Amazon Redshift⇒高速でシンプルなデータウェアハウスサービスで、分析に使用される\n★Amazon ElasticCache⇒インメモリデータストアサービス→クエリ結果のキャッシュやアプリのセッション情報を管理するのに使用される\n★Amazon Nepture⇒グラフデータベースサービスで、関係性や相関情報などを扱う。提案エンジン、物流最適化など\n管理サービスAmazon Cognitoウェブアプリケーションやモバイルアプリケーションの認証、許可、ユーザー管理をサポートしています。ユーザーは、ユーザー名とパスワードを使用して直接サインインするか、Facebook、Amazon、Google などのサードパーティーを通じてサインインできます。\nCloudWatch⇒AWSサービスの情報をモニタリングするサービス・標準(組込メトリクス)の収集、可視化・カスタムメトリクスの収集、可視化・ログの収集 → メトリクスだけでなくEC2などのログも収集できる※これによりEC2をステートレスにできる → EC2ローカルにログファイルがあると障害時自動終了が面倒\n★標準メトリクス → AWSが管理する範囲の情報。サービスによって異なる★カスタムメトリクス → ユーザが管理する範囲の情報。CloudWatchエージェントで取得できる★CloudWatch Logs → インスタンスのログを収集。CloudWatchエージェントで取得できる※文字列のフィルタリング結果をメトリクスとして扱える※保存期間は任意。失効しないも可能\n・アラームを設定することで、モニタリング結果に基づく運用を自動化できる\nAWS Security Token Service(AWS STS)AWS のサービスへのアクセスに使用できる一時的な限定権限認証情報を取得できます。一時的な認証情報は AWS STS によって生成されます。デフォルトでは、AWS STS は https://sts.amazonaws.com に 1 つのエンドポイントのあるグローバルサービスです。ただし、他のサポートされているリージョンにあるエンドポイントへの AWS STS API 呼び出しを実行することもできます。\nAmazon Elastic Container Registry (ECR)開発者がDockerコンテナイメージをAWSクラウドに保存・管理することができます。ECRは完全マネージド型の Docker コンテナレジストリとして提供されています。\nTrusted Advisor⇒環境を自動でチェックし、ベストプラクティスに近づけるためのアドバイスをくれるサービス・コスト最適化の視点・パフォーマンスの視点 → 最適なサービス、サイズが選択されてるか？・セキュリティ → リスクないか？・フォールトトレランス（耐障害性）・サービス制限 → 意図しない操作等で不利益が生じないようにするためのソフトリミット\nその他の管理ツール★Cloud Trail⇒AWS内のすべてのAPI呼び出しを記録\nCost Explorerコストと使用状況を表示および分析するために使用できるツールです。メイングラフ、コストと使用状況レポート、または Cost Explorer RI レポートを使用して、使用状況とコストを確認できます。過去 13 か月までのデータを表示し、今後 3 か月間にどれくらい費やす可能性が高いかを予測し、リザーブドインスタンスを購入するための推奨事項を得ることができます。また、さらに調べる必要がある分野を特定し、コストを把握するために使用できる傾向を確認できます。\n★CloudFormation⇒AWSの各リソースを含めた環境を自動作成／更新／管理\n★Elastic Beanstalk⇒Webアプリの環境を簡単にAWSに構築AWS クラウド上にアプリケーションをすばやくデプロイし、管理を自動化できます。これはGo、Java、.NET、Node.js、PHP、Python、Ruby で開発されたアプリケーションをサポートしており、.NETアプリケーションをAWSクラウドにすばやくデプロイすることが可能です。\nAWS Systems ManagerAWS でご利用のインフラストラクチャを可視化し、制御するためのサービスです。統一されたユーザーインターフェイスを介して複数のAWSサービスからの運用データを表示し、運用タスクを自動化することができます。\n★Cloud Config⇒リソースの設定変更履歴を簡単に見れる\n\nその他補足Lambda新しい情報に迅速に対応できるアプリケーションを容易に構築できるコンピューティングサービスです。これはサーバレスアプリケーションを利用する際にEC2の代わりに利用するサービスです。\nセキュリティグループインスタンスに対して設定するホワイトリストの仮想FW\nネットワークACLサブネットに対して設定するブラックリストの仮想FW着信トラフィックリクエストをフィルタリング\nオンデマンドインスタンス一週間という期限だけで利用する場合はオンデマンドインスタンスを利用\nスポットインスタンス一瞬だけ使う。動画編集するときだけ、みたいな\nスケジュールドリザーブドインスタンス週一回金曜日や、１０時から１７時といった定期的な利用時間にかぎってインスタンスを利用する場合にコスト最適\nCloudTrailAWS内のすべてのAPI呼び出しを記録AWSでのガバナンス、コンプライアンス、およびリスク監査のために、CloudTrailを有効化する必要ユーザーアクティビティログを取得することができます。ユーザー、ロール、または AWS のサービスによって実行されたアクションは、CloudTrail にイベントとして記録されます。イベントには、AWS マネジメントコンソール、AWS CLI、および AWS SDK と API で実行されたアクションが含まれます。\nAWS ConfigAWS Config はAWS リソースの設定を評価、監査、審査できるサービスです。Config では、AWS リソースの設定が継続的にモニタリングおよび記録され、望まれる設定に対する記録された設定の評価を自動的に実行できます。AWSリソース設定がコンプライアンスやガバナンス上最適な構成になっているかを評価・監視することができまます。\nAWS Systems Manager運用関連！AWSで利用しているインフラストラクチャを可視化し、制御するためのサービスアプリケーション、環境、リージョン、プロジェクト、キャンペーン、ビジネスユニット、ソフトウェアライフサイクルなど、選択した目的やアクティビティごとに AWS リソースをグループ化します。\nAWS リソースに関連する運用作業項目を一元的に表示、調査、および解決します。さまざまなメンテナンスおよびデプロイタスクを自動化またはスケジュールするインフラストラクチャを可視化し、制御するためのサービス\n統一されたユーザーインターフェイスを介して複数のAWSサービスからの運用データを表示し、運用タスクを自動化できる\nAccess AdvisorIAMエンティティ(ユーザー、グループ、ロール) が最後にAWSサービスにアクセスした⽇付と時刻を表⽰する機能\nEC2EC2はアンマネージド型サービスの典型的なサービスユーザー側でインスタンスのオペレーティングシステムとアプリケーションに定期的にパッチを適用し、更新し、保護する必要がある\nプレイスメントグループAZ内でインスタンスをまとめることで、低レイテンシーネットワークパフォーマンスを実現\nELB負荷分散機能配下のEC2の負荷に応じて、複数のAZに跨るEC2インスタンスの負荷分散を行う機能\nConnection Drainingインスタンスが登録解除されるか異常が発生した場合に、そのバックエンドインスタンスへの新規リクエスト送信を中止する機能\nAmazon Inspector事前に定義されたテンプレ―トに基づいて、EC2インスタンスを分析し、脆弱性をチェックすることができます。これにより、Amazon Inspector では、自動的にアプリケーションを評価し、露出、脆弱性、ベストプラクティスからの逸脱がないかどうかを確認できます。AWS にデプロイしたアプリケーションのセキュリティとコンプライアンスを向上させることができます。\n\nヘルスチェックEC2インスタンスの正常／異常を確認し、利用するEC2の振り分けを行う機能\n\nスティッキーセッションセッション中に、同じユーザから来たリクエストを全て、同じEC2インスタンスに送信する機能\n\nELBのターゲットグループを設定すれば、ELB構成されたEC2インスタンス群に対して、AutoScalingを設定することが可能\n\n\nS3（オブジェクトストレージ）S3 Intelligent-Tieringアクセスパターンを把握するために何らか特別な開発をする必要はなく、S3を有効活用\nS3は直接リージョンに設置されるサービス\nAZ間で自動的にデータを複製する\n重要なデータを保存するための耐久性のあるインフラストラクチャを提供し、オブジェクトの99.999999999％の耐久性のために設計されていますデータは、複数の施設と各施設の複数のデバイスに冗長的に保存されます。\nEBS (Elastic Block Store)：外付けHDD（ブロックストレージ）⇒EC2インスタンスにアタッチして使うブロックストレージボリュームEC2のルートボリュームor追加ボリュームとして使用（外付けHDDみたい）不要になれば削除できる削除の挙動は都度設定できる\nAZ内で自動でレプリケート（複製）される → ハードに障害起きてもデータがなくならないボリュームタイプの変更が可能容量の変更が可能 → 確保している容量に対して課金高い耐久性のスナップショット(EC2ボリュームをバックアップする機能) → S3に保存スナップショットはそのEBSが設置されているリージョン内にスナップショットを作成シングルリージョンのみに限定されず、スナップショットを他のリージョンにコピーすることで、他リージョンにおいて、スナップショットによる復元を実施できる\nEBSのスナップショットは増分バックアップ頻繁かつ詳細な更新が必要なデータのプライマリストレージデバイスとして使用\nその他\nKMS：データを暗号化することができます\n\nAMI： EBSスナップショット + α(管理情報)  AMIの作成時点のEBSボリュームも復元できる＝スナップショットからだけでなく、AMIからも復元できる\n\nEC2インスタンスを起動する際にボリュームタイプとしてEBSのストレスタイプを選択することが必須\n\nEFS (Elastic File System)：NAS（ファイルストレージ）  複数のEC2インスタンスでマウントして共有利用できるファイルストレージサービス  EC2インスタンスからLAN上にあるNASとして利用できる共有ファイルストレージ  インスタンスストア：Cドライブ  EC2インスタンスの一時的なデータを保持するストレージ  EBSの対比で、ホストのローカルのストレージを使うこと  インスタンスの状態に依存する（データは一時的利用）  AWS側で管理されるもの\n\nElastic IP  利用されていないElastic IPがあると課金される  課金発生しない条件  Elastic IP アドレスが EC2 インスタンスに関連付けられている。  Elastic IP アドレスに関連付けられているインスタンスが実行中である。  インスタンスに 1 つの Elastic IP アドレスしか添付されていない。\n\nElasticCache  クラウド内のインメモリデータストアまたはキャッシュを簡単にデプロイ、操作、およびスケーリングできるようにするウェブサービス  ミリ秒未満のレイテンシを必要とするリアルタイムIoTアプリケーションのデータ処理に利用\n\nAmazon Redshift  高速でシンプルなデータウェアハウスサービスで、分析に使用される  通常の業務システムデータなどのBIシステムやデータウェアハウスとして利用可能なリレーショナルデータベースサービスです  AWSが提供するフルマネージド型サービスであり、ペタバイト規模のデータを扱う性能を有しています\n\nAurora  Auroraの DB インスタンスでは常に自動バックアップが有効  クラウドに最適化して再設計されたリレーショナルデータベースエンジン  MySQL、PostgreSQL互換  可用性は99.99%  最大15のリードレプリカを利用した高速読み込みが可能\n\nSnowball Edge  AWSクラウドへの安全な大量データの転送を可能にするサービス（ペタ）  Snowballは古いサービスなので非推奨  切断された環境における高度な機械学習およびフルモーションビデオ分析にも利用される  AWSクラウドの一部をカーブアウトする（切り出す）ことができるサービス\n\nVPC  VPCを使用することで、AWSクラウドの一部をカーブアウトして定義した仮想ネットワークにAWSリソースを起動することができます。 この仮想ネットワークは、AWSのスケーラブルなインフラストラクチャを使用する利点を備え、独自のデータセンターで運用する従来のネットワークに非常に似ています。\n\nGlacier  取り出しに3-5Hかかる。法的保存期間の定めがあるものなど  マルチAZ構成のフォールトトレランス（耐障害性）を考慮して設計されているAWSサービス  AZ間で自動的にデータを複製する、ってこと？\n\n\n\nDynamoDB  AWSで実証された高可用性データセンターで実行されます。  このサービスは、AWSリージョンの3つの施設にデータを複製し、サーバー障害またはアベイラビリティーゾーンの停止が発生した場合のフォールトトレランスを提供します。  NoSQL型のフルマネージドDB  非リレーショナル  NoSQL型のkey-value およびドキュメントデータベース  テーブル名とプライマリーキーを決めるのみで、リージョン選択するだけで使える（AZ気にしない）  RDSよりさらに管理範囲が少ない  プッシュボタンスケーリングにより、稼働を停止させることなく、設定オプションをワンクリックするだけでダウンタイムなしに、いつでもDBをスケーリングできます  他のすべてのデータベースはEC2インスタンスに基づいているため、インスタンスのサイズを拡大してダウンタイムを招く\n\nAmazon DynamoDB Accelerator (DAX)  リクエストのレイテンシをミリ秒からマイクロ秒に短縮する機能\n\nDynamoDB Streams  DynamoDBによるクロスリージョンレプリケーションを行うために必要  セッションデータを高速で管理するデータベース処理  規模に関係なく数ミリ秒台のパフォーマンスを実現  AZ間でデータを自動的に複製するサービス  初めからマルチAZ構成のフォールトトレランスを考慮して設計されている  利用負荷があらかじめ予測できる場合　⇒　プロビジョンドスループット  利用負荷があらかじめ予測できない場合　⇒　オンデマンドキャパシティーモード\n\nRDS (Relational Database Service)  高速パフォーマンスと高可用性を提供するリレーショナルデータベース  自動バックアップ(自動スナップショット)の機能  リードレプリカ\nデータの冗長性を実現し、コスト最適に災害復旧対応を実現する機能\nデータベース (DB) インスタンスのパフォーマンスと耐久性が向上します。この機能によって、1 つの DB インスタンスのキャパシティーを伸縮自在にスケールし、読み取り頻度の高いデータベースのワークロードを緩和できます。ソース DB インスタンスのレプリカを複数作成し、アプリケーションの大容量読み取りトラフィックをデータの複数のコピーから提供することにより、全体の読み込みスループットを向上させることができます。リージョンは必要な場合、リードレプリカをスタンドアロンの DB インスタンスに昇格させることで、RDSに対してデータの冗長性を実現し、災害復旧を改善することができます  自動フェールオーバーを実行する機能  マルチAZ構成  マルチ AZ 配置を使用して DB インスタンスの高可用性およびフェイルオーバーサポートを提供  RDSは利用している途中でインスタンスタイプを縮小することができます  RDS リードレプリカ  RDSに対してデータの冗長性を実現し、コスト最適に災害復旧対応を実現する機能  RDSに対してデータベース読み取りアクティビティのオフロードを許可する機能\n\nOrganizations  アカウントの作成を自動化し、ビジネスニーズを反映したアカウントのグループを作成し、それらのグループにポリシーを適用して管理できます。  これにより、開発者向けのAWSアカウントの作成を自動化し、それらのアカウントのエンティティに必要なAWSサービスへのアクセスのみを許可するために、独自のOUを設定して、SCPによって管理することができます。  単一の組織内の複数のAWSアカウントの支払いを統合\n\nS3 Transfer Acceleration  クライアントとAmazon S3バケット間の長距離にわたるファイルの高速かつ安全な転送を可能にする際に、利用するべき機能\n\nAWS WAF (Web Application Firewall)  ⇒Webアプリケーションのファイアウォール  可用性低下、セキュリティ侵害、リソースの過剰消費など一般的なWebの脆弱性からアプリを保護する  基本量は無料だが、セキュリティルールに基づいて課金  セキュリティルールの設定が必要  適用先は、CloudFront/Application Load Balancer/API Gatewayから選択\n\nAWS Shield  DDoS攻撃に対する保護サービス  StandardプランとAdvancedプラン(AWS WAFが無償で無制限に利用可能)がある  エッジロケーションで使用  インフラに対するファイアウォール  EC2上のアプリのセキュリティ・コンプライアンス向上のための脆弱性診断サービス  自動でアプリを診断し、問題をリスト化\n\nAmazon EMR(Elastic Map Reduce)  ビッグデータのセットを分析および処理するために利用するサービス  Apache Hadoop や Apache Spark などのビッグデータフレームワークとして、大量のデータを処理および分析するマネージド型クラスタープラットフォーム  クラウドネイティブなビッグデータプラットフォーム  MACHINE LEARNING  抽出、変換、読み込み (ETL)  クリックストリーム分析  リアルタイムストリーミング  インタラクティブ分析  ゲノミクス\n\nAmazon Kinesis  ストリーミングデータをリアルタイムで収集、処理、分析する\n\nAmazon Athena  SQLの分析  インタラクティブなクエリサービスで、Amazon S3 内のデータを標準 SQL を使用して簡単に分析\n\nAWS SDK  各言語に対応したAWS SDKを選択しすることで、選択したプログラミング言語を使用して、AWS でアプリケーションを簡単に開発することができます。\n\nCloudFront  高速コンテンツ配信ネットワーク (CDN) サービス  グローバルに利用されるWEBアプリケーションのコンテンツを最適に提供するためにはCloudFrontによるコンテンツ配信を実施することが最適な構成  課金対象\nトラフィックの分散\nデータ転送とリクエストの価格は地域によって異なり、価格はコンテンツが配信されるエッジの場所に基づいています。  リクエスト\nリクエスト（HTTPまたはHTTPS）の数と種類、およびリクエストが行われた地域。  データ転送アウト\nAmazon CloudFrontエッジロケーションから転送されたデータの量。  ルーティングはしない\n\nコンバーティブル  リザーブドインスタンスのコンバーティブルは変更とインスタンス自体の交換が可能です。リザーブドインスタンスと同等な価格のリザーブドインスタンスのに交換できるため、より柔軟に変更できます。したがって、オプション１が正解となります。\n  リザーブドインスタンスのコンバーティブルはインスタンスファミリー、オペレーティングシステム、およびテナンシーを含む別の構成で、1 つ以上の別の コンバーティブルリザーブドインスタンス の コンバーティブルリザーブドインスタンス に交換することもできます。交換先の コンバーティブルリザーブドインスタンス が交換元の コンバーティブルリザーブドインスタンス と同等あるいはそれ以上の値である限り、交換の実行回数に制限はありません。\n  コンバーティブルリザーブドインスタンス を交換する場合、現在の予約のインスタンスの数はターゲットの コンバーティブルリザーブドインスタンス の設定と同じあるいはそれ以上の値を含有する数のインスタンスと交換されます。Amazon EC2 は、交換で受け取った リザーブドインスタンス の数を計算します。\n  一方でリザーブドインスタンスのスタンダードは以下のような属性を変更することが可能です。\n・アベイラビリティーゾーンまたは適用範囲\n\n・ネットワークプラットフォーム (EC2-Classic または VPC)\n\n・インスタンスサイズ（Linuxのみ）\nAWSリソースが不正処理の例  AWSリソースが不正処理に使用されている場合、AWS不正使用対策チームに連絡することが求められています。不正処理の例は次の通りです。\n✔スパム: AWS 所有の IP アドレスから不要なメールが届く、または AWS リソースがスパムウェブサイトやフォーラムに使用されている。\n\n✔ポートスキャニング: ログに、1 つ以上の AWS 所有の IP アドレスがサーバー上の複数のポートにパケットを送信していることが示されており、セキュリティで保護されていないポートを検出しようとしていると考えられる。\n\n✔サービス拒否攻撃 (DOS): ログに、1 つ以上の AWS 所有の IP アドレスがリソースのポートをパケットで溢れさせるために使用されていることが示されている。\n\n✔侵入の試み: ログに、1 つ以上の AWS 所有の IP アドレスがリソースへのログイン試行に使用されていることが示されている。\n\n✔不快なコンテンツや著作権で保護されたコンテンツのホスティング: AWS リソースが著作権者の同意なしに、違法コンテンツをホストまたは配布している。\n\n✔マルウェア配信: インストール先のコンピュータやマシンに不正アクセスしたり危害を加えるために意図的に作成されたソフトウェアを配布するために、AWS リソースが使用されている証拠がある。\nAmazon CloudFront  AWSからのデータ転送アウトと、ユーザーからのリクエストとトラフィック分散に基づいて料金が決まります。\n-トラフィックの分散：データ転送とリクエストの価格は地域によって異なり、価格はコンテンツが配信されるエッジの場所に基づいている\n\n-リクエスト：リクエスト（HTTPまたはHTTPS）の数と種類、およびリクエストが行われた地域\n\n-データ転送アウト：Amazon CloudFrontエッジロケーションから転送されたデータの量。\n\n-機密データのセキュリティを高めたい場合には、データ転送時にSSLを使用するか、クライアントサイド暗号化を使用することで、転送中のデータを保護できます。\nAmazon S3  保存データを保護するため次のような対応ができます。\n■サーバーサイド暗号化を有効化することで保存されるデータが暗号化されます。したがって、オプション２が正解となります。\n\n■クライアントサイド暗号化を使用することで、事前に暗号化されたデータをAmazon S3にアップロードできます。したがって、オプション３が正解となります。\nカスタムコンソール  各フェーズに応じたカスタムコンソールを作成するには、各フェーズや領域のすべてのリソースをグループとして管理することが必要となります。デフォルトでは、AWSマネジメントコンソールはAWSサービスごとに整理されています。ただし、リソースグループツールを使用すると、プロジェクトと使用するリソースに基づいて情報を整理および統合するカスタムコンソールを作成できます。\n\nRDS  RDSはDBインスタンス、保存データ、自動バックアップとスナップショットを暗号化することができます。  RDSは利用している途中でインスタンスタイプを縮小することができます。\n\nAmazon DynamoDB Accelerator (DAX)  フルマネージド型高可用性インメモリキャッシュで、DynamoDB 用に特化しています。1 秒あたりのリクエスト数が数百万件になる場合でも、ミリセカンドからマイクロセカンドへと最大 10 倍のパフォーマンス向上を実現します。\n\n\n","dateCreated":"2021-03-03T23:52:49+09:00","dateModified":"2021-09-19T00:02:06+09:00","datePublished":"2021-03-03T23:52:49+09:00","description":"AWS 云从业者基础知识 学习笔记汇总","headline":"AWS Memo","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2021/03/03/AWSMemo/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2021/03/03/AWSMemo/","keywords":"aws, AWS Certified Cloud Practitioner"}</script>
+    <meta name="description" content="AWS 云从业者基础知识 学习笔记汇总">
+<meta name="keywords" content="aws,AWS Certified Cloud Practitioner">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="AWS Memo">
+<meta property="og:url" content="https://kisky3.github.io/2021/03/03/AWSMemo/index.html">
+<meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="AWS 云从业者基础知识 学习笔记汇总">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-09-18T15:02:06.867Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS Memo">
+<meta name="twitter:description" content="AWS 云从业者基础知识 学习笔记汇总">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">向宇的博客 | Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            AWS Memo
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-03-03T23:52:49+09:00">
+	
+		    Mar 03, 2021
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>AWS 云从业者基础知识 学习笔记汇总</p>
+<a id="more"></a>
+
+<h4 id="セキュリティ"><a href="#セキュリティ" class="headerlink" title="セキュリティ"></a>セキュリティ</h4><h5 id="IAM-Identity-and-Access-Management"><a href="#IAM-Identity-and-Access-Management" class="headerlink" title="IAM (Identity and Access Management)"></a>IAM (Identity and Access Management)</h5><p>⇒ユーザーのAWSリソースへのアクセス管理サービス（権限設定）<br>・IAMユーザを作っての運用が推奨</p>
+<h5 id="セキュリティグループ"><a href="#セキュリティグループ" class="headerlink" title="セキュリティグループ"></a>セキュリティグループ</h5><p>⇒インスタンスに対して設定する(トラフィックを制御する)仮想ファイアウォール<br>・オンプレ(1LANに1ファイアウォール)とは違い、各インスタンスごとに設定できる<br>・許可するインバウンドのポートと送信元を設定するホワイトリスト<br>・送信元には、CIDRか他のセキュリティグループを指定</p>
+<p>★CIDR (Classless Inter-Domain Routing)<br>⇒IPアドレスの範囲を定義する（10.0.0.0/16など）</p>
+<h5 id="ネットワークACL-Access-Control-List"><a href="#ネットワークACL-Access-Control-List" class="headerlink" title="ネットワークACL (Access Control List)"></a>ネットワークACL (Access Control List)</h5><p>⇒サブネットに対して設定する仮想ファイアウォール<br>・拒否するインバウンドのポートと送信元を設定するブラックリスト<br>・必要がなければ設定しない追加のセキュリティレイヤー</p>
+<h5 id="AWS-Shield"><a href="#AWS-Shield" class="headerlink" title="AWS Shield"></a>AWS Shield</h5><p>⇒DDoS攻撃に対する保護サービス<br>・StandardプランとAdvancedプラン(AWS WAFが無償で無制限に利用可能)がある<br>・エッジロケーションで使用</p>
+<p>★DDoS攻撃 (Distributed Denial of Service attack)<br>⇒通信量を増大させて、通信処理に負荷をかけ、サービスを利用困難・ダウンさせる攻撃</p>
+<h5 id="AWS-WAF-Web-Application-Firewall"><a href="#AWS-WAF-Web-Application-Firewall" class="headerlink" title="AWS WAF (Web Application Firewall)"></a>AWS WAF (Web Application Firewall)</h5><p>⇒Webアプリケーションのファイアウォール<br>・可用性低下、セキュリティ侵害、リソースの過剰消費など一般的なWebの脆弱性からアプリを保護する<br>・基本量は無料だが、セキュリティルールに基づいて課金<br>・セキュリティルールの設定が必要<br>・適用先は、CloudFront/Application Load Balancer/API Gatewayから選択</p>
+<h5 id="Inspector"><a href="#Inspector" class="headerlink" title="Inspector"></a>Inspector</h5><p>⇒EC2上のアプリのセキュリティ・コンプライアンス向上のための脆弱性診断サービス<br>・自動でアプリを診断し、問題をリスト化</p>
+<h4 id="コンピューティング"><a href="#コンピューティング" class="headerlink" title="コンピューティング"></a>コンピューティング</h4><h5 id="EC2-Elastic-Compute-Cloud"><a href="#EC2-Elastic-Compute-Cloud" class="headerlink" title="EC2 (Elastic Compute Cloud)"></a>EC2 (Elastic Compute Cloud)</h5><p>⇒仮想コンピュータ<br>・必要なときに必要なだけ使用 → 使用した分だけ課金<br>・変更可能なインスタンスタイプから性能を選択 → 運用開始後に変更可能<br>・数分でサーバー調達して起動 → 経営の俊敏性向上<br>・世界中のリージョンから起動場所を選択 → 世界中にデプロイ<br>・AMIからいくつも同じ構成のサーバーを作成できる<br>・セキュリティグループでトラフィック制御<br>・OSを管理者権限で操作 → キーペアで安全にログインできる<br>・ユースケースに応じた料金オプションがある → コスト効率の向上</p>
+<h5 id="ELB-Elastic-Load-Balancing"><a href="#ELB-Elastic-Load-Balancing" class="headerlink" title="ELB (Elastic Load Balancing)"></a>ELB (Elastic Load Balancing)</h5><p>→EC2インスタンスを複数のAZに配置した際に、ユーザーからのアクセスを一本化するためのもの<br>→EC2を複数AZに配置すると、障害が起きてもシステムは停止しにくい<br>→可用性、対障害性の向上のために使うサービス<br>・ロードバランサータイプは3つ → HTTP/HTTPではApplication Load Balancer<br>・ヘルスチェック → 正常なインスタンスのみにトラフィックを送るため<br>・インターネット向け/内部向け両方に対応 → 内部向けにもELBを挟むことで可溶性をさらに向上<br>・高可用性のマネージドサービス → 自動・水平にノードが増えるので、単一障害点とならない<br>・クロスゾーン負荷分散 → AZを超えて負荷分散をする設定 → リソースの負荷が均等に</p>
+<h5 id="★AMI-Amazon-Machine-Image"><a href="#★AMI-Amazon-Machine-Image" class="headerlink" title="★AMI (Amazon Machine Image)"></a>★AMI (Amazon Machine Image)</h5><p>⇒EC2インスタンスのテンプレート（サーバ構成)</p>
+<h5 id="Auto-Scaling"><a href="#Auto-Scaling" class="headerlink" title="Auto Scaling"></a>Auto Scaling</h5><p>⇒EC2インスタンスを必要に応じて自動増減してくれるサービス<br>→高可用性、耐障害性、コスト効率化になる<br>・垂直スケーリング → インスタンスの性能変更 → システムの設計変更が発生するため面倒<br>・水平スケーリング → インスタンスの数を変更 → スケーラビリティを確保しやすい<br>・起動設定、Auto Scalingグループ、スケーリングポリシーを設定<br>（何をスケールするか）、（どのAZでスケールするか）、（どのタイミングでスケールするか）<br>・アプリデプロイを自動化</p>
+<h5 id="★ステートレス"><a href="#★ステートレス" class="headerlink" title="★ステートレス"></a>★ステートレス</h5><p>⇒EC2に情報やステータスを持たせない（スケールイン時に削除されてしまうので）</p>
+<h5 id="★ブートストラップ"><a href="#★ブートストラップ" class="headerlink" title="★ブートストラップ"></a>★ブートストラップ</h5><p>⇒ユーザーデータとメタデータを使って、アプリのデプロイをより簡易化するための設計パターン<br>（ここで言うデプロイはアプリ改修の場合）</p>
+<h5 id="★ユーザーデータ"><a href="#★ユーザーデータ" class="headerlink" title="★ユーザーデータ"></a>★ユーザーデータ</h5><p>⇒インスタンス起動時に行う処理を設定しておくもの</p>
+<h5 id="★メタデータ"><a href="#★メタデータ" class="headerlink" title="★メタデータ"></a>★メタデータ</h5><p>⇒EC2の情報（パブリックIP、インスタンスIDなど）<br>→EC2を起動する前に、情報をメタデータから取得できる</p>
+<h5 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h5><p>⇒ソースコードさえあればプログラムを実行できるサービス<br>→環境構築しなくていい<br>・サーバーの構築、管理不要<br>・一般的な言語のサポート → Rubyなどの言語が使えるので、新しく何かを学ぶ必要がない<br>・並行処理／スケーリング → リクエストに応じて自動で水平スケーリングし並行処理＝スケーラビリティ確保<br>・柔軟なリソースを設定 → メモリを設定する（課金対象ここ）。CPUなどはメモリに応じる<br>・ミリ秒単位の無駄のない課金 → 実行されている時間に課金<br>・他のAWSサービスとの連携 ⇒ サービス間の動作をつなぐマクロみたいな役割できる</p>
+<h4 id="その他のコンピューティングサービス"><a href="#その他のコンピューティングサービス" class="headerlink" title="その他のコンピューティングサービス"></a>その他のコンピューティングサービス</h4><h5 id="★ECS-Elastic-Container-Service"><a href="#★ECS-Elastic-Container-Service" class="headerlink" title="★ECS (Elastic Container Service)"></a>★ECS (Elastic Container Service)</h5><p>⇒コンテナ管理を行うマネージドサービス</p>
+<h5 id="★Lightsail"><a href="#★Lightsail" class="headerlink" title="★Lightsail"></a>★Lightsail</h5><p>⇒仮想プライベートサーバー</p>
+<h5 id="★Batch"><a href="#★Batch" class="headerlink" title="★Batch"></a>★Batch</h5><p>⇒フルマネージド型のバッチ処理実行環境サービス</p>
+<h4 id="ストレージ"><a href="#ストレージ" class="headerlink" title="ストレージ"></a>ストレージ</h4><h5 id="EBS-Elastic-Block-Store"><a href="#EBS-Elastic-Block-Store" class="headerlink" title="EBS (Elastic Block Store)"></a>EBS (Elastic Block Store)</h5><p>⇒EC2インスタンスにアタッチして使うブロックストレージボリューム<br>・EC2のルートボリュームor追加ボリュームとして使用（外付けHDDみたい）<br>    →不要になれば削除できる<br>・AZ内で自動でレプリケート（複製）される → ハードに障害起きてもデータがなくならない<br>・ボリュームタイプの変更が可能<br>・容量の変更が可能 → 確保している容量に対して課金<br>・高い耐久性のスナップショット → S3に保存</p>
+<h5 id="★スナップショット"><a href="#★スナップショット" class="headerlink" title="★スナップショット"></a>★スナップショット</h5><p>⇒ ある瞬間における対象の全体像を丸ごと写し取ったもの。ここから復元できる</p>
+<h5 id="★S3に保存"><a href="#★S3に保存" class="headerlink" title="★S3に保存"></a>★S3に保存</h5><p>⇒複数のAZで冗長化されており、耐久性がイレブンナイン<br>→EBSのスナップショットもイレブンナイン（99.999999999%）<br>※EBS自体はEC2にアタッチしているので、そのAZが死＝EBS死という状況を避けるため</p>
+<p>・ボリュームタイプの変更が可能</p>
+<h5 id="★汎用SSD-→-16-000IOPS"><a href="#★汎用SSD-→-16-000IOPS" class="headerlink" title="★汎用SSD → 16,000IOPS"></a>★汎用SSD → 16,000IOPS</h5><h5 id="★プロビジョンドIOPS-SSD-→-16-000〜64-000IOPS"><a href="#★プロビジョンドIOPS-SSD-→-16-000〜64-000IOPS" class="headerlink" title="★プロビジョンドIOPS SSD → 16,000〜64,000IOPS"></a>★プロビジョンドIOPS SSD → 16,000〜64,000IOPS</h5><h5 id="★スループット最適化HDD-→-SSDほど性能要らないとき-※ルートボリュームとしてはNG"><a href="#★スループット最適化HDD-→-SSDほど性能要らないとき-※ルートボリュームとしてはNG" class="headerlink" title="★スループット最適化HDD → SSDほど性能要らないとき　※ルートボリュームとしてはNG"></a>★スループット最適化HDD → SSDほど性能要らないとき　※ルートボリュームとしてはNG</h5><h5 id="★Cloud-HDD-→-SSDほど性能が要らず、アクセス頻度が低いとき-※ルートボリュームとしてはNG"><a href="#★Cloud-HDD-→-SSDほど性能が要らず、アクセス頻度が低いとき-※ルートボリュームとしてはNG" class="headerlink" title="★Cloud HDD → SSDほど性能が要らず、アクセス頻度が低いとき ※ルートボリュームとしてはNG"></a>★Cloud HDD → SSDほど性能が要らず、アクセス頻度が低いとき ※ルートボリュームとしてはNG</h5><h5 id="★IOPS"><a href="#★IOPS" class="headerlink" title="★IOPS"></a>★IOPS</h5><p>⇒1秒あたりのディスクが処理できるI/Oアクセスの数<br>→SSDの性能</p>
+<p>・ボリュームの暗号化 → スナップショットも暗号化。自動なので操作不要<br>・永続的ストレージ → インスタンスを再起動してもデータは残る</p>
+<h5 id="★インスタンスストア"><a href="#★インスタンスストア" class="headerlink" title="★インスタンスストア"></a>★インスタンスストア</h5><p>⇒EBSの対比で、ホストのローカルのストレージを使うこと<br>→インスタンスの状態に依存する（データは一時的利用）</p>
+<h5 id="AWS-マーケットプレイス"><a href="#AWS-マーケットプレイス" class="headerlink" title="AWS マーケットプレイス"></a>AWS マーケットプレイス</h5><p>AWS上で利用可能なソフトウェアやサービスを見つけ、購入することができるオンラインストアです。ここでAWS用のサードパーティのソフトウェアソリューションとサービスの検索することができます。</p>
+<h5 id="S3-Simple-Storage-Service"><a href="#S3-Simple-Storage-Service" class="headerlink" title="S3 (Simple Storage Service)"></a>S3 (Simple Storage Service)</h5><p>⇒マネージド型のオブジェクトストレージ<br>・無制限のストレージ容量 → 容量の確保は必要なく、バケットさえ作ればOK<br>・高い耐久性 → 複数のAZ内で冗長化（イレブンナイン）<br>・ネット経由でアクセス → 世界のどこからでもアクセスできる</p>
+<p>・バケット、オブジェクトはデフォルトでプライベート<br>・ACL（アクセスコントロールリスト）で簡単にアクセス権を設定できる<br>・バケットポリシーでより詳細にアクセス権を設定できる<br>・EC2などに、S3へのアクセスけんを設定する際はIAMロールを使用する<br>・HTTPSでアクセス可能。何もせずとも<br>・保存データの暗号化は複数の方法で可能 → S3キーでのサーバー、KMS、独自キーでのサーバーorクライアント</p>
+<h5 id="AWS-Global-Accelerator"><a href="#AWS-Global-Accelerator" class="headerlink" title="AWS Global Accelerator"></a>AWS Global Accelerator</h5><p>ローカルまたは世界中のユーザーに提供するアプリケーションの可用性とパフォーマンスを改善します。AWS グローバルネットワークを使用してユーザーからアプリケーションへのパスを最適化し、TCP および UDP トラフィックのパフォーマンスを改善します。アプリケーションエンドポイントの状態を継続的に監視し、異常なエンドポイントを検出し、1 分以内に正常なエンドポイントにトラフィックをリダイレクトします。</p>
+<h5 id="AWS-Storage-Gateway"><a href="#AWS-Storage-Gateway" class="headerlink" title="AWS Storage Gateway"></a>AWS Storage Gateway</h5><p>オンプレミスアプリケーションがAWSクラウドストレージをシームレスに接続することができるハイブリッドストレージサービスです。 このサービスはバックアップ、アーカイブ、災害復旧、クラウドデータ処理、および移行に使用できます。</p>
+<h5 id="ストレージクラス"><a href="#ストレージクラス" class="headerlink" title="ストレージクラス"></a>ストレージクラス</h5><p>★標準 → デフォ</p>
+<p>★低頻度アクセスストレージ（標準IA）→ リクエスト料金↑、ストレージ料金↓<br>　⇒バックアップデータに最適</p>
+<p>★1ゾーン定頻度アクセスストレージ（1ゾーンIA）→複数のAZで冗長化されない。別リージョンでのバックアップ</p>
+<p>★Amazon Glacier → 取り出しに3-5Hかかる。法的保存期間の定めがあるものなど<br>・ストレージ料金は、最適なストレージクラス選択によってコスト効率を高められる<br>・ライフサイクルポリシーによってストレージクラスの変更を自動化できる<br>・リージョン外へのアウト通信にのみ転送料金がかかる</p>
+<h5 id="その他のストレージサービス"><a href="#その他のストレージサービス" class="headerlink" title="その他のストレージサービス"></a>その他のストレージサービス</h5><p>EFS (Amazon Elastic File System)<br>⇒複数のEC2インスタンスでマウントして共有利用できるファイルストレージサービス</p>
+<h5 id="Storage-Gateway"><a href="#Storage-Gateway" class="headerlink" title="Storage Gateway"></a>Storage Gateway</h5><p>⇒オンプレアプリとAWSのストレージをシームレスに接続利用するためのゲートウェイ</p>
+<h5 id="Snowball"><a href="#Snowball" class="headerlink" title="Snowball"></a>Snowball</h5><p>⇒物理デバイスを利用してペタ級の大容量データ転送を行うサービス</p>
+<h4 id="ネットワーク"><a href="#ネットワーク" class="headerlink" title="ネットワーク"></a>ネットワーク</h4><h5 id="VPC-Virtual-Private-Cloud"><a href="#VPC-Virtual-Private-Cloud" class="headerlink" title="VPC (Virtual Private Cloud)"></a>VPC (Virtual Private Cloud)</h5><p>⇒AWS内に構築できるプライベートなネットワーク環境<br>→AWSの敷地の中で、「自分の領域はここ！」<br>・リージョンを選択して作成（AZをまたぐことはできる）<br>・CIDR (Classless Inter-Domain Routing) → プライベートIPの範囲を定義する</p>
+<h5 id="★サブネット"><a href="#★サブネット" class="headerlink" title="★サブネット"></a>★サブネット</h5><p>⇒AZとIPアドレス範囲を定義するネットワークグループ<br>→役割別に作成する（外部接続係、内部接続係）</p>
+<h5 id="★インターネットゲートウェイ"><a href="#★インターネットゲートウェイ" class="headerlink" title="★インターネットゲートウェイ"></a>★インターネットゲートウェイ</h5><p>★インターネットゲートウェイ<br>⇒VPCとパブリックインターネットを接続するためのGateway<br>→インターネット（外部との通信）の入り口<br>※入り口はVPCにつき一つ<br>※水平スケーリングによる冗長性を持っているので、単一障害点にはならない</p>
+<h5 id="★ルートテーブル"><a href="#★ルートテーブル" class="headerlink" title="★ルートテーブル"></a>★ルートテーブル</h5><p>⇒サブネットの経路を設定。サブネットと関連づける<br>→通信に関するルールブック</p>
+<h5 id="★セキュリティグループ"><a href="#★セキュリティグループ" class="headerlink" title="★セキュリティグループ"></a>★セキュリティグループ</h5><p>⇒仮想ファイアウォール<br>→セキュリティに関するルールブック<br>※送信元を、CIDRでIPアドレス範囲で指定<br>※送信元を、他のセキュリティグループのIDで指定<br>　→IPアドレスに依存せず、柔軟かつ最低限の送信元だけを許可するセキュアな設定<br>※VPCを指定して作成→トラフィックのホワイトリスト化</p>
+<h5 id="★ネットワークACL-Access-Control-List"><a href="#★ネットワークACL-Access-Control-List" class="headerlink" title="★ネットワークACL(Access Control List)"></a>★ネットワークACL(Access Control List)</h5><p>⇒サブネットに対して設定する仮想ファイアウォール<br>・拒否するインバウンドのポートと送信元を設定するブラックリスト<br>・必要がなければ設定しない追加のセキュリティレイヤー</p>
+<h5 id="★外部からEC2インスタンスにアクセスするための重要ポイント"><a href="#★外部からEC2インスタンスにアクセスするための重要ポイント" class="headerlink" title="★外部からEC2インスタンスにアクセスするための重要ポイント"></a>★外部からEC2インスタンスにアクセスするための重要ポイント</h5><p>・インターネットゲートウェイをVPCにアタッチ<br>・インターネットゲートウェイへの経路を持つルートテーブルをサブネットに関連づける<br>・EC2インスタンスをそのサブネット内で起動<br>・EC2インスタンスにパブリックIPアドレスを有効にする<br>（orEC2のパブリックIPを固定するElastic IPをアタッチする）</p>
+<h5 id="★ハイブリッド環境構成"><a href="#★ハイブリッド環境構成" class="headerlink" title="★ハイブリッド環境構成"></a>★ハイブリッド環境構成</h5><p>・VPCに、既存のオンプレからVPN or 専用回線で接続<br>→オンプレ環境の拡張先としてAWS使える<br>⇒オンプレ＆クラウド＝ハイブリッド</p>
+<h5 id="CloudFront"><a href="#CloudFront" class="headerlink" title="CloudFront"></a>CloudFront</h5><p>⇒コンテンツ配信ネットワークサービス(CDN = Contents Delivery Network)<br>・最も低いレイテンシーで配信できる<br>・キャッシュによる低レイテンシー配信 → エッジロケーションにキャッシュ持たせてる<br>・ユーザの近くからの低レイテンシー配信 → ユーザへは最もレイテンシーの低いエッジロケーションから配信<br>・安全性の高いセキュリティ → ドメイン証明書を設定できる＝HTTPS化</p>
+<h5 id="Route-53"><a href="#Route-53" class="headerlink" title="Route 53"></a>Route 53</h5><p>⇒DNS(Domain Name System)サービス<br>→例えばドメイン(teshita.com)とElastic IP(51.1.1.1)を紐付ける<br>・エッジロケーションで使用される<br>・複数のDNSレコードを設定し、用途に応じて様々なルーティング機能を選択<br>・高可用性実現するヘルスチェックとフェイルオーバー → 複数のDNSレコードにより実現<br>・ルートドメイン(Zone Apex)のエイリアスレコード</p>
+<h4 id="データベース"><a href="#データベース" class="headerlink" title="データベース"></a>データベース</h4><h5 id="AWS-OpsWorks"><a href="#AWS-OpsWorks" class="headerlink" title="AWS OpsWorks"></a>AWS OpsWorks</h5><p>Chef や Puppet のマネージド型インスタンスを利用した構成管理サービスです。Chef や Puppet は、コードを使用してサーバーの構成を自動化するためのオートメーションプラットフォームです。Puppetを使用してEC2インスタンスの構成方法を自動化することができます。</p>
+<h5 id="RDS-Relational-Database-Service"><a href="#RDS-Relational-Database-Service" class="headerlink" title="RDS (Relational Database Service)"></a>RDS (Relational Database Service)</h5><p>⇒オンプレで使用されているデータベースエンジンをそのまま使えるDBサービス<br>・通常のデータベースタスクの時間を節約して、ユーザーに必要な高速パフォーマンスと高可用性を提供する</p>
+<h5 id="★EC2にMySQLなどをインストールして使うのと違うのは"><a href="#★EC2にMySQLなどをインストールして使うのと違うのは" class="headerlink" title="★EC2にMySQLなどをインストールして使うのと違うのは"></a>★EC2にMySQLなどをインストールして使うのと違うのは</h5><p>・メンテナンス(OS、DBエンジンのアプデ)不要<br>・バックアップ不要 → 自動で行ってくれる(max35日間) →それを超えるときは手動のスナップショット<br>※ポイントタイムリカバリー → 自動バックアップ期間内なら、秒単位での指定復元可能<br>・高可用性の担保 → マルチAZ<br>　→MasterとStandby間でレプリケーション（異なるデータセンター間を低レイテンシーで実現）<br>※クロスリージョンリードレプリカ<br>　→リードレプリカを他リージョンに作成することで、マスターデータベースから読み込みの負荷を軽減できる</p>
+<h5 id="★Amazon-Aurora"><a href="#★Amazon-Aurora" class="headerlink" title="★Amazon Aurora"></a>★Amazon Aurora</h5><p>⇒クラウドに最適化して再設計されたリレーショナルデータベースエンジン<br>→MySQL、PostgreSQL互換<br>・メリットある</p>
+<h5 id="Amazon-Neptune"><a href="#Amazon-Neptune" class="headerlink" title="Amazon Neptune"></a>Amazon Neptune</h5><p>高速かつ信頼性の高いフルマネージドグラフデータベースサービスです。このサービスでは、高度に接続されたデータセットと連携するアプリケーションを簡単に構築および実行できます。Amazon Neptuneを利用することで、洗練されたインタラクティブなグラフアプリケーションを作成することができます。</p>
+<h5 id="★DMS-Databese-Migration-Service"><a href="#★DMS-Databese-Migration-Service" class="headerlink" title="★DMS (Databese Migration Service)"></a>★DMS (Databese Migration Service)</h5><p>⇒DBの移行サービス<br>・オンプレからAWSへの継続的なデータ移行 → システムのダウンタイムを最小限にできる</p>
+<h5 id="DynamoDB"><a href="#DynamoDB" class="headerlink" title="DynamoDB"></a>DynamoDB</h5><p>⇒NoSQL型のフルマネージドDB<br>→非リレーショナル<br>・テーブル名とプライマリーキーを決めるのみで、リージョン選択するだけで使える（AZ気にしない）<br>・RDSよりさらに管理範囲が少ない</p>
+<h5 id="★RDSとの違い"><a href="#★RDSとの違い" class="headerlink" title="★RDSとの違い"></a>★RDSとの違い</h5><p>①スケーリング<br>・RDS → 垂直スケーリング → 性能の向上（数は一つ） →大量のアクセス🙅‍♂️(高速パフォーマンスと高可用性🙆‍♂️)<br>・DynamoDB → 水平スケーリング → 数の増加 → 大量のアクセス🙆‍♂️(厳密なトランザクション、複雑なクエリ🙅‍♂️)</p>
+<p>②テーブルの型<br>・RDS → SQL型（Excelみたい）<br>・DynamoDB → NoSQL型（アイテム＝ハッシュ？）<br>→不定型の入れ物に自由に情報を格納 → キーを検索のインデックスとして扱う</p>
+<h5 id="その他のデータベースサービス"><a href="#その他のデータベースサービス" class="headerlink" title="その他のデータベースサービス"></a>その他のデータベースサービス</h5><h5 id="★Amazon-Redshift"><a href="#★Amazon-Redshift" class="headerlink" title="★Amazon Redshift"></a>★Amazon Redshift</h5><p>⇒高速でシンプルなデータウェアハウスサービスで、分析に使用される</p>
+<h5 id="★Amazon-ElasticCache"><a href="#★Amazon-ElasticCache" class="headerlink" title="★Amazon ElasticCache"></a>★Amazon ElasticCache</h5><p>⇒インメモリデータストアサービス<br>→クエリ結果のキャッシュやアプリのセッション情報を管理するのに使用される</p>
+<h5 id="★Amazon-Nepture"><a href="#★Amazon-Nepture" class="headerlink" title="★Amazon Nepture"></a>★Amazon Nepture</h5><p>⇒グラフデータベースサービスで、関係性や相関情報などを扱う。提案エンジン、物流最適化など</p>
+<h4 id="管理サービス"><a href="#管理サービス" class="headerlink" title="管理サービス"></a>管理サービス</h4><h5 id="Amazon-Cognito"><a href="#Amazon-Cognito" class="headerlink" title="Amazon Cognito"></a>Amazon Cognito</h5><p>ウェブアプリケーションやモバイルアプリケーションの認証、許可、ユーザー管理をサポートしています。ユーザーは、ユーザー名とパスワードを使用して直接サインインするか、Facebook、Amazon、Google などのサードパーティーを通じてサインインできます。</p>
+<h5 id="CloudWatch"><a href="#CloudWatch" class="headerlink" title="CloudWatch"></a>CloudWatch</h5><p>⇒AWSサービスの情報をモニタリングするサービス<br>・標準(組込メトリクス)の収集、可視化<br>・カスタムメトリクスの収集、可視化<br>・ログの収集 → メトリクスだけでなくEC2などのログも収集できる<br>※これによりEC2をステートレスにできる → EC2ローカルにログファイルがあると障害時自動終了が面倒</p>
+<h5 id="★標準メトリクス-→-AWSが管理する範囲の情報。サービスによって異なる"><a href="#★標準メトリクス-→-AWSが管理する範囲の情報。サービスによって異なる" class="headerlink" title="★標準メトリクス → AWSが管理する範囲の情報。サービスによって異なる"></a>★標準メトリクス → AWSが管理する範囲の情報。サービスによって異なる</h5><h5 id="★カスタムメトリクス-→-ユーザが管理する範囲の情報。CloudWatchエージェントで取得できる"><a href="#★カスタムメトリクス-→-ユーザが管理する範囲の情報。CloudWatchエージェントで取得できる" class="headerlink" title="★カスタムメトリクス → ユーザが管理する範囲の情報。CloudWatchエージェントで取得できる"></a>★カスタムメトリクス → ユーザが管理する範囲の情報。CloudWatchエージェントで取得できる</h5><h5 id="★CloudWatch-Logs-→-インスタンスのログを収集。CloudWatchエージェントで取得できる"><a href="#★CloudWatch-Logs-→-インスタンスのログを収集。CloudWatchエージェントで取得できる" class="headerlink" title="★CloudWatch Logs → インスタンスのログを収集。CloudWatchエージェントで取得できる"></a>★CloudWatch Logs → インスタンスのログを収集。CloudWatchエージェントで取得できる</h5><p>※文字列のフィルタリング結果をメトリクスとして扱える<br>※保存期間は任意。失効しないも可能</p>
+<p>・アラームを設定することで、モニタリング結果に基づく運用を自動化できる</p>
+<h5 id="AWS-Security-Token-Service-AWS-STS"><a href="#AWS-Security-Token-Service-AWS-STS" class="headerlink" title="AWS Security Token Service(AWS STS)"></a>AWS Security Token Service(AWS STS)</h5><p>AWS のサービスへのアクセスに使用できる一時的な限定権限認証情報を取得できます。一時的な認証情報は AWS STS によって生成されます。デフォルトでは、AWS STS は <a href="https://sts.amazonaws.com" target="_blank" rel="noopener">https://sts.amazonaws.com</a> に 1 つのエンドポイントのあるグローバルサービスです。ただし、他のサポートされているリージョンにあるエンドポイントへの AWS STS API 呼び出しを実行することもできます。</p>
+<h5 id="Amazon-Elastic-Container-Registry-ECR"><a href="#Amazon-Elastic-Container-Registry-ECR" class="headerlink" title="Amazon Elastic Container Registry (ECR)"></a>Amazon Elastic Container Registry (ECR)</h5><p>開発者がDockerコンテナイメージをAWSクラウドに保存・管理することができます。ECRは完全マネージド型の Docker コンテナレジストリとして提供されています。</p>
+<h5 id="Trusted-Advisor"><a href="#Trusted-Advisor" class="headerlink" title="Trusted Advisor"></a>Trusted Advisor</h5><p>⇒環境を自動でチェックし、ベストプラクティスに近づけるためのアドバイスをくれるサービス<br>・コスト最適化の視点<br>・パフォーマンスの視点 → 最適なサービス、サイズが選択されてるか？<br>・セキュリティ → リスクないか？<br>・フォールトトレランス（耐障害性）<br>・サービス制限 → 意図しない操作等で不利益が生じないようにするためのソフトリミット</p>
+<h4 id="その他の管理ツール"><a href="#その他の管理ツール" class="headerlink" title="その他の管理ツール"></a>その他の管理ツール</h4><h5 id="★Cloud-Trail"><a href="#★Cloud-Trail" class="headerlink" title="★Cloud Trail"></a>★Cloud Trail</h5><p>⇒AWS内のすべてのAPI呼び出しを記録</p>
+<h5 id="Cost-Explorer"><a href="#Cost-Explorer" class="headerlink" title="Cost Explorer"></a>Cost Explorer</h5><p>コストと使用状況を表示および分析するために使用できるツールです。メイングラフ、コストと使用状況レポート、または Cost Explorer RI レポートを使用して、使用状況とコストを確認できます。過去 13 か月までのデータを表示し、今後 3 か月間にどれくらい費やす可能性が高いかを予測し、リザーブドインスタンスを購入するための推奨事項を得ることができます。また、さらに調べる必要がある分野を特定し、コストを把握するために使用できる傾向を確認できます。</p>
+<h5 id="★CloudFormation"><a href="#★CloudFormation" class="headerlink" title="★CloudFormation"></a>★CloudFormation</h5><p>⇒AWSの各リソースを含めた環境を自動作成／更新／管理</p>
+<h5 id="★Elastic-Beanstalk"><a href="#★Elastic-Beanstalk" class="headerlink" title="★Elastic Beanstalk"></a>★Elastic Beanstalk</h5><p>⇒Webアプリの環境を簡単にAWSに構築<br>AWS クラウド上にアプリケーションをすばやくデプロイし、管理を自動化できます。これはGo、Java、.NET、Node.js、PHP、Python、Ruby で開発されたアプリケーションをサポートしており、.NETアプリケーションをAWSクラウドにすばやくデプロイすることが可能です。</p>
+<h5 id="AWS-Systems-Manager"><a href="#AWS-Systems-Manager" class="headerlink" title="AWS Systems Manager"></a>AWS Systems Manager</h5><p>AWS でご利用のインフラストラクチャを可視化し、制御するためのサービスです。統一されたユーザーインターフェイスを介して複数のAWSサービスからの運用データを表示し、運用タスクを自動化することができます。</p>
+<h5 id="★Cloud-Config"><a href="#★Cloud-Config" class="headerlink" title="★Cloud Config"></a>★Cloud Config</h5><p>⇒リソースの設定変更履歴を簡単に見れる</p>
+<hr>
+<h3 id="その他補足"><a href="#その他補足" class="headerlink" title="その他補足"></a>その他補足</h3><h5 id="Lambda-1"><a href="#Lambda-1" class="headerlink" title="Lambda"></a>Lambda</h5><p>新しい情報に迅速に対応できるアプリケーションを容易に構築できるコンピューティングサービスです。<br>これはサーバレスアプリケーションを利用する際にEC2の代わりに利用するサービスです。</p>
+<h5 id="セキュリティグループ-1"><a href="#セキュリティグループ-1" class="headerlink" title="セキュリティグループ"></a>セキュリティグループ</h5><p>インスタンスに対して設定するホワイトリストの仮想FW</p>
+<h5 id="ネットワークACL"><a href="#ネットワークACL" class="headerlink" title="ネットワークACL"></a>ネットワークACL</h5><p>サブネットに対して設定するブラックリストの仮想FW<br>着信トラフィックリクエストをフィルタリング</p>
+<h5 id="オンデマンドインスタンス"><a href="#オンデマンドインスタンス" class="headerlink" title="オンデマンドインスタンス"></a>オンデマンドインスタンス</h5><p>一週間という期限だけで利用する場合はオンデマンドインスタンスを利用</p>
+<h5 id="スポットインスタンス"><a href="#スポットインスタンス" class="headerlink" title="スポットインスタンス"></a>スポットインスタンス</h5><p>一瞬だけ使う。動画編集するときだけ、みたいな</p>
+<h5 id="スケジュールドリザーブドインスタンス"><a href="#スケジュールドリザーブドインスタンス" class="headerlink" title="スケジュールドリザーブドインスタンス"></a>スケジュールドリザーブドインスタンス</h5><p>週一回金曜日や、１０時から１７時といった定期的な利用時間にかぎってインスタンスを利用する場合にコスト最適</p>
+<h5 id="CloudTrail"><a href="#CloudTrail" class="headerlink" title="CloudTrail"></a>CloudTrail</h5><p>AWS内のすべてのAPI呼び出しを記録<br>AWSでのガバナンス、コンプライアンス、およびリスク監査のために、CloudTrailを有効化する必要<br>ユーザーアクティビティログを取得することができます。ユーザー、ロール、または AWS のサービスによって実行されたアクションは、CloudTrail にイベントとして記録されます。イベントには、AWS マネジメントコンソール、AWS CLI、および AWS SDK と API で実行されたアクションが含まれます。</p>
+<h5 id="AWS-Config"><a href="#AWS-Config" class="headerlink" title="AWS Config"></a>AWS Config</h5><p>AWS Config はAWS リソースの設定を評価、監査、審査できるサービスです。Config では、AWS リソースの設定が継続的にモニタリングおよび記録され、望まれる設定に対する記録された設定の評価を自動的に実行できます。AWSリソース設定がコンプライアンスやガバナンス上最適な構成になっているかを評価・監視することができまます。</p>
+<h5 id="AWS-Systems-Manager-1"><a href="#AWS-Systems-Manager-1" class="headerlink" title="AWS Systems Manager"></a>AWS Systems Manager</h5><p>運用関連！<br>AWSで利用しているインフラストラクチャを可視化し、制御するためのサービス<br>アプリケーション、環境、リージョン、プロジェクト、キャンペーン、ビジネスユニット、ソフトウェアライフサイクルなど、選択した目的やアクティビティごとに AWS リソースをグループ化します。</p>
+<p>AWS リソースに関連する運用作業項目を一元的に表示、調査、および解決します。<br>さまざまなメンテナンスおよびデプロイタスクを自動化またはスケジュールする<br>インフラストラクチャを可視化し、制御するためのサービス</p>
+<p>統一されたユーザーインターフェイスを介して複数のAWSサービスからの運用データを表示し、運用タスクを自動化できる</p>
+<h5 id="Access-Advisor"><a href="#Access-Advisor" class="headerlink" title="Access Advisor"></a>Access Advisor</h5><p>IAMエンティティ(ユーザー、グループ、ロール) が最後にAWSサービスにアクセスした⽇付と時刻を表⽰する機能</p>
+<h5 id="EC2"><a href="#EC2" class="headerlink" title="EC2"></a>EC2</h5><p>EC2はアンマネージド型サービスの典型的なサービス<br>ユーザー側でインスタンスのオペレーティングシステムとアプリケーションに定期的にパッチを適用し、更新し、保護する必要がある</p>
+<p>プレイスメントグループ<br>AZ内でインスタンスをまとめることで、低レイテンシーネットワークパフォーマンスを実現</p>
+<h5 id="ELB"><a href="#ELB" class="headerlink" title="ELB"></a>ELB</h5><p>負荷分散機能<br>配下のEC2の負荷に応じて、複数のAZに跨るEC2インスタンスの負荷分散を行う機能</p>
+<h5 id="Connection-Draining"><a href="#Connection-Draining" class="headerlink" title="Connection Draining"></a>Connection Draining</h5><p>インスタンスが登録解除されるか異常が発生した場合に、そのバックエンドインスタンスへの新規リクエスト送信を中止する機能</p>
+<h5 id="Amazon-Inspector"><a href="#Amazon-Inspector" class="headerlink" title="Amazon Inspector"></a>Amazon Inspector</h5><p>事前に定義されたテンプレ―トに基づいて、EC2インスタンスを分析し、脆弱性をチェックすることができます。これにより、Amazon Inspector では、自動的にアプリケーションを評価し、露出、脆弱性、ベストプラクティスからの逸脱がないかどうかを確認できます。AWS にデプロイしたアプリケーションのセキュリティとコンプライアンスを向上させることができます。</p>
+<ul>
+<li><p>ヘルスチェック<br>EC2インスタンスの正常／異常を確認し、利用するEC2の振り分けを行う機能</p>
+</li>
+<li><p>スティッキーセッション<br>セッション中に、同じユーザから来たリクエストを全て、同じEC2インスタンスに送信する機能</p>
+</li>
+<li><p>ELBのターゲットグループを設定すれば、ELB構成されたEC2インスタンス群に対して、AutoScalingを設定することが可能</p>
+</li>
+</ul>
+<h5 id="S3（オブジェクトストレージ）"><a href="#S3（オブジェクトストレージ）" class="headerlink" title="S3（オブジェクトストレージ）"></a>S3（オブジェクトストレージ）</h5><p>S3 Intelligent-Tiering<br>アクセスパターンを把握するために何らか特別な開発をする必要はなく、S3を有効活用</p>
+<p>S3は直接リージョンに設置されるサービス</p>
+<p>AZ間で自動的にデータを複製する</p>
+<p>重要なデータを保存するための耐久性のあるインフラストラクチャを提供し、オブジェクトの99.999999999％の耐久性のために設計されています<br>データは、複数の施設と各施設の複数のデバイスに冗長的に保存されます。</p>
+<h5 id="EBS-Elastic-Block-Store-：外付けHDD（ブロックストレージ）"><a href="#EBS-Elastic-Block-Store-：外付けHDD（ブロックストレージ）" class="headerlink" title="EBS (Elastic Block Store)：外付けHDD（ブロックストレージ）"></a>EBS (Elastic Block Store)：外付けHDD（ブロックストレージ）</h5><p>⇒EC2インスタンスにアタッチして使うブロックストレージボリューム<br>EC2のルートボリュームor追加ボリュームとして使用（外付けHDDみたい）<br>不要になれば削除できる<br>削除の挙動は都度設定できる</p>
+<p>AZ内で自動でレプリケート（複製）される → ハードに障害起きてもデータがなくならない<br>ボリュームタイプの変更が可能<br>容量の変更が可能 → 確保している容量に対して課金<br>高い耐久性のスナップショット(EC2ボリュームをバックアップする機能) → S3に保存<br>スナップショットはそのEBSが設置されているリージョン内にスナップショットを作成<br>シングルリージョンのみに限定されず、スナップショットを他のリージョンにコピーすることで、他リージョンにおいて、スナップショットによる復元を実施できる</p>
+<p>EBSのスナップショットは増分バックアップ<br>頻繁かつ詳細な更新が必要なデータのプライマリストレージデバイスとして使用</p>
+<h5 id="その他"><a href="#その他" class="headerlink" title="その他"></a>その他</h5><ul>
+<li><p>KMS：データを暗号化することができます</p>
+</li>
+<li><p>AMI： EBSスナップショット + α(管理情報)<br>  AMIの作成時点のEBSボリュームも復元できる＝スナップショットからだけでなく、AMIからも復元できる</p>
+</li>
+<li><p>EC2インスタンスを起動する際にボリュームタイプとしてEBSのストレスタイプを選択することが必須</p>
+</li>
+<li><p>EFS (Elastic File System)：NAS（ファイルストレージ）<br>  複数のEC2インスタンスでマウントして共有利用できるファイルストレージサービス<br>  EC2インスタンスからLAN上にあるNASとして利用できる共有ファイルストレージ<br>  インスタンスストア：Cドライブ<br>  EC2インスタンスの一時的なデータを保持するストレージ<br>  EBSの対比で、ホストのローカルのストレージを使うこと<br>  インスタンスの状態に依存する（データは一時的利用）<br>  AWS側で管理されるもの</p>
+</li>
+<li><p>Elastic IP<br>  利用されていないElastic IPがあると課金される<br>  課金発生しない条件<br>  Elastic IP アドレスが EC2 インスタンスに関連付けられている。<br>  Elastic IP アドレスに関連付けられているインスタンスが実行中である。<br>  インスタンスに 1 つの Elastic IP アドレスしか添付されていない。</p>
+</li>
+<li><p>ElasticCache<br>  クラウド内のインメモリデータストアまたはキャッシュを簡単にデプロイ、操作、およびスケーリングできるようにするウェブサービス<br>  ミリ秒未満のレイテンシを必要とするリアルタイムIoTアプリケーションのデータ処理に利用</p>
+</li>
+<li><p>Amazon Redshift<br>  高速でシンプルなデータウェアハウスサービスで、分析に使用される<br>  通常の業務システムデータなどのBIシステムやデータウェアハウスとして利用可能なリレーショナルデータベースサービスです<br>  AWSが提供するフルマネージド型サービスであり、ペタバイト規模のデータを扱う性能を有しています</p>
+</li>
+<li><p>Aurora<br>  Auroraの DB インスタンスでは常に自動バックアップが有効<br>  クラウドに最適化して再設計されたリレーショナルデータベースエンジン<br>  MySQL、PostgreSQL互換<br>  可用性は99.99%<br>  最大15のリードレプリカを利用した高速読み込みが可能</p>
+</li>
+<li><p>Snowball Edge<br>  AWSクラウドへの安全な大量データの転送を可能にするサービス（ペタ）<br>  Snowballは古いサービスなので非推奨<br>  切断された環境における高度な機械学習およびフルモーションビデオ分析にも利用される<br>  AWSクラウドの一部をカーブアウトする（切り出す）ことができるサービス</p>
+</li>
+<li><p>VPC<br>  VPCを使用することで、AWSクラウドの一部をカーブアウトして定義した仮想ネットワークにAWSリソースを起動することができます。 この仮想ネットワークは、AWSのスケーラブルなインフラストラクチャを使用する利点を備え、独自のデータセンターで運用する従来のネットワークに非常に似ています。</p>
+</li>
+<li><p>Glacier<br>  取り出しに3-5Hかかる。法的保存期間の定めがあるものなど<br>  マルチAZ構成のフォールトトレランス（耐障害性）を考慮して設計されているAWSサービス<br>  AZ間で自動的にデータを複製する、ってこと？</p>
+</li>
+</ul>
+<ul>
+<li><p>DynamoDB<br>  AWSで実証された高可用性データセンターで実行されます。<br>  このサービスは、AWSリージョンの3つの施設にデータを複製し、サーバー障害またはアベイラビリティーゾーンの停止が発生した場合のフォールトトレランスを提供します。<br>  NoSQL型のフルマネージドDB<br>  非リレーショナル<br>  NoSQL型のkey-value およびドキュメントデータベース<br>  テーブル名とプライマリーキーを決めるのみで、リージョン選択するだけで使える（AZ気にしない）<br>  RDSよりさらに管理範囲が少ない<br>  プッシュボタンスケーリングにより、稼働を停止させることなく、設定オプションをワンクリックするだけでダウンタイムなしに、いつでもDBをスケーリングできます<br>  他のすべてのデータベースはEC2インスタンスに基づいているため、インスタンスのサイズを拡大してダウンタイムを招く</p>
+</li>
+<li><p>Amazon DynamoDB Accelerator (DAX)<br>  リクエストのレイテンシをミリ秒からマイクロ秒に短縮する機能</p>
+</li>
+<li><p>DynamoDB Streams<br>  DynamoDBによるクロスリージョンレプリケーションを行うために必要<br>  セッションデータを高速で管理するデータベース処理<br>  規模に関係なく数ミリ秒台のパフォーマンスを実現<br>  AZ間でデータを自動的に複製するサービス<br>  初めからマルチAZ構成のフォールトトレランスを考慮して設計されている<br>  利用負荷があらかじめ予測できる場合　⇒　プロビジョンドスループット<br>  利用負荷があらかじめ予測できない場合　⇒　オンデマンドキャパシティーモード</p>
+</li>
+<li><p>RDS (Relational Database Service)<br>  高速パフォーマンスと高可用性を提供するリレーショナルデータベース<br>  自動バックアップ(自動スナップショット)の機能<br>  リードレプリカ</p>
+<pre><code>データの冗長性を実現し、コスト最適に災害復旧対応を実現する機能
+データベース (DB) インスタンスのパフォーマンスと耐久性が向上します。この機能によって、1 つの DB インスタンスのキャパシティーを伸縮自在にスケールし、読み取り頻度の高いデータベースのワークロードを緩和できます。ソース DB インスタンスのレプリカを複数作成し、アプリケーションの大容量読み取りトラフィックをデータの複数のコピーから提供することにより、全体の読み込みスループットを向上させることができます。リージョンは必要な場合、リードレプリカをスタンドアロンの DB インスタンスに昇格させることで、RDSに対してデータの冗長性を実現し、災害復旧を改善することができます</code></pre><p>  自動フェールオーバーを実行する機能<br>  マルチAZ構成<br>  マルチ AZ 配置を使用して DB インスタンスの高可用性およびフェイルオーバーサポートを提供<br>  RDSは利用している途中でインスタンスタイプを縮小することができます<br>  RDS リードレプリカ<br>  RDSに対してデータの冗長性を実現し、コスト最適に災害復旧対応を実現する機能<br>  RDSに対してデータベース読み取りアクティビティのオフロードを許可する機能</p>
+</li>
+<li><p>Organizations<br>  アカウントの作成を自動化し、ビジネスニーズを反映したアカウントのグループを作成し、それらのグループにポリシーを適用して管理できます。<br>  これにより、開発者向けのAWSアカウントの作成を自動化し、それらのアカウントのエンティティに必要なAWSサービスへのアクセスのみを許可するために、独自のOUを設定して、SCPによって管理することができます。<br>  単一の組織内の複数のAWSアカウントの支払いを統合</p>
+</li>
+<li><p>S3 Transfer Acceleration<br>  クライアントとAmazon S3バケット間の長距離にわたるファイルの高速かつ安全な転送を可能にする際に、利用するべき機能</p>
+</li>
+<li><p>AWS WAF (Web Application Firewall)<br>  ⇒Webアプリケーションのファイアウォール<br>  可用性低下、セキュリティ侵害、リソースの過剰消費など一般的なWebの脆弱性からアプリを保護する<br>  基本量は無料だが、セキュリティルールに基づいて課金<br>  セキュリティルールの設定が必要<br>  適用先は、CloudFront/Application Load Balancer/API Gatewayから選択</p>
+</li>
+<li><p>AWS Shield<br>  DDoS攻撃に対する保護サービス<br>  StandardプランとAdvancedプラン(AWS WAFが無償で無制限に利用可能)がある<br>  エッジロケーションで使用<br>  インフラに対するファイアウォール<br>  EC2上のアプリのセキュリティ・コンプライアンス向上のための脆弱性診断サービス<br>  自動でアプリを診断し、問題をリスト化</p>
+</li>
+<li><p>Amazon EMR(Elastic Map Reduce)<br>  ビッグデータのセットを分析および処理するために利用するサービス<br>  Apache Hadoop や Apache Spark などのビッグデータフレームワークとして、大量のデータを処理および分析するマネージド型クラスタープラットフォーム<br>  クラウドネイティブなビッグデータプラットフォーム<br>  MACHINE LEARNING<br>  抽出、変換、読み込み (ETL)<br>  クリックストリーム分析<br>  リアルタイムストリーミング<br>  インタラクティブ分析<br>  ゲノミクス</p>
+</li>
+<li><p>Amazon Kinesis<br>  ストリーミングデータをリアルタイムで収集、処理、分析する</p>
+</li>
+<li><p>Amazon Athena<br>  SQLの分析<br>  インタラクティブなクエリサービスで、Amazon S3 内のデータを標準 SQL を使用して簡単に分析</p>
+</li>
+<li><p>AWS SDK<br>  各言語に対応したAWS SDKを選択しすることで、選択したプログラミング言語を使用して、AWS でアプリケーションを簡単に開発することができます。</p>
+</li>
+<li><p>CloudFront<br>  高速コンテンツ配信ネットワーク (CDN) サービス<br>  グローバルに利用されるWEBアプリケーションのコンテンツを最適に提供するためにはCloudFrontによるコンテンツ配信を実施することが最適な構成<br>  課金対象</p>
+<pre><code>トラフィックの分散
+データ転送とリクエストの価格は地域によって異なり、価格はコンテンツが配信されるエッジの場所に基づいています。</code></pre><p>  リクエスト</p>
+<pre><code>リクエスト（HTTPまたはHTTPS）の数と種類、およびリクエストが行われた地域。</code></pre><p>  データ転送アウト</p>
+<pre><code>Amazon CloudFrontエッジロケーションから転送されたデータの量。</code></pre><p>  ルーティングはしない</p>
+</li>
+<li><p>コンバーティブル<br>  リザーブドインスタンスのコンバーティブルは変更とインスタンス自体の交換が可能です。リザーブドインスタンスと同等な価格のリザーブドインスタンスのに交換できるため、より柔軟に変更できます。したがって、オプション１が正解となります。</p>
+<p>  リザーブドインスタンスのコンバーティブルはインスタンスファミリー、オペレーティングシステム、およびテナンシーを含む別の構成で、1 つ以上の別の コンバーティブルリザーブドインスタンス の コンバーティブルリザーブドインスタンス に交換することもできます。交換先の コンバーティブルリザーブドインスタンス が交換元の コンバーティブルリザーブドインスタンス と同等あるいはそれ以上の値である限り、交換の実行回数に制限はありません。</p>
+<p>  コンバーティブルリザーブドインスタンス を交換する場合、現在の予約のインスタンスの数はターゲットの コンバーティブルリザーブドインスタンス の設定と同じあるいはそれ以上の値を含有する数のインスタンスと交換されます。Amazon EC2 は、交換で受け取った リザーブドインスタンス の数を計算します。</p>
+<p>  一方でリザーブドインスタンスのスタンダードは以下のような属性を変更することが可能です。</p>
+<pre><code>・アベイラビリティーゾーンまたは適用範囲
+
+・ネットワークプラットフォーム (EC2-Classic または VPC)
+
+・インスタンスサイズ（Linuxのみ）</code></pre></li>
+<li><p>AWSリソースが不正処理の例<br>  AWSリソースが不正処理に使用されている場合、AWS不正使用対策チームに連絡することが求められています。不正処理の例は次の通りです。</p>
+<pre><code>✔スパム: AWS 所有の IP アドレスから不要なメールが届く、または AWS リソースがスパムウェブサイトやフォーラムに使用されている。
+
+✔ポートスキャニング: ログに、1 つ以上の AWS 所有の IP アドレスがサーバー上の複数のポートにパケットを送信していることが示されており、セキュリティで保護されていないポートを検出しようとしていると考えられる。
+
+✔サービス拒否攻撃 (DOS): ログに、1 つ以上の AWS 所有の IP アドレスがリソースのポートをパケットで溢れさせるために使用されていることが示されている。
+
+✔侵入の試み: ログに、1 つ以上の AWS 所有の IP アドレスがリソースへのログイン試行に使用されていることが示されている。
+
+✔不快なコンテンツや著作権で保護されたコンテンツのホスティング: AWS リソースが著作権者の同意なしに、違法コンテンツをホストまたは配布している。
+
+✔マルウェア配信: インストール先のコンピュータやマシンに不正アクセスしたり危害を加えるために意図的に作成されたソフトウェアを配布するために、AWS リソースが使用されている証拠がある。</code></pre></li>
+<li><p>Amazon CloudFront<br>  AWSからのデータ転送アウトと、ユーザーからのリクエストとトラフィック分散に基づいて料金が決まります。</p>
+<pre><code>-トラフィックの分散：データ転送とリクエストの価格は地域によって異なり、価格はコンテンツが配信されるエッジの場所に基づいている
+
+-リクエスト：リクエスト（HTTPまたはHTTPS）の数と種類、およびリクエストが行われた地域
+
+-データ転送アウト：Amazon CloudFrontエッジロケーションから転送されたデータの量。
+
+-機密データのセキュリティを高めたい場合には、データ転送時にSSLを使用するか、クライアントサイド暗号化を使用することで、転送中のデータを保護できます。</code></pre></li>
+<li><p>Amazon S3<br>  保存データを保護するため次のような対応ができます。</p>
+<pre><code>■サーバーサイド暗号化を有効化することで保存されるデータが暗号化されます。したがって、オプション２が正解となります。
+
+■クライアントサイド暗号化を使用することで、事前に暗号化されたデータをAmazon S3にアップロードできます。したがって、オプション３が正解となります。</code></pre></li>
+<li><p>カスタムコンソール<br>  各フェーズに応じたカスタムコンソールを作成するには、各フェーズや領域のすべてのリソースをグループとして管理することが必要となります。デフォルトでは、AWSマネジメントコンソールはAWSサービスごとに整理されています。ただし、リソースグループツールを使用すると、プロジェクトと使用するリソースに基づいて情報を整理および統合するカスタムコンソールを作成できます。</p>
+</li>
+<li><p>RDS<br>  RDSはDBインスタンス、保存データ、自動バックアップとスナップショットを暗号化することができます。<br>  RDSは利用している途中でインスタンスタイプを縮小することができます。</p>
+</li>
+<li><p>Amazon DynamoDB Accelerator (DAX)<br>  フルマネージド型高可用性インメモリキャッシュで、DynamoDB 用に特化しています。1 秒あたりのリクエスト数が数百万件になる場合でも、ミリセカンドからマイクロセカンドへと最大 10 倍のパフォーマンス向上を実現します。</p>
+</li>
+</ul>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/AWS-Certified-Cloud-Practitioner/">AWS Certified Cloud Practitioner</a> <a class="tag tag--primary tag--small t-link" href="/tags/aws/">aws</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/03/10/ThreejsMemo/" data-tooltip="Three.js Memo" aria-label="PREVIOUS: Three.js Memo">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/02/23/CentOS6Error/" data-tooltip="CentOS6 Error:All mirror URLs are not using ftp, http[s] or file." aria-label="NEXT: CentOS6 Error:All mirror URLs are not using ftp, http[s] or file.">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/03/03/AWSMemo/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2022 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/03/10/ThreejsMemo/" data-tooltip="Three.js Memo" aria-label="PREVIOUS: Three.js Memo">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2021/02/23/CentOS6Error/" data-tooltip="CentOS6 Error:All mirror URLs are not using ftp, http[s] or file." aria-label="NEXT: CentOS6 Error:All mirror URLs are not using ftp, http[s] or file.">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/03/03/AWSMemo/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2021/03/03/AWSMemo/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>
