@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2022-01-20T13:55:28.167Z</updated>
+  <updated>2022-01-20T15:00:53.872Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://kisky3.github.io/2022/01/18/ReactBasic/"/>
     <id>https://kisky3.github.io/2022/01/18/ReactBasic/</id>
     <published>2022-01-18T14:35:11.000Z</published>
-    <updated>2022-01-20T13:55:28.167Z</updated>
+    <updated>2022-01-20T15:00:53.872Z</updated>
     
-    <content type="html"><![CDATA[<p>React 的小总结</p><a id="more"></a>]]></content>
+    <content type="html"><![CDATA[<p>React 的小总结</p><a id="more"></a><h1 id="1、React的特点"><a href="#1、React的特点" class="headerlink" title="1、React的特点"></a>1、React的特点</h1><ul><li>声明式编程</li><li>组件化编程</li><li>React Native编写原生应用</li><li>React Native (简称RN)是Facebook于2015年4月开源的跨平台移动应用开发框架，是Facebook早先开源的JS框架 React 在原生移动应用平台的衍生产物</li><li>高效 (优秀的Diffing算法)</li></ul><h1 id="2、React高效的原因"><a href="#2、React高效的原因" class="headerlink" title="2、React高效的原因"></a>2、React高效的原因</h1><ul><li>使用虚拟(virtual)DOM,不总是直接操作页面真实DON</li><li>DOM Diffing算法,最小化页面重绘<br>注意：React并不会提高渲染速度,反而可能会增加渲染时间,真正高效的原因是它能有效减少渲染次数</li></ul>]]></content>
     
     <summary type="html">
     
