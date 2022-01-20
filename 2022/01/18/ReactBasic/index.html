@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"React 的小总结\n\n一、React简介1、React的特点\n声明式编程\n组件化编程\nReact Native编写原生应用\nReact Native (简称RN)是Facebook于2015年4月开源的跨平台移动应用开发框架，是Facebook早先开源的JS框架 React 在原生移动应用平台的衍生产物\n高效 (优秀的Diffing算法)\n\n2、React高效的原因\n使用虚拟(virtual)DOM,不总是直接操作页面真实DON\nDOM Diffing算法,最小化页面重绘注意：React并不会提高渲染速度,反而可能会增加渲染时间,真正高效的原因是它能有效减少渲染次数3、创建虚拟DOM的两种方式Ⅰ- js创建虚拟DOM(不推荐)\n\n1234//1.创建虚拟DOM,创建嵌套格式的domsconst VDOM=React.createElement(&apos;h1&apos;,&#123;id:&apos;title&apos;&#125;,React.createElement(&apos;span&apos;,&#123;&#125;,&apos;hello,React&apos;))//2.渲染虚拟DOM到页面ReactDOM.render(VDOM,docoment.getElementById(&apos;test&apos;))\n\nⅡ -jsx创建虚拟DOM\n12345678910111213//1.创建虚拟DOM\tconst VDOM = (  /* 此处一定不要写引号，因为不是字符串 */    \t&lt;h1 id=&quot;title&quot;&gt;\t\t\t&lt;span&gt;Hello,React&lt;/span&gt;\t\t&lt;/h1&gt;\t)//2.渲染虚拟DOM到页面\tReactDOM.render(VDOM,document.getElementById(&apos;test&apos;))//3.打印真实DOM与虚拟DOM,这一步不是jsx创建虚拟dom必须，我只是为了方便查阅\tconst TDOM = document.getElementById(&apos;demo&apos;)    console.log(&apos;虚拟DOM&apos;,VDOM);\tconsole.log(&apos;真实DOM&apos;,TDOM);\n\n可以看到，上下两种方式，明显jsx的写法更符合我们的习惯,当出现多重嵌套时,js创建方法会使我们编程出现很大麻烦。但是jsx其实也只是帮我们做了一层编译,当我们写完jsx代码后,最终我们的代码也会被编译成js的书写方式\n4、关于虚拟DOM\n本质是Object类型的对象(一般对象)\n虚拟DOM比较’轻’,真实DOM比较’重’,因为虚拟DOM是React内部在用,无需真实DOM上那么多的属性(只有React需要的属性)\n虚拟DOM最终会被React转化为真实DOM,呈现在页面上。\n\n\n二、jsx语法规则JSX是一种JavaScript的语法扩展、是一种嵌入式的类似XML的语法,常应用于React架构中,但也不仅限于此.应该说JSX因React框架而流行,但也存在其他的实现.只要你够厉害,甚至能在单片机上实现(当然你要自己写出它的实现方式)。\n123456789101、规则- 定义虚拟DOM时,不要写引号- 标签中混入JS表达式时要用&#123;&#125;- 样式的类名指定不要用class,要用className- 内联样式,要用style=&#123;&#123;key:value&#125;&#125;的形式(双&#123;&#125;代表对象,单&#123;&#125;代表表达式)去写- 只有一个跟标签(整个虚拟DOM在外层有且仅有一个容器包裹)- 标签必须闭合- 标签首字母- 若小写字母开头,则将该标签转为html中同名元素,若html中无该标签对应的同名元素,则报错- 若大写字母开头,ract就去渲染对应组件,若组件没有定义,则报错\n\n\n三、两种组件定义区别、组件与模块理解Ⅰ-react中定义组件①函数式声明组件执行了ReactDOM.render(…….之后，发生了什么？\n1.React解析组件标签，找到了MyComponent组件。2.发现组件是使用函数定义的，随后调用该函数，将返回的虚拟DOM转为真实DOM，随后呈现在页面中。\n","dateCreated":"2022-01-18T23:35:11+09:00","dateModified":"2022-01-21T00:15:21+09:00","datePublished":"2022-01-18T23:35:11+09:00","description":"React 的小总结","headline":"React Memo","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2022/01/18/ReactBasic/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2022/01/18/ReactBasic/","keywords":"React"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"React 的小总结\n\n一、React简介1、React的特点\n声明式编程\n组件化编程\nReact Native编写原生应用\nReact Native (简称RN)是Facebook于2015年4月开源的跨平台移动应用开发框架，是Facebook早先开源的JS框架 React 在原生移动应用平台的衍生产物\n高效 (优秀的Diffing算法)\n\n2、React高效的原因\n使用虚拟(virtual)DOM,不总是直接操作页面真实DON\nDOM Diffing算法,最小化页面重绘注意：React并不会提高渲染速度,反而可能会增加渲染时间,真正高效的原因是它能有效减少渲染次数3、创建虚拟DOM的两种方式Ⅰ- js创建虚拟DOM(不推荐)\n\n1234//1.创建虚拟DOM,创建嵌套格式的domsconst VDOM=React.createElement(&apos;h1&apos;,&#123;id:&apos;title&apos;&#125;,React.createElement(&apos;span&apos;,&#123;&#125;,&apos;hello,React&apos;))//2.渲染虚拟DOM到页面ReactDOM.render(VDOM,docoment.getElementById(&apos;test&apos;))\n\nⅡ -jsx创建虚拟DOM\n12345678910111213//1.创建虚拟DOM\tconst VDOM = (  /* 此处一定不要写引号，因为不是字符串 */    \t&lt;h1 id=&quot;title&quot;&gt;\t\t\t&lt;span&gt;Hello,React&lt;/span&gt;\t\t&lt;/h1&gt;\t)//2.渲染虚拟DOM到页面\tReactDOM.render(VDOM,document.getElementById(&apos;test&apos;))//3.打印真实DOM与虚拟DOM,这一步不是jsx创建虚拟dom必须，我只是为了方便查阅\tconst TDOM = document.getElementById(&apos;demo&apos;)    console.log(&apos;虚拟DOM&apos;,VDOM);\tconsole.log(&apos;真实DOM&apos;,TDOM);\n\n可以看到，上下两种方式，明显jsx的写法更符合我们的习惯,当出现多重嵌套时,js创建方法会使我们编程出现很大麻烦。但是jsx其实也只是帮我们做了一层编译,当我们写完jsx代码后,最终我们的代码也会被编译成js的书写方式\n4、关于虚拟DOM\n本质是Object类型的对象(一般对象)\n虚拟DOM比较’轻’,真实DOM比较’重’,因为虚拟DOM是React内部在用,无需真实DOM上那么多的属性(只有React需要的属性)\n虚拟DOM最终会被React转化为真实DOM,呈现在页面上。\n\n\n二、jsx语法规则JSX是一种JavaScript的语法扩展、是一种嵌入式的类似XML的语法,常应用于React架构中,但也不仅限于此.应该说JSX因React框架而流行,但也存在其他的实现.只要你够厉害,甚至能在单片机上实现(当然你要自己写出它的实现方式)。\n123456789101、规则- 定义虚拟DOM时,不要写引号- 标签中混入JS表达式时要用&#123;&#125;- 样式的类名指定不要用class,要用className- 内联样式,要用style=&#123;&#123;key:value&#125;&#125;的形式(双&#123;&#125;代表对象,单&#123;&#125;代表表达式)去写- 只有一个跟标签(整个虚拟DOM在外层有且仅有一个容器包裹)- 标签必须闭合- 标签首字母- 若小写字母开头,则将该标签转为html中同名元素,若html中无该标签对应的同名元素,则报错- 若大写字母开头,ract就去渲染对应组件,若组件没有定义,则报错\n\n\n三、两种组件定义区别、组件与模块理解Ⅰ-react中定义组件①函数式声明组件执行了ReactDOM.render(…….之后，发生了什么？\n1.React解析组件标签，找到了MyComponent组件。2.发现组件是使用函数定义的，随后调用该函数，将返回的虚拟DOM转为真实DOM，随后呈现在页面中。\n","dateCreated":"2022-01-18T23:35:11+09:00","dateModified":"2022-01-21T00:23:04+09:00","datePublished":"2022-01-18T23:35:11+09:00","description":"React 的小总结","headline":"React Memo","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2022/01/18/ReactBasic/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2022/01/18/ReactBasic/","keywords":"React"}</script>
     <meta name="description" content="React 的小总结">
 <meta name="keywords" content="React">
 <meta property="og:type" content="blog">
@@ -26,7 +26,7 @@
 <meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
 <meta property="og:description" content="React 的小总结">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-01-20T15:15:21.504Z">
+<meta property="og:updated_time" content="2022-01-20T15:23:04.334Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Memo">
 <meta name="twitter:description" content="React 的小总结">
@@ -269,9 +269,9 @@
 <li>React Native (简称RN)是Facebook于2015年4月开源的跨平台移动应用开发框架，是Facebook早先开源的JS框架 React 在原生移动应用平台的衍生产物</li>
 <li>高效 (优秀的Diffing算法)</li>
 </ul>
-<h1 id="2、React高效的原因"><a href="#2、React高效的原因" class="headerlink" title="2、React高效的原因"></a>2、React高效的原因</h1><ul>
+<h2 id="2、React高效的原因"><a href="#2、React高效的原因" class="headerlink" title="2、React高效的原因"></a>2、React高效的原因</h2><ul>
 <li>使用虚拟(virtual)DOM,不总是直接操作页面真实DON</li>
-<li>DOM Diffing算法,最小化页面重绘<br>注意：React并不会提高渲染速度,反而可能会增加渲染时间,真正高效的原因是它能有效减少渲染次数<h1 id="3、创建虚拟DOM的两种方式"><a href="#3、创建虚拟DOM的两种方式" class="headerlink" title="3、创建虚拟DOM的两种方式"></a>3、创建虚拟DOM的两种方式</h1>Ⅰ- js创建虚拟DOM(不推荐)</li>
+<li>DOM Diffing算法,最小化页面重绘<br>注意：React并不会提高渲染速度,反而可能会增加渲染时间,真正高效的原因是它能有效减少渲染次数<h2 id="3、创建虚拟DOM的两种方式"><a href="#3、创建虚拟DOM的两种方式" class="headerlink" title="3、创建虚拟DOM的两种方式"></a>3、创建虚拟DOM的两种方式</h2>Ⅰ- js创建虚拟DOM(不推荐)</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//1.创建虚拟DOM,创建嵌套格式的doms</span><br><span class="line">const VDOM=React.createElement(&apos;h1&apos;,&#123;id:&apos;title&apos;&#125;,React.createElement(&apos;span&apos;,&#123;&#125;,&apos;hello,React&apos;))</span><br><span class="line">//2.渲染虚拟DOM到页面</span><br><span class="line">ReactDOM.render(VDOM,docoment.getElementById(&apos;test&apos;))</span><br></pre></td></tr></table></figure>
 
@@ -279,7 +279,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//1.创建虚拟DOM</span><br><span class="line">	const VDOM = (  /* 此处一定不要写引号，因为不是字符串 */</span><br><span class="line">    	&lt;h1 id=&quot;title&quot;&gt;</span><br><span class="line">			&lt;span&gt;Hello,React&lt;/span&gt;</span><br><span class="line">		&lt;/h1&gt;</span><br><span class="line">	)</span><br><span class="line">//2.渲染虚拟DOM到页面</span><br><span class="line">	ReactDOM.render(VDOM,document.getElementById(&apos;test&apos;))</span><br><span class="line"></span><br><span class="line">//3.打印真实DOM与虚拟DOM,这一步不是jsx创建虚拟dom必须，我只是为了方便查阅</span><br><span class="line">	const TDOM = document.getElementById(&apos;demo&apos;)</span><br><span class="line">    console.log(&apos;虚拟DOM&apos;,VDOM);</span><br><span class="line">	console.log(&apos;真实DOM&apos;,TDOM);</span><br></pre></td></tr></table></figure>
 
 <p>可以看到，上下两种方式，明显jsx的写法更符合我们的习惯,当出现多重嵌套时,js创建方法会使我们编程出现很大麻烦。但是jsx其实也只是帮我们做了一层编译,当我们写完jsx代码后,最终我们的代码也会被编译成js的书写方式</p>
-<h1 id="4、关于虚拟DOM"><a href="#4、关于虚拟DOM" class="headerlink" title="4、关于虚拟DOM"></a>4、关于虚拟DOM</h1><ul>
+<h2 id="4、关于虚拟DOM"><a href="#4、关于虚拟DOM" class="headerlink" title="4、关于虚拟DOM"></a>4、关于虚拟DOM</h2><ul>
 <li>本质是Object类型的对象(一般对象)</li>
 <li>虚拟DOM比较’轻’,真实DOM比较’重’,因为虚拟DOM是React内部在用,无需真实DOM上那么多的属性(只有React需要的属性)</li>
 <li>虚拟DOM最终会被React转化为真实DOM,呈现在页面上。</li>
@@ -311,8 +311,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2022/01/18/vuelifecycle/" data-tooltip="Basic Features Of Vue.js" aria-label="PREVIOUS: Basic Features Of Vue.js">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -389,8 +388,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2022/01/18/vuelifecycle/" data-tooltip="Basic Features Of Vue.js" aria-label="PREVIOUS: Basic Features Of Vue.js">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
