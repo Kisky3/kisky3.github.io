@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
-    <title>createNginxTestEnvironment - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <title>Create Test Environment By Nginx, EC2 and S3 - 向宇的博客 | Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,16 +17,23 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"","dateCreated":"2022-01-28T22:30:40+09:00","dateModified":"2022-01-28T22:30:40+09:00","datePublished":"2022-01-28T22:30:40+09:00","description":"","headline":"createNginxTestEnvironment","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2022/01/28/createNginxTestEnvironment/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2022/01/28/createNginxTestEnvironment/"}</script>
-    <meta name="keywords" content="hexo,javascript,front-end">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"用Nginx, EC2 和 S3来造一个测试环境\n\n最近因为测试环境不够用, 所以试造了一个测试环境。使用了Nginx, EC2 和 S3.\n下面记录一下步骤:\nEC2:1.首先要有两个EC2的服务器, 一个用于存放cakephp源代码, 一个用于nginx设定的ngin反向代理服务器。\n\ntest-web-redhat-test (用于存放cakephp源代码)\ntest.kou (nginx反向代理服务器)\n\n平时一般是启动两个EC2, 在test-web-redhat-test寻找到源代码路径,git checkout branch &amp; git pull 来进行代码获取。\n连接多用ssh。\n1ssh -i ~/.ssh/&lt;your.pem&gt; -oStrictHostKeyChecking=no ec2-user@&lt;your redhat server public ip&gt;&lt;/your&gt;\n\n\nNginx然后同样方式连接到test.kou (nginx反向代理服务器)。找到nginx.conf, 在里面进行redirect设定。指向S3的bucket地址。例:server_settings/nginx_settings/nginx/conf/nginx.conf\n1234567location /test/ &#123;   # if ($geo = &quot;disable&quot;) &#123; return 404; break; &#125;   proxy_set_header host   forms-test.s3-website-ap-northeast-1.amazonaws.com;   proxy_pass http://forms-test.s3-website-ap-northeast-1.amazonaws.com/;   break; &#125;\n\n nginx.conf修改之后要重新启动服务器,sudo service nginx configtest进行测试没啥问题的话,使用sudo service nginx restart来重启服务器。\n这样当你连接/test的时候就会被nginx反向代理到S3上的index.html了.\n\nS3新建一个bucket。并设置成能够公开静态页面的状态。在此取得proxy_pass\n\n\n\n\n有必要的话进行bucket policy设置来进行ip block.\n\n\n123456789101112&#123;    &quot;Version&quot;: &quot;2012-10-17&quot;,    &quot;Statement&quot;: [        &#123;            &quot;Sid&quot;: &quot;PublicReadGetObject&quot;,            &quot;Effect&quot;: &quot;Allow&quot;,            &quot;Principal&quot;: &quot;*&quot;,            &quot;Action&quot;: &quot;s3:GetObject&quot;,            &quot;Resource&quot;: &quot;arn:aws:s3:::test-s3-bucket-20200509-1140/*&quot;        &#125;    ]&#125;\n\n","dateCreated":"2022-01-28T22:30:40+09:00","dateModified":"2022-01-28T23:06:41+09:00","datePublished":"2022-01-28T22:30:40+09:00","description":"用Nginx, EC2 和 S3来造一个测试环境","headline":"Create Test Environment By Nginx, EC2 and S3","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2022/01/28/createNginxTestEnvironment/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2022/01/28/createNginxTestEnvironment/","keywords":"nginx, EC2, S3"}</script>
+    <meta name="description" content="用Nginx, EC2 和 S3来造一个测试环境">
+<meta name="keywords" content="nginx,EC2,S3">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="createNginxTestEnvironment">
+<meta property="og:title" content="Create Test Environment By Nginx, EC2 and S3">
 <meta property="og:url" content="https://kisky3.github.io/2022/01/28/createNginxTestEnvironment/index.html">
 <meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="用Nginx, EC2 和 S3来造一个测试环境">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-01-28T13:30:40.215Z">
+<meta property="og:image" content="https://kisky3.github.io/2022/01/28/createNginxTestEnvironment/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2022/01/28/createNginxTestEnvironment/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2022/01/28/createNginxTestEnvironment/3.png">
+<meta property="og:updated_time" content="2022-01-28T14:06:41.069Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="createNginxTestEnvironment">
+<meta name="twitter:title" content="Create Test Environment By Nginx, EC2 and S3">
+<meta name="twitter:description" content="用Nginx, EC2 和 S3来造一个测试环境">
+<meta name="twitter:image" content="https://kisky3.github.io/2022/01/28/createNginxTestEnvironment/1.png">
     
     
         
@@ -222,15 +229,17 @@
             <div id="main" data-behavior="3"
                  class="
                         hasCoverMetaIn
-                        ">
+                        hasCoverCaption">
                 
 <article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
     
     
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            createNginxTestEnvironment
+            Create Test Environment By Nginx, EC2 and S3
         </h1>
     
     
@@ -241,6 +250,12 @@
     	
     </time>
     
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Back-end-Knowledge/">Back-end Knowledge</a>
+
+
+    
 </div>
 
     
@@ -249,12 +264,49 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            
+            <p>用Nginx, EC2 和 S3来造一个测试环境</p>
+<a id="more"></a>
+<p>最近因为测试环境不够用, 所以试造了一个测试环境。<br>使用了Nginx, EC2 和 S3.</p>
+<p>下面记录一下步骤:</p>
+<h2 id="EC2"><a href="#EC2" class="headerlink" title="EC2:"></a>EC2:</h2><p>1.首先要有两个EC2的服务器, 一个用于存放cakephp源代码, 一个用于nginx设定的ngin反向代理服务器。</p>
+<ul>
+<li>test-web-redhat-test (用于存放cakephp源代码)</li>
+<li>test.kou (nginx反向代理服务器)</li>
+</ul>
+<p>平时一般是启动两个EC2, 在<code>test-web-redhat-test</code>寻找到源代码路径,<br>git checkout branch &amp; git pull 来进行代码获取。</p>
+<p>连接多用ssh。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i ~/.ssh/&lt;your.pem&gt; -oStrictHostKeyChecking=no ec2-user@&lt;your redhat server <span class="keyword">public</span> ip&gt;&lt;/your&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h2><p>然后同样方式连接到test.kou (nginx反向代理服务器)。<br>找到nginx.conf, 在里面进行redirect设定。指向S3的bucket地址。<br>例:<br>server_settings/nginx_settings/nginx/conf/nginx.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location /test/ &#123;</span><br><span class="line">   # if ($geo = &quot;disable&quot;) &#123; return 404; break; &#125;</span><br><span class="line"></span><br><span class="line">   proxy_set_header host   forms-test.s3-website-ap-northeast-1.amazonaws.com;</span><br><span class="line">   proxy_pass http://forms-test.s3-website-ap-northeast-1.amazonaws.com/;</span><br><span class="line">   break;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p> nginx.conf修改之后要重新启动服务器,<br><code>sudo service nginx configtest</code>进行测试没啥问题的话,<br>使用<code>sudo service nginx restart</code>来重启服务器。</p>
+<p>这样当你连接<your_domain>/test的时候就会被nginx反向代理到S3上的index.html了.</your_domain></p>
+<hr>
+<h2 id="S3"><a href="#S3" class="headerlink" title="S3"></a>S3</h2><p>新建一个bucket。并设置成能够公开静态页面的状态。在此取得proxy_pass</p>
+<img src="./1.png" style="width:500px">
+<img src="./2.png" style="width:500px">
+
+
+<p>有必要的话进行bucket policy设置来进行ip block.</p>
+<img src="./3.png" style="width:500px">
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;Version&quot;: &quot;2012-10-17&quot;,</span><br><span class="line">    &quot;Statement&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;Sid&quot;: &quot;PublicReadGetObject&quot;,</span><br><span class="line">            &quot;Effect&quot;: &quot;Allow&quot;,</span><br><span class="line">            &quot;Principal&quot;: &quot;*&quot;,</span><br><span class="line">            &quot;Action&quot;: &quot;s3:GetObject&quot;,</span><br><span class="line">            &quot;Resource&quot;: &quot;arn:aws:s3:::test-s3-bucket-20200509-1140/*&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
             
 
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/EC2/">EC2</a> <a class="tag tag--primary tag--small t-link" href="/tags/S3/">S3</a> <a class="tag tag--primary tag--small t-link" href="/tags/nginx/">nginx</a>
+
+            </div>
         
         
             <div class="post-actions-wrap">
@@ -303,8 +355,6 @@
             </li>
         
         
-            
-        
         <li class="post-action">
             
                 <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
@@ -317,8 +367,6 @@
 
 
         
-        
-            
         
     </div>
 </article>
@@ -383,8 +431,6 @@
                 </a>
             </li>
         
-        
-            
         
         <li class="post-action">
             
@@ -470,8 +516,6 @@
         <!--SCRIPTS-->
 <script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
 <!--SCRIPTS END-->
-
-    
 
 
 
