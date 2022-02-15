@@ -1,0 +1,495 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
+    <title>Vue Image Update - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"Vue的手机拍照相册照片上传一个小demo支持手机相册和拍照上传\n\n123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245246247248249250251252253254255256257258259260261262263264265266267268269270271272273274275276&lt;template&gt;  &lt;div&gt;    &lt;input      id=\"upload_file\"      type=\"file\"      style=\"display: none;\"      accept=\"image/*\"      name=\"file\"      @change=\"fileChange($event)\"    /&gt;    &lt;div class=\"upload_warp\"&gt;      &lt;div class=\"upload_warp_img\"&gt;        &lt;div class=\"upload_warp_img_div\" v-for=\"(item, index) in imgList\"&gt;          &lt;div class=\"upload_warp_img_div_top\"&gt;            &lt;img              src=\"data:image/png;base64,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\"              class=\"upload_warp_img_div_del\"              @click=\"fileDel(index)\"            /&gt;          &lt;/div&gt;          &lt;img :src=\"item.file.src\" style=\"display: inline-block;\" /&gt;        &lt;/div&gt;        &lt;div          class=\"upload_warp_left\"          id=\"upload_warp_left\"          @click=\"fileClick()\"          v-if=\"this.imgList.length &lt; 6\"        &gt;          &lt;!--&lt;img src=\"../assets/upload.png\"&gt;--&gt;          &lt;div&gt;相册上传&lt;/div&gt;        &lt;/div&gt;      &lt;/div&gt;    &lt;/div&gt;    &lt;div class=\"upload_warp_text\"&gt;      &lt;span        &gt;选中&#123;&#123; imgList.length &#125;&#125;张文件，共&#123;&#123; bytesToSize(this.size) &#125;&#125;&lt;/span      &gt;    &lt;/div&gt;  &lt;/div&gt;&lt;/template&gt;&lt;script type=\"text/ecmascript-6\"&gt;  export default &#123;    name: \"cameras-and-albums\",   data()&#123;    return&#123;     imgList: [],     datas: new FormData(),     files:0,     size:0    &#125;   &#125;,   methods:&#123;    //调用相册&amp;相机    fileClick() &#123;     $('#upload_file').click();    &#125;,    //调用手机摄像头并拍照    getImage() &#123;     let cmr = plus.camera.getCamera();     cmr.captureImage(function(p) &#123;      plus.io.resolveLocalFileSystemURL(p, function(entry) &#123;       compressImage(entry.toLocalURL(),entry.name);      &#125;, function(e) &#123;       plus.nativeUI.toast(\"读取拍照文件错误：\" + e.message);      &#125;);     &#125;, function(e) &#123;     &#125;, &#123;      filter: 'image'     &#125;);    &#125;,    //从相册选择照片    galleryImgs() &#123;     plus.gallery.pick(function(e) &#123;      let name = e.substr(e.lastIndexOf('/') + 1);      compressImage(e,name);     &#125;, function(e) &#123;     &#125;, &#123;      filter: \"image\"     &#125;);    &#125;,    //点击事件，弹出选择摄像头和相册的选项    showActionSheet() &#123;     let bts = [&#123;      title: \"拍照\"     &#125;, &#123;      title: \"从相册选择\"     &#125;];     plus.nativeUI.actionSheet(&#123;       cancel: \"取消\",       buttons: bts      &#125;,      function(e) &#123;       if (e.index == 1) &#123;        this.getImage();       &#125; else if (e.index == 2) &#123;        this.galleryImgs();       &#125;      &#125;     );    &#125;,    fileChange(el) &#123;     this.files=$(\"#upload_file\").get(0).files;     console.log(this.files.length);     for(let i=0;i&lt;this.files.length;i++)&#123;      this.datas.append(\"file\",this.files[i]);     &#125;     this.show1=false;     console.log(typeof this.files);     console.log(this.files);     if (!el.target.files[0].size) return;     this.fileList(el.target);     el.target.value = ''    &#125;,    fileList(fileList) &#123;     let files = fileList.files;     for (let i = 0; i &lt; files.length; i++) &#123;      //判断是否为文件夹      if (files[i].type != '') &#123;       this.fileAdd(files[i]);      &#125; else &#123;       //文件夹处理       this.folders(fileList.items[i]);      &#125;     &#125;    &#125;,    //文件夹处理    folders(files) &#123;     let _this = this;     //判断是否为原生file     if (files.kind) &#123;      files = files.webkitGetAsEntry();     &#125;     files.createReader().readEntries(function (file) &#123;      for (let i = 0; i &lt; file.length; i++) &#123;       if (file[i].isFile) &#123;        _this.foldersAdd(file[i]);       &#125; else &#123;        _this.folders(file[i]);       &#125;      &#125;     &#125;)    &#125;,    fileAdd(file) &#123;     //总大小     this.size = this.size + file.size;     //判断是否为图片文件     if (file.type.indexOf('image') == -1) &#123;      file.src = 'wenjian.png';      this.imgList.push(&#123;       file      &#125;);     &#125; else &#123;      let reader = new FileReader();      reader.vue = this;      reader.readAsDataURL(file);      reader.onload = function () &#123;       file.src = this.result;       this.vue.imgList.push(&#123;        file       &#125;);      &#125;     &#125;    &#125;,    fileDel(index) &#123;     this.size = this.size - this.imgList[index].file.size;//总大小     this.imgList.splice(index, 1);    &#125;,    bytesToSize(bytes) &#123;     if (bytes === 0)&#123;      return '0 B';     &#125;     let k = 1000, // or 1024      sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],      i = Math.floor(Math.log(bytes) / Math.log(k));     return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];    &#125;,    dragenter(el) &#123;     el.stopPropagation();     el.preventDefault();    &#125;,    dragover(el) &#123;     el.stopPropagation();     el.preventDefault();    &#125;,    drop(el) &#123;     el.stopPropagation();     el.preventDefault();     this.fileList(el.dataTransfer);    &#125;,    shows(et,tx)&#123;     this.strut=et;     this.txt=tx;    &#125;,    handleClick()&#123;     this.$store.commit('add')    &#125;,   &#125;,  &#125;&lt;/script&gt;&lt;style lang=\"\"&gt;    .upload_warp_img_div_del &#123;    position: absolute;    top: 6px;    width: 16px;    right: 4px;&#125;.upload_warp_img_div_top &#123;    position: absolute;    top: 0;    width: 100%;    height: 30px;    background-color: rgba(0, 0, 0, 0.4);    line-height: 30px;    text-align: left;    color: #fff;    font-size: 12px;    text-indent: 4px;&#125;.upload_warp_img_div_text &#123;    white-space: nowrap;    width: 80%;    overflow: hidden;    text-overflow: ellipsis;&#125;.upload_warp_img_div img &#123;    max-width: 100%;    max-height: 100%;    vertical-align: middle;&#125;.upload_warp_img_div &#123;    position: relative;    height: 100px;    width: 120px;    border: 1px solid #ccc;    margin: 0px 5px 5px 0px;    float: left;    line-height: 100px;    display: table-cell;    text-align: center;    background-color: #eee;    cursor: pointer;&#125;.upload_warp_img &#123;    border-top: 1px solid #D2D2D2;    padding: 5px 0 0 5px;    overflow: hidden&#125;.upload_warp_text &#123;    text-align: left;    margin-bottom: 5px;    padding-top: 5px;    text-indent: 14px;    border-top: 1px solid #ccc;    font-size: 14px;&#125;.upload_warp_right &#123;    float: left;    width: 57%;    margin-left: 2%;    height: 100%;    border: 1px dashed #999;    border-radius: 4px;    line-height: 130px;    color: #999;&#125;.upload_warp_left button &#123;    margin: 8px 5px 0px 5px;    cursor:pointer;&#125;.upload_warp_left &#123;    float: left;&#125;.upload_warp &#123;    margin: 5px;&#125;&lt;/style&gt;\n\n","dateCreated":"2020-01-07T23:29:44+09:00","dateModified":"2022-01-28T15:52:51+09:00","datePublished":"2020-01-07T23:29:44+09:00","description":"Vue的手机拍照相册照片上传一个小demo支持手机相册和拍照上传","headline":"Vue Image Update","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/01/07/VueImageUpdate/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/01/07/VueImageUpdate/","keywords":"vue, image upload"}</script>
+    <meta name="description" content="Vue的手机拍照相册照片上传一个小demo支持手机相册和拍照上传">
+<meta name="keywords" content="vue,image upload">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Vue Image Update">
+<meta property="og:url" content="https://kisky3.github.io/2020/01/07/VueImageUpdate/index.html">
+<meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="Vue的手机拍照相册照片上传一个小demo支持手机相册和拍照上传">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2022-01-28T06:52:51.366Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue Image Update">
+<meta name="twitter:description" content="Vue的手机拍照相册照片上传一个小demo支持手机相册和拍照上传">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">向宇的博客 | Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Vue Image Update
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-01-07T23:29:44+09:00">
+	
+		    Jan 07, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Vue的手机拍照相册照片上传<br>一个小demo<br>支持手机相册和拍照上传</p>
+<a id="more"></a>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;input</span><br><span class="line">      id=<span class="string">"upload_file"</span></span><br><span class="line">      type=<span class="string">"file"</span></span><br><span class="line">      style=<span class="string">"display: none;"</span></span><br><span class="line">      accept=<span class="string">"image/*"</span></span><br><span class="line">      name=<span class="string">"file"</span></span><br><span class="line">      @change=<span class="string">"fileChange($event)"</span></span><br><span class="line">    /&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"upload_warp"</span>&gt;</span><br><span class="line">      &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"upload_warp_img"</span>&gt;</span><br><span class="line">        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"upload_warp_img_div"</span> v-<span class="keyword">for</span>=<span class="string">"(item, index) in imgList"</span>&gt;</span><br><span class="line">          &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"upload_warp_img_div_top"</span>&gt;</span><br><span class="line">            &lt;img</span><br><span class="line">              src=<span class="string">"data:image/png;base64,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"</span></span><br><span class="line">              <span class="class"><span class="keyword">class</span></span>=<span class="string">"upload_warp_img_div_del"</span></span><br><span class="line">              @click=<span class="string">"fileDel(index)"</span></span><br><span class="line">            /&gt;</span><br><span class="line">          &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">          &lt;img :src="item.file.src" style="display: inline-block;" /</span>&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div</span></span><br><span class="line"><span class="regexp">          class="upload_warp_left"</span></span><br><span class="line"><span class="regexp">          id="upload_warp_left"</span></span><br><span class="line"><span class="regexp">          @click="fileClick()"</span></span><br><span class="line"><span class="regexp">          v-if="this.imgList.length &lt; 6"</span></span><br><span class="line"><span class="regexp">        &gt;</span></span><br><span class="line"><span class="regexp">          &lt;!--&lt;img src="../</span>assets/upload.png<span class="string">"&gt;--&gt;</span></span><br><span class="line"><span class="string">          &lt;div&gt;相册上传&lt;/div&gt;</span></span><br><span class="line"><span class="string">        &lt;/div&gt;</span></span><br><span class="line"><span class="string">      &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;div class="</span>upload_warp_text<span class="string">"&gt;</span></span><br><span class="line"><span class="string">      &lt;span</span></span><br><span class="line"><span class="string">        &gt;选中&#123;&#123; imgList.length &#125;&#125;张文件，共&#123;&#123; bytesToSize(this.size) &#125;&#125;&lt;/span</span></span><br><span class="line"><span class="string">      &gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">&lt;/template&gt;</span></span><br><span class="line"><span class="string">&lt;script type="</span>text/ecmascript<span class="number">-6</span><span class="string">"&gt;</span></span><br><span class="line"><span class="string">  export default &#123;</span></span><br><span class="line"><span class="string">    name: "</span>cameras-and-albums<span class="string">",</span></span><br><span class="line"><span class="string">   data()&#123;</span></span><br><span class="line"><span class="string">    return&#123;</span></span><br><span class="line"><span class="string">     imgList: [],</span></span><br><span class="line"><span class="string">     datas: new FormData(),</span></span><br><span class="line"><span class="string">     files:0,</span></span><br><span class="line"><span class="string">     size:0</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">   &#125;,</span></span><br><span class="line"><span class="string">   methods:&#123;</span></span><br><span class="line"><span class="string">    //调用相册&amp;相机</span></span><br><span class="line"><span class="string">    fileClick() &#123;</span></span><br><span class="line"><span class="string">     $('#upload_file').click();</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    //调用手机摄像头并拍照</span></span><br><span class="line"><span class="string">    getImage() &#123;</span></span><br><span class="line"><span class="string">     let cmr = plus.camera.getCamera();</span></span><br><span class="line"><span class="string">     cmr.captureImage(function(p) &#123;</span></span><br><span class="line"><span class="string">      plus.io.resolveLocalFileSystemURL(p, function(entry) &#123;</span></span><br><span class="line"><span class="string">       compressImage(entry.toLocalURL(),entry.name);</span></span><br><span class="line"><span class="string">      &#125;, function(e) &#123;</span></span><br><span class="line"><span class="string">       plus.nativeUI.toast("</span>读取拍照文件错误：<span class="string">" + e.message);</span></span><br><span class="line"><span class="string">      &#125;);</span></span><br><span class="line"><span class="string">     &#125;, function(e) &#123;</span></span><br><span class="line"><span class="string">     &#125;, &#123;</span></span><br><span class="line"><span class="string">      filter: 'image'</span></span><br><span class="line"><span class="string">     &#125;);</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    //从相册选择照片</span></span><br><span class="line"><span class="string">    galleryImgs() &#123;</span></span><br><span class="line"><span class="string">     plus.gallery.pick(function(e) &#123;</span></span><br><span class="line"><span class="string">      let name = e.substr(e.lastIndexOf('/') + 1);</span></span><br><span class="line"><span class="string">      compressImage(e,name);</span></span><br><span class="line"><span class="string">     &#125;, function(e) &#123;</span></span><br><span class="line"><span class="string">     &#125;, &#123;</span></span><br><span class="line"><span class="string">      filter: "</span>image<span class="string">"</span></span><br><span class="line"><span class="string">     &#125;);</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    //点击事件，弹出选择摄像头和相册的选项</span></span><br><span class="line"><span class="string">    showActionSheet() &#123;</span></span><br><span class="line"><span class="string">     let bts = [&#123;</span></span><br><span class="line"><span class="string">      title: "</span>拍照<span class="string">"</span></span><br><span class="line"><span class="string">     &#125;, &#123;</span></span><br><span class="line"><span class="string">      title: "</span>从相册选择<span class="string">"</span></span><br><span class="line"><span class="string">     &#125;];</span></span><br><span class="line"><span class="string">     plus.nativeUI.actionSheet(&#123;</span></span><br><span class="line"><span class="string">       cancel: "</span>取消<span class="string">",</span></span><br><span class="line"><span class="string">       buttons: bts</span></span><br><span class="line"><span class="string">      &#125;,</span></span><br><span class="line"><span class="string">      function(e) &#123;</span></span><br><span class="line"><span class="string">       if (e.index == 1) &#123;</span></span><br><span class="line"><span class="string">        this.getImage();</span></span><br><span class="line"><span class="string">       &#125; else if (e.index == 2) &#123;</span></span><br><span class="line"><span class="string">        this.galleryImgs();</span></span><br><span class="line"><span class="string">       &#125;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">     );</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    fileChange(el) &#123;</span></span><br><span class="line">     this.files=$("#upload_file").get(0).files;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="keyword">this</span>.files.length);</span><br><span class="line">     <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;<span class="keyword">this</span>.files.length;i++)&#123;</span><br><span class="line">      <span class="keyword">this</span>.datas.append(<span class="string">"file"</span>,<span class="keyword">this</span>.files[i]);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">this</span>.show1=<span class="literal">false</span>;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="keyword">this</span>.files);</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="keyword">this</span>.files);</span><br><span class="line">     <span class="keyword">if</span> (!el.target.files[<span class="number">0</span>].size) <span class="keyword">return</span>;</span><br><span class="line">     <span class="keyword">this</span>.fileList(el.target);</span><br><span class="line">     el.target.value = <span class="string">''</span></span><br><span class="line">    &#125;,</span><br><span class="line">    fileList(fileList) &#123;</span><br><span class="line">     <span class="keyword">let</span> files = fileList.files;</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; files.length; i++) &#123;</span><br><span class="line">      <span class="comment">//判断是否为文件夹</span></span><br><span class="line">      <span class="keyword">if</span> (files[i].type != <span class="string">''</span>) &#123;</span><br><span class="line">       <span class="keyword">this</span>.fileAdd(files[i]);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       <span class="comment">//文件夹处理</span></span><br><span class="line">       <span class="keyword">this</span>.folders(fileList.items[i]);</span><br><span class="line">      &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//文件夹处理</span></span><br><span class="line">    folders(files) &#123;</span><br><span class="line">     <span class="keyword">let</span> _this = <span class="keyword">this</span>;</span><br><span class="line">     <span class="comment">//判断是否为原生file</span></span><br><span class="line">     <span class="keyword">if</span> (files.kind) &#123;</span><br><span class="line">      files = files.webkitGetAsEntry();</span><br><span class="line">     &#125;</span><br><span class="line">     files.createReader().readEntries(<span class="function"><span class="keyword">function</span> (<span class="params">file</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; file.length; i++) &#123;</span><br><span class="line">       <span class="keyword">if</span> (file[i].isFile) &#123;</span><br><span class="line">        _this.foldersAdd(file[i]);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        _this.folders(file[i]);</span><br><span class="line">       &#125;</span><br><span class="line">      &#125;</span><br><span class="line">     &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    fileAdd(file) &#123;</span><br><span class="line">     <span class="comment">//总大小</span></span><br><span class="line">     <span class="keyword">this</span>.size = <span class="keyword">this</span>.size + file.size;</span><br><span class="line">     <span class="comment">//判断是否为图片文件</span></span><br><span class="line">     <span class="keyword">if</span> (file.type.indexOf(<span class="string">'image'</span>) == <span class="number">-1</span>) &#123;</span><br><span class="line">      file.src = <span class="string">'wenjian.png'</span>;</span><br><span class="line">      <span class="keyword">this</span>.imgList.push(&#123;</span><br><span class="line">       file</span><br><span class="line">      &#125;);</span><br><span class="line">     &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">      reader.vue = <span class="keyword">this</span>;</span><br><span class="line">      reader.readAsDataURL(file);</span><br><span class="line">      reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">       file.src = <span class="keyword">this</span>.result;</span><br><span class="line">       <span class="keyword">this</span>.vue.imgList.push(&#123;</span><br><span class="line">        file</span><br><span class="line">       &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    fileDel(index) &#123;</span><br><span class="line">     <span class="keyword">this</span>.size = <span class="keyword">this</span>.size - <span class="keyword">this</span>.imgList[index].file.size;<span class="comment">//总大小</span></span><br><span class="line">     <span class="keyword">this</span>.imgList.splice(index, <span class="number">1</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    bytesToSize(bytes) &#123;</span><br><span class="line">     <span class="keyword">if</span> (bytes === <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">'0 B'</span>;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">let</span> k = <span class="number">1000</span>, <span class="comment">// or 1024</span></span><br><span class="line">      sizes = [<span class="string">'B'</span>, <span class="string">'KB'</span>, <span class="string">'MB'</span>, <span class="string">'GB'</span>, <span class="string">'TB'</span>, <span class="string">'PB'</span>, <span class="string">'EB'</span>, <span class="string">'ZB'</span>, <span class="string">'YB'</span>],</span><br><span class="line">      i = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.log(bytes) / <span class="built_in">Math</span>.log(k));</span><br><span class="line">     <span class="keyword">return</span> (bytes / <span class="built_in">Math</span>.pow(k, i)).toPrecision(<span class="number">3</span>) + <span class="string">' '</span> + sizes[i];</span><br><span class="line">    &#125;,</span><br><span class="line">    dragenter(el) &#123;</span><br><span class="line">     el.stopPropagation();</span><br><span class="line">     el.preventDefault();</span><br><span class="line">    &#125;,</span><br><span class="line">    dragover(el) &#123;</span><br><span class="line">     el.stopPropagation();</span><br><span class="line">     el.preventDefault();</span><br><span class="line">    &#125;,</span><br><span class="line">    drop(el) &#123;</span><br><span class="line">     el.stopPropagation();</span><br><span class="line">     el.preventDefault();</span><br><span class="line">     <span class="keyword">this</span>.fileList(el.dataTransfer);</span><br><span class="line">    &#125;,</span><br><span class="line">    shows(et,tx)&#123;</span><br><span class="line">     <span class="keyword">this</span>.strut=et;</span><br><span class="line">     <span class="keyword">this</span>.txt=tx;</span><br><span class="line">    &#125;,</span><br><span class="line">    handleClick()&#123;</span><br><span class="line">     <span class="keyword">this</span>.$store.commit(<span class="string">'add'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">   &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;style lang=""&gt;</span></span><br><span class="line"><span class="regexp">    .upload_warp_img_div_del &#123;</span></span><br><span class="line"><span class="regexp">    position: absolute;</span></span><br><span class="line"><span class="regexp">    top: 6px;</span></span><br><span class="line"><span class="regexp">    width: 16px;</span></span><br><span class="line"><span class="regexp">    right: 4px;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp_img_div_top &#123;</span></span><br><span class="line"><span class="regexp">    position: absolute;</span></span><br><span class="line"><span class="regexp">    top: 0;</span></span><br><span class="line"><span class="regexp">    width: 100%;</span></span><br><span class="line"><span class="regexp">    height: 30px;</span></span><br><span class="line"><span class="regexp">    background-color: rgba(0, 0, 0, 0.4);</span></span><br><span class="line"><span class="regexp">    line-height: 30px;</span></span><br><span class="line"><span class="regexp">    text-align: left;</span></span><br><span class="line"><span class="regexp">    color: #fff;</span></span><br><span class="line"><span class="regexp">    font-size: 12px;</span></span><br><span class="line"><span class="regexp">    text-indent: 4px;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp_img_div_text &#123;</span></span><br><span class="line"><span class="regexp">    white-space: nowrap;</span></span><br><span class="line"><span class="regexp">    width: 80%;</span></span><br><span class="line"><span class="regexp">    overflow: hidden;</span></span><br><span class="line"><span class="regexp">    text-overflow: ellipsis;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp_img_div img &#123;</span></span><br><span class="line"><span class="regexp">    max-width: 100%;</span></span><br><span class="line"><span class="regexp">    max-height: 100%;</span></span><br><span class="line"><span class="regexp">    vertical-align: middle;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp_img_div &#123;</span></span><br><span class="line"><span class="regexp">    position: relative;</span></span><br><span class="line"><span class="regexp">    height: 100px;</span></span><br><span class="line"><span class="regexp">    width: 120px;</span></span><br><span class="line"><span class="regexp">    border: 1px solid #ccc;</span></span><br><span class="line"><span class="regexp">    margin: 0px 5px 5px 0px;</span></span><br><span class="line"><span class="regexp">    float: left;</span></span><br><span class="line"><span class="regexp">    line-height: 100px;</span></span><br><span class="line"><span class="regexp">    display: table-cell;</span></span><br><span class="line"><span class="regexp">    text-align: center;</span></span><br><span class="line"><span class="regexp">    background-color: #eee;</span></span><br><span class="line"><span class="regexp">    cursor: pointer;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp_img &#123;</span></span><br><span class="line"><span class="regexp">    border-top: 1px solid #D2D2D2;</span></span><br><span class="line"><span class="regexp">    padding: 5px 0 0 5px;</span></span><br><span class="line"><span class="regexp">    overflow: hidden</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp_text &#123;</span></span><br><span class="line"><span class="regexp">    text-align: left;</span></span><br><span class="line"><span class="regexp">    margin-bottom: 5px;</span></span><br><span class="line"><span class="regexp">    padding-top: 5px;</span></span><br><span class="line"><span class="regexp">    text-indent: 14px;</span></span><br><span class="line"><span class="regexp">    border-top: 1px solid #ccc;</span></span><br><span class="line"><span class="regexp">    font-size: 14px;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp_right &#123;</span></span><br><span class="line"><span class="regexp">    float: left;</span></span><br><span class="line"><span class="regexp">    width: 57%;</span></span><br><span class="line"><span class="regexp">    margin-left: 2%;</span></span><br><span class="line"><span class="regexp">    height: 100%;</span></span><br><span class="line"><span class="regexp">    border: 1px dashed #999;</span></span><br><span class="line"><span class="regexp">    border-radius: 4px;</span></span><br><span class="line"><span class="regexp">    line-height: 130px;</span></span><br><span class="line"><span class="regexp">    color: #999;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp_left button &#123;</span></span><br><span class="line"><span class="regexp">    margin: 8px 5px 0px 5px;</span></span><br><span class="line"><span class="regexp">    cursor:pointer;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp_left &#123;</span></span><br><span class="line"><span class="regexp">    float: left;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">.upload_warp &#123;</span></span><br><span class="line"><span class="regexp">    margin: 5px;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>style&gt;</span><br></pre></td></tr></table></figure>
+
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/image-upload/">image upload</a> <a class="tag tag--primary tag--small t-link" href="/tags/vue/">vue</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/01/14/form/" data-tooltip="Vue Form Component" aria-label="PREVIOUS: Vue Form Component">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/25/SlackBot/" data-tooltip="Easy Slack bot from Google Apps Script" aria-label="NEXT: Easy Slack bot from Google Apps Script">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/01/07/VueImageUpdate/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2022 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/01/14/form/" data-tooltip="Vue Form Component" aria-label="PREVIOUS: Vue Form Component">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2019/12/25/SlackBot/" data-tooltip="Easy Slack bot from Google Apps Script" aria-label="NEXT: Easy Slack bot from Google Apps Script">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/01/07/VueImageUpdate/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/01/07/VueImageUpdate/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>

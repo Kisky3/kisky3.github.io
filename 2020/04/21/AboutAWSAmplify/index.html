@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
+    <title>AWS Amplify with Vue.js - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"AWS Amplify 框架和Vue.js\n\nAmplify框架是什么amplify 是aws几个月前开发的一款支持web和mobile 的无服务框架，具备身份验证，分析，API，GraphQL, 数据库，推送，机器学习等很多强大功能，可以理解为google firebase的加强版。。\n\nVue12$ npm install vue$ vue create amplify-sample\n\nVue Project\n1234Vue CLI v3.11.0? Please pick a preset:  default (babel, eslint)❯ Manually select features\n\n1234567891011? Please pick a preset: Manually select features? Check the features needed for your project:  ◉ Babel ◯ TypeScript ◯ Progressive Web App (PWA) Support ◉ Router❯◉ Vuex ◯ CSS Pre-processors ◉ Linter / Formatter ◯ Unit Testing ◯ E2E Testing\n\nVue启动12$ cd amplify-sample/$ npm run serve\n\n可以在localhost:8080看到Vue的主页面了。\n\n导入Amplify使用npm导入Amplify\n12$ npm i aws-amplify$ npm i aws-amplify-vue\n\n设置amplify所使用的AWS\n1$ amplify configure\n\nsign in你的AWS之后回到命令行界面，按下enter\n12Specify the AWS Region? region:  us-east-1\n\n选择你所在区域，并且设置好你的用户名\n\n\n首先先将就着选择权限最强的AdministratorAccess吧，有需要的话之后再改也可以。AccessKey和SecretKey要记好。\n12345678910111213$ amplify initNote: It is recommended to run this command from the root of your app directory? Enter a name for the project amplify-sample? Enter a name for the environment dev? Choose your default editor: Visual Studio Code? Choose the type of app that you&apos;re building javascriptPlease tell us about your project? What javascript framework are you using vue? Source Directory Path:  src? Distribution Directory Path: dist? Build Command:  npm run-script build? Start Command: npm run-script serve\n\n中途可能会出现让你选择环境的选项? Enter a name for the environment可以先输入dev\n1? Do you want to use an AWS profile? (Y/n) Y\n\n\n追加认证给Project追加认证\n1$ amplify add auth\n\n123456789Using service: Cognito, provided by: awscloudformation The current configured provider is Amazon Cognito.  Do you want to use the default authentication and security configuration? (Use arrow keys)❯ Default configuration   Default configuration with Social Provider (Federation)   Manual configuration   I want to learn more.\n\n这次首先可以选择最基本的Default configuration，如果social provider的话，还可以使用Facebook, Google, Amazon等进行登陆。\n123456 How do you want users to be able to sign in?   Username ❯ Email   Phone Number   Email and Phone Number   I want to learn more.\n\n使用Email进行登陆。以后的设定都有默认配置就好。\n如果只是这样的话实际的认证还是做不了的。需要把本地的变更反映到服务器上。\n1$ amplify push\n\n12345678✔ Successfully pulled backend environment dev from the cloud.Current Environment: dev| Category | Resource name         | Operation | Provider plugin   || -------- | --------------------- | --------- | ----------------- || Auth     | amplifysample******** | Create    | awscloudformation |? Are you sure you want to continue? (Y/n)\n\n看第一行的话，首先pull到远程环境，然后检测出差别。就像git一样！利用这个功能，其他的末端也好，从AWS的命令行也能通过pull，来获取和远程一摸一样的环境。(比如说当本地环境坏掉之后，可以用这个挽回！)\n这次追加了新的Auth，应该能反应到服务器上。\n这个上传可能会花一点时间，趁反映到服务器的间隙，来编辑一下main.jsmain.js\n12345678910111213141516171819import Vue from &apos;vue&apos;import App from &apos;./App.vue&apos;import router from &apos;./router&apos;import store from &apos;./store&apos;import Amplify, * as AmplifyModules from &apos;aws-amplify&apos;import &#123; AmplifyPlugin &#125; from &apos;aws-amplify-vue&apos;import awsconfig from &apos;./aws-exports&apos;Amplify.configure(awsconfig)Vue.use(AmplifyPlugin, AmplifyModules)Vue.config.productionTip = falsenew Vue(&#123;  router,  store,  render: h =&gt; h(App)&#125;).$mount(&apos;#app&apos;)\n\n然后接着编辑 router/index.jsrouter/index.js\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586import Vue from &apos;vue&apos;import Router from &apos;vue-router&apos;import Home from &apos;../views/Home.vue&apos;import Login from &apos;../views/Login.vue&apos;import store from &apos;../store/index.js&apos;Vue.use(Router)// Amplify読み込みimport &#123; components, AmplifyEventBus &#125; from &apos;aws-amplify-vue&apos;import Amplify, * as AmplifyModules from &apos;aws-amplify&apos;import &#123; AmplifyPlugin &#125; from &apos;aws-amplify-vue&apos;Vue.use(Router)Vue.use(AmplifyPlugin, AmplifyModules)let user;// ユーザー管理getUser().then((user) =&gt; &#123;    if (user) &#123;        router.push(&#123;path: &apos;/&apos;&#125;);    &#125;&#125;);function getUser() &#123;    return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((data) =&gt; &#123;        if (data &amp;&amp; data.signInUserSession) &#123;            store.commit(&apos;setUser&apos;, data);            return data;        &#125;    &#125;).catch(() =&gt; &#123;        store.commit(&apos;setUser&apos;, null);        return null;    &#125;);&#125;// ログイン状態管理AmplifyEventBus.$on(&apos;authState&apos;, async (state) =&gt; &#123;    if (state === &apos;signedOut&apos;)&#123;        user = null;        store.commit(&apos;setUser&apos;, null);        router.push(&#123;path: &apos;/login&apos;&#125;);    &#125; else if (state === &apos;signedIn&apos;) &#123;        user = await getUser();        router.push(&#123;path: &apos;/&apos;&#125;);    &#125;&#125;);// ルーティング設定const router = new Router(&#123;    mode: &apos;history&apos;,    routes: [        &#123;            // ログインページ            path: &apos;/login&apos;,            name: &apos;login&apos;,            component: Login        &#125;,        &#123;            // トップページ            path: &apos;/&apos;,            name: &apos;home&apos;,            component: Home,            meta: &#123; requiresAuth: true&#125;        &#125;    ]&#125;);// リダイレクト設定router.beforeResolve(async (to, from, next) =&gt; &#123;    if (to.matched.some(record =&gt; record.meta.requiresAuth)) &#123;        user = await getUser();        if (!user) &#123;            return next(&#123;                path: &apos;/login&apos;            &#125;);        &#125;        return next()    &#125;    return next()&#125;);export default router\n\n\n","dateCreated":"2020-04-21T23:43:14+09:00","dateModified":"2022-01-28T15:52:49+09:00","datePublished":"2020-04-21T23:43:14+09:00","description":"AWS Amplify 框架和Vue.js","headline":"AWS Amplify with Vue.js","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/04/21/AboutAWSAmplify/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/04/21/AboutAWSAmplify/","keywords":"AWS, Amplify, Amplify Vue"}</script>
+    <meta name="description" content="AWS Amplify 框架和Vue.js">
+<meta name="keywords" content="AWS,Amplify,Amplify Vue">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="AWS Amplify with Vue.js">
+<meta property="og:url" content="https://kisky3.github.io/2020/04/21/AboutAWSAmplify/index.html">
+<meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="AWS Amplify 框架和Vue.js">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2020/04/21/AboutAWSAmplify/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2020/04/21/AboutAWSAmplify/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2020/04/21/AboutAWSAmplify/3.png">
+<meta property="og:updated_time" content="2022-01-28T06:52:49.683Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AWS Amplify with Vue.js">
+<meta name="twitter:description" content="AWS Amplify 框架和Vue.js">
+<meta name="twitter:image" content="https://kisky3.github.io/2020/04/21/AboutAWSAmplify/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">向宇的博客 | Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            AWS Amplify with Vue.js
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-04-21T23:43:14+09:00">
+	
+		    Apr 21, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>AWS Amplify 框架和Vue.js</p>
+<a id="more"></a>
+<h3 id="Amplify框架是什么"><a href="#Amplify框架是什么" class="headerlink" title="Amplify框架是什么"></a>Amplify框架是什么</h3><p>amplify 是aws几个月前开发的一款支持web和mobile 的无服务框架，具备身份验证，分析，API，GraphQL, 数据库，推送，机器学习等很多强大功能，可以理解为google firebase的加强版。。</p>
+<hr>
+<h3 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm install vue</span><br><span class="line">$ vue create amplify-sample</span><br></pre></td></tr></table></figure>
+
+<p>Vue Project</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Vue CLI v3.11.0</span><br><span class="line">? Please pick a preset:</span><br><span class="line">  default (babel, eslint)</span><br><span class="line">❯ Manually select features</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">? Please pick a preset: Manually select features</span><br><span class="line">? Check the features needed for your project: </span><br><span class="line"> ◉ Babel</span><br><span class="line"> ◯ TypeScript</span><br><span class="line"> ◯ Progressive Web App (PWA) Support</span><br><span class="line"> ◉ Router</span><br><span class="line">❯◉ Vuex</span><br><span class="line"> ◯ CSS Pre-processors</span><br><span class="line"> ◉ Linter / Formatter</span><br><span class="line"> ◯ Unit Testing</span><br><span class="line"> ◯ E2E Testing</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vue启动"><a href="#Vue启动" class="headerlink" title="Vue启动"></a>Vue启动</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd amplify-sample/</span><br><span class="line">$ npm run serve</span><br></pre></td></tr></table></figure>
+
+<p>可以在localhost:8080看到Vue的主页面了。<br><img src="./1.png" style="width: 500px"></p>
+<hr>
+<h3 id="导入Amplify"><a href="#导入Amplify" class="headerlink" title="导入Amplify"></a>导入Amplify</h3><p>使用npm导入Amplify</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm i aws-amplify</span><br><span class="line">$ npm i aws-amplify-vue</span><br></pre></td></tr></table></figure>
+
+<p>设置amplify所使用的AWS</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ amplify configure</span><br></pre></td></tr></table></figure>
+
+<p>sign in你的AWS之后回到命令行界面，按下enter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Specify the AWS Region</span><br><span class="line">? region:  us-east-1</span><br></pre></td></tr></table></figure>
+
+<p>选择你所在区域，并且设置好你的用户名<br><img src="./2.png" style="width: 500px"></p>
+<img src="./3.png" style="width: 500px">
+
+<p>首先先将就着选择权限最强的AdministratorAccess吧，有需要的话之后再改也可以。<br>AccessKey和SecretKey要记好。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ amplify init</span><br><span class="line"></span><br><span class="line">Note: It is recommended to run this command from the root of your app directory</span><br><span class="line">? Enter a name for the project amplify-sample</span><br><span class="line">? Enter a name for the environment dev</span><br><span class="line">? Choose your default editor: Visual Studio Code</span><br><span class="line">? Choose the type of app that you&apos;re building javascript</span><br><span class="line">Please tell us about your project</span><br><span class="line">? What javascript framework are you using vue</span><br><span class="line">? Source Directory Path:  src</span><br><span class="line">? Distribution Directory Path: dist</span><br><span class="line">? Build Command:  npm run-script build</span><br><span class="line">? Start Command: npm run-script serve</span><br></pre></td></tr></table></figure>
+
+<p>中途可能会出现让你选择环境的选项<code>? Enter a name for the environment</code><br>可以先输入dev</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">? Do you want to use an AWS profile? (Y/n) Y</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="追加认证"><a href="#追加认证" class="headerlink" title="追加认证"></a>追加认证</h3><p>给Project追加认证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ amplify add auth</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Using service: Cognito, provided by: awscloudformation</span><br><span class="line"></span><br><span class="line"> The current configured provider is Amazon Cognito. </span><br><span class="line"></span><br><span class="line"> Do you want to use the default authentication and security configuration? (Use arrow keys)</span><br><span class="line">❯ Default configuration </span><br><span class="line">  Default configuration with Social Provider (Federation) </span><br><span class="line">  Manual configuration </span><br><span class="line">  I want to learn more.</span><br></pre></td></tr></table></figure>
+
+<p>这次首先可以选择最基本的Default configuration，如果social provider的话，还可以使用Facebook, Google, Amazon等进行登陆。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> How do you want users to be able to sign in? </span><br><span class="line">  Username </span><br><span class="line">❯ Email </span><br><span class="line">  Phone Number </span><br><span class="line">  Email and Phone Number </span><br><span class="line">  I want to learn more.</span><br></pre></td></tr></table></figure>
+
+<p>使用Email进行登陆。以后的设定都有默认配置就好。</p>
+<p>如果只是这样的话实际的认证还是做不了的。<br>需要把本地的变更反映到服务器上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ amplify push</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">✔ Successfully pulled backend environment dev from the cloud.</span><br><span class="line"></span><br><span class="line">Current Environment: dev</span><br><span class="line"></span><br><span class="line">| Category | Resource name         | Operation | Provider plugin   |</span><br><span class="line">| -------- | --------------------- | --------- | ----------------- |</span><br><span class="line">| Auth     | amplifysample******** | Create    | awscloudformation |</span><br><span class="line">? Are you sure you want to continue? (Y/n)</span><br></pre></td></tr></table></figure>
+
+<p>看第一行的话，首先pull到远程环境，然后检测出差别。<br>就像git一样！利用这个功能，其他的末端也好，从AWS的命令行也能通过pull，<br>来获取和远程一摸一样的环境。<br>(比如说当本地环境坏掉之后，可以用这个挽回！)</p>
+<p>这次追加了新的Auth，应该能反应到服务器上。</p>
+<p>这个上传可能会花一点时间，趁反映到服务器的间隙，来编辑一下main.js<br>main.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import App from &apos;./App.vue&apos;</span><br><span class="line">import router from &apos;./router&apos;</span><br><span class="line">import store from &apos;./store&apos;</span><br><span class="line"></span><br><span class="line">import Amplify, * as AmplifyModules from &apos;aws-amplify&apos;</span><br><span class="line">import &#123; AmplifyPlugin &#125; from &apos;aws-amplify-vue&apos;</span><br><span class="line">import awsconfig from &apos;./aws-exports&apos;</span><br><span class="line">Amplify.configure(awsconfig)</span><br><span class="line"></span><br><span class="line">Vue.use(AmplifyPlugin, AmplifyModules)</span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = false</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">  router,</span><br><span class="line">  store,</span><br><span class="line">  render: h =&gt; h(App)</span><br><span class="line">&#125;).$mount(&apos;#app&apos;)</span><br></pre></td></tr></table></figure>
+
+<p>然后接着编辑 router/index.js<br>router/index.js</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import Router from &apos;vue-router&apos;</span><br><span class="line">import Home from &apos;../views/Home.vue&apos;</span><br><span class="line">import Login from &apos;../views/Login.vue&apos;</span><br><span class="line"></span><br><span class="line">import store from &apos;../store/index.js&apos;</span><br><span class="line"></span><br><span class="line">Vue.use(Router)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// Amplify読み込み</span><br><span class="line">import &#123; components, AmplifyEventBus &#125; from &apos;aws-amplify-vue&apos;</span><br><span class="line">import Amplify, * as AmplifyModules from &apos;aws-amplify&apos;</span><br><span class="line">import &#123; AmplifyPlugin &#125; from &apos;aws-amplify-vue&apos;</span><br><span class="line"></span><br><span class="line">Vue.use(Router)</span><br><span class="line">Vue.use(AmplifyPlugin, AmplifyModules)</span><br><span class="line"></span><br><span class="line">let user;</span><br><span class="line"></span><br><span class="line">// ユーザー管理</span><br><span class="line">getUser().then((user) =&gt; &#123;</span><br><span class="line">    if (user) &#123;</span><br><span class="line">        router.push(&#123;path: &apos;/&apos;&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">function getUser() &#123;</span><br><span class="line">    return Vue.prototype.$Amplify.Auth.currentAuthenticatedUser().then((data) =&gt; &#123;</span><br><span class="line">        if (data &amp;&amp; data.signInUserSession) &#123;</span><br><span class="line">            store.commit(&apos;setUser&apos;, data);</span><br><span class="line">            return data;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).catch(() =&gt; &#123;</span><br><span class="line">        store.commit(&apos;setUser&apos;, null);</span><br><span class="line">        return null;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// ログイン状態管理</span><br><span class="line">AmplifyEventBus.$on(&apos;authState&apos;, async (state) =&gt; &#123;</span><br><span class="line">    if (state === &apos;signedOut&apos;)&#123;</span><br><span class="line">        user = null;</span><br><span class="line">        store.commit(&apos;setUser&apos;, null);</span><br><span class="line">        router.push(&#123;path: &apos;/login&apos;&#125;);</span><br><span class="line">    &#125; else if (state === &apos;signedIn&apos;) &#123;</span><br><span class="line">        user = await getUser();</span><br><span class="line">        router.push(&#123;path: &apos;/&apos;&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// ルーティング設定</span><br><span class="line">const router = new Router(&#123;</span><br><span class="line">    mode: &apos;history&apos;,</span><br><span class="line">    routes: [</span><br><span class="line">        &#123;</span><br><span class="line">            // ログインページ</span><br><span class="line">            path: &apos;/login&apos;,</span><br><span class="line">            name: &apos;login&apos;,</span><br><span class="line">            component: Login</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            // トップページ</span><br><span class="line">            path: &apos;/&apos;,</span><br><span class="line">            name: &apos;home&apos;,</span><br><span class="line">            component: Home,</span><br><span class="line">            meta: &#123; requiresAuth: true&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// リダイレクト設定</span><br><span class="line">router.beforeResolve(async (to, from, next) =&gt; &#123;</span><br><span class="line">    if (to.matched.some(record =&gt; record.meta.requiresAuth)) &#123;</span><br><span class="line">        user = await getUser();</span><br><span class="line">        if (!user) &#123;</span><br><span class="line">            return next(&#123;</span><br><span class="line">                path: &apos;/login&apos;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        return next()</span><br><span class="line">    &#125;</span><br><span class="line">    return next()</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">export default router</span><br></pre></td></tr></table></figure>
+
+<hr>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/AWS/">AWS</a> <a class="tag tag--primary tag--small t-link" href="/tags/Amplify/">Amplify</a> <a class="tag tag--primary tag--small t-link" href="/tags/Amplify-Vue/">Amplify Vue</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/25/Recently/" data-tooltip="Inside The Living Body" aria-label="PREVIOUS: Inside The Living Body">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/20/package-lock/" data-tooltip="About package-lock.json" aria-label="NEXT: About package-lock.json">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/04/21/AboutAWSAmplify/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2022 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/25/Recently/" data-tooltip="Inside The Living Body" aria-label="PREVIOUS: Inside The Living Body">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/20/package-lock/" data-tooltip="About package-lock.json" aria-label="NEXT: About package-lock.json">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/04/21/AboutAWSAmplify/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/04/21/AboutAWSAmplify/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>

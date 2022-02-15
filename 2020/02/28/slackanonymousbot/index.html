@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
+    <title>Create a Anonymous Bot for Slack - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <meta name="author" content="Xiang Yu">
+    
+        <meta name="keywords" content="hexo,javascript,front-end,">
+    
+    
+        <link rel="icon" href="https://kisky3.github.io/assets/images/pic.jpg">
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"做一个可以在slack匿名发言的机器人\n\n运行环境\n\nUbuntu16.04\nnode.js\n\n完成后的示意图\n添加Bot首先点击下面的link在slack里添加bot\nhttps://my.slack.com/services/new/bot\n这里用了anonymous的bot名字，也可以输入其他的，然后点击「Add bot integration」按钮。\n\n\n然后记下画面上显示的 「API Token」\n获取频道IDhttps://slack.com/api/conversations.list?token=刚刚记录下的API_Token\n还可以取得用户ID和非公开频道ID\n\n安装Botkit安装并使用Slack官方文档上的Bot框架Botkit\n123456789101112131415161718//创建路径$ cd ~$ mkdir slack_anonymous_bot $ cd slack_anonymous_bot//botkit clone$ git clone https://github.com/howdyai/botkit.git$ cd botkit//branch 移动$ git checkout origin/legacy //安装$ npm install//如果安装失败・・・$ npm audit fix$ npm install\n\n如果生成了~/botkit/example/slack_bot.js就说明成功了\n\n编码123456// 移动到你生成的路径$ cd ~$ cd slack_anonymous_bot/botkit///制作anonymous_bot.js$ touch anonymous_bot.js\n\n在anonymous_bot.js里粘贴下面的代码\n12345678910111213141516171819202122232425262728293031323334353637var Botkit = require(&quot;./lib/Botkit.js&quot;); // 注意pathvar os = require(&quot;os&quot;);var controller = Botkit.slackbot(&#123;    debug: true,&#125;);var bot = controller.spawn(&#123;    token: &quot;刚刚记录下的API_TOKEN&quot;&#125;).startRTM();controller.on(&quot;direct_message&quot;, (bot, message) =&gt; &#123;    var now = new Date(); //获取时间    var user_name = &quot;名無しさん: &quot;+ now.getFullYear()+&quot;/&quot;+(now.getMonth()+1)+&quot;/&quot;+now.getDate()+&quot;/ &quot;+now.getHours()+&quot;:&quot;+now.getMinutes()+&quot;:&quot;+now.getSeconds();    bot.reply(message, &quot;匿名で投稿しました．&quot;);    bot.startConversation(&#123;  channel : &quot;刚刚取得的频道ID&quot; &#125;, (err, convo) =&gt; &#123;        var send_message = &#123;          type: &quot;message&quot;,          channel: &quot;刚刚取得的频道ID&quot;,          text: message.text,          username: user_name,          thread_ts: null,          reply_broadcast: null,          parse: null,          link_names: null,          attachments: null,          unfurl_links: null,          unfurl_media: null,          icon_url: null,          icon_emoji: &quot;:robot_face:&quot;,          as_user: true        &#125;        convo.say(send_message);    &#125;);&#125;);\n\n\n运行12345678//debug环境$ cd ~/slack_anonymous_bot/botkit$ node anonymous_bot.js//通常一般环境$ cd ~/slack_anonymous_bot/botkit$ forever start slack_bot.js$ forever stop slack_bot.js // 停止bot\n\n\n运行结果如果bot运行成功了，bot前的灯会变绿色。\n投稿时候首先会给你回信\n然后你就可以看到匿名bot在你登陆的频道里代表你发言了\n","dateCreated":"2020-02-28T23:50:23+09:00","dateModified":"2022-01-28T15:52:51+09:00","datePublished":"2020-02-28T23:50:23+09:00","description":"做一个可以在slack匿名发言的机器人","headline":"Create a Anonymous Bot for Slack","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2020/02/28/slackanonymousbot/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2020/02/28/slackanonymousbot/","keywords":"setting, slack bot, slack, AnonymousBot, BotKit"}</script>
+    <meta name="description" content="做一个可以在slack匿名发言的机器人">
+<meta name="keywords" content="setting,slack bot,slack,AnonymousBot,BotKit">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Create a Anonymous Bot for Slack">
+<meta property="og:url" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/index.html">
+<meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
+<meta property="og:description" content="做一个可以在slack匿名发言的机器人">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/1.png">
+<meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/2.png">
+<meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/4.png">
+<meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/5.png">
+<meta property="og:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/6.png">
+<meta property="og:updated_time" content="2022-01-28T06:52:51.625Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Create a Anonymous Bot for Slack">
+<meta name="twitter:description" content="做一个可以在slack匿名发言的机器人">
+<meta name="twitter:image" content="https://kisky3.github.io/2020/02/28/slackanonymousbot/1.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://kisky3.github.io/assets/images/me.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-txbv5drjurwncpxzv0lwwxgxavlzvpof5vrmy1qtqmjcvn9vllzopibimgon.min.css">
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143035141-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143035141-1');
+    </script>
+
+
+    
+</head>
+
+    <body style="margin: 0; height:100%">
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a class="header-title-link" href="/ ">向宇的博客 | Xiang Yu&#39;s Blog</a>
+    </div>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Xiang Yu</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>Front-end DeveloperDeveloper</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/ "
+                            
+                            title="Home"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-categories"
+                            
+                            title="Categories"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-tags"
+                            
+                            title="Tags"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/all-archives"
+                            
+                            title="Archives"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link " href="https://github.com/Kisky3" target="_blank" rel="noopener" title="GitHub">
+                    
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/categories/About-Me"
+                            
+                            title="Diaries"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-book" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Diaries</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/kisky3@126.com"
+                            title="Mail"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a  class="sidebar-button-link "
+                             href="/atom.xml"
+                            
+                            title="RSS"
+                        >
+                    
+                        <i class="sidebar-button-icon fa fa-rss" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">RSS</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        hasCoverCaption">
+                
+<article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Create a Anonymous Bot for Slack
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2020-02-28T23:50:23+09:00">
+	
+		    Feb 28, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/System-Setting/">System Setting</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>做一个可以在slack匿名发言的机器人</p>
+<a id="more"></a>
+<p>运行环境</p>
+<ul>
+<li>Ubuntu16.04</li>
+<li>node.js</li>
+</ul>
+<p>完成后的示意图<br><img src="./1.png" style="width:400px;margin:40px 0"></p>
+<h3 id="添加Bot"><a href="#添加Bot" class="headerlink" title="添加Bot"></a>添加Bot</h3><p>首先点击下面的link在slack里添加bot</p>
+<p><a href="https://my.slack.com/services/new/bot" target="_blank" rel="noopener">https://my.slack.com/services/new/bot</a></p>
+<p>这里用了<code>anonymous</code>的bot名字，也可以输入其他的，然后点击「Add bot integration」按钮。</p>
+<img src="./2.png" style="width:500px;margin:40px 0">
+
+<p>然后记下画面上显示的 「API Token」</p>
+<h3 id="获取频道ID"><a href="#获取频道ID" class="headerlink" title="获取频道ID"></a>获取频道ID</h3><p><a href="https://slack.com/api/conversations.list?token=刚刚记录下的API_Token" target="_blank" rel="noopener">https://slack.com/api/conversations.list?token=刚刚记录下的API_Token</a></p>
+<p>还可以取得用户ID和非公开频道ID</p>
+<hr>
+<h3 id="安装Botkit"><a href="#安装Botkit" class="headerlink" title="安装Botkit"></a>安装Botkit</h3><p>安装并使用Slack官方文档上的Bot框架<a href="https://github.com/howdyai/botkit" target="_blank" rel="noopener">Botkit</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//创建路径</span><br><span class="line">$ cd ~</span><br><span class="line">$ mkdir slack_anonymous_bot </span><br><span class="line">$ cd slack_anonymous_bot</span><br><span class="line"></span><br><span class="line">//botkit clone</span><br><span class="line">$ git clone https://github.com/howdyai/botkit.git</span><br><span class="line">$ cd botkit</span><br><span class="line"></span><br><span class="line">//branch 移动</span><br><span class="line">$ git checkout origin/legacy </span><br><span class="line"></span><br><span class="line">//安装</span><br><span class="line">$ npm install</span><br><span class="line"></span><br><span class="line">//如果安装失败・・・</span><br><span class="line">$ npm audit fix</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
+<p>如果生成了~/botkit/example/slack_bot.js就说明成功了</p>
+<hr>
+<h3 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 移动到你生成的路径</span><br><span class="line">$ cd ~</span><br><span class="line">$ cd slack_anonymous_bot/botkit/</span><br><span class="line"></span><br><span class="line">//制作anonymous_bot.js</span><br><span class="line">$ touch anonymous_bot.js</span><br></pre></td></tr></table></figure>
+
+<p>在anonymous_bot.js里粘贴下面的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">var Botkit = require(&quot;./lib/Botkit.js&quot;); // 注意path</span><br><span class="line">var os = require(&quot;os&quot;);</span><br><span class="line"></span><br><span class="line">var controller = Botkit.slackbot(&#123;</span><br><span class="line">    debug: true,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var bot = controller.spawn(&#123;</span><br><span class="line">    token: &quot;刚刚记录下的API_TOKEN&quot;</span><br><span class="line">&#125;).startRTM();</span><br><span class="line"></span><br><span class="line">controller.on(&quot;direct_message&quot;, (bot, message) =&gt; &#123;</span><br><span class="line">    var now = new Date(); //获取时间</span><br><span class="line">    var user_name = &quot;名無しさん: &quot;+ now.getFullYear()+&quot;/&quot;+(now.getMonth()+1)+&quot;/&quot;+now.getDate()+&quot;/ &quot;+now.getHours()+&quot;:&quot;+now.getMinutes()+&quot;:&quot;+now.getSeconds();</span><br><span class="line"></span><br><span class="line">    bot.reply(message, &quot;匿名で投稿しました．&quot;);</span><br><span class="line"></span><br><span class="line">    bot.startConversation(&#123;  channel : &quot;刚刚取得的频道ID&quot; &#125;, (err, convo) =&gt; &#123;</span><br><span class="line">        var send_message = &#123;</span><br><span class="line">          type: &quot;message&quot;,</span><br><span class="line">          channel: &quot;刚刚取得的频道ID&quot;,</span><br><span class="line">          text: message.text,</span><br><span class="line">          username: user_name,</span><br><span class="line">          thread_ts: null,</span><br><span class="line">          reply_broadcast: null,</span><br><span class="line">          parse: null,</span><br><span class="line">          link_names: null,</span><br><span class="line">          attachments: null,</span><br><span class="line">          unfurl_links: null,</span><br><span class="line">          unfurl_media: null,</span><br><span class="line">          icon_url: null,</span><br><span class="line">          icon_emoji: &quot;:robot_face:&quot;,</span><br><span class="line">          as_user: true</span><br><span class="line">        &#125;</span><br><span class="line">        convo.say(send_message);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//debug环境</span><br><span class="line">$ cd ~/slack_anonymous_bot/botkit</span><br><span class="line">$ node anonymous_bot.js</span><br><span class="line"></span><br><span class="line">//通常一般环境</span><br><span class="line">$ cd ~/slack_anonymous_bot/botkit</span><br><span class="line">$ forever start slack_bot.js</span><br><span class="line">$ forever stop slack_bot.js // 停止bot</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p>如果bot运行成功了，bot前的灯会变绿色。<br><img src="./4.png" style="width:300px;margin:40px 0"></p>
+<p>投稿时候首先会给你回信<br><img src="./5.png" style="width:300px;margin:40px 0"></p>
+<p>然后你就可以看到匿名bot在你登陆的频道里代表你发言了<br><img src="./6.png" style="width:300px;margin:40px 0"></p>
+
+            
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/tags/AnonymousBot/">AnonymousBot</a> <a class="tag tag--primary tag--small t-link" href="/tags/BotKit/">BotKit</a> <a class="tag tag--primary tag--small t-link" href="/tags/setting/">setting</a> <a class="tag tag--primary tag--small t-link" href="/tags/slack/">slack</a> <a class="tag tag--primary tag--small t-link" href="/tags/slack-bot/">slack bot</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/03/03/SettingVueCLI-env/" data-tooltip="Setting Vue CLI Modes and Environment Variables" aria-label="PREVIOUS: Setting Vue CLI Modes and Environment Variables">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/02/10/UseServerlessFrameworkToCreateRESTAPI/" data-tooltip="Use ServerlessFramework To Create REST API" aria-label="NEXT: Use ServerlessFramework To Create REST API">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/02/28/slackanonymousbot/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+    </div>
+</article>
+
+
+                <footer id="footer" class="main-content-wrap">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        Page Views:<span id="busuanzi_value_site_pv"></span><span id="busuanzi_container_site_pv"></span>
+        <span class="post-meta-divider">|</span>
+        Visitors:<span id="busuanzi_value_site_uv"></span><span id="busuanzi_container_site_uv"></span>
+        <br>
+    <span class="copyrights">
+        Copyrights &copy; 2022 Xiang Yu. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/03/03/SettingVueCLI-env/" data-tooltip="Setting Vue CLI Modes and Environment Variables" aria-label="PREVIOUS: Setting Vue CLI Modes and Environment Variables">
+                
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2020/02/10/UseServerlessFrameworkToCreateRESTAPI/" data-tooltip="Use ServerlessFramework To Create REST API" aria-label="NEXT: Use ServerlessFramework To Create REST API">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions" aria-label="Share this post">
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/xiang.yu.39794" title="Share on Facebook">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/02/28/slackanonymousbot/" title="global.share_on_movies">
+                    <i class="fa file-video" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="https://www.facebook.com/xiang.yu.39794">
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2020/02/28/slackanonymousbot/">
+                        <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/me.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Xiang Yu</h4>
+        
+            <div id="about-card-bio"><p>Front-end developer living in Tokyo     Chinese &amp; Japanese &amp; English</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Front-end developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Tokyo
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+
+        <!--SCRIPTS-->
+<script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.9}});</script></body>
+</html>
