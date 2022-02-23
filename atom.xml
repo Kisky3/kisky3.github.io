@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2022-02-15T09:48:25.249Z</updated>
+  <updated>2022-02-16T15:08:16.695Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://kisky3.github.io/2022/02/15/WebSecurity/"/>
     <id>https://kisky3.github.io/2022/02/15/WebSecurity/</id>
     <published>2022-02-15T04:31:39.000Z</published>
-    <updated>2022-02-15T09:48:25.249Z</updated>
+    <updated>2022-02-16T15:08:16.695Z</updated>
     
-    <content type="html"><![CDATA[<p>网络安全</p><a id="more"></a><h2 id="SQL-インジェクション"><a href="#SQL-インジェクション" class="headerlink" title="SQL インジェクション"></a>SQL インジェクション</h2><ul><li>SQL 文の組み立ては全てプレースホルダで実装する。</li><li>SQL 文の組み立てを文字列連結により行う場合は、エスケープ処理等を行うデータ<br>ベースエンジンの API を用いて、SQL 文のリテラルを正しく構成する。</li><li>ウェブアプリケーションに渡されるパラメータに SQL 文を直接指定しない。</li><li>エラーメッセージをそのままブラウザに表示しない。</li><li>データベースアカウントに適切な権限を与える。</li></ul><h2 id="OS-コマンド・インジェクション"><a href="#OS-コマンド・インジェクション" class="headerlink" title="OS コマンド・インジェクション"></a>OS コマンド・インジェクション</h2><ul><li>シェルを起動できる言語機能の利用を避ける</li><li>シェルを起動できる言語機能を利用する場合は、その引数を構成する全ての変数に<br>対してチェックを行い、あらかじめ許可した処理のみを実行する。</li></ul><h2 id="パス名パラメータの未チェック／ディレクトリ・トラバーサル"><a href="#パス名パラメータの未チェック／ディレクトリ・トラバーサル" class="headerlink" title="パス名パラメータの未チェック／ディレクトリ・トラバーサル"></a>パス名パラメータの未チェック／ディレクトリ・トラバーサル</h2><ul><li>外部からのパラメータでウェブサーバ内のファイル名を直接指定する実装を避ける。</li><li>ファイルを開く際は、固定のディレクトリを指定し、かつファイル名にディレクトリ名が含<br>まれないようにする。</li><li>ウェブサーバ内のファイルへのアクセス権限の設定を正しく管理する。</li><li>ファイル名のチェックを行う。</li></ul><h2 id="セッション管理の不備"><a href="#セッション管理の不備" class="headerlink" title="セッション管理の不備"></a>セッション管理の不備</h2><ul><li>セッション ID を推測が困難なものにする。</li><li>セッション ID を URL パラメータに格納しない。</li><li>HTTPS 通信で利用する Cookie には secure 属性を加える。</li><li>ログイン成功後に、新しくセッションを開始する。</li><li>ログイン成功後に、既存のセッション ID とは別に秘密情報を発行し、ページの遷移<br>ごとにその値を確認する。</li><li>セッション ID を固定値にしない。</li><li>セッション ID を Cookie にセットする場合、有効期限の設定に注意する。</li></ul><h2 id="クロスサイト・スクリプティング"><a href="#クロスサイト・スクリプティング" class="headerlink" title="クロスサイト・スクリプティング"></a>クロスサイト・スクリプティング</h2><ul><li><p>HTML テキストの入力を許可しない場合の対策</p><ul><li>ウェブページに出力する全ての要素に対して、エスケープ処理を施す。</li><li>URL を出力するときは、「http://」や 「https://」で始まる URL のみを許可する。</li><li><script>...</script> 要素の内容を動的に生成しない。</li><li>スタイルシートを任意のサイトから取り込めるようにしない。</li><li>入力値の内容チェックを行う</li></ul></li><li><p>HTML テキストの入力を許可する場合の対策</p><ul><li>入力された HTML テキストから構文解析木を作成し、スクリプトを含まない必要な要素のみを抽出する</li><li></li></ul></li><li><p>全てのウェブアプリケーションに共通の対策</p><ul><li>HTTP レスポンスヘッダの Content-Type フィールドに文字コード（charset）を<br>指定する。</li><li>Cookie 情報の漏えい対策として、発行する Cookie に HttpOnly 属性を加え、<br>TRACE メソッドを無効化する。</li><li>クロスサイト・スクリプティングの潜在的な脆弱性対策として有効なブラウザの機能を有効にするレスポンスヘッダを返す。</li></ul></li></ul><h2 id="CSRF（クロスサイト・リクエスト・フォージェリ"><a href="#CSRF（クロスサイト・リクエスト・フォージェリ" class="headerlink" title="CSRF（クロスサイト・リクエスト・フォージェリ)"></a>CSRF（クロスサイト・リクエスト・フォージェリ)</h2><ul><li><p>☞ 処理を実行するページを POST メソッドでアクセスするようにし、その「hidden パラメータ」に秘密情報が挿入されるよう、前のページを自動生成して、実行ページではその値が正しい場合のみ処理を実行する。</p></li><li><p>処理を実行する直前のページで再度パスワードの入力を求め、実行ページでは、再度入力されたパスワードが正しい場合のみ処理を実行する。</p></li><li><p>Referer が正しいリンク元かを確認し、正しい場合のみ処理を実行する。</p></li><li><p>重要な操作を行った際に、その旨を登録済みのメールアドレスに自動送信する。</p></li></ul><h2 id="HTTP-ヘッダ・インジェクション"><a href="#HTTP-ヘッダ・インジェクション" class="headerlink" title="HTTP ヘッダ・インジェクション"></a>HTTP ヘッダ・インジェクション</h2><ul><li>ヘッダの出力を直接行わず、ウェブアプリケーションの実行環境や言語に用意されているヘッダ出力用 API を使用する。</li><li>改行コードを適切に処理するヘッダ出力用 API を利用できない場合は、改行を許可しないよう、開発者自身で適切な処理を実装する。</li><li>外部からの入力の全てについて、改行コードを削除する。</li></ul><h2 id="メールヘッダ・インジェクション"><a href="#メールヘッダ・インジェクション" class="headerlink" title="メールヘッダ・インジェクション"></a>メールヘッダ・インジェクション</h2>]]></content>
+    <content type="html"><![CDATA[<p>网络安全</p><a id="more"></a><h2 id="SQL-インジェクション"><a href="#SQL-インジェクション" class="headerlink" title="SQL インジェクション"></a>SQL インジェクション</h2><ul><li>SQL 文の組み立ては全てプレースホルダで実装する。</li><li>SQL 文の組み立てを文字列連結により行う場合は、エスケープ処理等を行うデータ<br>ベースエンジンの API を用いて、SQL 文のリテラルを正しく構成する。</li><li>ウェブアプリケーションに渡されるパラメータに SQL 文を直接指定しない。</li><li>エラーメッセージをそのままブラウザに表示しない。</li><li>データベースアカウントに適切な権限を与える。</li></ul><h2 id="OS-コマンド・インジェクション"><a href="#OS-コマンド・インジェクション" class="headerlink" title="OS コマンド・インジェクション"></a>OS コマンド・インジェクション</h2><ul><li>シェルを起動できる言語機能の利用を避ける</li><li>シェルを起動できる言語機能を利用する場合は、その引数を構成する全ての変数に<br>対してチェックを行い、あらかじめ許可した処理のみを実行する。</li></ul><h2 id="パス名パラメータの未チェック／ディレクトリ・トラバーサル"><a href="#パス名パラメータの未チェック／ディレクトリ・トラバーサル" class="headerlink" title="パス名パラメータの未チェック／ディレクトリ・トラバーサル"></a>パス名パラメータの未チェック／ディレクトリ・トラバーサル</h2><ul><li>外部からのパラメータでウェブサーバ内のファイル名を直接指定する実装を避ける。</li><li>ファイルを開く際は、固定のディレクトリを指定し、かつファイル名にディレクトリ名が含<br>まれないようにする。</li><li>ウェブサーバ内のファイルへのアクセス権限の設定を正しく管理する。</li><li>ファイル名のチェックを行う。</li></ul><h2 id="セッション管理の不備"><a href="#セッション管理の不備" class="headerlink" title="セッション管理の不備"></a>セッション管理の不備</h2><ul><li>セッション ID を推測が困難なものにする。</li><li>セッション ID を URL パラメータに格納しない。</li><li>HTTPS 通信で利用する Cookie には secure 属性を加える。</li><li>ログイン成功後に、新しくセッションを開始する。</li><li>ログイン成功後に、既存のセッション ID とは別に秘密情報を発行し、ページの遷移<br>ごとにその値を確認する。</li><li>セッション ID を固定値にしない。</li><li>セッション ID を Cookie にセットする場合、有効期限の設定に注意する。</li></ul><h2 id="クロスサイト・スクリプティング"><a href="#クロスサイト・スクリプティング" class="headerlink" title="クロスサイト・スクリプティング"></a>クロスサイト・スクリプティング</h2><ul><li><p>HTML テキストの入力を許可しない場合の対策</p><ul><li>ウェブページに出力する全ての要素に対して、エスケープ処理を施す。</li><li>URL を出力するときは、「http://」や 「https://」で始まる URL のみを許可する。</li><li><script>...</script> 要素の内容を動的に生成しない。</li><li>スタイルシートを任意のサイトから取り込めるようにしない。</li><li>入力値の内容チェックを行う</li></ul></li><li><p>HTML テキストの入力を許可する場合の対策</p><ul><li>入力された HTML テキストから構文解析木を作成し、スクリプトを含まない必要な要素のみを抽出する</li><li></li></ul></li><li><p>全てのウェブアプリケーションに共通の対策</p><ul><li>HTTP レスポンスヘッダの Content-Type フィールドに文字コード（charset）を<br>指定する。</li><li>Cookie 情報の漏えい対策として、発行する Cookie に HttpOnly 属性を加え、<br>TRACE メソッドを無効化する。</li><li>クロスサイト・スクリプティングの潜在的な脆弱性対策として有効なブラウザの機能を有効にするレスポンスヘッダを返す。</li></ul></li></ul><h2 id="CSRF（クロスサイト・リクエスト・フォージェリ"><a href="#CSRF（クロスサイト・リクエスト・フォージェリ" class="headerlink" title="CSRF（クロスサイト・リクエスト・フォージェリ)"></a>CSRF（クロスサイト・リクエスト・フォージェリ)</h2><ul><li><p>☞ 処理を実行するページを POST メソッドでアクセスするようにし、その「hidden パラメータ」に秘密情報が挿入されるよう、前のページを自動生成して、実行ページではその値が正しい場合のみ処理を実行する。</p></li><li><p>処理を実行する直前のページで再度パスワードの入力を求め、実行ページでは、再度入力されたパスワードが正しい場合のみ処理を実行する。</p></li><li><p>Referer が正しいリンク元かを確認し、正しい場合のみ処理を実行する。</p></li><li><p>重要な操作を行った際に、その旨を登録済みのメールアドレスに自動送信する。</p></li></ul><h2 id="HTTP-ヘッダ・インジェクション"><a href="#HTTP-ヘッダ・インジェクション" class="headerlink" title="HTTP ヘッダ・インジェクション"></a>HTTP ヘッダ・インジェクション</h2><ul><li>ヘッダの出力を直接行わず、ウェブアプリケーションの実行環境や言語に用意されているヘッダ出力用 API を使用する。</li><li>改行コードを適切に処理するヘッダ出力用 API を利用できない場合は、改行を許可しないよう、開発者自身で適切な処理を実装する。</li><li>外部からの入力の全てについて、改行コードを削除する。</li></ul>]]></content>
     
     <summary type="html">
     
@@ -307,9 +307,9 @@
     <link href="https://kisky3.github.io/2021/06/22/leetcodememo/"/>
     <id>https://kisky3.github.io/2021/06/22/leetcodememo/</id>
     <published>2021-06-22T13:19:00.000Z</published>
-    <updated>2022-01-28T06:52:51.610Z</updated>
+    <updated>2022-02-23T14:57:29.388Z</updated>
     
-    <content type="html"><![CDATA[<p>LeetCode笔记</p><a id="more"></a><p>刷LeetCode啊！！！</p>]]></content>
+    <content type="html"><![CDATA[<p>LeetCode笔记</p><a id="more"></a><p>刷LeetCode啊！！！</p><p><a href="https://github.com/Kisky3/leetcode" target="_blank" rel="noopener">https://github.com/Kisky3/leetcode</a></p>]]></content>
     
     <summary type="html">
     
@@ -340,9 +340,9 @@
       <category term="Front-end Knowledge" scheme="https://kisky3.github.io/categories/Front-end-Knowledge/"/>
     
     
-      <category term="iOS" scheme="https://kisky3.github.io/tags/iOS/"/>
-    
       <category term="Input" scheme="https://kisky3.github.io/tags/Input/"/>
+    
+      <category term="iOS" scheme="https://kisky3.github.io/tags/iOS/"/>
     
   </entry>
   
