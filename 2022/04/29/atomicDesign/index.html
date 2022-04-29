@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="向宇的博客 | Xiang Yu&#39;s Blog">
-    <title>Web Security - 向宇的博客 | Xiang Yu&#39;s Blog</title>
+    <title>Atomic Design Memo - 向宇的博客 | Xiang Yu&#39;s Blog</title>
     <meta name="author" content="Xiang Yu">
     
         <meta name="keywords" content="hexo,javascript,front-end,">
@@ -17,19 +17,19 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"网络安全\n\nSQL インジェクション\nSQL 文の組み立ては全てプレースホルダで実装する。\nSQL 文の組み立てを文字列連結により行う場合は、エスケープ処理等を行うデータベースエンジンの API を用いて、SQL 文のリテラルを正しく構成する。\nウェブアプリケーションに渡されるパラメータに SQL 文を直接指定しない。\nエラーメッセージをそのままブラウザに表示しない。\nデータベースアカウントに適切な権限を与える。\n\nOS コマンド・インジェクション\nシェルを起動できる言語機能の利用を避ける\nシェルを起動できる言語機能を利用する場合は、その引数を構成する全ての変数に対してチェックを行い、あらかじめ許可した処理のみを実行する。\n\nパス名パラメータの未チェック／ディレクトリ・トラバーサル\n外部からのパラメータでウェブサーバ内のファイル名を直接指定する実装を避ける。\nファイルを開く際は、固定のディレクトリを指定し、かつファイル名にディレクトリ名が含まれないようにする。\nウェブサーバ内のファイルへのアクセス権限の設定を正しく管理する。\nファイル名のチェックを行う。\n\nセッション管理の不備\nセッション ID を推測が困難なものにする。\nセッション ID を URL パラメータに格納しない。\nHTTPS 通信で利用する Cookie には secure 属性を加える。\nログイン成功後に、新しくセッションを開始する。\nログイン成功後に、既存のセッション ID とは別に秘密情報を発行し、ページの遷移ごとにその値を確認する。\nセッション ID を固定値にしない。\nセッション ID を Cookie にセットする場合、有効期限の設定に注意する。\n\nクロスサイト・スクリプティング\nHTML テキストの入力を許可しない場合の対策\n\nウェブページに出力する全ての要素に対して、エスケープ処理を施す。\nURL を出力するときは、「http://」や 「https://」で始まる URL のみを許可する。\n... 要素の内容を動的に生成しない。\nスタイルシートを任意のサイトから取り込めるようにしない。\n入力値の内容チェックを行う\n\n\nHTML テキストの入力を許可する場合の対策\n\n入力された HTML テキストから構文解析木を作成し、スクリプトを含まない必要な要素のみを抽出する\n\n\n\n全てのウェブアプリケーションに共通の対策\n\nHTTP レスポンスヘッダの Content-Type フィールドに文字コード（charset）を指定する。\nCookie 情報の漏えい対策として、発行する Cookie に HttpOnly 属性を加え、TRACE メソッドを無効化する。\nクロスサイト・スクリプティングの潜在的な脆弱性対策として有効なブラウザの機能を有効にするレスポンスヘッダを返す。\n\n\n\nCSRF（クロスサイト・リクエスト・フォージェリ)\n☞ 処理を実行するページを POST メソッドでアクセスするようにし、その「hidden パラメータ」に秘密情報が挿入されるよう、前のページを自動生成して、実行ページではその値が正しい場合のみ処理を実行する。\n\n処理を実行する直前のページで再度パスワードの入力を求め、実行ページでは、再度入力されたパスワードが正しい場合のみ処理を実行する。\n\nReferer が正しいリンク元かを確認し、正しい場合のみ処理を実行する。\n\n重要な操作を行った際に、その旨を登録済みのメールアドレスに自動送信する。\n\n\nHTTP ヘッダ・インジェクション\nヘッダの出力を直接行わず、ウェブアプリケーションの実行環境や言語に用意されているヘッダ出力用 API を使用する。\n改行コードを適切に処理するヘッダ出力用 API を利用できない場合は、改行を許可しないよう、開発者自身で適切な処理を実装する。\n外部からの入力の全てについて、改行コードを削除する。\n\n","dateCreated":"2022-02-15T13:31:39+09:00","dateModified":"2022-03-15T19:26:16+09:00","datePublished":"2022-02-15T13:31:39+09:00","description":"网络安全","headline":"Web Security","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2022/02/15/WebSecurity/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2022/02/15/WebSecurity/","keywords":"security"}</script>
-    <meta name="description" content="网络安全">
-<meta name="keywords" content="security">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"原子设计理念\n\n","dateCreated":"2022-04-29T23:13:13+09:00","dateModified":"2022-04-29T23:16:52+09:00","datePublished":"2022-04-29T23:13:13+09:00","description":"原子设计理念","headline":"Atomic Design Memo","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2022/04/29/atomicDesign/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2022/04/29/atomicDesign/","keywords":"AtomicDesign"}</script>
+    <meta name="description" content="原子设计理念">
+<meta name="keywords" content="AtomicDesign">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="Web Security">
-<meta property="og:url" content="https://kisky3.github.io/2022/02/15/WebSecurity/index.html">
+<meta property="og:title" content="Atomic Design Memo">
+<meta property="og:url" content="https://kisky3.github.io/2022/04/29/atomicDesign/index.html">
 <meta property="og:site_name" content="向宇的博客 | Xiang Yu&#39;s Blog">
-<meta property="og:description" content="网络安全">
+<meta property="og:description" content="原子设计理念">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2022-03-15T10:26:16.559Z">
+<meta property="og:updated_time" content="2022-04-29T14:16:52.390Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Web Security">
-<meta name="twitter:description" content="网络安全">
+<meta name="twitter:title" content="Atomic Design Memo">
+<meta name="twitter:description" content="原子设计理念">
     
     
         
@@ -225,24 +225,32 @@
             <div id="main" data-behavior="3"
                  class="
                         hasCoverMetaIn
-                        ">
+                        hasCoverCaption">
                 
 <article class="post">
+    
+        <span class="post-header-cover-caption caption">Hello World, Hello Programming</span>
     
     
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            Web Security
+            Atomic Design Memo
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2022-02-15T13:31:39+09:00">
+    <time datetime="2022-04-29T23:13:13+09:00">
 	
-		    Feb 15, 2022
+		    Apr 29, 2022
     	
     </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Front-end-Knowledge/">Front-end Knowledge</a>
+
+
     
 </div>
 
@@ -252,73 +260,8 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>网络安全</p>
+            <p>原子设计理念</p>
 <a id="more"></a>
-<h2 id="SQL-インジェクション"><a href="#SQL-インジェクション" class="headerlink" title="SQL インジェクション"></a>SQL インジェクション</h2><ul>
-<li>SQL 文の組み立ては全てプレースホルダで実装する。</li>
-<li>SQL 文の組み立てを文字列連結により行う場合は、エスケープ処理等を行うデータ<br>ベースエンジンの API を用いて、SQL 文のリテラルを正しく構成する。</li>
-<li>ウェブアプリケーションに渡されるパラメータに SQL 文を直接指定しない。</li>
-<li>エラーメッセージをそのままブラウザに表示しない。</li>
-<li>データベースアカウントに適切な権限を与える。</li>
-</ul>
-<h2 id="OS-コマンド・インジェクション"><a href="#OS-コマンド・インジェクション" class="headerlink" title="OS コマンド・インジェクション"></a>OS コマンド・インジェクション</h2><ul>
-<li>シェルを起動できる言語機能の利用を避ける</li>
-<li>シェルを起動できる言語機能を利用する場合は、その引数を構成する全ての変数に<br>対してチェックを行い、あらかじめ許可した処理のみを実行する。</li>
-</ul>
-<h2 id="パス名パラメータの未チェック／ディレクトリ・トラバーサル"><a href="#パス名パラメータの未チェック／ディレクトリ・トラバーサル" class="headerlink" title="パス名パラメータの未チェック／ディレクトリ・トラバーサル"></a>パス名パラメータの未チェック／ディレクトリ・トラバーサル</h2><ul>
-<li>外部からのパラメータでウェブサーバ内のファイル名を直接指定する実装を避ける。</li>
-<li>ファイルを開く際は、固定のディレクトリを指定し、かつファイル名にディレクトリ名が含<br>まれないようにする。</li>
-<li>ウェブサーバ内のファイルへのアクセス権限の設定を正しく管理する。</li>
-<li>ファイル名のチェックを行う。</li>
-</ul>
-<h2 id="セッション管理の不備"><a href="#セッション管理の不備" class="headerlink" title="セッション管理の不備"></a>セッション管理の不備</h2><ul>
-<li>セッション ID を推測が困難なものにする。</li>
-<li>セッション ID を URL パラメータに格納しない。</li>
-<li>HTTPS 通信で利用する Cookie には secure 属性を加える。</li>
-<li>ログイン成功後に、新しくセッションを開始する。</li>
-<li>ログイン成功後に、既存のセッション ID とは別に秘密情報を発行し、ページの遷移<br>ごとにその値を確認する。</li>
-<li>セッション ID を固定値にしない。</li>
-<li>セッション ID を Cookie にセットする場合、有効期限の設定に注意する。</li>
-</ul>
-<h2 id="クロスサイト・スクリプティング"><a href="#クロスサイト・スクリプティング" class="headerlink" title="クロスサイト・スクリプティング"></a>クロスサイト・スクリプティング</h2><ul>
-<li><p>HTML テキストの入力を許可しない場合の対策</p>
-<ul>
-<li>ウェブページに出力する全ての要素に対して、エスケープ処理を施す。</li>
-<li>URL を出力するときは、「http://」や 「https://」で始まる URL のみを許可する。</li>
-<li><script>...</script> 要素の内容を動的に生成しない。</li>
-<li>スタイルシートを任意のサイトから取り込めるようにしない。</li>
-<li>入力値の内容チェックを行う</li>
-</ul>
-</li>
-<li><p>HTML テキストの入力を許可する場合の対策</p>
-<ul>
-<li>入力された HTML テキストから構文解析木を作成し、スクリプトを含まない必要な要素のみを抽出する</li>
-<li></li>
-</ul>
-</li>
-<li><p>全てのウェブアプリケーションに共通の対策</p>
-<ul>
-<li>HTTP レスポンスヘッダの Content-Type フィールドに文字コード（charset）を<br>指定する。</li>
-<li>Cookie 情報の漏えい対策として、発行する Cookie に HttpOnly 属性を加え、<br>TRACE メソッドを無効化する。</li>
-<li>クロスサイト・スクリプティングの潜在的な脆弱性対策として有効なブラウザの機能を有効にするレスポンスヘッダを返す。</li>
-</ul>
-</li>
-</ul>
-<h2 id="CSRF（クロスサイト・リクエスト・フォージェリ"><a href="#CSRF（クロスサイト・リクエスト・フォージェリ" class="headerlink" title="CSRF（クロスサイト・リクエスト・フォージェリ)"></a>CSRF（クロスサイト・リクエスト・フォージェリ)</h2><ul>
-<li><p>☞ 処理を実行するページを POST メソッドでアクセスするようにし、その「hidden パラメータ」に秘密情報が挿入されるよう、前のページを自動生成して、実行ページではその値が正しい場合のみ処理を実行する。</p>
-</li>
-<li><p>処理を実行する直前のページで再度パスワードの入力を求め、実行ページでは、再度入力されたパスワードが正しい場合のみ処理を実行する。</p>
-</li>
-<li><p>Referer が正しいリンク元かを確認し、正しい場合のみ処理を実行する。</p>
-</li>
-<li><p>重要な操作を行った際に、その旨を登録済みのメールアドレスに自動送信する。</p>
-</li>
-</ul>
-<h2 id="HTTP-ヘッダ・インジェクション"><a href="#HTTP-ヘッダ・インジェクション" class="headerlink" title="HTTP ヘッダ・インジェクション"></a>HTTP ヘッダ・インジェクション</h2><ul>
-<li>ヘッダの出力を直接行わず、ウェブアプリケーションの実行環境や言語に用意されているヘッダ出力用 API を使用する。</li>
-<li>改行コードを適切に処理するヘッダ出力用 API を利用できない場合は、改行を許可しないよう、開発者自身で適切な処理を実装する。</li>
-<li>外部からの入力の全てについて、改行コードを削除する。</li>
-</ul>
 
             
 
@@ -329,7 +272,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-link" href="/tags/security/">security</a>
+    <a class="tag tag--primary tag--small t-link" href="/tags/AtomicDesign/">AtomicDesign</a>
 
             </div>
         
@@ -339,8 +282,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2022/04/29/atomicDesign/" data-tooltip="Atomic Design Memo" aria-label="PREVIOUS: Atomic Design Memo">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -349,7 +291,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2022/01/28/createNginxTestEnvironment/" data-tooltip="Create Test Environment By Nginx, EC2 and S3" aria-label="NEXT: Create Test Environment By Nginx, EC2 and S3">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2022/02/15/WebSecurity/" data-tooltip="Web Security" aria-label="NEXT: Web Security">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -375,13 +317,11 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2022/02/15/WebSecurity/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2022/04/29/atomicDesign/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
-        
-            
         
         <li class="post-action">
             
@@ -395,8 +335,6 @@
 
 
         
-        
-            
         
     </div>
 </article>
@@ -421,8 +359,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2022/04/29/atomicDesign/" data-tooltip="Atomic Design Memo" aria-label="PREVIOUS: Atomic Design Memo">
+                    <a class="post-action-btn btn btn--disabled">
                 
                     <i class="fa fa-angle-left" aria-hidden="true"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
@@ -431,7 +368,7 @@
             <li class="post-action">
                 
                     
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2022/01/28/createNginxTestEnvironment/" data-tooltip="Create Test Environment By Nginx, EC2 and S3" aria-label="NEXT: Create Test Environment By Nginx, EC2 and S3">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2022/02/15/WebSecurity/" data-tooltip="Web Security" aria-label="NEXT: Web Security">
                 
                     <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -457,13 +394,11 @@
             
             
             <li class="post-action hide-xs">
-                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2022/02/15/WebSecurity/" title="global.share_on_movies">
+                <a class="post-action-btn btn btn--default" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2022/04/29/atomicDesign/" title="global.share_on_movies">
                     <i class="fa file-video" aria-hidden="true"></i>
                 </a>
             </li>
         
-        
-            
         
         <li class="post-action">
             
@@ -493,7 +428,7 @@
                 
                 
                 <li class="share-option">
-                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2022/02/15/WebSecurity/">
+                    <a class="share-option-btn" target="new" href="http://service.weibo.com/share/share.php?&amp;title=https://kisky3.github.io/2022/04/29/atomicDesign/">
                         <i class="fa file-video" aria-hidden="true"></i><span>global.share_on_movies</span>
                     </a>
                 </li>
@@ -549,8 +484,6 @@
         <!--SCRIPTS-->
 <script src="/assets/js/script-wqqb8bbbj9igtm4n3bzccarnx9r51u7u12cdzdqad027xmgqdfsi77py0qap.min.js"></script>
 <!--SCRIPTS END-->
-
-    
 
 
 
