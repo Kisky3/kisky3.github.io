@@ -17,7 +17,7 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"原子设计理念\n\n\n为什么要有原子设计理念？如果产品规模小只需要 1，2 个设计师，大概率是前期不需要大费周章搞一个需要开发配合的设计系统。可以只利用 Sketch 或者 Figma 做一个像贴纸一样的设计组件库。但是功能多了怎么办，要招人，当新设计师产出后就会发现与原设计师设计的风格不一样，慢慢发现整体设计风格不统一，只靠一个贴纸组件库很难能满足新功能需求，新功能贴纸上没有设计或者设计需要变通，又或者是新设计师忙着交工忘记检查自己新组件和已有组件的异同。\n这时候就会需要一个设计师领头去重新整理设计系统，挑出来发现同一个正文所用十几个不同字号，又或者是十几个透明度不同的灰黑色字体，所有组件跟现有上线产品对比整理好后一并交给开发，开发再一一整理代码库。\n原子设计理念好在哪里？从上面这个例子我们就可以看出首先贴纸组件库需要经常维护，同时也需要和开发人员及时沟通同步更新代码库，同时贴纸组件库也无法有效约束新设计师保证设计风格一致性。原子设计的原理可以最大程度保证任何一个设计组件的构成与开发构建组件一一对应。同时应用原子设计的设计软件（e.g., Sketch, Figma)可以给新设计师足够的自由满足需求变通，并且可以保证同一个设计组件的更新会覆盖到任何一个使用这个组件的设计中。\n什么是 Atomic Design 原子设计?原子设计是创建设计系统的理论方法,分为 5 个层次：\n\n原子（Atoms）\n分子（Molecules）\n组织（Organisms）\n模板（Templates）\n页面（Pages）\n\n\n\n原子是我们设计中最为基础元素，可以是一种字体，一个色板，一组图标或者一个矩形。把几个原子组合构成一个分子，比如黑体字、矩形、16 号字、蓝色、白色、构成一个按钮。几个分子构成一个组织，我们也可以称为组件，这样更符合日常习惯。\n组件构成页面框架，最后生成页面。\n这就是原子设计的基本概念，而当我们改变原子时，整个体系都会产生变化，同时我们也可以逐级调整，总之你的每次改变都会影响到这个系统，但是它又是保持一致性的。\n当然我们并不一定是最后生成页面，也许是 Apps 或者其他出版物，甚至我们可以根据自己从事工作的属性去设定个性的结构。\n但是无论如何构建自己的设计系统，原子设计为界面元素提供了应用规则和组织原理，这套理论对于规范化设计、团队协作、产品迭代意义重大。\nAtoms 原子层：单一可工作的原子组件Typographic styles 字体样式Color swatches 颜色色板Icons 图标Radio buttons 单选按钮Checkboxes 多选框Sliders 滑杆Toggles 切换按钮Profile pictures placeholders 个人资料图片占位符Product pictures placeholders 产品资料图片占位符Buttons 按钮Links 链接Input fields (without labels) 无标识输入栏Tabs 标签文字型按钮（常见导航）Pills 药丸型按钮（常见热门，历史搜索关键字）Badges 提醒小红点或数字（常见微信未读提示）Tags 标签Tooltips 信息提示框Loading Bar/Circle 加载条/加载圈\nMolecules 分子层：1-3 个不同的原子组成的简单 UI 功能组件Dropdown menus 下拉菜单Radio buttons inside regular buttons 普通按钮里嵌套单选按钮Dropdown buttons 下拉按钮Date pickers 日期选择器Search components 搜索组件Blockquotes 引用组件Breadcrumbs 面包屑导航栏Card/Tile components 卡片/长条卡片组件Collapsible group items 可收缩群组Input fields (with labels) 带标识输入栏Media uploaders 上传组件（选文件按钮+标题）Loading components 加载模块（进度条+X+名称）Interactive Notifications/Pop-ups/Modal 1-2 个按钮的简单提示框/弹窗/状态窗 (cookie 提示接受/拒绝）Pagination 页面页数选择栏Media objects 媒体组件（产品小图+标题+内容简介）\nOrganisms 有机体：由多个分子组件组成Navigation/Tab bars 导航栏Video/Music players 视频/音乐播放器Media grids 媒体表单（卡片组成的媒体库表单）Tables 信息表格（常见小长条卡片组成）Carousels 轮播形式（常见卡片+选择箭头/…)Forms 信息表单\n\n利用原子设计理念提升设计团队基于 Single Responsibility Principle （单一职责原则）的概念, 一个系统有不同的模块，每个模块只负责一个功能，模块和模块之间的连带性较小，所以这样的系统更强。\n这可能会带来以下的优点:\n\n可以对各个 component 为单位进行单体测试\n减少过耦合带来的 bug\n易于维护\n提高代码的复用率\n易于多人数平行开发\n能更灵活地应付需求改变\n\n","dateCreated":"2022-04-29T23:13:13+09:00","dateModified":"2022-04-30T00:31:16+09:00","datePublished":"2022-04-29T23:13:13+09:00","description":"原子设计理念","headline":"Atomic Design Memo","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2022/04/29/atomicDesign/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2022/04/29/atomicDesign/","keywords":"AtomicDesign"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png"},"articleBody":"原子设计理念\n\n\n为什么要有原子设计理念？如果产品规模小只需要 1，2 个设计师，大概率是前期不需要大费周章搞一个需要开发配合的设计系统。可以只利用 Sketch 或者 Figma 做一个像贴纸一样的设计组件库。但是功能多了怎么办，要招人，当新设计师产出后就会发现与原设计师设计的风格不一样，慢慢发现整体设计风格不统一，只靠一个贴纸组件库很难能满足新功能需求，新功能贴纸上没有设计或者设计需要变通，又或者是新设计师忙着交工忘记检查自己新组件和已有组件的异同。\n这时候就会需要一个设计师领头去重新整理设计系统，挑出来发现同一个正文所用十几个不同字号，又或者是十几个透明度不同的灰黑色字体，所有组件跟现有上线产品对比整理好后一并交给开发，开发再一一整理代码库。\n\n原子设计理念好在哪里？从上面这个例子我们就可以看出首先贴纸组件库需要经常维护，同时也需要和开发人员及时沟通同步更新代码库，同时贴纸组件库也无法有效约束新设计师保证设计风格一致性。原子设计的原理可以最大程度保证任何一个设计组件的构成与开发构建组件一一对应。同时应用原子设计的设计软件（e.g., Sketch, Figma)可以给新设计师足够的自由满足需求变通，并且可以保证同一个设计组件的更新会覆盖到任何一个使用这个组件的设计中。\n\n什么是 Atomic Design 原子设计?原子设计是创建设计系统的理论方法,分为 5 个层次：\n\n原子（Atoms）\n分子（Molecules）\n组织（Organisms）\n模板（Templates）\n页面（Pages）\n\n\n\n原子是我们设计中最为基础元素，可以是一种字体，一个色板，一组图标或者一个矩形。把几个原子组合构成一个分子，比如黑体字、矩形、16 号字、蓝色、白色、构成一个按钮。几个分子构成一个组织，我们也可以称为组件，这样更符合日常习惯。\n组件构成页面框架，最后生成页面。\n这就是原子设计的基本概念，而当我们改变原子时，整个体系都会产生变化，同时我们也可以逐级调整，总之你的每次改变都会影响到这个系统，但是它又是保持一致性的。\n当然我们并不一定是最后生成页面，也许是 Apps 或者其他出版物，甚至我们可以根据自己从事工作的属性去设定个性的结构。\n但是无论如何构建自己的设计系统，原子设计为界面元素提供了应用规则和组织原理，这套理论对于规范化设计、团队协作、产品迭代意义重大。\nAtoms 原子层：单一可工作的原子组件\nTypographic styles 字体样式\nColor swatches 颜色色板\nIcons 图标\nRadio buttons 单选按钮\nCheckboxes 多选框\nSliders 滑杆\nToggles 切换按钮\nProfile pictures placeholders 个人资料图片占位符\nProduct pictures placeholders 产品资料图片占位符\nButtons 按钮\nLinks 链接\nInput fields (without labels) 无标识输入栏\nTabs 标签文字型按钮（常见导航）\nPills 药丸型按钮（常见热门，历史搜索关键字）\nBadges 提醒小红点或数字（常见微信未读提示）\nTags 标签\nTooltips 信息提示框\nLoading Bar/Circle 加载条/加载圈\n\nMolecules 分子层：1-3 个不同的原子组成的简单 UI 功能组件\nDropdown menus 下拉菜单\nRadio buttons inside regular buttons 普通按钮里嵌套单选按钮\nDropdown buttons 下拉按钮\nDate pickers 日期选择器\nSearch components 搜索组件\nBlockquotes 引用组件\nBreadcrumbs 面包屑导航栏\nCard/Tile components 卡片/长条卡片组件\nCollapsible group items 可收缩群组\nInput fields (with labels) 带标识输入栏\nMedia uploaders 上传组件（选文件按钮+标题）\nLoading components 加载模块（进度条+X+名称）\nInteractive Notifications/Pop-ups/Modal 1-2 个按钮的简单提示框/弹窗/状态窗 - (cookie 提示接受/拒绝）\nPagination 页面页数选择栏\nMedia objects 媒体组件（产品小图+标题+内容简介）\n\nOrganisms 有机体：由多个分子组件组成\nNavigation/Tab bars 导航栏\nVideo/Music players 视频/音乐播放器\nMedia grids 媒体表单（卡片组成的媒体库表单）\nTables 信息表格（常见小长条卡片组成）\nCarousels 轮播形式（常见卡片+选择箭头/…)\nForms 信息表单\n\n\n利用原子设计理念提升设计团队基于 Single Responsibility Principle （单一职责原则）的概念, 一个系统有不同的模块，每个模块只负责一个功能，模块和模块之间的连带性较小，所以这样的系统更强。\n这可能会带来以下的优点:\n\n可以对各个 component 为单位进行单体测试\n减少过耦合带来的 bug\n易于维护\n提高代码的复用率\n易于多人数平行开发\n能更灵活地应付需求改变\n\n","dateCreated":"2022-04-29T23:13:13+09:00","dateModified":"2022-04-30T00:35:39+09:00","datePublished":"2022-04-29T23:13:13+09:00","description":"原子设计理念","headline":"Atomic Design Memo","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://kisky3.github.io/2022/04/29/atomicDesign/"},"publisher":{"@type":"Organization","name":"Xiang Yu","sameAs":["https://github.com/Kisky3","/categories/About-Me","kisky3@126.com"],"image":"me.png","logo":{"@type":"ImageObject","url":"me.png"}},"url":"https://kisky3.github.io/2022/04/29/atomicDesign/","keywords":"AtomicDesign"}</script>
     <meta name="description" content="原子设计理念">
 <meta name="keywords" content="AtomicDesign">
 <meta property="og:type" content="blog">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="原子设计理念">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://kisky3.github.io/2022/04/29/atomicDesign/1.jpg">
-<meta property="og:updated_time" content="2022-04-29T15:31:16.873Z">
+<meta property="og:updated_time" content="2022-04-29T15:35:39.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Atomic Design Memo">
 <meta name="twitter:description" content="原子设计理念">
@@ -267,7 +267,9 @@
 
 <h2 id="为什么要有原子设计理念？"><a href="#为什么要有原子设计理念？" class="headerlink" title="为什么要有原子设计理念？"></a>为什么要有原子设计理念？</h2><p>如果产品规模小只需要 1，2 个设计师，大概率是前期不需要大费周章搞一个需要开发配合的设计系统。可以只利用 Sketch 或者 Figma 做一个像贴纸一样的设计组件库。但是功能多了怎么办，要招人，当新设计师产出后就会发现与原设计师设计的风格不一样，慢慢发现整体设计风格不统一，只靠一个贴纸组件库很难能满足新功能需求，新功能贴纸上没有设计或者设计需要变通，又或者是新设计师忙着交工忘记检查自己新组件和已有组件的异同。</p>
 <p>这时候就会需要一个设计师领头去重新整理设计系统，挑出来发现同一个正文所用十几个不同字号，又或者是十几个透明度不同的灰黑色字体，所有组件跟现有上线产品对比整理好后一并交给开发，开发再一一整理代码库。</p>
+<hr>
 <h2 id="原子设计理念好在哪里？"><a href="#原子设计理念好在哪里？" class="headerlink" title="原子设计理念好在哪里？"></a>原子设计理念好在哪里？</h2><p>从上面这个例子我们就可以看出首先贴纸组件库需要经常维护，同时也需要和开发人员及时沟通同步更新代码库，同时贴纸组件库也无法有效约束新设计师保证设计风格一致性。原子设计的原理可以最大程度保证任何一个设计组件的构成与开发构建组件一一对应。同时应用原子设计的设计软件（e.g., Sketch, Figma)可以给新设计师足够的自由满足需求变通，并且可以保证同一个设计组件的更新会覆盖到任何一个使用这个组件的设计中。</p>
+<hr>
 <h2 id="什么是-Atomic-Design-原子设计"><a href="#什么是-Atomic-Design-原子设计" class="headerlink" title="什么是 Atomic Design 原子设计?"></a>什么是 Atomic Design 原子设计?</h2><p>原子设计是创建设计系统的理论方法,分为 5 个层次：</p>
 <ul>
 <li>原子（Atoms）</li>
@@ -283,9 +285,51 @@
 <p>这就是原子设计的基本概念，而当我们改变原子时，整个体系都会产生变化，同时我们也可以逐级调整，总之你的每次改变都会影响到这个系统，但是它又是保持一致性的。</p>
 <p>当然我们并不一定是最后生成页面，也许是 Apps 或者其他出版物，甚至我们可以根据自己从事工作的属性去设定个性的结构。</p>
 <p>但是无论如何构建自己的设计系统，原子设计为界面元素提供了应用规则和组织原理，这套理论对于规范化设计、团队协作、产品迭代意义重大。</p>
-<h3 id="Atoms-原子层：单一可工作的原子组件"><a href="#Atoms-原子层：单一可工作的原子组件" class="headerlink" title="Atoms 原子层：单一可工作的原子组件"></a>Atoms 原子层：单一可工作的原子组件</h3><p>Typographic styles 字体样式<br>Color swatches 颜色色板<br>Icons 图标<br>Radio buttons 单选按钮<br>Checkboxes 多选框<br>Sliders 滑杆<br>Toggles 切换按钮<br>Profile pictures placeholders 个人资料图片占位符<br>Product pictures placeholders 产品资料图片占位符<br>Buttons 按钮<br>Links 链接<br>Input fields (without labels) 无标识输入栏<br>Tabs 标签文字型按钮（常见导航）<br>Pills 药丸型按钮（常见热门，历史搜索关键字）<br>Badges 提醒小红点或数字（常见微信未读提示）<br>Tags 标签<br>Tooltips 信息提示框<br>Loading Bar/Circle 加载条/加载圈</p>
-<h3 id="Molecules-分子层：1-3-个不同的原子组成的简单-UI-功能组件"><a href="#Molecules-分子层：1-3-个不同的原子组成的简单-UI-功能组件" class="headerlink" title="Molecules 分子层：1-3 个不同的原子组成的简单 UI 功能组件"></a>Molecules 分子层：1-3 个不同的原子组成的简单 UI 功能组件</h3><p>Dropdown menus 下拉菜单<br>Radio buttons inside regular buttons 普通按钮里嵌套单选按钮<br>Dropdown buttons 下拉按钮<br>Date pickers 日期选择器<br>Search components 搜索组件<br>Blockquotes 引用组件<br>Breadcrumbs 面包屑导航栏<br>Card/Tile components 卡片/长条卡片组件<br>Collapsible group items 可收缩群组<br>Input fields (with labels) 带标识输入栏<br>Media uploaders 上传组件（选文件按钮+标题）<br>Loading components 加载模块（进度条+X+名称）<br>Interactive Notifications/Pop-ups/Modal 1-2 个按钮的简单提示框/弹窗/状态窗 (cookie 提示接受/拒绝）<br>Pagination 页面页数选择栏<br>Media objects 媒体组件（产品小图+标题+内容简介）</p>
-<h3 id="Organisms-有机体：由多个分子组件组成"><a href="#Organisms-有机体：由多个分子组件组成" class="headerlink" title="Organisms 有机体：由多个分子组件组成"></a>Organisms 有机体：由多个分子组件组成</h3><p>Navigation/Tab bars 导航栏<br>Video/Music players 视频/音乐播放器<br>Media grids 媒体表单（卡片组成的媒体库表单）<br>Tables 信息表格（常见小长条卡片组成）<br>Carousels 轮播形式（常见卡片+选择箭头/…)<br>Forms 信息表单</p>
+<h3 id="Atoms-原子层：单一可工作的原子组件"><a href="#Atoms-原子层：单一可工作的原子组件" class="headerlink" title="Atoms 原子层：单一可工作的原子组件"></a>Atoms 原子层：单一可工作的原子组件</h3><ul>
+<li>Typographic styles 字体样式</li>
+<li>Color swatches 颜色色板</li>
+<li>Icons 图标</li>
+<li>Radio buttons 单选按钮</li>
+<li>Checkboxes 多选框</li>
+<li>Sliders 滑杆</li>
+<li>Toggles 切换按钮</li>
+<li>Profile pictures placeholders 个人资料图片占位符</li>
+<li>Product pictures placeholders 产品资料图片占位符</li>
+<li>Buttons 按钮</li>
+<li>Links 链接</li>
+<li>Input fields (without labels) 无标识输入栏</li>
+<li>Tabs 标签文字型按钮（常见导航）</li>
+<li>Pills 药丸型按钮（常见热门，历史搜索关键字）</li>
+<li>Badges 提醒小红点或数字（常见微信未读提示）</li>
+<li>Tags 标签</li>
+<li>Tooltips 信息提示框</li>
+<li>Loading Bar/Circle 加载条/加载圈</li>
+</ul>
+<h3 id="Molecules-分子层：1-3-个不同的原子组成的简单-UI-功能组件"><a href="#Molecules-分子层：1-3-个不同的原子组成的简单-UI-功能组件" class="headerlink" title="Molecules 分子层：1-3 个不同的原子组成的简单 UI 功能组件"></a>Molecules 分子层：1-3 个不同的原子组成的简单 UI 功能组件</h3><ul>
+<li>Dropdown menus 下拉菜单</li>
+<li>Radio buttons inside regular buttons 普通按钮里嵌套单选按钮</li>
+<li>Dropdown buttons 下拉按钮</li>
+<li>Date pickers 日期选择器</li>
+<li>Search components 搜索组件</li>
+<li>Blockquotes 引用组件</li>
+<li>Breadcrumbs 面包屑导航栏</li>
+<li>Card/Tile components 卡片/长条卡片组件</li>
+<li>Collapsible group items 可收缩群组</li>
+<li>Input fields (with labels) 带标识输入栏</li>
+<li>Media uploaders 上传组件（选文件按钮+标题）</li>
+<li>Loading components 加载模块（进度条+X+名称）</li>
+<li>Interactive Notifications/Pop-ups/Modal 1-2 个按钮的简单提示框/弹窗/状态窗 - (cookie 提示接受/拒绝）</li>
+<li>Pagination 页面页数选择栏</li>
+<li>Media objects 媒体组件（产品小图+标题+内容简介）</li>
+</ul>
+<h3 id="Organisms-有机体：由多个分子组件组成"><a href="#Organisms-有机体：由多个分子组件组成" class="headerlink" title="Organisms 有机体：由多个分子组件组成"></a>Organisms 有机体：由多个分子组件组成</h3><ul>
+<li>Navigation/Tab bars 导航栏</li>
+<li>Video/Music players 视频/音乐播放器</li>
+<li>Media grids 媒体表单（卡片组成的媒体库表单）</li>
+<li>Tables 信息表格（常见小长条卡片组成）</li>
+<li>Carousels 轮播形式（常见卡片+选择箭头/…)</li>
+<li>Forms 信息表单</li>
+</ul>
 <hr>
 <h2 id="利用原子设计理念提升设计团队"><a href="#利用原子设计理念提升设计团队" class="headerlink" title="利用原子设计理念提升设计团队"></a>利用原子设计理念提升设计团队</h2><p>基于 Single Responsibility Principle （单一职责原则）的概念, 一个系统有不同的模块，每个模块只负责一个功能，模块和模块之间的连带性较小，所以这样的系统更强。</p>
 <p>这可能会带来以下的优点:</p>
