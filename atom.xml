@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2022-04-29T14:16:52.390Z</updated>
+  <updated>2022-04-29T14:47:11.915Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://kisky3.github.io/2022/04/29/atomicDesign/"/>
     <id>https://kisky3.github.io/2022/04/29/atomicDesign/</id>
     <published>2022-04-29T14:13:13.000Z</published>
-    <updated>2022-04-29T14:16:52.390Z</updated>
+    <updated>2022-04-29T14:47:11.915Z</updated>
     
-    <content type="html"><![CDATA[<p>原子设计理念</p><a id="more"></a>]]></content>
+    <content type="html"><![CDATA[<p>原子设计理念</p><a id="more"></a><h2 id="什么是-Atomic-Design-原子设计"><a href="#什么是-Atomic-Design-原子设计" class="headerlink" title="什么是 Atomic Design 原子设计"></a>什么是 Atomic Design 原子设计</h2><p>原子设计是创建设计系统的理论方法,分为 5 个层次：</p><ul><li>原子（Atoms）</li><li>分子（Molecules）</li><li>组织（Organisms）</li><li>模板（Templates）</li><li>页面（Pages）</li></ul>]]></content>
     
     <summary type="html">
     
