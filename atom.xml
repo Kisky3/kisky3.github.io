@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://kisky3.github.io/"/>
-  <updated>2022-04-29T15:35:39.681Z</updated>
+  <updated>2022-05-15T14:14:37.093Z</updated>
   <id>https://kisky3.github.io/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AWSSAAMEMO</title>
+    <link href="https://kisky3.github.io/2022/05/15/AWSSAAMEMO/"/>
+    <id>https://kisky3.github.io/2022/05/15/AWSSAAMEMO/</id>
+    <published>2022-05-15T14:14:37.000Z</published>
+    <updated>2022-05-15T14:14:37.093Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Atomic Design Memo</title>
@@ -457,30 +471,6 @@
       <category term="node.js" scheme="https://kisky3.github.io/tags/node-js/"/>
     
       <category term="npm" scheme="https://kisky3.github.io/tags/npm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Set localStorage Wih JS , Read With CakePHP</title>
-    <link href="https://kisky3.github.io/2021/04/19/SetCookieWihJS-ReadWithCakePHP/"/>
-    <id>https://kisky3.github.io/2021/04/19/SetCookieWihJS-ReadWithCakePHP/</id>
-    <published>2021-04-19T14:55:01.000Z</published>
-    <updated>2022-01-28T06:52:51.043Z</updated>
-    
-    <content type="html"><![CDATA[<p>在js里设定localStorage,并在CakePHP里使用</p><a id="more"></a><p>在最近要在js里设定localStorage,并在CakePHP里读取js的localStorage.而且使用js和CakePHP的地方分别处于两个repo.</p><p>为了解决这个问题,费了一点时间.<br>下面不知道是不是最好的方法,但是能够满足需求了.</p><ol><li>在Javascript里设定localStorage</li></ol><!-- javascript --><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">localStorage.setItem(<span class="string">'mytext'</span>, <span class="string">'Hello, World!'</span>);</span><br></pre></td></tr></table></figure><p>如果对期限有要求的话可以考虑使用sessionStorage, 或者自己将时间的数据存到storage里, 并在读取localstorage时获取现在时刻进行对比并追加处理.</p><ol start="2"><li>在CakePHP里创建Element,并在template里通过js引用.<br>例子：</li></ol><p>my-project/myname/Template/Element/helloworld.tpl</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"><span class="keyword">var</span> test = localStorage.getItem(<span class="string">"mytext"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(test);</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure><p>CakePHP template</p><p>test.tpl</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;$<span class="keyword">this</span>-&gt;Element(<span class="string">'helloworld'</span>)&#125;</span><br><span class="line"><span class="comment">// other CakePHP coding...</span></span><br></pre></td></tr></table></figure><p>这样在加载test.tpl的时候就能够通过element读取之前保存在本地的localstorage了.</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在js里设定localStorage,并在CakePHP里使用&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Back-end Knowledge" scheme="https://kisky3.github.io/categories/Back-end-Knowledge/"/>
-    
-    
-      <category term="CakePHP" scheme="https://kisky3.github.io/tags/CakePHP/"/>
-    
-      <category term="Cookie" scheme="https://kisky3.github.io/tags/Cookie/"/>
     
   </entry>
   
