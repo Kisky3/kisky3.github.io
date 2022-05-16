@@ -2,7 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://kisky3.github.io/2022/05/15/AWSSAAMEMO/</loc>
-    <lastmod>2022-05-15</lastmod>
+    <lastmod>2022-05-16</lastmod>
+  </url>  <url>
+    <loc>https://kisky3.github.io/2021/03/03/AWSMemo/</loc>
+    <lastmod>2022-05-16</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2022/04/29/atomicDesign/</loc>
     <lastmod>2022-04-29</lastmod>
@@ -398,9 +401,6 @@
     <lastmod>2022-01-28</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2020/04/21/AboutAWSAmplify/</loc>
-    <lastmod>2022-01-28</lastmod>
-  </url>  <url>
-    <loc>https://kisky3.github.io/2021/03/03/AWSMemo/</loc>
     <lastmod>2022-01-28</lastmod>
   </url>  <url>
     <loc>https://kisky3.github.io/2019/07/16/API/</loc>
